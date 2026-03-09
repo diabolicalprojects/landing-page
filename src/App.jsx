@@ -477,11 +477,15 @@ const DiabolicalChatbot = () => {
 
     const openWA = (msg) => {
         const encoded = encodeURIComponent(msg);
-        // Try native app protocol first, fallback to wa.me
-        const url = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
-            ? `whatsapp://send?phone=524495136907&text=${encoded}`
-            : `https://wa.me/524495136907?text=${encoded}`;
-        window.open(url, '_blank');
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            // En móvil usamos href directo de la pestaña actual para evitar bloqueos de popup en Opera/Safari
+            window.location.href = `whatsapp://send?phone=524495136907&text=${encoded}`;
+        } else {
+            // En PC usamos API de WhatsApp en pestaña nueva
+            window.open(`https://api.whatsapp.com/send?phone=524495136907&text=${encoded}`, '_blank');
+        }
     };
 
     useEffect(() => {
@@ -1025,10 +1029,13 @@ const Contact = () => {
         e.preventDefault();
         const msg = `🟢 *DIAGNÓSTICO RÁPIDO — DIABOLICAL*\n\n*Nombre:* ${form.name}\n*WhatsApp:* ${form.whatsapp}\n*Email:* ${form.email}\n\n*¿Cómo llegan sus clientes?:* ${form.source}\n*Personas que atienden:* ${form.people}\n*Si fuera automático:* ${form.aspiration}`;
         const encoded = encodeURIComponent(msg);
-        const url = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
-            ? `whatsapp://send?phone=524495136907&text=${encoded}`
-            : `https://wa.me/524495136907?text=${encoded}`;
-        window.open(url, '_blank');
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            window.location.href = `whatsapp://send?phone=524495136907&text=${encoded}`;
+        } else {
+            window.open(`https://api.whatsapp.com/send?phone=524495136907&text=${encoded}`, '_blank');
+        }
         setSent(true);
     };
 
