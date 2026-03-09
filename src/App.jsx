@@ -220,56 +220,73 @@ const Navbar = () => {
         };
         window.addEventListener('scroll', handleScroll);
 
-        // Detect white background sections (if any, currently mostly black)
-        const trigger = ScrollTrigger.create({
-            trigger: "#problem",
-            start: "top 80px",
-            end: "bottom 80px",
-            onToggle: self => setIsLight(self.isActive)
-        });
+        // Detect white background sections
+        const triggers = [
+            ScrollTrigger.create({
+                trigger: "#problem",
+                start: "top 70px",
+                end: "bottom 70px",
+                onToggle: self => { if (self.isActive) setIsLight(true); }
+            }),
+            ScrollTrigger.create({
+                trigger: "#comparison",
+                start: "top 70px",
+                end: "bottom 70px",
+                onToggle: self => { if (self.isActive) setIsLight(true); }
+            })
+        ];
+
+        const handleLightOff = () => {
+            const problemEl = document.getElementById('problem');
+            const comparisonEl = document.getElementById('comparison');
+            if (!problemEl || !comparisonEl) return;
+            const py = problemEl.getBoundingClientRect();
+            const cy = comparisonEl.getBoundingClientRect();
+            const isInLight = (py.top < 80 && py.bottom > 80) || (cy.top < 80 && cy.bottom > 80);
+            setIsLight(isInLight);
+        };
+        window.addEventListener('scroll', handleLightOff, { passive: true });
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
-            trigger.kill();
+            window.removeEventListener('scroll', handleLightOff);
+            triggers.forEach(t => t.kill());
         };
     }, []);
 
     return (
         <nav
             className={cn(
-                "fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-out px-10 py-5 rounded-full flex items-center justify-between gap-12 w-[95%] max-w-7xl",
+                "fixed top-3 md:top-5 left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-out px-5 md:px-8 py-3 md:py-4 rounded-full flex items-center justify-between gap-6 md:gap-12 w-[96%] max-w-7xl",
                 isLight
-                    ? (isScrolled ? "bg-white/70 backdrop-blur-xl border border-black/10 shadow-xl" : "bg-white/40 backdrop-blur-xl border border-black/10")
-                    : (isScrolled ? "glass" : "bg-black/40 backdrop-blur-xl border border-white/10")
+                    ? (isScrolled ? "bg-white/80 backdrop-blur-xl border border-black/10 shadow-xl" : "bg-white/50 backdrop-blur-xl border border-black/10")
+                    : (isScrolled ? "glass" : "bg-black/60 backdrop-blur-xl border border-white/10")
             )}
         >
             <div className="flex items-center gap-3">
                 <img
-                    src={isLight
-                        ? logoHorizontalNegro
-                        : logoHorizontalBlanco
-                    }
+                    src={isLight ? logoHorizontalNegro : logoHorizontalBlanco}
                     alt="Diabolical"
-                    className="h-6 md:h-10 transition-all"
+                    className="h-5 md:h-8 transition-all"
                 />
             </div>
 
             {/* Desktop Navigation */}
             <div className={cn(
-                "hidden lg:flex items-center gap-12 text-[11px] uppercase tracking-[0.25em] font-bold transition-colors",
+                "hidden lg:flex items-center gap-10 text-[11px] uppercase tracking-[0.25em] font-bold transition-colors",
                 isLight ? "text-black/60" : "text-white/60"
             )}>
-                <a href="#problem" className={cn("hover:text-black transition-colors", !isLight && "hover:text-white")}>Problema</a>
-                <a href="#solutions" className={cn("hover:text-black transition-colors", !isLight && "hover:text-white")}>Soluciones</a>
-                <a href="#contact" className={cn("hover:text-black transition-colors", !isLight && "hover:text-white")}>Contacto</a>
+                <a href="#problem" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Problema</a>
+                <a href="#solutions" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Soluciones</a>
+                <a href="#contact" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Contacto</a>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
                 <button className={cn(
-                    "hidden sm:flex items-center gap-3 px-8 py-3 rounded-full text-[11px] font-black uppercase tracking-tighter hover:scale-105 transition-all magnetic-btn",
+                    "hidden sm:flex items-center gap-2 px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-tighter hover:scale-105 transition-all magnetic-btn",
                     isLight ? "bg-black text-white" : "bg-white text-black"
                 )}>
-                    Auditoría <ArrowRight size={14} />
+                    Auditoría <ArrowRight size={12} />
                 </button>
 
                 {/* Mobile Menu Toggle */}
@@ -277,26 +294,20 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     className={cn(
                         "lg:hidden p-2 rounded-full transition-colors",
-                        isLight ? "text-black hover:bg-black/5" : "text-white hover:bg-white/5"
+                        isLight ? "text-black" : "text-white"
                     )}
                 >
-                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
                 </button>
             </div>
 
-            {/* Mobile Menu Overlay */}
+            {/* Mobile Menu Overlay — always black background for legibility */}
             {isMenuOpen && (
-                <div className={cn(
-                    "absolute top-24 left-0 w-full rounded-[2rem] p-8 flex flex-col gap-6 lg:hidden animate-in fade-in slide-in-from-top-4 duration-300",
-                    isLight ? "bg-white/90 backdrop-blur-2xl border border-black/10 text-black shadow-2xl" : "glass text-white"
-                )}>
-                    <a href="#problem" onClick={() => setIsMenuOpen(false)} className="text-xl font-title tracking-widest py-2 border-b border-current/10">Problema</a>
-                    <a href="#solution" onClick={() => setIsMenuOpen(false)} className="text-xl font-title tracking-widest py-2 border-b border-current/10">Ventaja</a>
-                    <a href="#protocols" onClick={() => setIsMenuOpen(false)} className="text-xl font-title tracking-widest py-2 border-b border-current/10">Protocolos</a>
-                    <button className={cn(
-                        "w-full py-5 rounded-full font-black text-sm uppercase tracking-widest mt-4",
-                        isLight ? "bg-black text-white" : "bg-white text-black"
-                    )}>
+                <div className="absolute top-[calc(100%+12px)] left-0 w-full rounded-[1.5rem] bg-black border border-white/10 backdrop-blur-2xl p-6 flex flex-col gap-4 lg:hidden animate-in fade-in slide-in-from-top-4 duration-200 shadow-2xl">
+                    <a href="#problem" onClick={() => setIsMenuOpen(false)} className="text-base font-title tracking-widest py-3 border-b border-white/10 text-white">Problema</a>
+                    <a href="#solutions" onClick={() => setIsMenuOpen(false)} className="text-base font-title tracking-widest py-3 border-b border-white/10 text-white">Soluciones</a>
+                    <a href="#contact" onClick={() => setIsMenuOpen(false)} className="text-base font-title tracking-widest py-3 border-b border-white/10 text-white">Contacto</a>
+                    <button className="w-full py-4 rounded-full font-black text-sm uppercase tracking-widest mt-2 bg-white text-black">
                         Obtener Auditoría
                     </button>
                 </div>
@@ -392,31 +403,27 @@ const Footer = () => {
     }, []);
 
     return (
-        <footer ref={footerRef} className="py-32 md:py-48 bg-black border-t border-white/10">
+        <footer ref={footerRef} className="py-16 md:py-24 bg-black border-t border-white/10">
             <div className="container mx-auto px-6">
-                <div className="flex flex-col md:flex-row justify-between items-start gap-32 mb-48">
-                    <div className="max-w-3xl footer-content">
-                        <div className="flex items-center gap-4 mb-20">
-                            <img src={logoHorizontalBlanco} alt="Diabolical" className="h-10" />
-                        </div>
-                        <h2 className="text-4xl md:text-6xl font-title mb-16 leading-[0.9] tracking-tighter">
-                            ¿LISTO PARA TU <br />
-                            <span className="text-white/10 italic">TRANSFORMACIÓN?</span>
+                <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16 footer-content">
+                    <div className="max-w-2xl">
+                        <img src={logoHorizontalBlanco} alt="Diabolical" className="h-7 mb-8 opacity-80" />
+                        <h2 className="text-2xl md:text-4xl font-title mb-6 leading-[0.9] tracking-tighter">
+                            ¿LISTO PARA TU{' '}
+                            <span className="text-white/15 italic">TRANSFORMACIÓN?</span>
                         </h2>
-                        <p className="text-xl md:text-3xl text-white/50 font-light mb-24 max-w-2xl leading-relaxed italic">
-                            "La IA no es una herramienta. Es tu nueva infraestructura de dominio."
+                        <p className="text-base text-white/40 font-light mb-8 leading-relaxed italic">
+                            "La IA no es una herramienta. Es tu nueva <strong className="text-white/60 not-italic">infraestructura de dominio.</strong>"
                         </p>
-                        <button className="px-16 py-8 bg-white text-black font-black text-xs md:text-sm uppercase tracking-[0.5em] rounded-full hover:scale-105 transition-all shadow-2xl">
+                        <button className="px-8 py-3.5 bg-white text-black font-black text-[11px] uppercase tracking-[0.4em] rounded-full hover:scale-105 transition-all shadow-2xl">
                             Reservar Auditoría de Fricción
                         </button>
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row justify-between items-center pt-20 border-t border-white/10 text-[10px] md:text-xs font-mono uppercase tracking-[0.5em] text-white/20">
+                <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10 text-[9px] font-mono uppercase tracking-[0.4em] text-white/20">
                     <div>Powered by Diabolical Logic — © 2026</div>
-                    <div className="flex items-center gap-6 mt-8 md:mt-0 underline underline-offset-[12px] decoration-white/10">
-                        Status_Active: [DIABOLICAL_STABLE_v2.5]
-                    </div>
+                    <div className="mt-4 md:mt-0">DIABOLICAL_STABLE_v2.5</div>
                 </div>
             </div>
         </footer>
@@ -674,28 +681,28 @@ const AdminPage = () => {
 
 const Problem = () => {
     return (
-        <section id="problem" className="py-24 md:py-40 bg-black relative border-b border-white/5">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-32 items-center text-left">
+        <section id="problem" className="py-20 md:py-32 bg-white relative border-b border-black/10">
+            <div className="max-w-6xl mx-auto px-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-center text-left">
                     <div>
-                        <div className="flex items-center gap-4 mb-8">
-                            <span className="w-12 h-px bg-white/20"></span>
-                            <span className="text-[10px] uppercase tracking-[0.6em] text-white/40 font-bold">Protocolo_02: El Reencuadre</span>
+                        <div className="flex items-center gap-3 mb-6">
+                            <span className="w-8 h-px bg-black/30"></span>
+                            <span className="text-[9px] uppercase tracking-[0.6em] text-black/40 font-bold">El Reencuadre</span>
                         </div>
-                        <h2 className="text-4xl md:text-7xl font-title leading-[0.85] tracking-tighter uppercase mb-12">
+                        <h2 className="text-3xl md:text-5xl font-title leading-[0.9] tracking-tighter uppercase mb-8 text-black">
                             El modelo de <br />
-                            <span className="text-white/20 italic">"contratar para crecer"</span> <br />
-                            está roto.
+                            <span className="text-black/20 italic">"contratar para crecer"</span><br />
+                            <strong>está roto.</strong>
                         </h2>
                     </div>
-                    <div className="space-y-8">
-                        <p className="text-lg md:text-2xl text-white/60 leading-relaxed font-light">
-                            La mayoría de los dueños de negocio en <span className="text-white">Aguascalientes</span> creen que para vender más necesitan más empleados. Pero más empleados significa más sueldos, más supervisión y más errores humanos.
+                    <div className="space-y-6">
+                        <p className="text-base md:text-lg text-black/60 leading-relaxed">
+                            La mayoría de los dueños de negocio en <strong className="text-black">Aguascalientes</strong> creen que para vender más necesitan más empleados. Pero más empleados significa <strong className="text-black">más sueldos, más supervisión y más errores humanos.</strong>
                         </p>
-                        <div className="p-8 md:p-12 glass-card rounded-[2.5rem] border-white/10 bg-white/[0.02]">
-                            <h3 className="text-xs uppercase tracking-[0.4em] font-black mb-6 text-white text-left">La Diferencia Diabolical</h3>
-                            <p className="text-sm md:text-lg text-white/50 leading-relaxed text-left">
-                                No somos una agencia de marketing ni una empresa de software. <span className="text-white">Somos ingenieros de libertad.</span> Instalamos "empleados digitales" que no duermen, no piden aumentos y atienden a mil clientes al mismo tiempo con la misma calidad que tú lo harías.
+                        <div className="p-6 md:p-8 bg-black rounded-2xl">
+                            <h3 className="text-[9px] uppercase tracking-[0.4em] font-black mb-4 text-white/50">La Diferencia Diabolical</h3>
+                            <p className="text-sm md:text-base text-white/70 leading-relaxed">
+                                No somos una agencia de marketing ni una empresa de software. <strong className="text-white">Somos ingenieros de libertad.</strong> Instalamos <strong className="text-white">"empleados digitales"</strong> que no duermen, no piden aumentos y atienden a mil clientes al mismo tiempo.
                             </p>
                         </div>
                     </div>
@@ -710,41 +717,41 @@ const SolutionCards = () => {
         {
             tag: "VENTAS",
             title: "El Vendedor que no duerme",
-            desc: "¿Te ha pasado que un cliente escribe a las 11 PM y nadie le contesta hasta el día siguiente? Para entonces, ya le compró a tu competencia. Nuestro sistema responde, da precios y cierra la cita en segundos, a cualquier hora.",
-            icon: <Users size={24} />
+            desc: <>¿Te ha pasado que un cliente escribe a las <strong>11 PM</strong> y nadie le contesta hasta el día siguiente? Para entonces, <strong>ya le compró a tu competencia.</strong> Nuestro sistema responde, da precios y cierra la cita en segundos, a cualquier hora.</>,
+            icon: <Users size={20} />
         },
         {
             tag: "SEGUIMIENTO",
             title: "El Olvido Cero",
-            desc: "Muchos clientes dicen 'luego te aviso' y se pierden para siempre porque a tu equipo se le olvidó marcarles. Nuestro sistema les da seguimiento automático y educado hasta que digan que sí. Tú solo recibes la confirmación.",
-            icon: <Activity size={24} />
+            desc: <>Muchos clientes dicen <strong>'luego te aviso'</strong> y se pierden para siempre porque a tu equipo se le olvidó marcarles. Nuestro sistema les da <strong>seguimiento automático</strong> hasta que digan que sí. Tú solo recibes la confirmación.</>,
+            icon: <Activity size={20} />
         },
         {
             tag: "OPERACIONES",
             title: "El Administrador Perfecto",
-            desc: "Deja de ser el secretario de tu propio negocio. El sistema registra datos, agenda en tu calendario y te avisa qué tienes que hacer cada día. Tú solo ejecutas, el sistema organiza.",
-            icon: <Cpu size={24} />
+            desc: <>Deja de ser el <strong>secretario de tu propio negocio.</strong> El sistema registra datos, agenda en tu calendario y te avisa qué tienes que hacer. <strong>Tú solo ejecutas, el sistema organiza.</strong></>,
+            icon: <Cpu size={20} />
         }
     ];
 
     return (
-        <section id="solutions" className="py-24 md:py-40 bg-black relative">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="text-center max-w-3xl mx-auto mb-24">
-                    <h2 className="text-3xl md:text-5xl font-title uppercase tracking-tighter mb-8">Soluciones_Autónomas</h2>
-                    <p className="text-white/40 uppercase tracking-[0.3em] text-[10px] font-bold">Identificación de Fricción & Resolución Digital</p>
+        <section id="solutions" className="py-16 md:py-28 bg-black relative">
+            <div className="max-w-6xl mx-auto px-6">
+                <div className="text-center max-w-2xl mx-auto mb-14">
+                    <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-3">Soluciones Autónomas</h2>
+                    <p className="text-white/30 uppercase tracking-[0.3em] text-[9px] font-bold">Identificación de Fricción & Resolución Digital</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-left">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 text-left">
                     {solutions.map((s, i) => (
-                        <div key={i} className="glass-card p-10 md:p-14 rounded-[3.5rem] border-white/5 hover:border-white/20 transition-all group flex flex-col justify-between min-h-[450px]">
+                        <div key={i} className="glass-card p-7 md:p-9 rounded-3xl border-white/5 hover:border-white/20 transition-all group flex flex-col gap-5">
+                            <div className="w-11 h-11 rounded-2xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
+                                {s.icon}
+                            </div>
                             <div>
-                                <div className="w-16 h-16 rounded-3xl bg-white/5 flex items-center justify-center mb-10 group-hover:scale-110 transition-transform">
-                                    {s.icon}
-                                </div>
-                                <span className="text-[9px] font-black tracking-[0.5em] text-white/20 block mb-4 uppercase">{s.tag}</span>
-                                <h3 className="text-xl md:text-2xl font-title mb-6 leading-tight">{s.title}</h3>
-                                <p className="text-sm md:text-base text-white/40 leading-relaxed italic">"{s.desc}"</p>
+                                <span className="text-[8px] font-black tracking-[0.5em] text-white/20 block mb-2 uppercase">{s.tag}</span>
+                                <h3 className="text-lg md:text-xl font-title mb-3 leading-tight">{s.title}</h3>
+                                <p className="text-sm text-white/50 leading-relaxed">{s.desc}</p>
                             </div>
                         </div>
                     ))}
@@ -756,47 +763,47 @@ const SolutionCards = () => {
 
 const Contact = () => {
     return (
-        <section id="contact" className="py-24 md:py-40 bg-black relative border-t border-white/5">
-            <div className="max-w-4xl mx-auto px-6">
-                <div className="text-center mb-24">
-                    <div className="inline-block px-4 py-1 bg-white/5 rounded-full mb-8">
-                        <span className="text-[9px] uppercase tracking-[0.4em] text-white/40 font-black">Protocolo_06: Diagnóstico</span>
+        <section id="contact" className="py-16 md:py-28 bg-black relative border-t border-white/5">
+            <div className="max-w-3xl mx-auto px-6">
+                <div className="text-center mb-12">
+                    <div className="inline-block px-3 py-1 bg-white/5 rounded-full mb-5">
+                        <span className="text-[8px] uppercase tracking-[0.4em] text-white/40 font-black">Diagnóstico</span>
                     </div>
-                    <h2 className="text-4xl md:text-7xl font-title uppercase tracking-tighter mb-8 leading-[0.9]">
-                        ¿Tu negocio es apto para <br />
-                        <span className="text-white/20 italic">ser autónomo?</span>
+                    <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-4 leading-[0.9]">
+                        ¿Tu negocio es apto para{' '}
+                        <span className="text-white/25 italic">ser autónomo?</span>
                     </h2>
-                    <p className="text-white/40 text-sm md:text-lg max-w-2xl mx-auto italic font-light tracking-wide text-center">
-                        "No trabajamos con cualquiera. Solo con negocios que tienen flujo de clientes y quieren dejar de operarlos manualmente."
+                    <p className="text-white/40 text-sm max-w-xl mx-auto italic font-light">
+                        "Solo trabajamos con negocios que tienen <strong className="text-white/60 not-italic">flujo de clientes</strong> y quieren dejar de operarlos manualmente."
                     </p>
                 </div>
 
-                <div className="glass-card p-10 md:p-20 rounded-[4rem] border-white/10 shadow-2xl relative">
-                    <h3 className="text-xs uppercase tracking-[0.4em] font-black mb-10 text-center opacity-30">Cuestionario de Fricción</h3>
-                    <form className="space-y-10 text-left">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                            <div className="space-y-4">
-                                <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold italic">¿Cómo llegan tus clientes hoy?</label>
-                                <select className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-white/30 font-medium transition-all appearance-none cursor-pointer">
+                <div className="glass-card p-7 md:p-10 rounded-3xl border-white/10 shadow-2xl">
+                    <h3 className="text-[9px] uppercase tracking-[0.4em] font-black mb-8 text-center text-white/30">Cuestionario de Fricción</h3>
+                    <form className="space-y-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div className="flex flex-col gap-2">
+                                <label className="text-[9px] uppercase tracking-[0.35em] text-white/30 font-bold">¿Cómo llegan tus clientes?</label>
+                                <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-white/30 transition-all appearance-none cursor-pointer">
                                     <option className="bg-black">WhatsApp / Instagram</option>
-                                    <option className="bg-black">Recomendación de Boca en Boca</option>
+                                    <option className="bg-black">Boca en Boca</option>
                                     <option className="bg-black">Publicidad Pagada (Ads)</option>
                                     <option className="bg-black">Google / SEO Local</option>
                                 </select>
                             </div>
-                            <div className="space-y-4">
-                                <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold italic">¿Cuántas personas atienden hoy?</label>
-                                <input type="number" placeholder="Ej: 3" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-white/30 font-medium transition-all" />
+                            <div className="flex flex-col gap-2">
+                                <label className="text-[9px] uppercase tracking-[0.35em] text-white/30 font-bold">¿Cuántas personas atienden hoy?</label>
+                                <input type="number" placeholder="Ej: 3" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-white/30 transition-all" />
                             </div>
                         </div>
 
-                        <div className="space-y-4">
-                            <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold italic">Si fuera automático, ¿qué harías con tu tiempo libre?</label>
-                            <input type="text" placeholder="Escalar el negocio, pasar tiempo en familia..." className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-white/30 font-medium transition-all" />
+                        <div className="flex flex-col gap-2">
+                            <label className="text-[9px] uppercase tracking-[0.35em] text-white/30 font-bold">Si fuera automático, ¿qué harías con tu tiempo libre?</label>
+                            <input type="text" placeholder="Escalar el negocio, pasar tiempo en familia..." className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-white/30 transition-all" />
                         </div>
 
-                        <button className="w-full py-8 md:py-10 bg-white text-black rounded-full font-black text-xs md:text-sm uppercase tracking-[0.6em] hover:scale-[1.02] active:scale-95 transition-all shadow-glow mt-8">
-                            Solicitar Diagnóstico de Fricción
+                        <button className="w-full py-4 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.5em] hover:scale-[1.02] active:scale-95 transition-all shadow-glow mt-2">
+                            Solicitar Diagnóstico Gratuito
                         </button>
                     </form>
                 </div>
@@ -806,34 +813,46 @@ const Contact = () => {
 };
 
 const ComparisonSection = () => {
+    const rows = [
+        { bad: "Pagas nóminas, seguros y bonos cada mes.", good: "Una inversión fija que se paga sola." },
+        { bad: "El crecimiento depende de tu cansancio.", good: "El sistema escala sin que tú trabajes más." },
+        { bad: "Ventas perdidas por falta de respuesta.", good: "Cada mensaje es una oportunidad cerrada." },
+        { bad: "Vives pegado al celular.", good: "Recuperas tus domingos." },
+    ];
     return (
-        <section className="py-24 md:py-40 bg-black border-y border-white/5 relative overflow-hidden">
+        <section id="comparison" className="py-16 md:py-28 bg-white border-y border-black/10 relative overflow-hidden">
             <div className="max-w-4xl mx-auto px-6 relative z-10">
-                <div className="text-center mb-20">
-                    <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-4">La Lógica del Ahorro</h2>
-                    <p className="text-[10px] uppercase tracking-[0.5em] text-white/20 font-bold">Escalabilidad vs Estancamiento</p>
+                <div className="text-center mb-10">
+                    <h2 className="text-2xl md:text-3xl font-title uppercase tracking-tighter mb-2 text-black">La Lógica del Ahorro</h2>
+                    <p className="text-[9px] uppercase tracking-[0.5em] text-black/30 font-bold">Escalabilidad vs Estancamiento</p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-px bg-white/10 rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl">
-                    <div className="bg-black/80 p-8 md:p-12">
-                        <h4 className="text-[10px] uppercase tracking-[0.4em] text-white/40 mb-10 font-black">Si sigues igual...</h4>
-                        <ul className="space-y-10 md:space-y-14">
-                            <li className="text-[11px] md:text-sm text-white/30 leading-snug">Pagas nóminas, seguros y bonos cada mes.</li>
-                            <li className="text-[11px] md:text-sm text-white/30 leading-snug">El crecimiento depende de tu cansancio.</li>
-                            <li className="text-[11px] md:text-sm text-white/30 leading-snug">Ventas perdidas por falta de respuesta.</li>
-                            <li className="text-[11px] md:text-sm text-white/30 leading-snug">Vives pegado al celular.</li>
-                        </ul>
+                {/* Header row */}
+                <div className="grid grid-cols-2 gap-4 mb-3 px-1">
+                    <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded-full bg-black/20 flex-shrink-0"></span>
+                        <span className="text-[9px] uppercase tracking-[0.4em] text-black/40 font-black">Si sigues igual...</span>
                     </div>
-                    <div className="bg-white/5 p-8 md:p-12 relative flex flex-col h-full">
-                        <div className="absolute inset-0 bg-white/[0.02] pointer-events-none"></div>
-                        <h4 className="text-[10px] uppercase tracking-[0.4em] text-white mb-10 font-black">Con Sistema Diabolical</h4>
-                        <ul className="space-y-10 md:space-y-14 relative z-10">
-                            <li className="text-[11px] md:text-sm text-white leading-snug font-bold">Una inversión fija que se paga sola.</li>
-                            <li className="text-[11px] md:text-sm text-white leading-snug font-bold">El sistema escala sin que tú trabajes más.</li>
-                            <li className="text-[11px] md:text-sm text-white leading-snug font-bold">Cada mensaje es una oportunidad cerrada.</li>
-                            <li className="text-[11px] md:text-sm text-white leading-snug font-bold">Recuperas tus domingos.</li>
-                        </ul>
+                    <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded-full bg-black flex-shrink-0"></span>
+                        <span className="text-[9px] uppercase tracking-[0.4em] text-black font-black">Con Diabolical</span>
                     </div>
+                </div>
+
+                {/* Comparison rows */}
+                <div className="space-y-2">
+                    {rows.map((row, i) => (
+                        <div key={i} className="grid grid-cols-2 gap-4 rounded-2xl overflow-hidden">
+                            <div className="bg-black/5 px-5 py-4 flex items-center gap-3">
+                                <span className="text-black/40 text-lg leading-none flex-shrink-0">✗</span>
+                                <span className="text-xs md:text-sm text-black/50 leading-snug">{row.bad}</span>
+                            </div>
+                            <div className="bg-black px-5 py-4 flex items-center gap-3">
+                                <span className="text-white text-lg leading-none flex-shrink-0">✓</span>
+                                <span className="text-xs md:text-sm text-white font-bold leading-snug">{row.good}</span>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>
@@ -842,20 +861,21 @@ const ComparisonSection = () => {
 
 const BoldHook = () => {
     return (
-        <section className="py-32 md:py-60 bg-black relative">
-            <div className="max-w-5xl mx-auto px-6 text-center">
-                <div className="inline-block px-6 py-2 border border-red-500/20 rounded-full mb-12">
-                    <span className="text-[9px] text-red-500 uppercase tracking-[0.6em] font-black animate-pulse underline">Alerta_Financiera</span>
+        <section className="py-20 md:py-36 bg-black relative">
+            <div className="max-w-4xl mx-auto px-6 text-center">
+                <div className="inline-block px-4 py-1.5 border border-red-500/20 rounded-full mb-8">
+                    <span className="text-[8px] text-red-500 uppercase tracking-[0.6em] font-black animate-pulse">Alerta Financiera</span>
                 </div>
-                <h2 className="text-4xl md:text-8xl font-title tracking-tighter uppercase mb-12 leading-[0.85]">
-                    Cada minuto que pasas leyendo esto, <span className="text-white/20">estás perdiendo dinero.</span>
+                <h2 className="text-3xl md:text-6xl font-title tracking-tighter uppercase mb-8 leading-[0.9]">
+                    Cada minuto que pasas leyendo esto,{' '}
+                    <span className="text-white/20">estás perdiendo dinero.</span>
                 </h2>
-                <div className="max-w-3xl mx-auto space-y-10">
-                    <p className="text-lg md:text-2xl text-white/60 leading-relaxed font-light">
-                        Mientras tu equipo (o tú mismo) dedica horas a contestar las mismas 10 preguntas por WhatsApp o a pasar datos de un papel a un Excel, tus competidores más ágiles te están robando mercado. No estás ahorrando dinero al no automatizar; estás pagando un <span className="text-white underline underline-offset-8 decoration-white/20">"impuesto por ineficiencia"</span> que te sale más caro que cualquier nómina.
+                <div className="max-w-2xl mx-auto space-y-6">
+                    <p className="text-base md:text-lg text-white/60 leading-relaxed">
+                        Mientras tu equipo dedica horas a contestar las <strong className="text-white">mismas 10 preguntas</strong> por WhatsApp, tus competidores más ágiles te están <strong className="text-white">robando mercado.</strong> No estás ahorrando al no automatizar; estás pagando un <span className="text-white underline underline-offset-4 decoration-white/20">"impuesto por ineficiencia"</span> que te sale más caro que cualquier nómina.
                     </p>
-                    <p className="text-2xl md:text-4xl font-title text-white italic tracking-tight pt-8 border-t border-white/5">
-                        "No tienes un problema de ventas, tienes un problema de sistema."
+                    <p className="text-xl md:text-2xl font-title text-white italic tracking-tight pt-6 border-t border-white/5">
+                        "No tienes un problema de ventas, tienes un <strong>problema de sistema.</strong>"
                     </p>
                 </div>
             </div>
