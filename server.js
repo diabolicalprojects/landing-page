@@ -52,13 +52,28 @@ app.post('/api/settings', (req, res) => {
 });
 
 // Serve frontend static files
-app.use(express.static(path.join(__dirname, 'dist')));
+const distPath = path.resolve(__dirname, 'dist');
+app.use(express.static(distPath));
+
+// API index helper
+app.get('/api', (req, res) => {
+    res.json({ status: 'online', version: '1.0.0', service: 'DIABOLICAL API' });
+});
 
 // Fallback for SPA routing: send everything else to index.html
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+    const indexPath = path.join(distPath, 'index.html');
+    if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+    } else {
+        res.status(404).send('DIABOLICAL: Frontend build (dist/index.html) not found. Please run npm run build first.');
+    }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
+    console.log('====================================');
     console.log(`DIABOLICAL Server running on port ${PORT}`);
+    console.log(`Serving static files from: ${distPath}`);
+    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log('====================================');
 });
