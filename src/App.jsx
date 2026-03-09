@@ -168,8 +168,12 @@ const InteractiveGrid = () => {
 const CustomCursor = () => {
     const dotRef = useRef(null);
     const outlineRef = useRef(null);
+    // Only activate on devices with a fine pointer (mouse), not touch
+    const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
 
     useEffect(() => {
+        if (isTouchDevice) return;
+
         const moveCursor = (e) => {
             const { clientX, clientY } = e;
             gsap.to(dotRef.current, { x: clientX, y: clientY, duration: 0.1 });
@@ -199,7 +203,9 @@ const CustomCursor = () => {
                 el.removeEventListener('mouseleave', handleMouseLeave);
             });
         };
-    }, []);
+    }, [isTouchDevice]);
+
+    if (isTouchDevice) return null;
 
     return (
         <>
@@ -257,17 +263,17 @@ const Navbar = () => {
     return (
         <nav
             className={cn(
-                "fixed top-3 md:top-5 left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-out px-5 md:px-8 py-3 md:py-4 rounded-full flex items-center justify-between gap-6 md:gap-12 w-[96%] max-w-7xl",
+                "fixed top-3 md:top-5 left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-out px-4 md:px-8 py-2.5 md:py-4 rounded-full flex items-center justify-between gap-4 md:gap-12 w-[94%] max-w-7xl",
                 isLight
-                    ? (isScrolled ? "bg-white/80 backdrop-blur-xl border border-black/10 shadow-xl" : "bg-white/50 backdrop-blur-xl border border-black/10")
-                    : (isScrolled ? "glass" : "bg-black/60 backdrop-blur-xl border border-white/10")
+                    ? (isScrolled ? "bg-white/90 backdrop-blur-xl border border-black/10 shadow-xl" : "bg-white/70 backdrop-blur-xl border border-black/10")
+                    : (isScrolled ? "glass" : "bg-black/70 backdrop-blur-xl border border-white/10")
             )}
         >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 min-w-0">
                 <img
                     src={isLight ? logoHorizontalNegro : logoHorizontalBlanco}
                     alt="Diabolical"
-                    className="h-5 md:h-8 transition-all"
+                    className="h-5 md:h-8 transition-all flex-shrink-0"
                 />
             </div>
 
@@ -281,35 +287,62 @@ const Navbar = () => {
                 <a href="#contact" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Contacto</a>
             </div>
 
-            <div className="flex items-center gap-3">
-                <button className={cn(
-                    "hidden sm:flex items-center gap-2 px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-tighter hover:scale-105 transition-all magnetic-btn",
-                    isLight ? "bg-black text-white" : "bg-white text-black"
-                )}>
+            <div className="flex items-center gap-2 flex-shrink-0">
+                {/* CTA shown on medium+ screens */}
+                <a
+                    href="#contact"
+                    className={cn(
+                        "hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-tighter transition-all magnetic-btn whitespace-nowrap",
+                        isLight ? "bg-black text-white hover:bg-black/80" : "bg-white text-black hover:bg-white/90"
+                    )}
+                >
                     Auditoría <ArrowRight size={12} />
-                </button>
+                </a>
 
                 {/* Mobile Menu Toggle */}
                 <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
                     className={cn(
-                        "lg:hidden p-2 rounded-full transition-colors",
-                        isLight ? "text-black" : "text-white"
+                        "lg:hidden flex items-center justify-center w-10 h-10 rounded-full transition-colors flex-shrink-0",
+                        isLight ? "text-black bg-black/5 active:bg-black/10" : "text-white bg-white/10 active:bg-white/20"
                     )}
                 >
-                    {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                    {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
                 </button>
             </div>
 
-            {/* Mobile Menu Overlay — always black background for legibility */}
+            {/* Mobile Menu Overlay */}
             {isMenuOpen && (
-                <div className="absolute top-[calc(100%+12px)] left-0 w-full rounded-[1.5rem] bg-black border border-white/10 backdrop-blur-2xl p-6 flex flex-col gap-4 lg:hidden animate-in fade-in slide-in-from-top-4 duration-200 shadow-2xl">
-                    <a href="#problem" onClick={() => setIsMenuOpen(false)} className="text-base font-title tracking-widest py-3 border-b border-white/10 text-white">Problema</a>
-                    <a href="#solutions" onClick={() => setIsMenuOpen(false)} className="text-base font-title tracking-widest py-3 border-b border-white/10 text-white">Soluciones</a>
-                    <a href="#contact" onClick={() => setIsMenuOpen(false)} className="text-base font-title tracking-widest py-3 border-b border-white/10 text-white">Contacto</a>
-                    <button className="w-full py-4 rounded-full font-black text-sm uppercase tracking-widest mt-2 bg-white text-black">
+                <div className="absolute top-[calc(100%+10px)] left-0 w-full rounded-3xl bg-black border border-white/10 backdrop-blur-2xl px-5 py-5 flex flex-col gap-1 lg:hidden shadow-2xl">
+                    <a
+                        href="#problem"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="flex items-center text-sm font-title tracking-widest py-4 border-b border-white/10 text-white active:text-white/60 transition-colors"
+                    >
+                        Problema
+                    </a>
+                    <a
+                        href="#solutions"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="flex items-center text-sm font-title tracking-widest py-4 border-b border-white/10 text-white active:text-white/60 transition-colors"
+                    >
+                        Soluciones
+                    </a>
+                    <a
+                        href="#contact"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="flex items-center text-sm font-title tracking-widest py-4 border-b border-white/10 text-white active:text-white/60 transition-colors"
+                    >
+                        Contacto
+                    </a>
+                    <a
+                        href="#contact"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="w-full flex items-center justify-center py-4 rounded-full font-black text-sm uppercase tracking-widest mt-3 bg-white text-black active:scale-95 transition-transform"
+                    >
                         Obtener Auditoría
-                    </button>
+                    </a>
                 </div>
             )}
         </nav>
@@ -333,45 +366,48 @@ const Hero = () => {
     }, []);
 
     return (
-        <section ref={heroRef} className="relative min-h-[110vh] w-full flex flex-col items-center justify-center overflow-hidden pt-32 pb-20 bg-black">
+        <section ref={heroRef} className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden pt-28 md:pt-36 pb-20 bg-black">
             {/* Interactive Background */}
             <div className="absolute inset-0 z-0">
                 <InteractiveGrid />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0,transparent_100%)]" />
             </div>
 
-            <div className="hero-content relative z-10 container mx-auto px-6 text-center max-w-6xl flex flex-col items-center">
-                <div className="hero-logo-container mb-24 animate-float">
+            <div className="hero-content relative z-10 w-full mx-auto px-5 text-center max-w-5xl flex flex-col items-center">
+                <div className="hero-logo-container mb-10 md:mb-20 animate-float">
                     <div className="hero-glow !scale-125" />
                     <img
                         src={logoCuadradoBlanco}
                         alt="Diabolical Logo"
-                        className="w-36 h-36 md:w-56 md:h-56 glitch-logo"
+                        className="w-28 h-28 sm:w-40 sm:h-40 md:w-52 md:h-52 glitch-logo"
                     />
                 </div>
 
-                <h1 className="text-5xl md:text-7xl font-title mb-10 leading-[0.9] tracking-tighter text-white uppercase text-balance drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                    Vende más con <br />
+                <h1 className="text-4xl sm:text-5xl md:text-7xl font-title mb-6 md:mb-10 leading-[0.9] tracking-tighter text-white uppercase drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] max-w-full">
+                    Vende más con{' '}
                     <span className="text-white/10 outline-text">Inteligencia Artificial</span>
                 </h1>
 
-                <p className="text-lg md:text-2xl text-white/70 max-w-3xl mx-auto mb-16 leading-relaxed font-light tracking-wide uppercase">
+                <p className="text-base sm:text-lg md:text-2xl text-white/70 max-w-2xl mx-auto mb-10 md:mb-16 leading-relaxed font-light tracking-wide px-2">
                     Instalamos sistemas de IA que venden, responden y recuperan clientes por ti mientras tú escalas.
                 </p>
 
-                <div className="flex flex-col md:flex-row items-center justify-center gap-10 w-full px-6">
-                    <button className="w-full md:w-auto px-16 py-8 bg-white text-black rounded-full font-black text-xs md:text-sm uppercase tracking-[0.4em] hover:invert transition-all duration-500 magnetic-btn shadow-[0_0_40px_rgba(255,255,255,0.2)]">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8 w-full">
+                    <a
+                        href="#contact"
+                        className="w-full sm:w-auto px-10 py-5 bg-white text-black rounded-full font-black text-xs md:text-sm uppercase tracking-[0.3em] md:tracking-[0.4em] hover:invert transition-all duration-500 magnetic-btn shadow-[0_0_40px_rgba(255,255,255,0.2)] text-center min-h-[56px] flex items-center justify-center"
+                    >
                         Obtener mi Auditoría
-                    </button>
+                    </a>
                     <div className="hidden md:block text-[10px] uppercase tracking-[0.6em] font-mono text-white/40 border-b border-white/20 pb-2">
                         [ SYSTEM_STATUS: OPERATIONAL_v2.0 ]
                     </div>
                 </div>
             </div>
 
-            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 opacity-30 flex flex-col items-center gap-6">
-                <span className="text-[10px] uppercase tracking-[0.5em] font-mono">Scroll to explore</span>
-                <div className="w-px h-24 bg-gradient-to-b from-white to-transparent" />
+            <div className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 opacity-30 flex flex-col items-center gap-4">
+                <span className="text-[9px] uppercase tracking-[0.4em] font-mono hidden sm:block">Scroll to explore</span>
+                <div className="w-px h-16 md:h-24 bg-gradient-to-b from-white to-transparent" />
             </div>
         </section>
     );
@@ -403,27 +439,30 @@ const Footer = () => {
     }, []);
 
     return (
-        <footer ref={footerRef} className="py-16 md:py-24 bg-black border-t border-white/10">
-            <div className="container mx-auto px-6">
-                <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16 footer-content">
-                    <div className="max-w-2xl">
-                        <img src={logoHorizontalBlanco} alt="Diabolical" className="h-7 mb-8 opacity-80" />
-                        <h2 className="text-2xl md:text-4xl font-title mb-6 leading-[0.9] tracking-tighter">
+        <footer ref={footerRef} className="py-14 md:py-24 bg-black border-t border-white/10">
+            <div className="container mx-auto px-5 md:px-6">
+                <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-12 md:mb-16 footer-content">
+                    <div className="w-full md:max-w-2xl">
+                        <img src={logoHorizontalBlanco} alt="Diabolical" className="h-6 md:h-7 mb-6 md:mb-8 opacity-80" />
+                        <h2 className="text-2xl md:text-4xl font-title mb-4 md:mb-6 leading-[0.9] tracking-tighter">
                             ¿LISTO PARA TU{' '}
                             <span className="text-white/15 italic">TRANSFORMACIÓN?</span>
                         </h2>
-                        <p className="text-base text-white/40 font-light mb-8 leading-relaxed italic">
+                        <p className="text-sm md:text-base text-white/40 font-light mb-6 md:mb-8 leading-relaxed italic">
                             "La IA no es una herramienta. Es tu nueva <strong className="text-white/60 not-italic">infraestructura de dominio.</strong>"
                         </p>
-                        <button className="px-8 py-3.5 bg-white text-black font-black text-[11px] uppercase tracking-[0.4em] rounded-full hover:scale-105 transition-all shadow-2xl">
+                        <a
+                            href="#contact"
+                            className="inline-flex items-center px-8 py-4 bg-white text-black font-black text-[11px] uppercase tracking-[0.3em] rounded-full hover:scale-105 active:scale-95 transition-all shadow-2xl min-h-[52px]"
+                        >
                             Reservar Auditoría de Fricción
-                        </button>
+                        </a>
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10 text-[9px] font-mono uppercase tracking-[0.4em] text-white/20">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-2 pt-6 md:pt-8 border-t border-white/10 text-[9px] font-mono uppercase tracking-[0.3em] text-white/20">
                     <div>Powered by Diabolical Logic — © 2026</div>
-                    <div className="mt-4 md:mt-0">DIABOLICAL_STABLE_v2.5</div>
+                    <div>DIABOLICAL_STABLE_v2.5</div>
                 </div>
             </div>
         </footer>
@@ -764,27 +803,27 @@ const SolutionCards = () => {
 const Contact = () => {
     return (
         <section id="contact" className="py-16 md:py-28 bg-black relative border-t border-white/5">
-            <div className="max-w-3xl mx-auto px-6">
-                <div className="text-center mb-12">
-                    <div className="inline-block px-3 py-1 bg-white/5 rounded-full mb-5">
+            <div className="max-w-3xl mx-auto px-5 md:px-6">
+                <div className="text-center mb-10 md:mb-12">
+                    <div className="inline-block px-3 py-1 bg-white/5 rounded-full mb-4">
                         <span className="text-[8px] uppercase tracking-[0.4em] text-white/40 font-black">Diagnóstico</span>
                     </div>
                     <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-4 leading-[0.9]">
                         ¿Tu negocio es apto para{' '}
                         <span className="text-white/25 italic">ser autónomo?</span>
                     </h2>
-                    <p className="text-white/40 text-sm max-w-xl mx-auto italic font-light">
-                        "Solo trabajamos con negocios que tienen <strong className="text-white/60 not-italic">flujo de clientes</strong> y quieren dejar de operarlos manualmente."
+                    <p className="text-white/50 text-sm max-w-xl mx-auto italic font-light leading-relaxed">
+                        "Solo trabajamos con negocios que tienen <strong className="text-white/70 not-italic">flujo de clientes</strong> y quieren dejar de operarlos manualmente."
                     </p>
                 </div>
 
-                <div className="glass-card p-7 md:p-10 rounded-3xl border-white/10 shadow-2xl">
-                    <h3 className="text-[9px] uppercase tracking-[0.4em] font-black mb-8 text-center text-white/30">Cuestionario de Fricción</h3>
-                    <form className="space-y-6">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="glass-card p-6 md:p-10 rounded-3xl border-white/10 shadow-2xl">
+                    <h3 className="text-[9px] uppercase tracking-[0.4em] font-black mb-6 md:mb-8 text-center text-white/30">Cuestionario de Fricción</h3>
+                    <form className="space-y-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="flex flex-col gap-2">
-                                <label className="text-[9px] uppercase tracking-[0.35em] text-white/30 font-bold">¿Cómo llegan tus clientes?</label>
-                                <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-white/30 transition-all appearance-none cursor-pointer">
+                                <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">¿Cómo llegan tus clientes?</label>
+                                <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white text-sm focus:outline-none focus:border-white/30 transition-all appearance-none min-h-[52px]">
                                     <option className="bg-black">WhatsApp / Instagram</option>
                                     <option className="bg-black">Boca en Boca</option>
                                     <option className="bg-black">Publicidad Pagada (Ads)</option>
@@ -792,17 +831,20 @@ const Contact = () => {
                                 </select>
                             </div>
                             <div className="flex flex-col gap-2">
-                                <label className="text-[9px] uppercase tracking-[0.35em] text-white/30 font-bold">¿Cuántas personas atienden hoy?</label>
-                                <input type="number" placeholder="Ej: 3" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-white/30 transition-all" />
+                                <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">¿Cuántas personas atienden hoy?</label>
+                                <input type="number" placeholder="Ej: 3" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white text-sm focus:outline-none focus:border-white/30 transition-all min-h-[52px]" />
                             </div>
                         </div>
 
                         <div className="flex flex-col gap-2">
-                            <label className="text-[9px] uppercase tracking-[0.35em] text-white/30 font-bold">Si fuera automático, ¿qué harías con tu tiempo libre?</label>
-                            <input type="text" placeholder="Escalar el negocio, pasar tiempo en familia..." className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-white/30 transition-all" />
+                            <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">Si fuera automático, ¿qué harías con tu tiempo libre?</label>
+                            <input type="text" placeholder="Ej: pasar tiempo en familia, viajar..." className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white text-sm focus:outline-none focus:border-white/30 transition-all min-h-[52px]" />
                         </div>
 
-                        <button className="w-full py-4 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.5em] hover:scale-[1.02] active:scale-95 transition-all shadow-glow mt-2">
+                        <button
+                            type="submit"
+                            className="w-full py-5 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.3em] md:tracking-[0.5em] hover:scale-[1.02] active:scale-95 transition-all shadow-2xl mt-2 min-h-[60px]"
+                        >
                             Solicitar Diagnóstico Gratuito
                         </button>
                     </form>
@@ -821,35 +863,35 @@ const ComparisonSection = () => {
     ];
     return (
         <section id="comparison" className="py-16 md:py-28 bg-white border-y border-black/10 relative overflow-hidden">
-            <div className="max-w-4xl mx-auto px-6 relative z-10">
-                <div className="text-center mb-10">
+            <div className="max-w-4xl mx-auto px-5 md:px-6 relative z-10">
+                <div className="text-center mb-8 md:mb-10">
                     <h2 className="text-2xl md:text-3xl font-title uppercase tracking-tighter mb-2 text-black">La Lógica del Ahorro</h2>
-                    <p className="text-[9px] uppercase tracking-[0.5em] text-black/30 font-bold">Escalabilidad vs Estancamiento</p>
+                    <p className="text-[9px] uppercase tracking-[0.4em] text-black/30 font-bold">Escalabilidad vs Estancamiento</p>
                 </div>
 
                 {/* Header row */}
-                <div className="grid grid-cols-2 gap-4 mb-3 px-1">
-                    <div className="flex items-center gap-2">
-                        <span className="w-3 h-3 rounded-full bg-black/20 flex-shrink-0"></span>
-                        <span className="text-[9px] uppercase tracking-[0.4em] text-black/40 font-black">Si sigues igual...</span>
+                <div className="grid grid-cols-2 gap-2 md:gap-4 mb-2 px-1">
+                    <div className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-black/20 flex-shrink-0"></span>
+                        <span className="text-[8px] md:text-[9px] uppercase tracking-[0.3em] text-black/40 font-black">Si sigues igual</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <span className="w-3 h-3 rounded-full bg-black flex-shrink-0"></span>
-                        <span className="text-[9px] uppercase tracking-[0.4em] text-black font-black">Con Diabolical</span>
+                    <div className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-black flex-shrink-0"></span>
+                        <span className="text-[8px] md:text-[9px] uppercase tracking-[0.3em] text-black font-black">Con Diabolical</span>
                     </div>
                 </div>
 
                 {/* Comparison rows */}
-                <div className="space-y-2">
+                <div className="space-y-1.5 md:space-y-2">
                     {rows.map((row, i) => (
-                        <div key={i} className="grid grid-cols-2 gap-4 rounded-2xl overflow-hidden">
-                            <div className="bg-black/5 px-5 py-4 flex items-center gap-3">
-                                <span className="text-black/40 text-lg leading-none flex-shrink-0">✗</span>
-                                <span className="text-xs md:text-sm text-black/50 leading-snug">{row.bad}</span>
+                        <div key={i} className="grid grid-cols-2 gap-1.5 md:gap-4 rounded-xl md:rounded-2xl overflow-hidden">
+                            <div className="bg-black/5 px-3 md:px-5 py-3.5 md:py-4 flex items-start gap-2 md:gap-3">
+                                <span className="text-black/30 text-base leading-none flex-shrink-0 mt-0.5">✗</span>
+                                <span className="text-[11px] md:text-sm text-black/50 leading-snug">{row.bad}</span>
                             </div>
-                            <div className="bg-black px-5 py-4 flex items-center gap-3">
-                                <span className="text-white text-lg leading-none flex-shrink-0">✓</span>
-                                <span className="text-xs md:text-sm text-white font-bold leading-snug">{row.good}</span>
+                            <div className="bg-black px-3 md:px-5 py-3.5 md:py-4 flex items-start gap-2 md:gap-3">
+                                <span className="text-white text-base leading-none flex-shrink-0 mt-0.5">✓</span>
+                                <span className="text-[11px] md:text-sm text-white font-bold leading-snug">{row.good}</span>
                             </div>
                         </div>
                     ))}
@@ -861,20 +903,20 @@ const ComparisonSection = () => {
 
 const BoldHook = () => {
     return (
-        <section className="py-20 md:py-36 bg-black relative">
-            <div className="max-w-4xl mx-auto px-6 text-center">
-                <div className="inline-block px-4 py-1.5 border border-red-500/20 rounded-full mb-8">
-                    <span className="text-[8px] text-red-500 uppercase tracking-[0.6em] font-black animate-pulse">Alerta Financiera</span>
+        <section className="py-16 md:py-36 bg-black relative">
+            <div className="max-w-4xl mx-auto px-5 md:px-6 text-center">
+                <div className="inline-block px-4 py-1.5 border border-red-500/20 rounded-full mb-6 md:mb-8">
+                    <span className="text-[8px] text-red-500 uppercase tracking-[0.5em] font-black animate-pulse">Alerta Financiera</span>
                 </div>
-                <h2 className="text-3xl md:text-6xl font-title tracking-tighter uppercase mb-8 leading-[0.9]">
+                <h2 className="text-2xl sm:text-3xl md:text-6xl font-title tracking-tighter uppercase mb-6 md:mb-8 leading-[0.9]">
                     Cada minuto que pasas leyendo esto,{' '}
                     <span className="text-white/20">estás perdiendo dinero.</span>
                 </h2>
-                <div className="max-w-2xl mx-auto space-y-6">
-                    <p className="text-base md:text-lg text-white/60 leading-relaxed">
+                <div className="max-w-2xl mx-auto space-y-5 md:space-y-6">
+                    <p className="text-sm md:text-lg text-white/60 leading-relaxed">
                         Mientras tu equipo dedica horas a contestar las <strong className="text-white">mismas 10 preguntas</strong> por WhatsApp, tus competidores más ágiles te están <strong className="text-white">robando mercado.</strong> No estás ahorrando al no automatizar; estás pagando un <span className="text-white underline underline-offset-4 decoration-white/20">"impuesto por ineficiencia"</span> que te sale más caro que cualquier nómina.
                     </p>
-                    <p className="text-xl md:text-2xl font-title text-white italic tracking-tight pt-6 border-t border-white/5">
+                    <p className="text-lg md:text-2xl font-title text-white italic tracking-tight pt-5 md:pt-6 border-t border-white/5">
                         "No tienes un problema de ventas, tienes un <strong>problema de sistema.</strong>"
                     </p>
                 </div>
@@ -940,7 +982,7 @@ const LandingPage = () => {
     }, []);
 
     return (
-        <main className="relative bg-black min-h-screen selection:bg-white selection:text-black font-jakarta cursor-none overflow-x-hidden">
+        <main className="relative bg-black min-h-screen selection:bg-white selection:text-black font-jakarta overflow-x-hidden">
             <GEOTags data={seoData} />
             <CustomCursor />
             {/* Soft Ambient Background Elements */}
