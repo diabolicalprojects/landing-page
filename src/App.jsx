@@ -810,19 +810,24 @@ const Footer = () => {
 const AdminPage = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        title: "",
-        description: "",
-        keywords: ""
+        title: "DIABOLICAL | Elite AI Automation & Design",
+        description: "Exponential scaling through autonomous AI systems and high-end digital engineering.",
+        keywords: "AI Automation, Elite Design, Business Intelligence, Digital Engineering"
     });
     const [isSaving, setIsSaving] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [password, setPassword] = useState("");
 
+    // Real-time SEO Title Sync
+    useEffect(() => {
+        if (formData.title) document.title = formData.title;
+    }, [formData.title]);
+
     useEffect(() => {
         const fetchSettings = async () => {
             try {
                 const res = await axios.get('/api/settings');
-                setFormData(res.data);
+                if (res.data) setFormData(res.data);
             } catch (error) {
                 console.error("Error fetching settings:", error);
             }
@@ -899,7 +904,9 @@ const AdminPage = () => {
                                 score > 70 ? "bg-green-500" : "bg-yellow-500"
                             )} />
                         </div>
-                        <h1 className="text-4xl font-title tracking-tighter uppercase">SEO & GEO INFRASTRUCTURE</h1>
+                        <h1 className="text-4xl font-title tracking-tighter uppercase flex items-center gap-4">
+                            SEO & GEO <span className="text-white/20 whitespace-nowrap">INFRASTRUCTURE</span>
+                        </h1>
                     </div>
                     <button onClick={() => navigate('/')} className="px-8 py-3 glass rounded-full text-[10px] uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all">
                         Exit to Site
@@ -991,10 +998,31 @@ const AdminPage = () => {
                         <div className="glass-card p-12 rounded-[3rem] border-white/10">
                             <h2 className="text-[10px] uppercase tracking-[0.4em] text-white/30 mb-8 font-bold">Search Preview</h2>
                             <div className="bg-black/40 border border-white/5 p-8 rounded-2xl space-y-4">
-                                <div className="text-blue-400 text-lg hover:underline cursor-pointer truncate">{formData.title || "Page Title Preview"}</div>
-                                <div className="text-green-500/60 text-xs truncate">diabolicalservices.tech › services</div>
-                                <div className="text-white/40 text-sm leading-relaxed line-clamp-3">
-                                    {formData.description || "Enter a meta description to see how it will appear in search results."}
+                                <div className="text-blue-400 text-lg hover:underline cursor-pointer truncate font-medium">{formData.title || "Page Title"}</div>
+                                <div className="text-green-500/60 text-xs truncate">https://diabolicalservices.tech</div>
+                                <div className="text-white/40 text-sm leading-relaxed line-clamp-2">
+                                    {formData.description || "Enter description..."}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="glass-card p-12 rounded-[3rem] border-white/10 bg-white/[0.01]">
+                            <h2 className="text-[10px] uppercase tracking-[0.4em] text-white/30 mb-8 font-bold">System Status</h2>
+                            <div className="space-y-4 font-mono text-[9px] text-white/20 uppercase tracking-widest">
+                                <div className="flex justify-between font-bold text-white/40">
+                                    <span>Server_Node</span>
+                                    <span className="text-green-500">Online</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span>Database_Flat</span>
+                                    <span>Active</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span>Static_Dist</span>
+                                    <span>Deployed</span>
+                                </div>
+                                <div className="pt-4 border-t border-white/5">
+                                    Last_Sync: {new Date().toLocaleTimeString()}
                                 </div>
                             </div>
                         </div>
