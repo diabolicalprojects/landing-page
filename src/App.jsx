@@ -740,6 +740,11 @@ const AdminPage = () => {
     }, [formData.title]);
 
     useEffect(() => {
+        document.body.classList.add('admin-mode');
+        return () => document.body.classList.remove('admin-mode');
+    }, []);
+
+    useEffect(() => {
         const fetchSettings = async () => {
             try {
                 const res = await axios.get('/api/settings');

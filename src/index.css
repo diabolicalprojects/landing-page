@@ -115,7 +115,9 @@ body::before {
 
 /* Apply custom cursor only on fine-pointer (mouse) devices */
 @media (pointer: fine) {
-  * {
+
+  body:not(.admin-mode),
+  body:not(.admin-mode) * {
     cursor: none !important;
   }
 }
