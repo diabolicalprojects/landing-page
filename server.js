@@ -35,7 +35,11 @@ app.get('/api/settings', (req, res) => {
         if (fs.existsSync(settingsFile)) {
             res.json(JSON.parse(fs.readFileSync(settingsFile, 'utf8')));
         } else {
-            res.json({ title: "Diabolical", description: "Elite AI Services" });
+            res.json({
+                title: "Diabolical",
+                description: "Elite AI Services",
+                keywords: "AI Automation, Business Intelligence"
+            });
         }
     } catch (e) {
         res.status(500).json({ error: e.message });

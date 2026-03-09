@@ -863,15 +863,20 @@ const AdminPage = () => {
 
     const getSEOScore = () => {
         let score = 0;
-        if (formData.title.length > 30 && formData.title.length < 60) score += 33;
-        if (formData.description.length > 120 && formData.description.length < 160) score += 33;
-        if (formData.keywords.split(',').length > 3) score += 34;
+        const title = formData.title || "";
+        const description = formData.description || "";
+        const keywords = formData.keywords || "";
+
+        if (title.length > 30 && title.length < 60) score += 33;
+        if (description.length > 120 && description.length < 160) score += 33;
+        if (keywords.split(',').filter(k => k.trim()).length > 3) score += 34;
         return score;
     };
 
     if (!isLoggedIn) {
         return (
-            <div className="min-h-screen bg-black flex items-center justify-center p-6 font-jakarta relative overflow-hidden">
+            <div className="min-h-screen bg-black flex items-center justify-center p-6 font-jakarta relative overflow-hidden cursor-none">
+                <CustomCursor />
                 <div className="glass-card p-12 rounded-[3.5rem] w-full max-w-md border-white/10 text-center relative z-10">
                     <img
                         src={logoCuadradoBlanco}
@@ -934,7 +939,8 @@ const AdminPage = () => {
     const score = getSEOScore();
 
     return (
-        <div className="min-h-screen bg-[#050505] text-white p-8 md:p-16 font-jakarta">
+        <div className="min-h-screen bg-[#050505] text-white p-8 md:p-16 font-jakarta cursor-none">
+            <CustomCursor />
             <div className="max-w-6xl mx-auto">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-16 pb-12 border-b border-white/10">
                     <div>
