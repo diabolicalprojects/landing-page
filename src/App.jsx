@@ -20,6 +20,8 @@ import {
     Terminal as TerminalIcon,
     Shield,
     Menu,
+    Search,
+    Share2,
     X
 } from 'lucide-react';
 import { clsx } from 'clsx';
@@ -218,9 +220,9 @@ const Navbar = () => {
         };
         window.addEventListener('scroll', handleScroll);
 
-        // Detect white background sections
+        // Detect white background sections (if any, currently mostly black)
         const trigger = ScrollTrigger.create({
-            trigger: "#impact",
+            trigger: "#problem",
             start: "top 80px",
             end: "bottom 80px",
             onToggle: self => setIsLight(self.isActive)
@@ -258,8 +260,8 @@ const Navbar = () => {
                 isLight ? "text-black/60" : "text-white/60"
             )}>
                 <a href="#problem" className={cn("hover:text-black transition-colors", !isLight && "hover:text-white")}>Problema</a>
-                <a href="#solution" className={cn("hover:text-black transition-colors", !isLight && "hover:text-white")}>Ventaja</a>
-                <a href="#protocols" className={cn("hover:text-black transition-colors", !isLight && "hover:text-white")}>Protocolos</a>
+                <a href="#solutions" className={cn("hover:text-black transition-colors", !isLight && "hover:text-white")}>Soluciones</a>
+                <a href="#contact" className={cn("hover:text-black transition-colors", !isLight && "hover:text-white")}>Contacto</a>
             </div>
 
             <div className="flex items-center gap-4">
@@ -364,391 +366,8 @@ const Hero = () => {
     );
 };
 
-const Problem = () => {
-    const sectionRef = useRef(null);
-    const issues = [
-        {
-            title: "Ventas que se escapan",
-            desc: "Clientes que no esperan y se van porque nadie les respondió al instante. La lentitud es muerte comercial.",
-            icon: <Scan size={32} className="text-white/60" />
-        },
-        {
-            title: "Seguimientos olvidados",
-            desc: "Dinero que se queda sobre la mesa porque \"se nos pasó\" volver a llamar. La IA nunca olvida.",
-            icon: <Lock size={32} className="text-white/60" />
-        },
-        {
-            title: "Talento desperdiciado",
-            desc: "Tu equipo gasta horas en tareas repetitivas que una IA hace mejor, más rápido y sin errores.",
-            icon: <Cpu size={32} className="text-white/60" />
-        }
-    ];
 
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from(".reveal-title > *", {
-                scrollTrigger: {
-                    trigger: ".reveal-title",
-                    start: "top 85%",
-                },
-                y: 30,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.2,
-                ease: "power3.out"
-            });
 
-            gsap.from(".problem-card", {
-                scrollTrigger: {
-                    trigger: ".problem-cards-grid",
-                    start: "top 80%",
-                },
-                y: 60,
-                opacity: 0,
-                duration: 1.2,
-                stagger: 0.15,
-                ease: "power4.out",
-                once: true,
-                clearProps: "all"
-            });
-        }, sectionRef);
-        return () => ctx.revert();
-    }, []);
-
-    return (
-        <section ref={sectionRef} id="problem" className="py-32 md:py-64 bg-black">
-            <div className="container mx-auto px-6">
-                <div className="max-w-5xl mx-auto text-center mb-48 reveal-title">
-                    <h2 className="text-3xl md:text-5xl font-title mb-10 tracking-tight leading-none">
-                        LO QUE NO VES, TE ESTÁ <br />
-                        <span className="text-white/10 uppercase italic">COSTANDO UNA FORTUNA.</span>
-                    </h2>
-                    <p className="text-xl md:text-3xl font-light text-white/50 max-w-2xl mx-auto leading-relaxed">
-                        No necesitas más personal, necesitas un sistema que no duerma ni cometa errores.
-                    </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 problem-cards-grid">
-                    {issues.map((item, i) => (
-                        <div key={i} className="problem-card glass-card p-16 rounded-[3rem] border-white/10 group hover:border-white/30 transition-all duration-700">
-                            <div className="mb-12 p-6 w-fit rounded-2xl bg-white/[0.05] group-hover:bg-white/[0.1] transition-colors">
-                                {item.icon}
-                            </div>
-                            <h3 className="text-2xl md:text-3xl font-title mb-8 leading-tight">{item.title}</h3>
-                            <p className="text-lg md:text-xl text-white/50 leading-relaxed font-light">{item.desc}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-};
-
-const SolutionCards = () => {
-    const sectionRef = useRef(null);
-    const cards = [
-        {
-            title: "Inmediatez Absoluta",
-            desc: "Tus clientes reciben atención premium en segundos. Siempre. Sin excepciones. Ganamos por velocidad.",
-            id: "01",
-            icon: (
-                <svg className="w-full h-full text-white/20" viewBox="0 0 100 100" fill="none" stroke="currentColor">
-                    <circle cx="50" cy="50" r="10" strokeWidth="1" />
-                    <circle cx="50" cy="50" r="30" strokeWidth="0.5" strokeDasharray="4 4" />
-                    <circle cx="50" cy="50" r="45" strokeWidth="0.2" />
-                    <path d="M50 5 L50 95 M5 50 L95 50" strokeWidth="0.2" />
-                    <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="20s" repeatCount="indefinite" />
-                </svg>
-            )
-        },
-        {
-            title: "Retención Implacable",
-            desc: "El sistema no olvida a ningún prospecto. El seguimiento es automático, persistente y altamente efectivo.",
-            id: "02",
-            icon: (
-                <svg className="w-full h-full text-white/20" viewBox="0 0 100 100" fill="none" stroke="currentColor">
-                    <rect x="25" y="25" width="50" height="50" strokeWidth="1" />
-                    <rect x="35" y="35" width="30" height="30" strokeWidth="0.5" />
-                    <path d="M10 10 L90 90 M90 10 L10 90" strokeWidth="0.2" />
-                    <circle cx="50" cy="50" r="5" fill="currentColor" opacity="0.4" />
-                </svg>
-            )
-        },
-        {
-            title: "Imagen de Vanguardia",
-            desc: "Tu marca se posiciona instantáneamente como líder tecnológico. La percepción de valor se duplica.",
-            id: "03",
-            icon: (
-                <svg className="w-full h-full text-white/20" viewBox="0 0 100 100" fill="none" stroke="currentColor">
-                    <path d="M20 50 Q50 10 80 50 Q50 90 20 50" strokeWidth="1" />
-                    <circle cx="50" cy="50" r="15" strokeWidth="0.5" />
-                    <circle cx="50" cy="50" r="2" fill="currentColor" />
-                    <circle cx="50" cy="50" r="40" strokeWidth="0.1" strokeDasharray="2 2" />
-                </svg>
-            )
-        }
-    ];
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from(".solution-title > *", {
-                scrollTrigger: {
-                    trigger: ".solution-title",
-                    start: "top 85%",
-                },
-                y: 30,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.1,
-                ease: "power2.out"
-            });
-
-            // Animar la entrada de las tarjetas del sistema de forma segura (sin tocar la posición sticky)
-            gsap.from(".card-content", {
-                scrollTrigger: {
-                    trigger: ".solution-cards-stack",
-                    start: "top 80%",
-                    once: true
-                },
-                y: 80,
-                opacity: 0,
-                duration: 1.2,
-                stagger: 0.2,
-                ease: "power4.out",
-                clearProps: "all"
-            });
-        }, sectionRef);
-        return () => ctx.revert();
-    }, []);
-
-    return (
-        <section ref={sectionRef} id="solution" className="bg-black py-48">
-            <div className="container mx-auto px-6">
-                <div className="text-center mb-48 solution-title">
-                    <h2 className="text-4xl md:text-6xl font-title mb-8 tracking-tight leading-none">NO ES MAGIA. ES UN SISTEMA <br /><span className="text-white/10 italic">DIABOLICAL.</span></h2>
-                    <p className="text-white/50 uppercase tracking-[0.5em] text-xs md:text-sm font-bold">Implementamos IA de forma fluida y brutal</p>
-                </div>
-
-                <div className="space-y-[30vh] solution-cards-stack pb-[20vh]">
-                    {cards.map((card, i) => (
-                        <div
-                            key={i}
-                            style={{ top: `${48 + i * 20}px`, zIndex: i + 1 }}
-                            className="sticky-card sticky glass-card rounded-[4rem] p-16 md:p-32 overflow-hidden group hover:bg-white/[0.05] border-white/10 transition-all duration-1000"
-                        >
-                            <div className="card-content relative w-full h-full">
-                                <div className="absolute top-0 right-[-10%] w-1/2 h-full opacity-10 group-hover:opacity-40 transition-opacity duration-1000">
-                                    {card.icon}
-                                </div>
-                                <div className="relative z-10 flex flex-col xl:flex-row gap-20 items-center">
-                                    <div className="w-full xl:w-1/2">
-                                        <div className="text-sm font-mono text-white/30 mb-8 tracking-[1em]">PROTOCOLO_ID_{card.id}</div>
-                                        <h3 className="text-4xl md:text-5xl font-title uppercase mb-12 leading-none tracking-tighter">{card.title}</h3>
-                                        <p className="text-xl md:text-3xl text-white/60 font-light leading-relaxed">{card.desc}</p>
-                                    </div>
-                                    <div className="hidden xl:block w-px h-80 bg-white/10" />
-                                    <div className="w-full xl:w-1/3">
-                                        <div className="space-y-10">
-                                            <div className="flex items-center gap-6 text-white/80">
-                                                <CheckCircle2 size={24} className="text-white/30" />
-                                                <span className="text-xs md:text-sm uppercase tracking-[0.3em] font-bold">Ejecución Autónoma</span>
-                                            </div>
-                                            <div className="flex items-center gap-6 text-white/80">
-                                                <CheckCircle2 size={24} className="text-white/30" />
-                                                <span className="text-xs md:text-sm uppercase tracking-[0.3em] font-bold">Precisión Técnica</span>
-                                            </div>
-                                            <div className="flex items-center gap-6 text-white/80">
-                                                <CheckCircle2 size={24} className="text-white/30" />
-                                                <span className="text-xs md:text-sm uppercase tracking-[0.3em] font-bold">Zero Fricción</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-};
-
-const Impact = () => {
-    const sectionRef = useRef(null);
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from(".impact-title", {
-                scrollTrigger: {
-                    trigger: ".impact-title",
-                    start: "top 85%",
-                },
-                y: 40,
-                opacity: 0,
-                duration: 1.2,
-                ease: "power3.out"
-            });
-
-            gsap.from(".stats-card", {
-                scrollTrigger: {
-                    trigger: ".stats-card",
-                    start: "top 80%",
-                },
-                x: -50,
-                opacity: 0,
-                duration: 1.5,
-                ease: "power4.out"
-            });
-
-            gsap.from(".quote-content", {
-                scrollTrigger: {
-                    trigger: ".quote-content",
-                    start: "top 80%",
-                },
-                x: 50,
-                opacity: 0,
-                duration: 1.5,
-                ease: "power4.out"
-            });
-        }, sectionRef);
-        return () => ctx.revert();
-    }, []);
-
-    return (
-        <section ref={sectionRef} id="impact" className="py-48 md:py-64 bg-white text-black overflow-hidden relative">
-            <div className="container mx-auto px-6 text-center">
-                <h2 className="impact-title text-3xl md:text-5xl font-title mb-32 tracking-tighter leading-none">TRABAJA MENOS. <br /><span className="opacity-20 uppercase italic">VENDE MUCHO MÁS.</span></h2>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center text-left max-w-6xl mx-auto">
-                    <div className="stats-card border border-black/10 bg-black/[0.03] p-16 md:p-24 rounded-[4rem]">
-                        <div className="text-6xl md:text-8xl font-title mb-8 leading-none">+30%</div>
-                        <div className="text-xl md:text-2xl text-black/60 uppercase tracking-[0.15em] font-bold leading-tight">
-                            Eficiencia bruta <br /> en gestión comercial
-                        </div>
-                        <p className="mt-16 text-sm md:text-base opacity-50 italic font-medium">
-                            Es lo que logran nuestros clientes al eliminar el error humano y la fatiga del proceso de venta.
-                        </p>
-                    </div>
-
-                    <div className="quote-content p-12 space-y-16">
-                        <div className="text-2xl md:text-4xl border-l-4 border-black pl-12 font-light italic leading-tight text-black/90">
-                            "Tener un sistema autónomo es la ventaja injusta para escalar sin contratar más personal."
-                        </div>
-                        <div className="pl-12 flex items-center gap-6">
-                            <div className="w-16 h-px bg-black opacity-30" />
-                            <span className="text-[10px] md:text-xs uppercase tracking-[0.4em] font-black">Ventaja Diabolical</span>
-                        </div>
-                        <div className="pl-12 pt-8">
-                            <button className="px-12 py-6 bg-black text-white rounded-full font-black text-[10px] md:text-xs uppercase tracking-[0.3em] hover:scale-110 transition-all magnetic-btn">
-                                Activar Protocolo <ArrowRight size={14} className="inline ml-2" />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-};
-
-const Protocols = () => {
-    const sectionRef = useRef(null);
-    const protocols = [
-        {
-            name: "Crecimiento Acelerado",
-            badge: "01",
-            note: "Ideal para pequeñas empresas que pierden leads hoy.",
-            features: ["Atención automática 24/7", "Filtro inteligente de prospectos", "Configuración técnica rápida"],
-            cta: "Activar Protocolo"
-        },
-        {
-            name: "Sistema Implacable",
-            badge: "02",
-            isPopular: true,
-            note: "Domina tu mercado con tecnología profunda.",
-            features: ["Automatización total de flujos", "Retención y recuperación activa", "Soporte técnico dedicado", "Integración con CRM"],
-            cta: "Dominar Mercado"
-        },
-        {
-            name: "Dominio Total",
-            badge: "03",
-            note: "Tu negocio funcionando como un reactor nuclear.",
-            features: ["IA personalizada con voz propia", "Integración total en ecosistema", "Consultoría estratégica mensual", "Escalado masivo"],
-            cta: "Control Total"
-        }
-    ];
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from(".protocols-title > *", {
-                scrollTrigger: {
-                    trigger: ".protocols-title",
-                    start: "top 85%",
-                },
-                y: 30,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.15,
-                ease: "power2.out"
-            });
-
-            gsap.from(".pricing-card", {
-                scrollTrigger: {
-                    trigger: ".pricing-grid",
-                    start: "top 85%",
-                },
-                y: 30,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.1,
-                ease: "power2.out",
-                clearProps: "all"
-            });
-        }, sectionRef);
-        return () => ctx.revert();
-    }, []);
-
-    return (
-        <section ref={sectionRef} id="protocols" className="py-32 md:py-64 bg-black">
-            <div className="container mx-auto px-6">
-                <div className="text-center mb-48 protocols-title">
-                    <h2 className="text-4xl md:text-6xl font-title mb-8 tracking-tighter">PROTOCOLOS DE PODER</h2>
-                    <p className="text-white/40 text-xs md:text-sm tracking-[0.6em] uppercase font-bold">Superioridad tecnológica por diseño</p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl mx-auto font-jakarta pricing-grid">
-                    {protocols.map((p, i) => (
-                        <div key={i} className={cn(
-                            "pricing-card glass-card p-12 md:p-16 rounded-[4rem] flex flex-col group",
-                            p.isPopular ? "border-white/30 bg-white/[0.05] ring-2 ring-white/10" : "border-white/10"
-                        )}>
-                            <div className="mb-16">
-                                <div className="text-xs opacity-30 font-mono mb-6 tracking-[0.5em]">LEVEL_{p.badge}</div>
-                                <h3 className="text-2xl md:text-3xl font-title mb-6 tracking-tighter uppercase leading-none">{p.name}</h3>
-                                <p className="text-sm md:text-base text-white/40 italic font-light">{p.note}</p>
-                            </div>
-
-                            <ul className="space-y-8 mb-20 flex-grow">
-                                {p.features.map((f, j) => (
-                                    <li key={j} className="flex gap-6 text-sm md:text-lg text-white/60 leading-relaxed font-light items-start">
-                                        <div className="w-2 h-2 rounded-full bg-white/20 mt-2.5 shrink-0" />
-                                        <span>{f}</span>
-                                    </li>
-                                ))}
-                            </ul>
-
-                            <button className={cn(
-                                "w-full py-7 rounded-full text-xs md:text-sm font-black uppercase tracking-[0.4em] transition-all",
-                                p.isPopular ? "bg-white text-black hover:scale-105 shadow-[0_0_50px_rgba(255,255,255,0.2)]" : "bg-white/5 text-white/60 border border-white/10 hover:bg-white/10"
-                            )}>
-                                {p.cta}
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-};
 
 const Footer = () => {
     const footerRef = useRef(null);
@@ -1053,7 +672,138 @@ const AdminPage = () => {
     );
 };
 
-// Removed old Problem and SolutionCards to resolve duplication
+const Problem = () => {
+    return (
+        <section id="problem" className="py-24 md:py-40 bg-black relative border-b border-white/5">
+            <div className="max-w-7xl mx-auto px-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-32 items-center text-left">
+                    <div>
+                        <div className="flex items-center gap-4 mb-8">
+                            <span className="w-12 h-px bg-white/20"></span>
+                            <span className="text-[10px] uppercase tracking-[0.6em] text-white/40 font-bold">Protocolo_02: El Reencuadre</span>
+                        </div>
+                        <h2 className="text-4xl md:text-7xl font-title leading-[0.85] tracking-tighter uppercase mb-12">
+                            El modelo de <br />
+                            <span className="text-white/20 italic">"contratar para crecer"</span> <br />
+                            está roto.
+                        </h2>
+                    </div>
+                    <div className="space-y-8">
+                        <p className="text-lg md:text-2xl text-white/60 leading-relaxed font-light">
+                            La mayoría de los dueños de negocio en <span className="text-white">Aguascalientes</span> creen que para vender más necesitan más empleados. Pero más empleados significa más sueldos, más supervisión y más errores humanos.
+                        </p>
+                        <div className="p-8 md:p-12 glass-card rounded-[2.5rem] border-white/10 bg-white/[0.02]">
+                            <h3 className="text-xs uppercase tracking-[0.4em] font-black mb-6 text-white text-left">La Diferencia Diabolical</h3>
+                            <p className="text-sm md:text-lg text-white/50 leading-relaxed text-left">
+                                No somos una agencia de marketing ni una empresa de software. <span className="text-white">Somos ingenieros de libertad.</span> Instalamos "empleados digitales" que no duermen, no piden aumentos y atienden a mil clientes al mismo tiempo con la misma calidad que tú lo harías.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+const SolutionCards = () => {
+    const solutions = [
+        {
+            tag: "VENTAS",
+            title: "El Vendedor que no duerme",
+            desc: "¿Te ha pasado que un cliente escribe a las 11 PM y nadie le contesta hasta el día siguiente? Para entonces, ya le compró a tu competencia. Nuestro sistema responde, da precios y cierra la cita en segundos, a cualquier hora.",
+            icon: <Users size={24} />
+        },
+        {
+            tag: "SEGUIMIENTO",
+            title: "El Olvido Cero",
+            desc: "Muchos clientes dicen 'luego te aviso' y se pierden para siempre porque a tu equipo se le olvidó marcarles. Nuestro sistema les da seguimiento automático y educado hasta que digan que sí. Tú solo recibes la confirmación.",
+            icon: <Activity size={24} />
+        },
+        {
+            tag: "OPERACIONES",
+            title: "El Administrador Perfecto",
+            desc: "Deja de ser el secretario de tu propio negocio. El sistema registra datos, agenda en tu calendario y te avisa qué tienes que hacer cada día. Tú solo ejecutas, el sistema organiza.",
+            icon: <Cpu size={24} />
+        }
+    ];
+
+    return (
+        <section id="solutions" className="py-24 md:py-40 bg-black relative">
+            <div className="max-w-7xl mx-auto px-6">
+                <div className="text-center max-w-3xl mx-auto mb-24">
+                    <h2 className="text-3xl md:text-5xl font-title uppercase tracking-tighter mb-8">Soluciones_Autónomas</h2>
+                    <p className="text-white/40 uppercase tracking-[0.3em] text-[10px] font-bold">Identificación de Fricción & Resolución Digital</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-left">
+                    {solutions.map((s, i) => (
+                        <div key={i} className="glass-card p-10 md:p-14 rounded-[3.5rem] border-white/5 hover:border-white/20 transition-all group flex flex-col justify-between min-h-[450px]">
+                            <div>
+                                <div className="w-16 h-16 rounded-3xl bg-white/5 flex items-center justify-center mb-10 group-hover:scale-110 transition-transform">
+                                    {s.icon}
+                                </div>
+                                <span className="text-[9px] font-black tracking-[0.5em] text-white/20 block mb-4 uppercase">{s.tag}</span>
+                                <h3 className="text-xl md:text-2xl font-title mb-6 leading-tight">{s.title}</h3>
+                                <p className="text-sm md:text-base text-white/40 leading-relaxed italic">"{s.desc}"</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
+const Contact = () => {
+    return (
+        <section id="contact" className="py-24 md:py-40 bg-black relative border-t border-white/5">
+            <div className="max-w-4xl mx-auto px-6">
+                <div className="text-center mb-24">
+                    <div className="inline-block px-4 py-1 bg-white/5 rounded-full mb-8">
+                        <span className="text-[9px] uppercase tracking-[0.4em] text-white/40 font-black">Protocolo_06: Diagnóstico</span>
+                    </div>
+                    <h2 className="text-4xl md:text-7xl font-title uppercase tracking-tighter mb-8 leading-[0.9]">
+                        ¿Tu negocio es apto para <br />
+                        <span className="text-white/20 italic">ser autónomo?</span>
+                    </h2>
+                    <p className="text-white/40 text-sm md:text-lg max-w-2xl mx-auto italic font-light tracking-wide text-center">
+                        "No trabajamos con cualquiera. Solo con negocios que tienen flujo de clientes y quieren dejar de operarlos manualmente."
+                    </p>
+                </div>
+
+                <div className="glass-card p-10 md:p-20 rounded-[4rem] border-white/10 shadow-2xl relative">
+                    <h3 className="text-xs uppercase tracking-[0.4em] font-black mb-10 text-center opacity-30">Cuestionario de Fricción</h3>
+                    <form className="space-y-10 text-left">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div className="space-y-4">
+                                <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold italic">¿Cómo llegan tus clientes hoy?</label>
+                                <select className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-white/30 font-medium transition-all appearance-none cursor-pointer">
+                                    <option className="bg-black">WhatsApp / Instagram</option>
+                                    <option className="bg-black">Recomendación de Boca en Boca</option>
+                                    <option className="bg-black">Publicidad Pagada (Ads)</option>
+                                    <option className="bg-black">Google / SEO Local</option>
+                                </select>
+                            </div>
+                            <div className="space-y-4">
+                                <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold italic">¿Cuántas personas atienden hoy?</label>
+                                <input type="number" placeholder="Ej: 3" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-white/30 font-medium transition-all" />
+                            </div>
+                        </div>
+
+                        <div className="space-y-4">
+                            <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold italic">Si fuera automático, ¿qué harías con tu tiempo libre?</label>
+                            <input type="text" placeholder="Escalar el negocio, pasar tiempo en familia..." className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-white/30 font-medium transition-all" />
+                        </div>
+
+                        <button className="w-full py-8 md:py-10 bg-white text-black rounded-full font-black text-xs md:text-sm uppercase tracking-[0.6em] hover:scale-[1.02] active:scale-95 transition-all shadow-glow mt-8">
+                            Solicitar Diagnóstico de Fricción
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    );
+};
 
 const ComparisonSection = () => {
     return (
