@@ -1,21 +1,19 @@
-FROM node:20-alpine
+FROM node:20
 WORKDIR /app
 
-# Copiamos solo lo necesario para instalar
+# Instalación de dependencias
 COPY package*.json ./
 RUN npm install
 
-# Copiamos el resto
+# Copia de código y construcción
 COPY . .
-
-# Construimos el frontend
 RUN npm run build
 
-# Permisos para la carpeta de datos
+# Asegurar permisos de la base de datos local
 RUN mkdir -p data && chmod 777 data
 
 EXPOSE 3000
 ENV NODE_ENV=production
 
-# Comando de inicio
+# Comando de inicio directo
 CMD ["node", "server.js"]
