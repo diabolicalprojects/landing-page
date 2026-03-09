@@ -477,15 +477,24 @@ const DiabolicalChatbot = () => {
 
     const openWA = (msg) => {
         const encoded = encodeURIComponent(msg);
-        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        const isAndroid = /Android/i.test(navigator.userAgent);
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-        if (isMobile) {
-            // En móvil usamos href directo de la pestaña actual para evitar bloqueos de popup en Opera/Safari
-            window.location.href = `whatsapp://send?phone=524495136907&text=${encoded}`;
-        } else {
-            // En PC usamos API de WhatsApp en pestaña nueva
-            window.open(`https://api.whatsapp.com/send?phone=524495136907&text=${encoded}`, '_blank');
+        let url = `https://api.whatsapp.com/send?phone=524495136907&text=${encoded}`;
+        if (isAndroid) {
+            url = `intent://send/?phone=524495136907&text=${encoded}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
+        } else if (isIOS) {
+            url = `whatsapp://send?phone=524495136907&text=${encoded}`;
         }
+
+        const a = document.createElement('a');
+        a.href = url;
+        if (!isAndroid && !isIOS) a.target = '_blank';
+        else a.target = '_top';
+        a.rel = 'noopener noreferrer';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => document.body.removeChild(a), 150);
     };
 
     useEffect(() => {
@@ -1029,13 +1038,25 @@ const Contact = () => {
         e.preventDefault();
         const msg = `🟢 *DIAGNÓSTICO RÁPIDO — DIABOLICAL*\n\n*Nombre:* ${form.name}\n*WhatsApp:* ${form.whatsapp}\n*Email:* ${form.email}\n\n*¿Cómo llegan sus clientes?:* ${form.source}\n*Personas que atienden:* ${form.people}\n*Si fuera automático:* ${form.aspiration}`;
         const encoded = encodeURIComponent(msg);
-        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        const isAndroid = /Android/i.test(navigator.userAgent);
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-        if (isMobile) {
-            window.location.href = `whatsapp://send?phone=524495136907&text=${encoded}`;
-        } else {
-            window.open(`https://api.whatsapp.com/send?phone=524495136907&text=${encoded}`, '_blank');
+        let url = `https://api.whatsapp.com/send?phone=524495136907&text=${encoded}`;
+        if (isAndroid) {
+            url = `intent://send/?phone=524495136907&text=${encoded}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
+        } else if (isIOS) {
+            url = `whatsapp://send?phone=524495136907&text=${encoded}`;
         }
+
+        const a = document.createElement('a');
+        a.href = url;
+        if (!isAndroid && !isIOS) a.target = '_blank';
+        else a.target = '_top';
+        a.rel = 'noopener noreferrer';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => document.body.removeChild(a), 150);
+
         setSent(true);
     };
 
