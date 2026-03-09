@@ -31,6 +31,7 @@ import { twMerge } from 'tailwind-merge';
 import logoHorizontalNegro from './assets/logo/LOGO-DIABOLICAL-HORIZONTAL-NEGRO.svg';
 import logoHorizontalBlanco from './assets/logo/LOGO-DIABOLICAL-HORIZONTAL-BLANCO.svg';
 import logoCuadradoBlanco from './assets/logo/LOGO-DIABOLICAL-CUADRADO-BLANCO.svg';
+import chatbotIcon from './assets/logo/icono-diabolical-chatbot.svg';
 
 // Utility for tailwind classes
 function cn(...inputs) {
@@ -474,15 +475,30 @@ const DiabolicalChatbot = () => {
         },
     ];
 
+    const openWA = (msg) => {
+        const encoded = encodeURIComponent(msg);
+        // Try native app protocol first, fallback to wa.me
+        const url = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+            ? `whatsapp://send?phone=524495136907&text=${encoded}`
+            : `https://wa.me/524495136907?text=${encoded}`;
+        window.open(url, '_blank');
+    };
+
     useEffect(() => {
         const handler = () => setIsOpen(true);
         window.addEventListener('open-diabolical-chat', handler);
         return () => window.removeEventListener('open-diabolical-chat', handler);
     }, []);
 
+    // Lock body scroll when open
+    useEffect(() => {
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        return () => { document.body.style.overflow = ''; };
+    }, [isOpen]);
+
     const handleClose = () => {
         setIsOpen(false);
-        setTimeout(() => { setStep(0); setAnswers({}); setContact({ name: '', whatsapp: '' }); }, 300);
+        setTimeout(() => { setStep(0); setAnswers({}); setContact({ name: '', whatsapp: '' }); }, 350);
     };
 
     const handleAnswer = (value) => {
@@ -493,7 +509,7 @@ const DiabolicalChatbot = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const msg = `🔴 *NUEVO DIAGNÓSTICO DIABOLICAL*\n\n*Nombre:* ${contact.name}\n*WhatsApp:* ${contact.whatsapp}\n\n*1. Fricción:* ${answers.friction}\n*2. Volumen:* ${answers.volume}\n*3. Dependencia:* ${answers.dependency}\n*4. Impacto Estimado:* ${answers.budget}\n*5. Potencial:* ${answers.impact}`;
-        window.open(`https://wa.me/524495136907?text=${encodeURIComponent(msg)}`, '_blank');
+        openWA(msg);
         setStep(questions.length + 1);
     };
 
@@ -505,28 +521,40 @@ const DiabolicalChatbot = () => {
 
     return (
         <>
-            {/* Floating Button */}
+            {/* Backdrop — blurs the rest of the landing */}
+            {isOpen && (
+                <div
+                    className="chatbot-backdrop fixed inset-0 z-40 bg-black/50"
+                    style={{ backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }}
+                    onClick={handleClose}
+                />
+            )}
+
+            {/* Floating Trigger Button */}
             <button
                 onClick={() => isOpen ? handleClose() : setIsOpen(true)}
                 aria-label="Diagnóstico Diabolical"
-                className="fixed bottom-6 right-5 md:bottom-8 md:right-8 z-[60] w-14 h-14 rounded-full bg-black border border-white/20 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_8px_32px_rgba(0,0,0,0.8)]"
+                className={cn(
+                    "fixed bottom-6 right-5 md:bottom-8 md:right-8 z-[60] w-16 h-16 rounded-full bg-black border border-white/15 flex items-center justify-center transition-all hover:scale-110 active:scale-95",
+                    !isOpen && "chatbot-btn-idle"
+                )}
             >
                 {isOpen
                     ? <X size={20} className="text-white" />
-                    : <img src="https://cdn.diabolicalservices.tech/diabolical/general/original/icono-diabolical-blanco.svg" alt="Diabolical" className="w-7 h-7" />
+                    : <img src={chatbotIcon} alt="Diabolical" className="w-10 h-10" />
                 }
             </button>
 
             {/* Chat Panel */}
             {isOpen && (
                 <div
-                    className="fixed z-50 flex flex-col bg-[#0a0a0a] border border-white/10 rounded-3xl shadow-2xl overflow-hidden"
-                    style={{ bottom: '5.5rem', right: '1.25rem', width: 'min(calc(100vw - 2.5rem), 22rem)', maxHeight: 'calc(100dvh - 7rem)' }}
+                    className="chatbot-panel fixed z-50 flex flex-col bg-[#0a0a0a] border border-white/10 rounded-3xl shadow-2xl overflow-hidden"
+                    style={{ bottom: '6rem', right: '1.25rem', width: 'min(calc(100vw - 2.5rem), 22rem)', maxHeight: 'calc(100dvh - 8rem)' }}
                 >
                     {/* Header */}
                     <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3 flex-shrink-0">
-                        <div className="w-8 h-8 rounded-full bg-white/10 border border-white/15 flex items-center justify-center flex-shrink-0">
-                            <img src="https://cdn.diabolicalservices.tech/diabolical/general/original/icono-diabolical-blanco.svg" alt="" className="w-5 h-5" />
+                        <div className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+                            <img src={chatbotIcon} alt="" className="w-6 h-6" />
                         </div>
                         <div className="flex-1 min-w-0">
                             <p className="text-xs font-black uppercase tracking-widest text-white leading-none">Diagnóstico Diabolical</p>
@@ -541,7 +569,7 @@ const DiabolicalChatbot = () => {
                     {/* Progress Bar */}
                     {!isSuccess && (
                         <div className="h-px bg-white/5 flex-shrink-0">
-                            <div className="h-full bg-white/50 transition-all duration-500 ease-out" style={{ width: `${progress}%` }} />
+                            <div className="h-full bg-white/40 transition-all duration-500 ease-out" style={{ width: `${progress}%` }} />
                         </div>
                     )}
 
@@ -996,7 +1024,11 @@ const Contact = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const msg = `🟢 *DIAGNÓSTICO RÁPIDO — DIABOLICAL*\n\n*Nombre:* ${form.name}\n*WhatsApp:* ${form.whatsapp}\n*Email:* ${form.email}\n\n*¿Cómo llegan sus clientes?:* ${form.source}\n*Personas que atienden:* ${form.people}\n*Si fuera automático:* ${form.aspiration}`;
-        window.open(`https://wa.me/524495136907?text=${encodeURIComponent(msg)}`, '_blank');
+        const encoded = encodeURIComponent(msg);
+        const url = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+            ? `whatsapp://send?phone=524495136907&text=${encoded}`
+            : `https://wa.me/524495136907?text=${encoded}`;
+        window.open(url, '_blank');
         setSent(true);
     };
 

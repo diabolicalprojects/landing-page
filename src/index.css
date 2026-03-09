@@ -299,3 +299,50 @@ html {
   z-index: -1;
   pointer-events: none;
 }
+
+/* Diabolical Chatbot Animations */
+@keyframes chatSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes chatBackdropIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes chatBtnPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.15), 0 8px 32px rgba(0, 0, 0, 0.8);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.8);
+  }
+}
+
+.chatbot-panel {
+  animation: chatSlideIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.chatbot-backdrop {
+  animation: chatBackdropIn 0.3s ease forwards;
+}
+
+.chatbot-btn-idle {
+  animation: chatBtnPulse 3s ease-in-out infinite;
+}
