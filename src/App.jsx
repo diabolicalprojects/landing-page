@@ -816,7 +816,9 @@ const AdminPage = () => {
     });
     const [isSaving, setIsSaving] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     // Real-time SEO Title Sync
     useEffect(() => {
@@ -837,11 +839,11 @@ const AdminPage = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        // Simple security for the admin path
-        if (password === "diabolical2026") {
+        // Updated secure credentials
+        if (username === "admin" && password === "Diabolical1502") {
             setIsLoggedIn(true);
         } else {
-            alert("Acceso Denegado: Protocolo Inválido");
+            alert("ACCESO DENEGADO: Identidad o Protocolo Inválido");
         }
     };
 
@@ -869,23 +871,65 @@ const AdminPage = () => {
 
     if (!isLoggedIn) {
         return (
-            <div className="min-h-screen bg-black flex items-center justify-center p-6 font-jakarta">
-                <div className="glass-card p-12 rounded-[3rem] w-full max-w-md border-white/10 text-center">
-                    <img src={logoCuadradoBlanco} className="w-20 mx-auto mb-12 opacity-50" alt="" />
-                    <h2 className="text-2xl font-title mb-8 tracking-widest uppercase">Admin Auth</h2>
+            <div className="min-h-screen bg-black flex items-center justify-center p-6 font-jakarta relative overflow-hidden">
+                {/* Same Custom Cursor for consistency */}
+                <CustomCursor />
+
+                <div className="glass-card p-12 rounded-[3.5rem] w-full max-w-md border-white/10 text-center relative z-10">
+                    <img
+                        src={logoCuadradoBlanco}
+                        className="w-24 mx-auto mb-10 glitch-logo opacity-80"
+                        alt="Diabolical"
+                    />
+
+                    <div className="space-y-2 mb-10">
+                        <h2 className="text-2xl font-title tracking-[0.2em] uppercase text-white">Admin_Access</h2>
+                        <p className="text-[9px] uppercase tracking-[0.4em] text-white/30 font-bold">Secure Infrastructure Node</p>
+                    </div>
+
                     <form onSubmit={handleLogin} className="space-y-6">
-                        <input
-                            type="password"
-                            placeholder="SECRET_KEY"
-                            className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <button className="w-full py-4 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.4em] hover:invert transition-all">
+                        <div className="space-y-4">
+                            <input
+                                type="text"
+                                placeholder="USERNAME"
+                                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono text-sm tracking-widest transition-all"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+
+                            <div className="relative group">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="AUTH_TOKEN"
+                                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono text-sm tracking-widest transition-all"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-5 top-1/2 -translate-y-1/2 text-white/20 hover:text-white/60 p-2 transition-colors"
+                                >
+                                    {showPassword ? <Lock size={16} /> : <Zap size={16} />}
+                                </button>
+                            </div>
+                        </div>
+
+                        <button className="w-full py-5 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.5em] hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_30px_rgba(255,255,255,0.05)] mt-4">
                             UNLOCK_TERMINAL
                         </button>
                     </form>
+
+                    <button
+                        onClick={() => navigate('/')}
+                        className="mt-12 text-[9px] uppercase tracking-[0.4em] text-white/20 hover:text-white/50 transition-colors block w-full"
+                    >
+                        Back to Zero_Point
+                    </button>
                 </div>
+
+                {/* Background Decor */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
             </div>
         );
     }
