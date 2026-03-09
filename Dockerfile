@@ -13,7 +13,7 @@ COPY package*.json ./
 # Install only production dependencies
 RUN npm install --production
 # Copy built frontend assets
-COPY --from=build-frontend /app/dist ./dist
+COPY --from=build-frontend /app/build ./dist
 # Copy backend server code
 COPY server.js .
 # Create data folder for settings persistence
