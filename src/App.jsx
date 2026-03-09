@@ -289,15 +289,15 @@ const Navbar = () => {
 
             <div className="flex items-center gap-2 flex-shrink-0">
                 {/* CTA shown on medium+ screens */}
-                <a
-                    href="#contact"
+                <button
+                    onClick={() => window.dispatchEvent(new Event('open-diabolical-chat'))}
                     className={cn(
                         "hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-tighter transition-all magnetic-btn whitespace-nowrap",
                         isLight ? "bg-black text-white hover:bg-black/80" : "bg-white text-black hover:bg-white/90"
                     )}
                 >
                     Auditoría <ArrowRight size={12} />
-                </a>
+                </button>
 
                 {/* Mobile Menu Toggle */}
                 <button
@@ -336,13 +336,12 @@ const Navbar = () => {
                     >
                         Contacto
                     </a>
-                    <a
-                        href="#contact"
-                        onClick={() => setIsMenuOpen(false)}
+                    <button
+                        onClick={() => { setIsMenuOpen(false); window.dispatchEvent(new Event('open-diabolical-chat')); }}
                         className="w-full flex items-center justify-center py-4 rounded-full font-black text-sm uppercase tracking-widest mt-3 bg-white text-black active:scale-95 transition-transform"
                     >
                         Obtener Auditoría
-                    </a>
+                    </button>
                 </div>
             )}
         </nav>
@@ -393,12 +392,12 @@ const Hero = () => {
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8 w-full">
-                    <a
-                        href="#contact"
-                        className="w-full sm:w-auto px-10 py-5 bg-white text-black rounded-full font-black text-xs md:text-sm uppercase tracking-[0.3em] md:tracking-[0.4em] hover:invert transition-all duration-500 magnetic-btn shadow-[0_0_40px_rgba(255,255,255,0.2)] text-center min-h-[56px] flex items-center justify-center"
+                    <button
+                        onClick={() => window.dispatchEvent(new Event('open-diabolical-chat'))}
+                        className="w-full sm:w-auto px-10 py-5 bg-white text-black rounded-full font-black text-xs md:text-sm uppercase tracking-[0.3em] md:tracking-[0.4em] hover:invert transition-all duration-500 magnetic-btn shadow-[0_0_40px_rgba(255,255,255,0.2)] min-h-[56px] flex items-center justify-center"
                     >
                         Obtener mi Auditoría
-                    </a>
+                    </button>
                     <div className="hidden md:block text-[10px] uppercase tracking-[0.6em] font-mono text-white/40 border-b border-white/20 pb-2">
                         [ SYSTEM_STATUS: OPERATIONAL_v2.0 ]
                     </div>
@@ -415,6 +414,198 @@ const Hero = () => {
 
 
 
+
+const DiabolicalChatbot = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [step, setStep] = useState(0);
+    const [answers, setAnswers] = useState({});
+    const [contact, setContact] = useState({ name: '', whatsapp: '' });
+
+    const questions = [
+        {
+            id: 'friction', tag: '01 / FRICCIÓN',
+            label: '¿Cuál es el proceso que más detiene el crecimiento de tu negocio hoy?',
+            options: [
+                { label: 'Tardamos en responder leads', value: 'Ventas / Velocidad de respuesta' },
+                { label: 'Seguimiento desordenado', value: 'Retención / Seguimiento manual' },
+                { label: 'Gestión de citas y agenda', value: 'Operaciones / Gestión de agenda' },
+                { label: 'Tareas repetitivas del equipo', value: 'Eficiencia / Automatización interna' },
+            ]
+        },
+        {
+            id: 'volume', tag: '02 / VOLUMEN',
+            label: '¿Cuántos prospectos o mensajes nuevos recibe tu negocio mensualmente?',
+            options: [
+                { label: 'Menos de 50', value: 'Menos de 50 leads/mes' },
+                { label: '50 — 200', value: '50–200 leads/mes' },
+                { label: '200 — 500', value: '200–500 leads/mes' },
+                { label: 'Más de 500 🔥', value: '500+ leads/mes' },
+            ]
+        },
+        {
+            id: 'dependency', tag: '03 / DEPENDENCIA',
+            label: 'Si tu equipo deja de responder 48 horas, ¿qué pasa con tus ventas?',
+            options: [
+                { label: 'Seguirían normales', value: 'Baja dependencia humana' },
+                { label: 'Bajarían un poco', value: 'Dependencia moderada' },
+                { label: 'Se detienen casi por completo', value: 'Alta dependencia (crítica)' },
+                { label: 'El negocio colapsaría', value: 'Dependencia total (urgente)' },
+            ]
+        },
+        {
+            id: 'budget', tag: '04 / IMPACTO',
+            label: '¿Cuánto estimas que pierdes al mes por no tener atención 24/7?',
+            options: [
+                { label: '$0 – $500 USD', value: '$0–500 USD/mes' },
+                { label: '$500 – $2,000 USD', value: '$500–2,000 USD/mes' },
+                { label: '$2,000 – $10,000 USD', value: '$2,000–10,000 USD/mes' },
+                { label: '$10,000+ USD', value: '$10,000+ USD/mes' },
+            ]
+        },
+        {
+            id: 'impact', tag: '05 / POTENCIAL',
+            label: 'Si este proceso fuera automático, ¿qué tan grande sería el cambio?',
+            options: [
+                { label: 'Ahorraría 1–5 hrs/semana', value: '1–5 horas/semana liberadas' },
+                { label: '10–20 hrs/semana', value: '10–20 horas/semana liberadas' },
+                { label: 'Más del 50% de mi tiempo', value: '+50% del tiempo liberado' },
+                { label: 'Podría duplicar mi negocio', value: 'Potencial de duplicar operaciones' },
+            ]
+        },
+    ];
+
+    useEffect(() => {
+        const handler = () => setIsOpen(true);
+        window.addEventListener('open-diabolical-chat', handler);
+        return () => window.removeEventListener('open-diabolical-chat', handler);
+    }, []);
+
+    const handleClose = () => {
+        setIsOpen(false);
+        setTimeout(() => { setStep(0); setAnswers({}); setContact({ name: '', whatsapp: '' }); }, 300);
+    };
+
+    const handleAnswer = (value) => {
+        setAnswers(prev => ({ ...prev, [questions[step].id]: value }));
+        setStep(prev => prev + 1);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const msg = `🔴 *NUEVO DIAGNÓSTICO DIABOLICAL*\n\n*Nombre:* ${contact.name}\n*WhatsApp:* ${contact.whatsapp}\n\n*1. Fricción:* ${answers.friction}\n*2. Volumen:* ${answers.volume}\n*3. Dependencia:* ${answers.dependency}\n*4. Impacto Estimado:* ${answers.budget}\n*5. Potencial:* ${answers.impact}`;
+        window.open(`https://wa.me/524495136907?text=${encodeURIComponent(msg)}`, '_blank');
+        setStep(questions.length + 1);
+    };
+
+    const isContactStep = step === questions.length;
+    const isSuccess = step > questions.length;
+    const progress = Math.min((step / (questions.length + 1)) * 100, 100);
+    const currentQ = !isContactStep && !isSuccess ? questions[step] : null;
+    const inp = 'w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-white/30 transition-all min-h-[52px] placeholder:text-white/25';
+
+    return (
+        <>
+            {/* Floating Button */}
+            <button
+                onClick={() => isOpen ? handleClose() : setIsOpen(true)}
+                aria-label="Diagnóstico Diabolical"
+                className="fixed bottom-6 right-5 md:bottom-8 md:right-8 z-[60] w-14 h-14 rounded-full bg-black border border-white/20 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_8px_32px_rgba(0,0,0,0.8)]"
+            >
+                {isOpen
+                    ? <X size={20} className="text-white" />
+                    : <img src="https://cdn.diabolicalservices.tech/diabolical/general/original/icono-diabolical-blanco.svg" alt="Diabolical" className="w-7 h-7" />
+                }
+            </button>
+
+            {/* Chat Panel */}
+            {isOpen && (
+                <div
+                    className="fixed z-50 flex flex-col bg-[#0a0a0a] border border-white/10 rounded-3xl shadow-2xl overflow-hidden"
+                    style={{ bottom: '5.5rem', right: '1.25rem', width: 'min(calc(100vw - 2.5rem), 22rem)', maxHeight: 'calc(100dvh - 7rem)' }}
+                >
+                    {/* Header */}
+                    <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3 flex-shrink-0">
+                        <div className="w-8 h-8 rounded-full bg-white/10 border border-white/15 flex items-center justify-center flex-shrink-0">
+                            <img src="https://cdn.diabolicalservices.tech/diabolical/general/original/icono-diabolical-blanco.svg" alt="" className="w-5 h-5" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <p className="text-xs font-black uppercase tracking-widest text-white leading-none">Diagnóstico Diabolical</p>
+                            <p className="text-[9px] text-white/30 uppercase tracking-widest mt-0.5">Sistema Autónomo · Online</p>
+                        </div>
+                        <div className="flex items-center gap-1.5 flex-shrink-0">
+                            <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                            <span className="text-[8px] text-white/20 font-mono uppercase">Live</span>
+                        </div>
+                    </div>
+
+                    {/* Progress Bar */}
+                    {!isSuccess && (
+                        <div className="h-px bg-white/5 flex-shrink-0">
+                            <div className="h-full bg-white/50 transition-all duration-500 ease-out" style={{ width: `${progress}%` }} />
+                        </div>
+                    )}
+
+                    {/* Body */}
+                    <div className="flex-1 overflow-y-auto p-5">
+                        {isSuccess && (
+                            <div className="flex flex-col items-center text-center py-8 gap-5">
+                                <div className="w-16 h-16 rounded-full bg-white/5 border border-white/15 flex items-center justify-center">
+                                    <CheckCircle2 size={28} className="text-white" />
+                                </div>
+                                <div className="space-y-2">
+                                    <h3 className="text-base font-title uppercase tracking-tight text-white">¡Diagnóstico Enviado!</h3>
+                                    <p className="text-xs text-white/50 leading-relaxed">Te contactaremos vía WhatsApp en las próximas horas con tu plan de automatización personalizado.</p>
+                                </div>
+                                <button onClick={handleClose} className="px-8 py-3 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-widest active:scale-95 transition-transform">Cerrar</button>
+                            </div>
+                        )}
+
+                        {currentQ && (
+                            <div className="space-y-4">
+                                <div className="space-y-1.5">
+                                    <span className="text-[8px] font-black uppercase tracking-[0.5em] text-white/20">{currentQ.tag}</span>
+                                    <p className="text-sm font-bold text-white leading-snug">{currentQ.label}</p>
+                                </div>
+                                <div className="space-y-2">
+                                    {currentQ.options.map((opt, i) => (
+                                        <button key={i} onClick={() => handleAnswer(opt.value)}
+                                            className="w-full text-left px-4 py-3.5 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.09] hover:border-white/25 text-white/70 hover:text-white text-sm transition-all active:scale-[0.98] min-h-[52px] leading-snug">
+                                            {opt.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {isContactStep && (
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <div className="space-y-1.5">
+                                    <span className="text-[8px] font-black uppercase tracking-[0.5em] text-white/20">06 / CONTACTO</span>
+                                    <p className="text-sm font-bold text-white leading-snug">Perfecto. ¿A dónde enviamos tu análisis?</p>
+                                </div>
+                                <div className="space-y-3">
+                                    <input required type="text" placeholder="Tu nombre" value={contact.name} onChange={e => setContact(p => ({ ...p, name: e.target.value }))} className={inp} />
+                                    <input required type="tel" placeholder="WhatsApp (+52 449 000 0000)" value={contact.whatsapp} onChange={e => setContact(p => ({ ...p, whatsapp: e.target.value }))} className={inp} />
+                                </div>
+                                <button type="submit" className="w-full py-4 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.3em] hover:scale-[1.02] active:scale-95 transition-all min-h-[56px]">Enviar por WhatsApp →</button>
+                                <p className="text-[9px] text-white/20 text-center">Solo te contactamos si tu negocio es un buen candidato.</p>
+                            </form>
+                        )}
+                    </div>
+
+                    {/* Step counter footer */}
+                    {!isSuccess && (
+                        <div className="px-5 py-2.5 border-t border-white/5 flex-shrink-0">
+                            <p className="text-[8px] font-mono text-white/20 uppercase tracking-widest text-center">
+                                {isContactStep ? 'Paso 6 de 6' : `Paso ${step + 1} de ${questions.length + 1}`}
+                            </p>
+                        </div>
+                    )}
+                </div>
+            )}
+        </>
+    );
+};
 
 const Footer = () => {
     const footerRef = useRef(null);
@@ -451,12 +642,12 @@ const Footer = () => {
                         <p className="text-sm md:text-base text-white/40 font-light mb-6 md:mb-8 leading-relaxed italic">
                             "La IA no es una herramienta. Es tu nueva <strong className="text-white/60 not-italic">infraestructura de dominio.</strong>"
                         </p>
-                        <a
-                            href="#contact"
+                        <button
+                            onClick={() => window.dispatchEvent(new Event('open-diabolical-chat'))}
                             className="inline-flex items-center px-8 py-4 bg-white text-black font-black text-[11px] uppercase tracking-[0.3em] rounded-full hover:scale-105 active:scale-95 transition-all shadow-2xl min-h-[52px]"
                         >
                             Reservar Auditoría de Fricción
-                        </a>
+                        </button>
                     </div>
                 </div>
 
@@ -553,19 +744,18 @@ const AdminPage = () => {
 
     if (!isLoggedIn) {
         return (
-            <div className="min-h-screen bg-black flex items-center justify-center p-6 font-jakarta relative overflow-hidden cursor-none">
-                <CustomCursor />
-                <div className="glass-card p-12 rounded-[3.5rem] w-full max-w-md border-white/10 text-center relative z-10">
+            <div className="min-h-screen bg-black flex items-center justify-center p-5 font-jakarta relative overflow-hidden">
+                <div className="glass-card p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] w-full max-w-md border-white/10 text-center relative z-10">
                     <img src={logoCuadradoBlanco} className="w-24 mx-auto mb-10 opacity-80" alt="Diabolical" />
                     <div className="space-y-2 mb-10">
                         <h2 className="text-2xl font-title tracking-[0.2em] uppercase text-white">Admin_Access</h2>
                         <p className="text-[9px] uppercase tracking-[0.4em] text-white/30 font-bold">Secure Infrastructure Node</p>
                     </div>
-                    <form onSubmit={handleLogin} className="space-y-6">
-                        <div className="space-y-4">
-                            <input type="text" placeholder="USERNAME" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono text-sm tracking-widest transition-all" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <form onSubmit={handleLogin} className="space-y-5">
+                        <div className="space-y-3">
+                            <input type="text" placeholder="USERNAME" className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono text-sm tracking-widest transition-all min-h-[52px]" value={username} onChange={(e) => setUsername(e.target.value)} />
                             <div className="relative">
-                                <input type={showPassword ? "text" : "password"} placeholder="AUTH_TOKEN" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono text-sm tracking-widest transition-all" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <input type={showPassword ? "text" : "password"} placeholder="AUTH_TOKEN" className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono text-sm tracking-widest transition-all min-h-[52px]" value={password} onChange={(e) => setPassword(e.target.value)} />
                                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-5 top-1/2 -translate-y-1/2 text-white/20 hover:text-white/60 p-2 transition-colors">
                                     {showPassword ? <Lock size={16} /> : <Zap size={16} />}
                                 </button>
@@ -581,27 +771,26 @@ const AdminPage = () => {
     const score = getSEOScore();
 
     return (
-        <div className="min-h-screen bg-[#050505] text-white flex flex-col font-jakarta cursor-none">
-            <CustomCursor />
+        <div className="min-h-screen bg-[#050505] text-white flex flex-col font-jakarta">
 
             {/* Header Dashboard */}
-            <header className="px-8 py-6 border-b border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-                <div className="flex items-center gap-6">
-                    <img src={logoCuadradoBlanco} alt="" className="w-8" />
-                    <div className="h-8 w-px bg-white/10" />
+            <header className="px-4 md:px-8 py-4 md:py-6 border-b border-white/5 flex flex-wrap justify-between items-center gap-3">
+                <div className="flex items-center gap-4 md:gap-6">
+                    <img src={logoCuadradoBlanco} alt="" className="w-7 md:w-8" />
+                    <div className="h-6 w-px bg-white/10" />
                     <div>
-                        <h1 className="text-xs font-black uppercase tracking-[0.5em] flex items-center gap-3">
+                        <h1 className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] flex items-center gap-2">
                             Monster_SEO <span className="text-[8px] bg-red-500/80 text-white px-2 py-0.5 rounded-full animate-pulse">Live</span>
                         </h1>
-                        <p className="text-[10px] text-white/20 uppercase tracking-widest mt-1">Infrastructure Control Center</p>
+                        <p className="text-[9px] text-white/20 uppercase tracking-widest mt-0.5">Infrastructure Control Center</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-full border border-white/5">
-                        <div className={cn("w-2 h-2 rounded-full", score > 70 ? "bg-green-500" : "bg-yellow-500")} />
-                        <span className="text-[9px] font-mono text-white/40 uppercase tracking-widest">HealthIndex: {score}%</span>
+                <div className="flex items-center gap-2 md:gap-4">
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-full border border-white/5">
+                        <div className={cn("w-1.5 h-1.5 rounded-full", score > 70 ? "bg-green-500" : "bg-yellow-500")} />
+                        <span className="text-[8px] md:text-[9px] font-mono text-white/40 uppercase tracking-widest">SEO: {score}%</span>
                     </div>
-                    <button onClick={() => navigate('/')} className="px-6 py-2 glass rounded-full text-[9px] uppercase tracking-widest hover:bg-white hover:text-black transition-all">Exit_Node</button>
+                    <button onClick={() => navigate('/')} className="px-4 md:px-6 py-2 glass rounded-full text-[9px] uppercase tracking-widest hover:bg-white hover:text-black transition-all whitespace-nowrap">Exit_Node</button>
                 </div>
             </header>
 
@@ -636,7 +825,7 @@ const AdminPage = () => {
                 </aside>
 
                 {/* Main Content Areas */}
-                <main className="flex-1 overflow-y-auto p-8 md:p-16">
+                <main className="flex-1 overflow-y-auto p-4 sm:p-8 md:p-12 lg:p-16">
                     <form onSubmit={handleSubmit} className="max-w-4xl space-y-12">
 
                         {activeTab === 'seo' && (
@@ -705,7 +894,7 @@ const AdminPage = () => {
                             type="submit"
                             disabled={isSaving}
                             className={cn(
-                                "fixed bottom-12 right-12 px-12 py-6 rounded-full font-black text-xs uppercase tracking-[0.4em] transition-all z-50",
+                                "fixed bottom-5 right-4 md:bottom-12 md:right-12 px-8 md:px-12 py-4 md:py-6 rounded-full font-black text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] transition-all z-50",
                                 isSaving ? "bg-white/20 text-white/40" : "bg-white text-black hover:scale-105 shadow-[0_0_50px_rgba(255,255,255,0.2)]"
                             )}
                         >
@@ -801,6 +990,18 @@ const SolutionCards = () => {
 };
 
 const Contact = () => {
+    const [form, setForm] = useState({ source: 'WhatsApp / Instagram', people: '', aspiration: '', name: '', email: '', whatsapp: '' });
+    const [sent, setSent] = useState(false);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const msg = `🟢 *DIAGNÓSTICO RÁPIDO — DIABOLICAL*\n\n*Nombre:* ${form.name}\n*WhatsApp:* ${form.whatsapp}\n*Email:* ${form.email}\n\n*¿Cómo llegan sus clientes?:* ${form.source}\n*Personas que atienden:* ${form.people}\n*Si fuera automático:* ${form.aspiration}`;
+        window.open(`https://wa.me/524495136907?text=${encodeURIComponent(msg)}`, '_blank');
+        setSent(true);
+    };
+
+    const inp = 'w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white text-sm focus:outline-none focus:border-white/30 transition-all min-h-[52px] placeholder:text-white/25';
+
     return (
         <section id="contact" className="py-16 md:py-28 bg-black relative border-t border-white/5">
             <div className="max-w-3xl mx-auto px-5 md:px-6">
@@ -818,36 +1019,67 @@ const Contact = () => {
                 </div>
 
                 <div className="glass-card p-6 md:p-10 rounded-3xl border-white/10 shadow-2xl">
-                    <h3 className="text-[9px] uppercase tracking-[0.4em] font-black mb-6 md:mb-8 text-center text-white/30">Cuestionario de Fricción</h3>
-                    <form className="space-y-5">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div className="flex flex-col gap-2">
-                                <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">¿Cómo llegan tus clientes?</label>
-                                <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white text-sm focus:outline-none focus:border-white/30 transition-all appearance-none min-h-[52px]">
-                                    <option className="bg-black">WhatsApp / Instagram</option>
-                                    <option className="bg-black">Boca en Boca</option>
-                                    <option className="bg-black">Publicidad Pagada (Ads)</option>
-                                    <option className="bg-black">Google / SEO Local</option>
-                                </select>
+                    {sent ? (
+                        <div className="flex flex-col items-center text-center py-10 gap-5">
+                            <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+                                <CheckCircle2 size={28} className="text-white" />
                             </div>
-                            <div className="flex flex-col gap-2">
-                                <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">¿Cuántas personas atienden hoy?</label>
-                                <input type="number" placeholder="Ej: 3" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white text-sm focus:outline-none focus:border-white/30 transition-all min-h-[52px]" />
+                            <div>
+                                <h3 className="text-lg font-title uppercase text-white mb-2">¡Mensaje Enviado!</h3>
+                                <p className="text-sm text-white/50 leading-relaxed">Te contactaremos pronto por WhatsApp para presentarte tu plan de automatización.</p>
                             </div>
+                            <button onClick={() => setSent(false)} className="px-8 py-3 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-widest">Enviar otro</button>
                         </div>
+                    ) : (
+                        <>
+                            <h3 className="text-[9px] uppercase tracking-[0.4em] font-black mb-6 md:mb-8 text-center text-white/30">Cuestionario de Fricción</h3>
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">¿Cómo llegan tus clientes?</label>
+                                        <select value={form.source} onChange={e => setForm(p => ({ ...p, source: e.target.value }))} className={inp + ' appearance-none'}>
+                                            <option className="bg-black">WhatsApp / Instagram</option>
+                                            <option className="bg-black">Boca en Boca</option>
+                                            <option className="bg-black">Publicidad Pagada (Ads)</option>
+                                            <option className="bg-black">Google / SEO Local</option>
+                                        </select>
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">¿Cuántas personas atienden hoy?</label>
+                                        <input type="number" placeholder="Ej: 3" value={form.people} onChange={e => setForm(p => ({ ...p, people: e.target.value }))} className={inp} />
+                                    </div>
+                                </div>
 
-                        <div className="flex flex-col gap-2">
-                            <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">Si fuera automático, ¿qué harías con tu tiempo libre?</label>
-                            <input type="text" placeholder="Ej: pasar tiempo en familia, viajar..." className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white text-sm focus:outline-none focus:border-white/30 transition-all min-h-[52px]" />
-                        </div>
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">Si fuera automático, ¿qué harías con tu tiempo libre?</label>
+                                    <input type="text" placeholder="Ej: escalar, viajar, pasar tiempo con mi familia..." value={form.aspiration} onChange={e => setForm(p => ({ ...p, aspiration: e.target.value }))} className={inp} />
+                                </div>
 
-                        <button
-                            type="submit"
-                            className="w-full py-5 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.3em] md:tracking-[0.5em] hover:scale-[1.02] active:scale-95 transition-all shadow-2xl mt-2 min-h-[60px]"
-                        >
-                            Solicitar Diagnóstico Gratuito
-                        </button>
-                    </form>
+                                <div className="border-t border-white/5 pt-4 space-y-4">
+                                    <p className="text-[9px] uppercase tracking-[0.4em] text-white/20 font-black text-center">Datos de Contacto</p>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div className="flex flex-col gap-2">
+                                            <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">Tu nombre</label>
+                                            <input required type="text" placeholder="Nombre" value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} className={inp} />
+                                        </div>
+                                        <div className="flex flex-col gap-2">
+                                            <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">WhatsApp</label>
+                                            <input required type="tel" placeholder="+52 449 000 0000" value={form.whatsapp} onChange={e => setForm(p => ({ ...p, whatsapp: e.target.value }))} className={inp} />
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">Correo electrónico</label>
+                                        <input required type="email" placeholder="tu@correo.com" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} className={inp} />
+                                    </div>
+                                </div>
+
+                                <button type="submit" className="w-full py-5 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] hover:scale-[1.02] active:scale-95 transition-all shadow-2xl mt-2 min-h-[60px]">
+                                    Solicitar Diagnóstico Gratuito →
+                                </button>
+                                <p className="text-[9px] text-white/20 text-center">Te contactaremos solo si tu negocio es un buen candidato.</p>
+                            </form>
+                        </>
+                    )}
                 </div>
             </div>
         </section>
@@ -999,6 +1231,7 @@ const LandingPage = () => {
             <BoldHook />
             <Contact />
             <Footer />
+            <DiabolicalChatbot />
         </main>
     );
 };
