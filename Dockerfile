@@ -1,4 +1,4 @@
-# 1. Construcción del frontend
+# 1. Construcción del Frontend (Vite)
 FROM node:20-alpine AS build-frontend
 WORKDIR /app
 COPY package*.json ./
@@ -6,21 +6,23 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# 2. Imagen de ejecución final
+# 2. Imagen de ejecución final (Express)
 FROM node:20-alpine
 WORKDIR /app
+
+# Instalamos solo dependencias de producción
 COPY package*.json ./
 RUN npm install --production
 
-# CORRECCIÓN: Copiamos 'dist' (lo que genera Vite) hacia 'dist' (lo que busca server.js)
+# Copiamos la carpeta 'dist' construida en el paso anterior
 COPY --from=build-frontend /app/dist ./dist
 
+# Copiamos el servidor y aseguramos la carpeta de datos
 COPY server.js .
-# La carpeta data se manejará con el volumen de Dokploy
-RUN mkdir -p data 
+RUN mkdir -p data
 
-ENV PORT=3000
+# Exponemos el puerto y lanzamos
+EXPOSE 3000
 ENV NODE_ENV=production
 
-EXPOSE 3000
 CMD ["node", "server.js"]
