@@ -809,10 +809,28 @@ const Footer = () => {
 
 const AdminPage = () => {
     const navigate = useNavigate();
+    const [activeTab, setActiveTab] = useState('seo');
     const [formData, setFormData] = useState({
+        // SEO الأساسية
         title: "DIABOLICAL | Elite AI Automation & Design",
         description: "Exponential scaling through autonomous AI systems and high-end digital engineering.",
-        keywords: "AI Automation, Elite Design, Business Intelligence, Digital Engineering"
+        keywords: "AI Automation, Elite Design, Business Intelligence, Digital Engineering",
+        siteUrl: "https://diabolicalservices.tech",
+
+        // Social & Brand
+        favicon: "/favicon.ico",
+        ogImage: "",
+        twitterHandle: "@diabolical",
+
+        // Advanced Técnico
+        sitemapXml: "",
+        robotsTxt: "User-agent: *\nAllow: /",
+        structuredData: "{}",
+
+        // Analytics & Tracking
+        googleTagManager: "",
+        metaPixel: "",
+        customHeaderScripts: ""
     });
     const [isSaving, setIsSaving] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -820,7 +838,6 @@ const AdminPage = () => {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-    // Real-time SEO Title Sync
     useEffect(() => {
         if (formData.title) document.title = formData.title;
     }, [formData.title]);
@@ -829,7 +846,7 @@ const AdminPage = () => {
         const fetchSettings = async () => {
             try {
                 const res = await axios.get('/api/settings');
-                if (res.data) setFormData(res.data);
+                if (res.data) setFormData({ ...formData, ...res.data });
             } catch (error) {
                 console.error("Error fetching settings:", error);
             }
@@ -839,7 +856,6 @@ const AdminPage = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        // Updated secure credentials
         if (username === "admin" && password === "Diabolical1502") {
             setIsLoggedIn(true);
         } else {
@@ -852,10 +868,10 @@ const AdminPage = () => {
         setIsSaving(true);
         try {
             await axios.post('/api/settings', formData);
-            alert('INFRAESTRUCTURA ACTUALIZADA: SEO & GEO Sincronizados con el Servidor.');
+            alert('INFRAESTRUCTURA ACTUALIZADA: La información se ha propagado a los motores de búsqueda.');
         } catch (error) {
             console.error("Error updating SEO:", error);
-            alert('Error al sincronizar con el backend.');
+            alert('Error al sincronizar con el centro de mando.');
         } finally {
             setIsSaving(false);
         }
@@ -863,13 +879,10 @@ const AdminPage = () => {
 
     const getSEOScore = () => {
         let score = 0;
-        const title = formData.title || "";
-        const description = formData.description || "";
-        const keywords = formData.keywords || "";
-
-        if (title.length > 30 && title.length < 60) score += 33;
-        if (description.length > 120 && description.length < 160) score += 33;
-        if (keywords.split(',').filter(k => k.trim()).length > 3) score += 34;
+        if (formData.title.length > 30 && formData.title.length < 60) score += 25;
+        if (formData.description.length > 120 && formData.description.length < 160) score += 25;
+        if (formData.ogImage) score += 25;
+        if (formData.googleTagManager || formData.metaPixel) score += 25;
         return score;
     };
 
@@ -878,60 +891,24 @@ const AdminPage = () => {
             <div className="min-h-screen bg-black flex items-center justify-center p-6 font-jakarta relative overflow-hidden cursor-none">
                 <CustomCursor />
                 <div className="glass-card p-12 rounded-[3.5rem] w-full max-w-md border-white/10 text-center relative z-10">
-                    <img
-                        src={logoCuadradoBlanco}
-                        className="w-24 mx-auto mb-10 opacity-80"
-                        alt="Diabolical"
-                    />
-
+                    <img src={logoCuadradoBlanco} className="w-24 mx-auto mb-10 opacity-80" alt="Diabolical" />
                     <div className="space-y-2 mb-10">
                         <h2 className="text-2xl font-title tracking-[0.2em] uppercase text-white">Admin_Access</h2>
                         <p className="text-[9px] uppercase tracking-[0.4em] text-white/30 font-bold">Secure Infrastructure Node</p>
                     </div>
-
                     <form onSubmit={handleLogin} className="space-y-6">
                         <div className="space-y-4">
-                            <input
-                                type="text"
-                                placeholder="USERNAME"
-                                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono text-sm tracking-widest transition-all"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                            />
-
-                            <div className="relative group">
-                                <input
-                                    type={showPassword ? "text" : "password"}
-                                    placeholder="AUTH_TOKEN"
-                                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono text-sm tracking-widest transition-all"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-5 top-1/2 -translate-y-1/2 text-white/20 hover:text-white/60 p-2 transition-colors"
-                                >
+                            <input type="text" placeholder="USERNAME" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono text-sm tracking-widest transition-all" value={username} onChange={(e) => setUsername(e.target.value)} />
+                            <div className="relative">
+                                <input type={showPassword ? "text" : "password"} placeholder="AUTH_TOKEN" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono text-sm tracking-widest transition-all" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-5 top-1/2 -translate-y-1/2 text-white/20 hover:text-white/60 p-2 transition-colors">
                                     {showPassword ? <Lock size={16} /> : <Zap size={16} />}
                                 </button>
                             </div>
                         </div>
-
-                        <button className="w-full py-5 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.5em] hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_30px_rgba(255,255,255,0.05)] mt-4">
-                            UNLOCK_TERMINAL
-                        </button>
+                        <button className="w-full py-5 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.5em] hover:scale-[1.02] active:scale-95 transition-all shadow-2xl mt-4">UNLOCK_TERMINAL</button>
                     </form>
-
-                    <button
-                        onClick={() => navigate('/')}
-                        className="mt-12 text-[9px] uppercase tracking-[0.4em] text-white/20 hover:text-white/50 transition-colors block w-full"
-                    >
-                        Back to Zero_Point
-                    </button>
                 </div>
-
-                {/* Background Decor */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
             </div>
         );
     }
@@ -939,144 +916,200 @@ const AdminPage = () => {
     const score = getSEOScore();
 
     return (
-        <div className="min-h-screen bg-[#050505] text-white p-8 md:p-16 font-jakarta cursor-none">
+        <div className="min-h-screen bg-[#050505] text-white flex flex-col font-jakarta cursor-none">
             <CustomCursor />
-            <div className="max-w-6xl mx-auto">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-16 pb-12 border-b border-white/10">
+
+            {/* Header Dashboard */}
+            <header className="px-8 py-6 border-b border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="flex items-center gap-6">
+                    <img src={logoCuadradoBlanco} alt="" className="w-8" />
+                    <div className="h-8 w-px bg-white/10" />
                     <div>
-                        <div className="flex items-center gap-4 mb-4">
-                            <span className="px-3 py-1 bg-white/10 rounded-full text-[8px] font-mono tracking-[0.3em] uppercase">Control_Panel v2.5</span>
-                            <span className={cn(
-                                "w-2 h-2 rounded-full animate-pulse",
-                                score > 70 ? "bg-green-500" : "bg-yellow-500"
-                            )} />
-                        </div>
-                        <h1 className="text-4xl font-title tracking-tighter uppercase flex items-center gap-4">
-                            SEO & GEO <span className="text-white/20 whitespace-nowrap">INFRASTRUCTURE</span>
+                        <h1 className="text-xs font-black uppercase tracking-[0.5em] flex items-center gap-3">
+                            Monster_SEO <span className="text-[8px] bg-red-500/80 text-white px-2 py-0.5 rounded-full animate-pulse">Live</span>
                         </h1>
+                        <p className="text-[10px] text-white/20 uppercase tracking-widest mt-1">Infrastructure Control Center</p>
                     </div>
-                    <button onClick={() => navigate('/')} className="px-8 py-3 glass rounded-full text-[10px] uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all">
-                        Exit to Site
-                    </button>
+                </div>
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-full border border-white/5">
+                        <div className={cn("w-2 h-2 rounded-full", score > 70 ? "bg-green-500" : "bg-yellow-500")} />
+                        <span className="text-[9px] font-mono text-white/40 uppercase tracking-widest">HealthIndex: {score}%</span>
+                    </div>
+                    <button onClick={() => navigate('/')} className="px-6 py-2 glass rounded-full text-[9px] uppercase tracking-widest hover:bg-white hover:text-black transition-all">Exit_Node</button>
+                </div>
+            </header>
+
+            <div className="flex flex-1 overflow-hidden">
+                {/* Sidebar Navigation */}
+                <aside className="w-20 md:w-64 border-r border-white/5 bg-black flex flex-col p-4 gap-2">
+                    {[
+                        { id: 'seo', icon: <Search size={18} />, label: 'SEO Core' },
+                        { id: 'social', icon: <Share2 size={18} />, label: 'Social & Branding' },
+                        { id: 'tech', icon: <TerminalIcon size={18} />, label: 'Technical XML/IA' },
+                        { id: 'analytics', icon: <Activity size={18} />, label: 'Tracking Tags' }
+                    ].map(tab => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={cn(
+                                "flex items-center gap-4 p-4 rounded-2xl transition-all group",
+                                activeTab === tab.id ? "bg-white text-black" : "text-white/40 hover:bg-white/5 hover:text-white"
+                            )}
+                        >
+                            <span className="group-hover:scale-110 transition-transform">{tab.icon}</span>
+                            <span className="hidden md:block text-[10px] uppercase font-black tracking-widest">{tab.label}</span>
+                        </button>
+                    ))}
+                    <div className="mt-auto p-4 md:p-6 bg-white/[0.02] rounded-3xl border border-white/5 hidden md:block">
+                        <h4 className="text-[8px] uppercase tracking-widest text-white/20 mb-2">Build_Status</h4>
+                        <div className="flex justify-between items-center text-[9px] font-mono text-green-500/60 uppercase">
+                            <span>Sitemap</span>
+                            <span>Valid</span>
+                        </div>
+                    </div>
+                </aside>
+
+                {/* Main Content Areas */}
+                <main className="flex-1 overflow-y-auto p-8 md:p-16">
+                    <form onSubmit={handleSubmit} className="max-w-4xl space-y-12">
+
+                        {activeTab === 'seo' && (
+                            <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="space-y-4">
+                                    <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold italic level-label">Main Search Title</label>
+                                    <input type="text" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-white/30 transition-all text-xl" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} />
+                                </div>
+                                <div className="space-y-4">
+                                    <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold italic level-label">Meta Description (Max 160)</label>
+                                    <textarea rows="4" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-white/30 transition-all resize-none" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} />
+                                </div>
+                                <div className="space-y-4">
+                                    <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold italic level-label">Canonical Site URL</label>
+                                    <input type="text" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white/50 focus:outline-none focus:border-white/30 transition-all font-mono" value={formData.siteUrl} onChange={(e) => setFormData({ ...formData, siteUrl: e.target.value })} />
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'social' && (
+                            <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="space-y-4">
+                                    <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold italic">Social Preview Image (OG Image URL)</label>
+                                    <input type="text" placeholder="https://..." className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-white/30 transition-all font-mono" value={formData.ogImage} onChange={(e) => setFormData({ ...formData, ogImage: e.target.value })} />
+                                </div>
+                                <div className="space-y-4">
+                                    <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold italic">Favicon Path</label>
+                                    <input type="text" placeholder="/favicon.ico" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-white/30 transition-all font-mono" value={formData.favicon} onChange={(e) => setFormData({ ...formData, favicon: e.target.value })} />
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'tech' && (
+                            <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="space-y-4">
+                                    <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold italic">Structured Data (Scheme JSON)</label>
+                                    <textarea rows="6" className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-white/50 focus:outline-none focus:border-white/30 transition-all font-mono text-xs" value={formData.structuredData} onChange={(e) => setFormData({ ...formData, structuredData: e.target.value })} />
+                                </div>
+                                <div className="space-y-4">
+                                    <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold italic">Sitemap.xml Config</label>
+                                    <textarea rows="4" className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-white/50 focus:outline-none focus:border-white/30 transition-all font-mono text-xs" value={formData.sitemapXml} onChange={(e) => setFormData({ ...formData, sitemapXml: e.target.value })} />
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'analytics' && (
+                            <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold">Google Tag Manager (ID)</label>
+                                        <input type="text" placeholder="GTM-XXXXXX" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-white/30" value={formData.googleTagManager} onChange={(e) => setFormData({ ...formData, googleTagManager: e.target.value })} />
+                                    </div>
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold">Meta Pixel (ID)</label>
+                                        <input type="text" placeholder="1234567890" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-white/30" value={formData.metaPixel} onChange={(e) => setFormData({ ...formData, metaPixel: e.target.value })} />
+                                    </div>
+                                </div>
+                                <div className="space-y-4">
+                                    <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-2 font-bold italic">Head Injection Scripts</label>
+                                    <textarea rows="4" className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-white/30 focus:outline-none focus:border-white/30 transition-all font-mono text-[10px]" value={formData.customHeaderScripts} onChange={(e) => setFormData({ ...formData, customHeaderScripts: e.target.value })} />
+                                </div>
+                            </div>
+                        )}
+
+                        <button
+                            type="submit"
+                            disabled={isSaving}
+                            className={cn(
+                                "fixed bottom-12 right-12 px-12 py-6 rounded-full font-black text-xs uppercase tracking-[0.4em] transition-all z-50",
+                                isSaving ? "bg-white/20 text-white/40" : "bg-white text-black hover:scale-105 shadow-[0_0_50px_rgba(255,255,255,0.2)]"
+                            )}
+                        >
+                            {isSaving ? "SYNCHRONIZING..." : "PROPAGATE_ALL_DATA"}
+                        </button>
+                    </form>
+                </main>
+            </div>
+        </div>
+    );
+};
+
+// Removed old Problem and SolutionCards to resolve duplication
+
+const ComparisonSection = () => {
+    return (
+        <section className="py-24 md:py-40 bg-black border-y border-white/5 relative overflow-hidden">
+            <div className="max-w-4xl mx-auto px-6 relative z-10">
+                <div className="text-center mb-20">
+                    <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-4">La Lógica del Ahorro</h2>
+                    <p className="text-[10px] uppercase tracking-[0.5em] text-white/20 font-bold">Escalabilidad vs Estancamiento</p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                    {/* Left: Editor */}
-                    <div className="lg:col-span-2 space-y-12">
-                        <div className="glass-card p-12 rounded-[3rem] border-white/10">
-                            <div className="flex items-center gap-4 mb-12">
-                                <Activity size={20} className="text-white/40" />
-                                <h2 className="text-sm font-bold uppercase tracking-[0.4em]">Content Optimization</h2>
-                            </div>
-
-                            <form onSubmit={handleSubmit} className="space-y-10">
-                                <div className="space-y-4">
-                                    <div className="flex justify-between items-end px-4">
-                                        <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 font-bold">SEO Title</label>
-                                        <span className={cn("text-[10px] font-mono", formData.title.length > 60 ? "text-red-500" : "text-white/20")}>
-                                            {formData.title.length} / 60
-                                        </span>
-                                    </div>
-                                    <input
-                                        type="text"
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-6 text-white text-lg font-light focus:outline-none focus:border-white/30 transition-all shadow-inner"
-                                        value={formData.title}
-                                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    />
-                                </div>
-
-                                <div className="space-y-4">
-                                    <div className="flex justify-between items-end px-4">
-                                        <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 font-bold">Meta Description</label>
-                                        <span className={cn("text-[10px] font-mono", formData.description.length > 160 ? "text-red-500" : "text-white/20")}>
-                                            {formData.description.length} / 160
-                                        </span>
-                                    </div>
-                                    <textarea
-                                        rows="4"
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-6 text-white font-light focus:outline-none focus:border-white/30 transition-all resize-none leading-relaxed"
-                                        value={formData.description}
-                                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                    />
-                                </div>
-
-                                <div className="space-y-4">
-                                    <label className="text-[10px] uppercase tracking-[0.4em] text-white/30 px-4 font-bold">AI Intent Keywords (GEO)</label>
-                                    <input
-                                        type="text"
-                                        placeholder="AI Automation, Scaling, Business Intelligence..."
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-6 text-white font-mono text-sm focus:outline-none focus:border-white/30 transition-all"
-                                        value={formData.keywords}
-                                        onChange={(e) => setFormData({ ...formData, keywords: e.target.value })}
-                                    />
-                                    <p className="text-[9px] text-white/20 px-4 italic uppercase tracking-wider">Separate values with commas for AI agent indexing.</p>
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    disabled={isSaving}
-                                    className={cn(
-                                        "w-full py-8 rounded-full font-black text-xs uppercase tracking-[0.5em] transition-all mt-8",
-                                        isSaving ? "bg-white/20 text-white/40" : "bg-white text-black hover:scale-[1.02] shadow-[0_0_50px_rgba(255,255,255,0.1)]"
-                                    )}
-                                >
-                                    {isSaving ? "SYNCING_DATA..." : "COMMIT_CHANGES"}
-                                </button>
-                            </form>
-                        </div>
+                <div className="grid grid-cols-2 gap-px bg-white/10 rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl">
+                    <div className="bg-black/80 p-8 md:p-12">
+                        <h4 className="text-[10px] uppercase tracking-[0.4em] text-white/40 mb-10 font-black">Si sigues igual...</h4>
+                        <ul className="space-y-10 md:space-y-14">
+                            <li className="text-[11px] md:text-sm text-white/30 leading-snug">Pagas nóminas, seguros y bonos cada mes.</li>
+                            <li className="text-[11px] md:text-sm text-white/30 leading-snug">El crecimiento depende de tu cansancio.</li>
+                            <li className="text-[11px] md:text-sm text-white/30 leading-snug">Ventas perdidas por falta de respuesta.</li>
+                            <li className="text-[11px] md:text-sm text-white/30 leading-snug">Vives pegado al celular.</li>
+                        </ul>
                     </div>
-
-                    {/* Right: Preview & Score */}
-                    <div className="space-y-12">
-                        <div className="glass-card p-12 rounded-[3rem] border-white/10 bg-white/[0.02]">
-                            <h2 className="text-[10px] uppercase tracking-[0.4em] text-white/30 mb-8 font-bold">Health Score</h2>
-                            <div className="flex items-center gap-8 mb-8">
-                                <div className="text-6xl font-title tracking-tighter">{score}%</div>
-                                <div className="h-12 w-px bg-white/10" />
-                                <div className="text-[10px] uppercase tracking-[0.2em] font-bold leading-tight text-white/40">
-                                    DIABOLICAL <br /> RANKING_INDEX
-                                </div>
-                            </div>
-                            <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
-                                <div className="h-full bg-white transition-all duration-1000" style={{ width: `${score}%` }} />
-                            </div>
-                        </div>
-
-                        <div className="glass-card p-12 rounded-[3rem] border-white/10">
-                            <h2 className="text-[10px] uppercase tracking-[0.4em] text-white/30 mb-8 font-bold">Search Preview</h2>
-                            <div className="bg-black/40 border border-white/5 p-8 rounded-2xl space-y-4">
-                                <div className="text-blue-400 text-lg hover:underline cursor-pointer truncate font-medium">{formData.title || "Page Title"}</div>
-                                <div className="text-green-500/60 text-xs truncate">https://diabolicalservices.tech</div>
-                                <div className="text-white/40 text-sm leading-relaxed line-clamp-2">
-                                    {formData.description || "Enter description..."}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="glass-card p-12 rounded-[3rem] border-white/10 bg-white/[0.01]">
-                            <h2 className="text-[10px] uppercase tracking-[0.4em] text-white/30 mb-8 font-bold">System Status</h2>
-                            <div className="space-y-4 font-mono text-[9px] text-white/20 uppercase tracking-widest">
-                                <div className="flex justify-between font-bold text-white/40">
-                                    <span>Server_Node</span>
-                                    <span className="text-green-500">Online</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span>Database_Flat</span>
-                                    <span>Active</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span>Static_Dist</span>
-                                    <span>Deployed</span>
-                                </div>
-                                <div className="pt-4 border-t border-white/5">
-                                    Last_Sync: {new Date().toLocaleTimeString()}
-                                </div>
-                            </div>
-                        </div>
+                    <div className="bg-white/5 p-8 md:p-12 relative flex flex-col h-full">
+                        <div className="absolute inset-0 bg-white/[0.02] pointer-events-none"></div>
+                        <h4 className="text-[10px] uppercase tracking-[0.4em] text-white mb-10 font-black">Con Sistema Diabolical</h4>
+                        <ul className="space-y-10 md:space-y-14 relative z-10">
+                            <li className="text-[11px] md:text-sm text-white leading-snug font-bold">Una inversión fija que se paga sola.</li>
+                            <li className="text-[11px] md:text-sm text-white leading-snug font-bold">El sistema escala sin que tú trabajes más.</li>
+                            <li className="text-[11px] md:text-sm text-white leading-snug font-bold">Cada mensaje es una oportunidad cerrada.</li>
+                            <li className="text-[11px] md:text-sm text-white leading-snug font-bold">Recuperas tus domingos.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+    );
+};
+
+const BoldHook = () => {
+    return (
+        <section className="py-32 md:py-60 bg-black relative">
+            <div className="max-w-5xl mx-auto px-6 text-center">
+                <div className="inline-block px-6 py-2 border border-red-500/20 rounded-full mb-12">
+                    <span className="text-[9px] text-red-500 uppercase tracking-[0.6em] font-black animate-pulse underline">Alerta_Financiera</span>
+                </div>
+                <h2 className="text-4xl md:text-8xl font-title tracking-tighter uppercase mb-12 leading-[0.85]">
+                    Cada minuto que pasas leyendo esto, <span className="text-white/20">estás perdiendo dinero.</span>
+                </h2>
+                <div className="max-w-3xl mx-auto space-y-10">
+                    <p className="text-lg md:text-2xl text-white/60 leading-relaxed font-light">
+                        Mientras tu equipo (o tú mismo) dedica horas a contestar las mismas 10 preguntas por WhatsApp o a pasar datos de un papel a un Excel, tus competidores más ágiles te están robando mercado. No estás ahorrando dinero al no automatizar; estás pagando un <span className="text-white underline underline-offset-8 decoration-white/20">"impuesto por ineficiencia"</span> que te sale más caro que cualquier nómina.
+                    </p>
+                    <p className="text-2xl md:text-4xl font-title text-white italic tracking-tight pt-8 border-t border-white/5">
+                        "No tienes un problema de ventas, tienes un problema de sistema."
+                    </p>
+                </div>
+            </div>
+        </section>
     );
 };
 
@@ -1150,8 +1183,9 @@ const LandingPage = () => {
             <Hero />
             <Problem />
             <SolutionCards />
-            <Impact />
-            <Protocols />
+            <ComparisonSection />
+            <BoldHook />
+            <Contact />
             <Footer />
         </main>
     );
