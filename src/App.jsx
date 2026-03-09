@@ -25,6 +25,11 @@ import {
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+// Import Logos correctly for Vite/Production
+import logoHorizontalNegro from './assets/logo/LOGO-DIABOLICAL-HORIZONTAL-NEGRO.svg';
+import logoHorizontalBlanco from './assets/logo/LOGO-DIABOLICAL-HORIZONTAL-BLANCO.svg';
+import logoCuadradoBlanco from './assets/logo/LOGO-DIABOLICAL-CUADRADO-BLANCO.svg';
+
 // Utility for tailwind classes
 function cn(...inputs) {
     return twMerge(clsx(inputs));
@@ -239,8 +244,8 @@ const Navbar = () => {
             <div className="flex items-center gap-3">
                 <img
                     src={isLight
-                        ? "/src/assets/logo/LOGO-DIABOLICAL-HORIZONTAL-NEGRO.svg"
-                        : "/src/assets/logo/LOGO-DIABOLICAL-HORIZONTAL-BLANCO.svg"
+                        ? logoHorizontalNegro
+                        : logoHorizontalBlanco
                     }
                     alt="Diabolical"
                     className="h-6 md:h-10 transition-all"
@@ -326,7 +331,7 @@ const Hero = () => {
                 <div className="hero-logo-container mb-24 animate-float">
                     <div className="hero-glow !scale-125" />
                     <img
-                        src="/src/assets/logo/LOGO-DIABOLICAL-CUADRADO-BLANCO.svg"
+                        src={logoCuadradoBlanco}
                         alt="Diabolical Logo"
                         className="w-36 h-36 md:w-56 md:h-56 glitch-logo"
                     />
@@ -773,7 +778,7 @@ const Footer = () => {
                 <div className="flex flex-col md:flex-row justify-between items-start gap-32 mb-48">
                     <div className="max-w-3xl footer-content">
                         <div className="flex items-center gap-4 mb-20">
-                            <img src="/src/assets/logo/LOGO-DIABOLICAL-HORIZONTAL-BLANCO.svg" alt="Diabolical" className="h-10" />
+                            <img src={logoHorizontalBlanco} alt="Diabolical" className="h-10" />
                         </div>
                         <h2 className="text-4xl md:text-6xl font-title mb-16 leading-[0.9] tracking-tighter">
                             ¿LISTO PARA TU <br />
@@ -861,7 +866,7 @@ const AdminPage = () => {
         return (
             <div className="min-h-screen bg-black flex items-center justify-center p-6 font-jakarta">
                 <div className="glass-card p-12 rounded-[3rem] w-full max-w-md border-white/10 text-center">
-                    <img src="/src/assets/logo/LOGO-DIABOLICAL-CUADRADO-BLANCO.svg" className="w-20 mx-auto mb-12 opacity-50" alt="" />
+                    <img src={logoCuadradoBlanco} className="w-20 mx-auto mb-12 opacity-50" alt="" />
                     <h2 className="text-2xl font-title mb-8 tracking-widest uppercase">Admin Auth</h2>
                     <form onSubmit={handleLogin} className="space-y-6">
                         <input
