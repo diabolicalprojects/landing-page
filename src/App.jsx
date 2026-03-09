@@ -872,13 +872,10 @@ const AdminPage = () => {
     if (!isLoggedIn) {
         return (
             <div className="min-h-screen bg-black flex items-center justify-center p-6 font-jakarta relative overflow-hidden">
-                {/* Same Custom Cursor for consistency */}
-                <CustomCursor />
-
                 <div className="glass-card p-12 rounded-[3.5rem] w-full max-w-md border-white/10 text-center relative z-10">
                     <img
                         src={logoCuadradoBlanco}
-                        className="w-24 mx-auto mb-10 glitch-logo opacity-80"
+                        className="w-24 mx-auto mb-10 opacity-80"
                         alt="Diabolical"
                     />
 
