@@ -1,28 +1,25 @@
-# 1. Construcción del Frontend (Vite)
-FROM node:20-alpine AS build-frontend
+# Single-stage build for debugging and robustness
+FROM node:20-slim
 WORKDIR /app
+
+# Copy all metadata files
 COPY package*.json ./
+
+# Install EVERY dependency (including devDeps for the build)
 RUN npm install
+
+# Copy source code
 COPY . .
+
+# Run the frontend build
 RUN npm run build
 
-# 2. Imagen de ejecución final (Express)
-FROM node:20-alpine
-WORKDIR /app
+# Make sure data directory exists and has permissions
+RUN mkdir -p /app/data && chmod 777 /app/data
 
-# Instalamos solo dependencias de producción
-COPY package*.json ./
-RUN npm install --production
-
-# Copiamos la carpeta 'dist' construida en el paso anterior
-COPY --from=build-frontend /app/dist ./dist
-
-# Copiamos el servidor y aseguramos la carpeta de datos
-COPY server.js .
-RUN mkdir -p data
-
-# Exponemos el puerto y lanzamos
+# Expose port and set environment
 EXPOSE 3000
 ENV NODE_ENV=production
 
+# Start the server
 CMD ["node", "server.js"]
