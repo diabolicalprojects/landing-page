@@ -3,67 +3,83 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
+// CAPTURADOR DE ERRORES CRÍTICOS
+process.on('uncaughtException', (err) => {
+    console.error('FATAL ERROR (Uncaught):', err);
+});
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('FATAL ERROR (Unhandled Rejection):', reason);
+});
+
 const app = express();
-// Dokploy inyecta el puerto, si no usa el 3000
 const PORT = process.env.PORT || 3000;
 
-// Rutas absolutas para Docker
+console.log('--- SYSTEM STARTUP ---');
+
+// Rutas
 const distPath = path.join(__dirname, 'dist');
 const dataDir = path.join(__dirname, 'data');
 const settingsFile = path.join(dataDir, 'settings.json');
 
-console.log('--- DIABOLICAL STARTUP ---');
-console.log('Directorio actual:', __dirname);
-console.log('Buscando dist en:', distPath);
+// Logs iniciales
+console.log('Node Version:', process.version);
+console.log('Port:', PORT);
+console.log('Path:', __dirname);
 
-// Asegurar carpeta de datos
-if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
-    console.log('Carpeta data creada');
+// Asegurar carpeta de datos con try/catch para ver errores de permisos
+try {
+    if (!fs.existsSync(dataDir)) {
+        fs.mkdirSync(dataDir, { recursive: true });
+        console.log('Data directory created success');
+    }
+} catch (e) {
+    console.error('Permission error creating data dir:', e);
 }
 
 app.use(cors());
 app.use(express.json());
 
-// Logs de peticiones para ver si llega tráfico
-app.use((req, res, next) => {
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-    next();
-});
+// Health check instantáneo
+app.get('/health', (req, res) => res.status(200).send('OK_DIABOLICAL'));
 
-// Health check para Dokploy (Crítico para que el proxy no de 502)
-app.get('/health', (req, res) => res.status(200).send('OK'));
-
-// API Endpoints
+// API
 app.get('/api/settings', (req, res) => {
-    if (fs.existsSync(settingsFile)) {
-        res.json(JSON.parse(fs.readFileSync(settingsFile, 'utf8')));
-    } else {
-        res.json({ title: "Diabolical Services", description: "Elite AI & Design" });
+    try {
+        if (fs.existsSync(settingsFile)) {
+            res.json(JSON.parse(fs.readFileSync(settingsFile, 'utf8')));
+        } else {
+            res.json({ title: "Diabolical", description: "AI Services" });
+        }
+    } catch (e) {
+        res.status(500).json({ error: e.message });
     }
 });
 
 app.post('/api/settings', (req, res) => {
-    fs.writeFileSync(settingsFile, JSON.stringify(req.body, null, 2));
-    res.json({ status: 'saved' });
-});
-
-// Servir estáticos
-app.use(express.static(distPath));
-
-// Fallback para React (SPA)
-app.get('*', (req, res) => {
-    const index = path.join(distPath, 'index.html');
-    if (fs.existsSync(index)) {
-        res.sendFile(index);
-    } else {
-        res.status(404).send('DIABOLICAL: dist/index.html not found. Build is empty.');
+    try {
+        fs.writeFileSync(settingsFile, JSON.stringify(req.body, null, 2));
+        res.json({ ok: true });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
     }
 });
 
-// Arrancar servidor
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 SERVIDOR ONLINE EN PUERTO ${PORT}`);
-    console.log(`URL de salud: http://localhost:${PORT}/health`);
-    console.log('--------------------------');
+// Estáticos
+app.use(express.static(distPath));
+
+// Fallback
+app.get('*', (req, res) => {
+    const indexPath = path.join(distPath, 'index.html');
+    if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+    } else {
+        res.status(404).send('BUILD_NOT_FOUND: ' + indexPath);
+    }
+});
+
+// Arrancar sin forzar 0.0.0.0 (dejar que el OS decida)
+app.listen(PORT, () => {
+    console.log('------------------------------------');
+    console.log(`READY: Server active on port ${PORT}`);
+    console.log('------------------------------------');
 });

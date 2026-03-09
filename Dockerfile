@@ -1,25 +1,21 @@
-# Single-stage build for debugging and robustness
-FROM node:20-slim
+FROM node:20-alpine
 WORKDIR /app
 
-# Copy all metadata files
+# Copiamos solo lo necesario para instalar
 COPY package*.json ./
-
-# Install EVERY dependency (including devDeps for the build)
 RUN npm install
 
-# Copy source code
+# Copiamos el resto
 COPY . .
 
-# Run the frontend build
+# Construimos el frontend
 RUN npm run build
 
-# Make sure data directory exists and has permissions
-RUN mkdir -p /app/data && chmod 777 /app/data
+# Permisos para la carpeta de datos
+RUN mkdir -p data && chmod 777 data
 
-# Expose port and set environment
 EXPOSE 3000
 ENV NODE_ENV=production
 
-# Start the server
+# Comando de inicio
 CMD ["node", "server.js"]
