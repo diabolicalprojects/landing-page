@@ -523,7 +523,7 @@ const DiabolicalChatbot = () => {
         e.preventDefault();
 
         try {
-            await fetch('https://n8n.diabolicalservices.tech/webhook-test/9b0c65c5-32f4-4f80-aa01-0730f9812e88', {
+            await fetch('https://n8n.diabolicalservices.tech/webhook/9b0c65c5-32f4-4f80-aa01-0730f9812e88', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -1060,7 +1060,7 @@ const Contact = () => {
         e.preventDefault();
         
         try {
-            await fetch('https://n8n.diabolicalservices.tech/webhook-test/9b0c65c5-32f4-4f80-aa01-0730f9812e88', {
+            await fetch('https://n8n.diabolicalservices.tech/webhook/9b0c65c5-32f4-4f80-aa01-0730f9812e88', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
