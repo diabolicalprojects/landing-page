@@ -420,7 +420,7 @@ const DiabolicalChatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [step, setStep] = useState(0);
     const [answers, setAnswers] = useState({});
-    const [contact, setContact] = useState({ name: '', whatsapp: '' });
+    const [contact, setContact] = useState({ name: '', company: '', whatsapp: '', email: '' });
 
     const questions = [
         {
@@ -511,7 +511,7 @@ const DiabolicalChatbot = () => {
 
     const handleClose = () => {
         setIsOpen(false);
-        setTimeout(() => { setStep(0); setAnswers({}); setContact({ name: '', whatsapp: '' }); }, 350);
+        setTimeout(() => { setStep(0); setAnswers({}); setContact({ name: '', company: '', whatsapp: '', email: '' }); }, 350);
     };
 
     const handleAnswer = (value) => {
@@ -519,9 +519,24 @@ const DiabolicalChatbot = () => {
         setStep(prev => prev + 1);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const msg = `🔴 *NUEVO DIAGNÓSTICO DIABOLICAL*\n\n*Nombre:* ${contact.name}\n*WhatsApp:* ${contact.whatsapp}\n\n*1. Fricción:* ${answers.friction}\n*2. Volumen:* ${answers.volume}\n*3. Dependencia:* ${answers.dependency}\n*4. Impacto Estimado:* ${answers.budget}\n*5. Potencial:* ${answers.impact}`;
+
+        try {
+            await fetch('https://n8n.diabolicalservices.tech/webhook-test/9b0c65c5-32f4-4f80-aa01-0730f9812e88', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    type: 'chatbot',
+                    contact: contact,
+                    answers: answers
+                })
+            });
+        } catch (error) {
+            console.error('Error sending to n8n:', error);
+        }
+
+        const msg = `🔴 *NUEVO DIAGNÓSTICO DIABOLICAL*\n\n*Empresa:* ${contact.company}\n*Nombre:* ${contact.name}\n*WhatsApp:* ${contact.whatsapp}\n*Email:* ${contact.email}\n\n*1. Fricción:* ${answers.friction}\n*2. Volumen:* ${answers.volume}\n*3. Dependencia:* ${answers.dependency}\n*4. Impacto Estimado:* ${answers.budget}\n*5. Potencial:* ${answers.impact}`;
         openWA(msg);
         setStep(questions.length + 1);
     };
@@ -625,8 +640,10 @@ const DiabolicalChatbot = () => {
                                     <p className="text-sm font-bold text-white leading-snug">Perfecto. ¿A dónde enviamos tu análisis?</p>
                                 </div>
                                 <div className="space-y-3">
-                                    <input required type="text" placeholder="Tu nombre" value={contact.name} onChange={e => setContact(p => ({ ...p, name: e.target.value }))} className={inp} />
+                                    <input required type="text" placeholder="Nombre de tu empresa" value={contact.company} onChange={e => setContact(p => ({ ...p, company: e.target.value }))} className={inp} />
+                                    <input required type="text" placeholder="Tu nombre (Contacto)" value={contact.name} onChange={e => setContact(p => ({ ...p, name: e.target.value }))} className={inp} />
                                     <input required type="tel" placeholder="WhatsApp (+52 449 000 0000)" value={contact.whatsapp} onChange={e => setContact(p => ({ ...p, whatsapp: e.target.value }))} className={inp} />
+                                    <input required type="email" placeholder="tu@correo.com" value={contact.email} onChange={e => setContact(p => ({ ...p, email: e.target.value }))} className={inp} />
                                 </div>
                                 <button type="submit" className="w-full py-4 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.3em] hover:scale-[1.02] active:scale-95 transition-all min-h-[56px]">Enviar por WhatsApp →</button>
                                 <p className="text-[9px] text-white/20 text-center">Solo te contactamos si tu negocio es un buen candidato.</p>
@@ -1036,12 +1053,26 @@ const SolutionCards = () => {
 };
 
 const Contact = () => {
-    const [form, setForm] = useState({ source: 'WhatsApp / Instagram', people: '', aspiration: '', name: '', email: '', whatsapp: '' });
+    const [form, setForm] = useState({ source: 'WhatsApp / Instagram', people: '', aspiration: '', company: '', name: '', email: '', whatsapp: '' });
     const [sent, setSent] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const msg = `🟢 *DIAGNÓSTICO RÁPIDO — DIABOLICAL*\n\n*Nombre:* ${form.name}\n*WhatsApp:* ${form.whatsapp}\n*Email:* ${form.email}\n\n*¿Cómo llegan sus clientes?:* ${form.source}\n*Personas que atienden:* ${form.people}\n*Si fuera automático:* ${form.aspiration}`;
+        
+        try {
+            await fetch('https://n8n.diabolicalservices.tech/webhook-test/9b0c65c5-32f4-4f80-aa01-0730f9812e88', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    type: 'contact_form',
+                    ...form
+                })
+            });
+        } catch (error) {
+            console.error('Error sending to n8n:', error);
+        }
+
+        const msg = `🟢 *DIAGNÓSTICO RÁPIDO — DIABOLICAL*\n\n*Empresa:* ${form.company}\n*Nombre:* ${form.name}\n*WhatsApp:* ${form.whatsapp}\n*Email:* ${form.email}\n\n*¿Cómo llegan sus clientes?:* ${form.source}\n*Personas que atienden:* ${form.people}\n*Si fuera automático:* ${form.aspiration}`;
         const encoded = encodeURIComponent(msg);
         const isAndroid = /Android/i.test(navigator.userAgent);
         const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -1124,17 +1155,23 @@ const Contact = () => {
                                     <p className="text-[9px] uppercase tracking-[0.4em] text-white/20 font-black text-center">Datos de Contacto</p>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div className="flex flex-col gap-2">
-                                            <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">Tu nombre</label>
+                                            <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">Nombre de la Empresa</label>
+                                            <input required type="text" placeholder="Empresa" value={form.company} onChange={e => setForm(p => ({ ...p, company: e.target.value }))} className={inp} />
+                                        </div>
+                                        <div className="flex flex-col gap-2">
+                                            <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">Tu nombre (Contacto)</label>
                                             <input required type="text" placeholder="Nombre" value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} className={inp} />
                                         </div>
+                                    </div>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                                         <div className="flex flex-col gap-2">
                                             <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">WhatsApp</label>
                                             <input required type="tel" placeholder="+52 449 000 0000" value={form.whatsapp} onChange={e => setForm(p => ({ ...p, whatsapp: e.target.value }))} className={inp} />
                                         </div>
-                                    </div>
-                                    <div className="flex flex-col gap-2">
-                                        <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">Correo electrónico</label>
-                                        <input required type="email" placeholder="tu@correo.com" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} className={inp} />
+                                        <div className="flex flex-col gap-2">
+                                            <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">Correo electrónico</label>
+                                            <input required type="email" placeholder="tu@correo.com" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} className={inp} />
+                                        </div>
                                     </div>
                                 </div>
 
