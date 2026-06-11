@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://diabolicalservices.tech/sitemap.xml

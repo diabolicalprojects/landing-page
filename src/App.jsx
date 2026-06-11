@@ -274,6 +274,8 @@ const Navbar = () => {
                 <img
                     src={isLight ? logoHorizontalNegro : logoHorizontalBlanco}
                     alt="Diabolical"
+                    width="150"
+                    height="30"
                     className="h-5 md:h-8 transition-all flex-shrink-0"
                 />
             </div>
@@ -379,6 +381,8 @@ const Hero = () => {
                     <img
                         src={logoCuadradoBlanco}
                         alt="Diabolical Logo"
+                        width="208"
+                        height="208"
                         className="w-28 h-28 sm:w-40 sm:h-40 md:w-52 md:h-52 glitch-logo"
                     />
                 </div>
@@ -569,7 +573,7 @@ const DiabolicalChatbot = () => {
             >
                 {isOpen
                     ? <X size={20} className="text-white" />
-                    : <img src={chatbotIcon} alt="Diabolical" className="w-10 h-10" />
+                    : <img src={chatbotIcon} alt="Diabolical" width="40" height="40" className="w-10 h-10" />
                 }
             </button>
 
@@ -582,7 +586,7 @@ const DiabolicalChatbot = () => {
                     {/* Header */}
                     <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3 flex-shrink-0">
                         <div className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-                            <img src={chatbotIcon} alt="" className="w-6 h-6" />
+                            <img src={chatbotIcon} alt="" width="24" height="24" className="w-6 h-6" />
                         </div>
                         <div className="flex-1 min-w-0">
                             <p className="text-xs font-black uppercase tracking-widest text-white leading-none">Diagnóstico Diabolical</p>
@@ -640,10 +644,10 @@ const DiabolicalChatbot = () => {
                                     <p className="text-sm font-bold text-white leading-snug">Perfecto. ¿A dónde enviamos tu análisis?</p>
                                 </div>
                                 <div className="space-y-3">
-                                    <input required type="text" placeholder="Nombre de tu empresa" value={contact.company} onChange={e => setContact(p => ({ ...p, company: e.target.value }))} className={inp} />
-                                    <input required type="text" placeholder="Tu nombre (Contacto)" value={contact.name} onChange={e => setContact(p => ({ ...p, name: e.target.value }))} className={inp} />
-                                    <input required type="tel" placeholder="WhatsApp (+52 449 000 0000)" value={contact.whatsapp} onChange={e => setContact(p => ({ ...p, whatsapp: e.target.value }))} className={inp} />
-                                    <input required type="email" placeholder="tu@correo.com" value={contact.email} onChange={e => setContact(p => ({ ...p, email: e.target.value }))} className={inp} />
+                                    <input required type="text" placeholder="Nombre de tu empresa" aria-label="Nombre de tu empresa" value={contact.company} onChange={e => setContact(p => ({ ...p, company: e.target.value }))} className={inp} />
+                                    <input required type="text" placeholder="Tu nombre (Contacto)" aria-label="Tu nombre" value={contact.name} onChange={e => setContact(p => ({ ...p, name: e.target.value }))} className={inp} />
+                                    <input required type="tel" placeholder="WhatsApp (+52 449 000 0000)" aria-label="Teléfono o WhatsApp" value={contact.whatsapp} onChange={e => setContact(p => ({ ...p, whatsapp: e.target.value }))} className={inp} />
+                                    <input required type="email" placeholder="tu@correo.com" aria-label="Correo electrónico" value={contact.email} onChange={e => setContact(p => ({ ...p, email: e.target.value }))} className={inp} />
                                 </div>
                                 <button type="submit" className="w-full py-4 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.3em] hover:scale-[1.02] active:scale-95 transition-all min-h-[56px]">Enviar por WhatsApp →</button>
                                 <p className="text-[9px] text-white/20 text-center">Solo te contactamos si tu negocio es un buen candidato.</p>
@@ -692,13 +696,13 @@ const Footer = () => {
             <div className="container mx-auto px-5 md:px-6">
                 <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-12 md:mb-16 footer-content">
                     <div className="w-full md:max-w-2xl">
-                        <img src={logoHorizontalBlanco} alt="Diabolical" className="h-6 md:h-7 mb-6 md:mb-8 opacity-80" />
+                        <img src={logoHorizontalBlanco} alt="Diabolical" width="140" height="28" className="h-6 md:h-7 mb-6 md:mb-8 opacity-80" />
                         <h2 className="text-2xl md:text-4xl font-title mb-4 md:mb-6 leading-[0.9] tracking-tighter">
                             ¿LISTO PARA TU{' '}
                             <span className="text-white/15 italic">TRANSFORMACIÓN?</span>
                         </h2>
-                        <p className="text-sm md:text-base text-white/40 font-light mb-6 md:mb-8 leading-relaxed italic">
-                            "La IA no es una herramienta. Es tu nueva <strong className="text-white/60 not-italic">infraestructura de dominio.</strong>"
+                        <p className="text-sm md:text-base text-white/60 font-light mb-6 md:mb-8 leading-relaxed italic">
+                            "La IA no es una herramienta. Es tu nueva <strong className="text-white/70 not-italic">infraestructura de dominio.</strong>"
                         </p>
                         <button
                             onClick={() => window.dispatchEvent(new Event('open-diabolical-chat'))}
@@ -709,12 +713,96 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row justify-between items-center gap-2 pt-6 md:pt-8 border-t border-white/10 text-[9px] font-mono uppercase tracking-[0.3em] text-white/20">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-2 pt-6 md:pt-8 border-t border-white/10 text-[9px] font-mono uppercase tracking-[0.3em] text-white/40">
                     <div>Powered by Diabolical Logic — © 2026</div>
-                    <div>DIABOLICAL_STABLE_v2.5</div>
+                    <div className="flex gap-4">
+                        <a href="/politica-privacidad" className="hover:text-white transition-colors">Política de Privacidad</a>
+                        <span>|</span>
+                        <span>DIABOLICAL_STABLE_v2.5</span>
+                    </div>
                 </div>
             </div>
         </footer>
+    );
+};
+
+const FAQSection = () => {
+    const [openIndex, setOpenIndex] = useState(null);
+
+    const faqs = [
+        {
+            question: "¿Qué hace exactamente Diabolical?",
+            answer: "Diseñamos e instalamos \"empleados digitales\" y sistemas autónomos basados en Inteligencia Artificial. No somos una agencia de marketing tradicional; creamos infraestructura técnica que automatiza tus ventas, atención al cliente y operaciones 24/7."
+        },
+        {
+            question: "¿Cómo sé si mi negocio está listo para la automatización con IA?",
+            answer: "Si tu negocio ya tiene un flujo constante de clientes o prospectos (por WhatsApp, Instagram, correo o publicidad pagada) y tu equipo pasa horas respondiendo las mismas preguntas o agendando citas manualmente, estás 100% listo."
+        },
+        {
+            question: "¿La IA va a reemplazar a mi equipo humano?",
+            answer: "No. La IA se encarga de las tareas repetitivas y de bajo valor (como la primera respuesta, filtrado y agendamiento 24/7), liberando a tu equipo para que se concentre en el cierre de ventas complejas y la atención estratégica."
+        },
+        {
+            question: "¿Cómo es el proceso de implementación y cuánto tarda?",
+            answer: "Nuestra integración toma entre 2 y 4 semanas. Nos encargamos de todo: desde el diseño del flujo conversacional y la conexión con tus sistemas actuales (CRM, bases de datos), hasta las pruebas y puesta en marcha."
+        },
+        {
+            question: "¿Qué es la Auditoría de Fricción Gratuita?",
+            answer: "Es un diagnóstico completo donde analizamos los cuellos de botella y procesos manuales en los que tu negocio está perdiendo prospectos o dinero. Te entregamos un reporte detallado con las soluciones exactas de IA que necesitas."
+        }
+    ];
+
+    const toggleFAQ = (index) => {
+        setOpenIndex(openIndex === index ? null : index);
+    };
+
+    return (
+        <section id="faq" className="py-16 md:py-28 bg-[#030303] border-t border-white/5 relative">
+            <div className="max-w-4xl mx-auto px-5 md:px-6 relative z-10">
+                <div className="text-center mb-12 md:mb-16">
+                    <div className="inline-block px-3 py-1 bg-white/5 rounded-full mb-4">
+                        <span className="text-[8px] uppercase tracking-[0.4em] text-white/40 font-black">Respuestas</span>
+                    </div>
+                    <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-3">Preguntas Frecuentes</h2>
+                    <p className="text-white/40 uppercase tracking-[0.3em] text-[9px] font-bold">Claridad técnica sobre la integración de sistemas</p>
+                </div>
+
+                <div className="space-y-4">
+                    {faqs.map((faq, i) => {
+                        const isOpen = openIndex === i;
+                        return (
+                            <div 
+                                key={i} 
+                                className="glass-card rounded-2xl border border-white/5 hover:border-white/10 transition-all duration-300 overflow-hidden"
+                            >
+                                <button
+                                    onClick={() => toggleFAQ(i)}
+                                    className="w-full text-left px-6 py-5 flex justify-between items-center gap-4 text-white hover:text-white/80 transition-colors"
+                                >
+                                    <span className="text-sm md:text-base font-bold tracking-wide">{faq.question}</span>
+                                    <span className={cn(
+                                        "w-6 h-6 rounded-full bg-white/5 flex items-center justify-center text-xs transition-transform duration-300 flex-shrink-0",
+                                        isOpen && "rotate-45"
+                                    )}>
+                                        ＋
+                                    </span>
+                                </button>
+                                <div 
+                                    className={cn(
+                                        "transition-all duration-300 ease-in-out overflow-hidden",
+                                        isOpen ? "max-h-60 border-t border-white/5" : "max-h-0"
+                                    )}
+                                >
+                                    <p className="px-6 py-5 text-xs md:text-sm text-white/50 leading-relaxed font-light">
+                                        {faq.answer}
+                                    </p>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        </section>
     );
 };
 
@@ -809,7 +897,7 @@ const AdminPage = () => {
         return (
             <div className="min-h-screen bg-black flex items-center justify-center p-5 font-jakarta relative overflow-hidden">
                 <div className="glass-card p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] w-full max-w-md border-white/10 text-center relative z-10">
-                    <img src={logoCuadradoBlanco} className="w-24 mx-auto mb-10 opacity-80" alt="Diabolical" />
+                    <img src={logoCuadradoBlanco} width="96" height="96" className="w-24 mx-auto mb-10 opacity-80" alt="Diabolical" />
                     <div className="space-y-2 mb-10">
                         <h2 className="text-2xl font-title tracking-[0.2em] uppercase text-white">Admin_Access</h2>
                         <p className="text-[9px] uppercase tracking-[0.4em] text-white/30 font-bold">Secure Infrastructure Node</p>
@@ -839,7 +927,7 @@ const AdminPage = () => {
             {/* Header Dashboard */}
             <header className="px-4 md:px-8 py-4 md:py-6 border-b border-white/5 flex flex-wrap justify-between items-center gap-3">
                 <div className="flex items-center gap-4 md:gap-6">
-                    <img src={logoCuadradoBlanco} alt="" className="w-7 md:w-8" />
+                    <img src={logoCuadradoBlanco} alt="" width="32" height="32" className="w-7 md:w-8" />
                     <div className="h-6 w-px bg-white/10" />
                     <div>
                         <h1 className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] flex items-center gap-2">
@@ -1141,36 +1229,36 @@ const Contact = () => {
                                         </select>
                                     </div>
                                     <div className="flex flex-col gap-2">
-                                        <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">¿Cuántas personas atienden hoy?</label>
-                                        <input type="number" placeholder="Ej: 3" value={form.people} onChange={e => setForm(p => ({ ...p, people: e.target.value }))} className={inp} />
+                                        <label htmlFor="people-input" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">¿Cuántas personas atienden hoy?</label>
+                                        <input id="people-input" type="number" placeholder="Ej: 3" aria-label="Cantidad de personas que atienden" value={form.people} onChange={e => setForm(p => ({ ...p, people: e.target.value }))} className={inp} />
                                     </div>
                                 </div>
 
                                 <div className="flex flex-col gap-2">
-                                    <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">Si fuera automático, ¿qué harías con tu tiempo libre?</label>
-                                    <input type="text" placeholder="Ej: escalar, viajar, pasar tiempo con mi familia..." value={form.aspiration} onChange={e => setForm(p => ({ ...p, aspiration: e.target.value }))} className={inp} />
+                                    <label htmlFor="aspiration-input" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">Si fuera automático, ¿qué harías con tu tiempo libre?</label>
+                                    <input id="aspiration-input" type="text" placeholder="Ej: escalar, viajar, pasar tiempo con mi familia..." aria-label="Qué harías con tu tiempo libre" value={form.aspiration} onChange={e => setForm(p => ({ ...p, aspiration: e.target.value }))} className={inp} />
                                 </div>
 
                                 <div className="border-t border-white/5 pt-4 space-y-4">
-                                    <p className="text-[9px] uppercase tracking-[0.4em] text-white/20 font-black text-center">Datos de Contacto</p>
+                                    <p className="text-[9px] uppercase tracking-[0.4em] text-white/40 font-black text-center">Datos de Contacto</p>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div className="flex flex-col gap-2">
-                                            <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">Nombre de la Empresa</label>
-                                            <input required type="text" placeholder="Empresa" value={form.company} onChange={e => setForm(p => ({ ...p, company: e.target.value }))} className={inp} />
+                                            <label htmlFor="company-input" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">Nombre de la Empresa</label>
+                                            <input id="company-input" required type="text" placeholder="Empresa" aria-label="Nombre de la empresa" value={form.company} onChange={e => setForm(p => ({ ...p, company: e.target.value }))} className={inp} />
                                         </div>
                                         <div className="flex flex-col gap-2">
-                                            <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">Tu nombre (Contacto)</label>
-                                            <input required type="text" placeholder="Nombre" value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} className={inp} />
+                                            <label htmlFor="name-input" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">Tu nombre (Contacto)</label>
+                                            <input id="name-input" required type="text" placeholder="Nombre" aria-label="Nombre" value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} className={inp} />
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                                         <div className="flex flex-col gap-2">
-                                            <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">WhatsApp</label>
-                                            <input required type="tel" placeholder="+52 449 000 0000" value={form.whatsapp} onChange={e => setForm(p => ({ ...p, whatsapp: e.target.value }))} className={inp} />
+                                            <label htmlFor="whatsapp-input" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">WhatsApp</label>
+                                            <input id="whatsapp-input" required type="tel" placeholder="+52 449 000 0000" aria-label="Número de WhatsApp" value={form.whatsapp} onChange={e => setForm(p => ({ ...p, whatsapp: e.target.value }))} className={inp} />
                                         </div>
                                         <div className="flex flex-col gap-2">
-                                            <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">Correo electrónico</label>
-                                            <input required type="email" placeholder="tu@correo.com" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} className={inp} />
+                                            <label htmlFor="email-input" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">Correo electrónico</label>
+                                            <input id="email-input" required type="email" placeholder="tu@correo.com" aria-label="Correo electrónico" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} className={inp} />
                                         </div>
                                     </div>
                                 </div>
@@ -1331,6 +1419,7 @@ const LandingPage = () => {
             <SolutionCards />
             <ComparisonSection />
             <BoldHook />
+            <FAQSection />
             <Contact />
             <Footer />
             <DiabolicalChatbot />
