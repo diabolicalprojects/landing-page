@@ -131,7 +131,7 @@ const getSettings = () => {
             }]
           }
         ], null, 2),
-        googleTagManager: "",
+        googleTagManager: "GTM-P3P29XB5",
         metaPixel: "",
         customHeaderScripts: `<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7C6BCDND8S"></script>
