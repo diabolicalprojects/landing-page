@@ -18,38 +18,42 @@ const Navbar = () => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
         };
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
 
         // Detect white background sections
         const triggers = [
             ScrollTrigger.create({
                 trigger: "#problem",
-                start: "top 70px",
-                end: "bottom 70px",
-                onToggle: self => { if (self.isActive) setIsLight(true); }
+                start: "top 80px",
+                end: "bottom 80px",
+                id: "prob-trigger",
+                onToggle: self => {
+                    if (self.isActive) {
+                        setIsLight(true);
+                    } else {
+                        const compActive = ScrollTrigger.getById('comp-trigger')?.isActive;
+                        setIsLight(!!compActive);
+                    }
+                }
             }),
             ScrollTrigger.create({
                 trigger: "#comparison",
-                start: "top 70px",
-                end: "bottom 70px",
-                onToggle: self => { if (self.isActive) setIsLight(true); }
+                start: "top 80px",
+                end: "bottom 80px",
+                id: "comp-trigger",
+                onToggle: self => {
+                    if (self.isActive) {
+                        setIsLight(true);
+                    } else {
+                        const probActive = ScrollTrigger.getById('prob-trigger')?.isActive;
+                        setIsLight(!!probActive);
+                    }
+                }
             })
         ];
 
-        const handleLightOff = () => {
-            const problemEl = document.getElementById('problem');
-            const comparisonEl = document.getElementById('comparison');
-            if (!problemEl || !comparisonEl) return;
-            const py = problemEl.getBoundingClientRect();
-            const cy = comparisonEl.getBoundingClientRect();
-            const isInLight = (py.top < 80 && py.bottom > 80) || (cy.top < 80 && cy.bottom > 80);
-            setIsLight(isInLight);
-        };
-        window.addEventListener('scroll', handleLightOff, { passive: true });
-
         return () => {
             window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('scroll', handleLightOff);
             triggers.forEach(t => t.kill());
         };
     }, []);

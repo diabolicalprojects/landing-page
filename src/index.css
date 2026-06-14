@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: 'CODE Bold';
-  src: url('./assets/fonts/CODE Bold.otf') format('opentype');
+  src: url('/fonts/CODE-Bold.otf') format('opentype');
   font-weight: bold;
   font-style: normal;
   font-display: swap;

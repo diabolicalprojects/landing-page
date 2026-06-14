@@ -4,7 +4,11 @@ const InteractiveGrid = () => {
     const canvasRef = useRef(null);
     const mouseRef = useRef({ x: -1000, y: -1000 });
 
+    const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+
     useEffect(() => {
+        if (isTouchDevice) return;
+
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         let animationFrameId;
@@ -119,6 +123,10 @@ const InteractiveGrid = () => {
             cancelAnimationFrame(animationFrameId);
         };
     }, []);
+
+    if (isTouchDevice) {
+        return <div className="absolute inset-0 z-0 pointer-events-none opacity-40 bg-grid" />;
+    }
 
     return <canvas ref={canvasRef} className="absolute inset-0 z-0 pointer-events-none opacity-40" />;
 };

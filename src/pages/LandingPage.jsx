@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense, lazy } from 'react';
 import axios from 'axios';
 
 // Common components
@@ -6,7 +6,8 @@ import GEOTags from '../components/common/GEOTags';
 import CustomCursor from '../components/common/CustomCursor';
 import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
-import DiabolicalChatbot from '../components/common/DiabolicalChatbot';
+
+const DiabolicalChatbot = lazy(() => import('../components/common/DiabolicalChatbot'));
 
 // Section components
 import Hero from '../components/sections/Hero';
@@ -57,7 +58,9 @@ const LandingPage = () => {
             <FAQSection />
             <Contact />
             <Footer />
-            <DiabolicalChatbot />
+            <Suspense fallback={null}>
+                <DiabolicalChatbot />
+            </Suspense>
         </main>
     );
 };

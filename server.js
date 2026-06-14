@@ -1,11 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+const compression = require('compression');
 const fs = require('fs');
 const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(compression());
 
 console.log('--- DIABOLICAL SEO_MONSTER BOOT SEQUENCE ---');
 console.log('Entorno:', process.env.NODE_ENV);
