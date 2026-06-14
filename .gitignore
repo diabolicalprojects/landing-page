@@ -6,3 +6,10 @@ dist
 .env
 .DS_Store
 data/settings.json
+
+# Test outputs and scripts
+lcp_details.txt
+performance_report.json
+report.json
+screenshots/
+scripts/capture_screenshot.py
