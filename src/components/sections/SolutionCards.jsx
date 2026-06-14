@@ -28,7 +28,7 @@ const SolutionCards = () => {
             <div className="max-w-6xl mx-auto px-6">
                 <div className="text-center max-w-2xl mx-auto mb-14">
                     <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-3">Soluciones Autónomas</h2>
-                    <p className="text-white/30 uppercase tracking-[0.3em] text-[9px] font-bold">Identificación de Fricción & Resolución Digital</p>
+                    <p className="text-white/50 uppercase tracking-[0.3em] text-[9px] font-bold">Identificación de Fricción & Resolución Digital</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 text-left">

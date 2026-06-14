@@ -330,14 +330,13 @@ html {
 }
 
 @keyframes chatBtnPulse {
-
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.15), 0 8px 32px rgba(0, 0, 0, 0.8);
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
   }
-
-  50% {
-    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.8);
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
   }
 }
 
@@ -350,5 +349,16 @@ html {
 }
 
 .chatbot-btn-idle {
-  animation: chatBtnPulse 3s ease-in-out infinite;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+}
+
+.chatbot-btn-idle::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  animation: chatBtnPulse 2.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }

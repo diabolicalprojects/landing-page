@@ -47,7 +47,7 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row justify-between items-center gap-2 pt-6 md:pt-8 border-t border-white/10 text-[9px] font-mono uppercase tracking-[0.3em] text-white/40">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-2 pt-6 md:pt-8 border-t border-white/10 text-[9px] font-mono uppercase tracking-[0.3em] text-white/60">
                     <div>Powered by Diabolical Logic — © 2026</div>
                     <div className="flex gap-4">
                         <Link to="/politica-privacidad" className="hover:text-white transition-colors">Política de Privacidad</Link>

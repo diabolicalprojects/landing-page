@@ -53,11 +53,11 @@ const Contact = () => {
             <div className="max-w-3xl mx-auto px-5 md:px-6">
                 <div className="text-center mb-10 md:mb-12">
                     <div className="inline-block px-3 py-1 bg-white/5 rounded-full mb-4">
-                        <span className="text-[8px] uppercase tracking-[0.4em] text-white/40 font-black">Diagnóstico</span>
+                        <span className="text-[8px] uppercase tracking-[0.4em] text-white/60 font-black">Diagnóstico</span>
                     </div>
                     <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-4 leading-[0.9]">
                         ¿Tu negocio es apto para{' '}
-                        <span className="text-white/25 italic">ser autónomo?</span>
+                        <span className="text-white/50 italic">ser autónomo?</span>
                     </h2>
                     <p className="text-white/50 text-sm max-w-xl mx-auto italic font-light leading-relaxed">
                         "Solo trabajamos con negocios que tienen <strong className="text-white/70 not-italic">flujo de clientes</strong> y quieren dejar de operarlos manualmente."
@@ -82,8 +82,8 @@ const Contact = () => {
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="flex flex-col gap-2">
-                                        <label className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold">¿Cómo llegan tus clientes?</label>
-                                        <select value={form.source} onChange={e => setForm(p => ({ ...p, source: e.target.value }))} className={inp + ' appearance-none'}>
+                                        <label htmlFor="source-select" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">¿Cómo llegan tus clientes?</label>
+                                        <select id="source-select" value={form.source} onChange={e => setForm(p => ({ ...p, source: e.target.value }))} className={inp + ' appearance-none'}>
                                             <option className="bg-black">WhatsApp / Instagram</option>
                                             <option className="bg-black">Boca en Boca</option>
                                             <option className="bg-black">Publicidad Pagada (Ads)</option>

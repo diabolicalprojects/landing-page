@@ -12,14 +12,14 @@ const ComparisonSection = () => {
             <div className="max-w-4xl mx-auto px-5 md:px-6 relative z-10">
                 <div className="text-center mb-8 md:mb-10">
                     <h2 className="text-2xl md:text-3xl font-title uppercase tracking-tighter mb-2 text-black">La Lógica del Ahorro</h2>
-                    <p className="text-[9px] uppercase tracking-[0.4em] text-black/30 font-bold">Escalabilidad vs Estancamiento</p>
+                    <p className="text-[9px] uppercase tracking-[0.4em] text-black/60 font-bold">Escalabilidad vs Estancamiento</p>
                 </div>
 
                 {/* Header row */}
                 <div className="grid grid-cols-2 gap-2 md:gap-4 mb-2 px-1">
                     <div className="flex items-center gap-1.5">
                         <span className="w-2.5 h-2.5 rounded-full bg-black/20 flex-shrink-0"></span>
-                        <span className="text-[8px] md:text-[9px] uppercase tracking-[0.3em] text-black/40 font-black">Si sigues igual</span>
+                        <span className="text-[8px] md:text-[9px] uppercase tracking-[0.3em] text-black/60 font-black">Si sigues igual</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                         <span className="w-2.5 h-2.5 rounded-full bg-black flex-shrink-0"></span>
@@ -33,7 +33,7 @@ const ComparisonSection = () => {
                         <div key={i} className="grid grid-cols-2 gap-1.5 md:gap-4 rounded-xl md:rounded-2xl overflow-hidden">
                             <div className="bg-black/5 px-3 md:px-5 py-3.5 md:py-4 flex items-start gap-2 md:gap-3">
                                 <span className="text-black/30 text-base leading-none flex-shrink-0 mt-0.5">✗</span>
-                                <span className="text-[11px] md:text-sm text-black/50 leading-snug">{row.bad}</span>
+                                <span className="text-[11px] md:text-sm text-black/70 leading-snug">{row.bad}</span>
                             </div>
                             <div className="bg-black px-3 md:px-5 py-3.5 md:py-4 flex items-start gap-2 md:gap-3">
                                 <span className="text-white text-base leading-none flex-shrink-0 mt-0.5">✓</span>
