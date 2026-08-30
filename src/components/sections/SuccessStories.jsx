@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, TrendingUp, CheckCircle2 } from 'lucide-react';
+import { Sparkles, CheckCircle2 } from 'lucide-react';
 
 const SuccessStories = () => {
     const cases = [

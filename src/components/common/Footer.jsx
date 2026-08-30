@@ -8,19 +8,24 @@ const Footer = () => {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.from(".footer-content > *", {
-                scrollTrigger: {
-                    trigger: ".footer-content",
-                    start: "top 90%",
-                    once: true
-                },
-                y: 40,
-                opacity: 0,
-                duration: 1.2,
-                stagger: 0.1,
-                ease: "power3.out",
-                clearProps: "all"
-            });
+            gsap.fromTo(".footer-content > *",
+                { y: 40, opacity: 0 },
+                {
+                    scrollTrigger: {
+                        trigger: ".footer-content",
+                        start: "top 90%",
+                        once: true
+                    },
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.2,
+                    stagger: 0.1,
+                    ease: "power3.out",
+                    // Solo el transform: limpiar la opacidad devolvería el
+                    // elemento a la regla `.js` de index.css, que lo esconde.
+                    clearProps: "transform"
+                }
+            );
         }, footerRef);
         return () => ctx.revert();
     }, []);

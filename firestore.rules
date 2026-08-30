@@ -1,1 +1,13 @@
-rules_version = '2'; service cloud.firestore { match /databases/{database}/documents { match /{document=**} { allow read, write: if true; } } }
+rules_version = '2';
+
+// Deny-by-default. La landing no lee ni escribe Firestore: todo el estado vive
+// en el servidor Express (data/settings.json) y los leads salen por el webhook
+// de n8n. Abrir una colección aquí requiere una regla explícita con
+// `request.auth != null` y validación de campos.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

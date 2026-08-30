@@ -1,8 +1,6 @@
-import React, { useEffect, useState, Suspense, lazy } from 'react';
-import axios from 'axios';
+import React, { Suspense, lazy, useSyncExternalStore } from 'react';
 
 // Common components
-import GEOTags from '../components/common/GEOTags';
 import CustomCursor from '../components/common/CustomCursor';
 import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
@@ -19,28 +17,22 @@ import SuccessStories from '../components/sections/SuccessStories';
 import FAQSection from '../components/sections/FAQSection';
 import Contact from '../components/sections/Contact';
 
-const LandingPage = () => {
-    const [seoData, setSeoData] = useState({
-        title: "Diabolical | IA Services & Elite Design",
-        description: "Consultoría de Ingeniería en Sistemas Autónomos.",
-        keywords: ""
-    });
+// El <head> (título, descripción, JSON-LD) lo resuelve el servidor antes de
+// enviar el HTML — ver server/render.js. La página no lo toca: reescribirlo
+// desde React solo conseguía pisar los valores buenos con placeholders.
+// Devuelve false durante el prerender y la hidratación, true después.
+const noopSubscribe = () => () => {};
+const useHydrated = () => useSyncExternalStore(noopSubscribe, () => true, () => false);
 
-    useEffect(() => {
-        const loadSEO = async () => {
-            try {
-                const res = await axios.get('/api/settings');
-                setSeoData(res.data);
-            } catch (error) {
-                console.warn("Using default SEO data");
-            }
-        };
-        loadSEO();
-    }, []);
+const LandingPage = () => {
+    // El chatbot se monta después de hidratar. Renderizarlo dentro de un
+    // <Suspense> durante el prerender dejaba el boundary sin resolver y React
+    // descartaba todo el HTML del servidor para volver a renderizar en cliente
+    // (error #419). Además evita cargar su chunk en la primera pintura.
+    const showChatbot = useHydrated();
 
     return (
         <main className="relative bg-black min-h-screen selection:bg-white selection:text-black font-jakarta overflow-x-hidden">
-            <GEOTags data={seoData} />
             <CustomCursor />
             {/* Soft Ambient Background Elements */}
             <div className="fixed inset-0 pointer-events-none z-0">
@@ -58,9 +50,11 @@ const LandingPage = () => {
             <FAQSection />
             <Contact />
             <Footer />
-            <Suspense fallback={null}>
-                <DiabolicalChatbot />
-            </Suspense>
+            {showChatbot && (
+                <Suspense fallback={null}>
+                    <DiabolicalChatbot />
+                </Suspense>
+            )}
         </main>
     );
 };

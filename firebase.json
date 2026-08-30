@@ -14,14 +14,37 @@
     ],
     "rewrites": [
       {
+        "source": "/politica-privacidad",
+        "destination": "/app-shell.html"
+      },
+      {
+        "source": "/admin",
+        "destination": "/app-shell.html"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
+    ],
+    "headers": [
+      {
+        "source": "/assets/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "/index.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
     ]
-  },
-  "auth": {
-    "providers": {
-      "emailPassword": true
-    }
   }
 }

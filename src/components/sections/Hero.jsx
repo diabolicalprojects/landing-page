@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ArrowRight } from 'lucide-react';
 import InteractiveGrid from '../common/InteractiveGrid';
 
 const Hero = () => {
@@ -8,13 +7,22 @@ const Hero = () => {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.from(".hero-content > *", {
-                y: 40,
-                opacity: 0,
-                duration: 1.2,
-                stagger: 0.15,
-                ease: "power3.out"
-            });
+            // fromTo, no from: el HTML viene prerenderizado y el CSS ya deja
+            // estos elementos en opacity 0 (regla `.js`), así que un `from`
+            // animaría de 0 a 0. Ver index.css.
+            gsap.fromTo(".hero-content > *",
+                { y: 40, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.2,
+                    stagger: 0.15,
+                    ease: "power3.out"
+                    // Sin clearProps: la regla `.js` de index.css deja estos
+                    // elementos en opacity 0, así que limpiar el estilo inline
+                    // los volvería a esconder al terminar la animación.
+                }
+            );
         }, heroRef);
         return () => ctx.revert();
     }, []);
