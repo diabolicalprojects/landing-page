@@ -1,47 +1,30 @@
 import React, { useState } from 'react';
 import { CheckCircle2 } from 'lucide-react';
-import { cn } from '../../utils/cn';
+import { openWhatsApp, sendLead } from '../../utils/leads';
+import { CONTACT_EMAIL } from '../../config';
+
+const EMPTY_FORM = { source: 'WhatsApp / Instagram', people: '', aspiration: '', company: '', name: '', email: '', whatsapp: '' };
 
 const Contact = () => {
-    const [form, setForm] = useState({ source: 'WhatsApp / Instagram', people: '', aspiration: '', company: '', name: '', email: '', whatsapp: '' });
+    const [form, setForm] = useState(EMPTY_FORM);
     const [sent, setSent] = useState(false);
+    const [isSending, setIsSending] = useState(false);
+    const [delivered, setDelivered] = useState(true);
+    // Honeypot: los bots rellenan todos los campos, las personas no ven este.
+    const [botTrap, setBotTrap] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        try {
-            await fetch('https://n8n.diabolicalservices.tech/webhook/9b0c65c5-32f4-4f80-aa01-0730f9812e88', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    type: 'contact_form',
-                    ...form
-                })
-            });
-        } catch (error) {
-            console.error('Error sending to n8n:', error);
-        }
+        if (botTrap) return;
 
-        const msg = `🟢 *DIAGNÓSTICO RÁPIDO — DIABOLICAL*\n\n*Empresa:* ${form.company}\n*Nombre:* ${form.name}\n*WhatsApp:* ${form.whatsapp}\n*Email:* ${form.email}\n\n*¿Cómo llegan sus clientes?:* ${form.source}\n*Personas que atienden:* ${form.people}\n*Si fuera automático:* ${form.aspiration}`;
-        const encoded = encodeURIComponent(msg);
-        const isAndroid = /Android/i.test(navigator.userAgent);
-        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        setIsSending(true);
+        const ok = await sendLead({ type: 'contact_form', ...form });
+        setDelivered(ok);
+        setIsSending(false);
 
-        let url = `https://api.whatsapp.com/send?phone=524495136907&text=${encoded}`;
-        if (isAndroid) {
-            url = `intent://send/?phone=524495136907&text=${encoded}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
-        } else if (isIOS) {
-            url = `whatsapp://send?phone=524495136907&text=${encoded}`;
-        }
-
-        const a = document.createElement('a');
-        a.href = url;
-        if (!isAndroid && !isIOS) a.target = '_blank';
-        else a.target = '_top';
-        a.rel = 'noopener noreferrer';
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => document.body.removeChild(a), 150);
+        openWhatsApp(
+            `🟢 *DIAGNÓSTICO RÁPIDO — DIABOLICAL*\n\n*Empresa:* ${form.company}\n*Nombre:* ${form.name}\n*WhatsApp:* ${form.whatsapp}\n*Email:* ${form.email}\n\n*¿Cómo llegan sus clientes?:* ${form.source}\n*Personas que atienden:* ${form.people}\n*Si fuera automático:* ${form.aspiration}`
+        );
 
         setSent(true);
     };
@@ -73,8 +56,16 @@ const Contact = () => {
                             <div>
                                 <h3 className="text-lg font-title uppercase text-white mb-2">¡Mensaje Enviado!</h3>
                                 <p className="text-sm text-white/50 leading-relaxed">Te contactaremos pronto por WhatsApp para presentarte tu plan de automatización.</p>
+                                {!delivered && (
+                                    <p role="alert" className="mt-4 text-xs text-yellow-500/90 leading-relaxed">
+                                        No pudimos registrar tus datos automáticamente. Si WhatsApp no
+                                        se abrió, escríbenos a{' '}
+                                        <a href={`mailto:${CONTACT_EMAIL}`} className="text-white underline">{CONTACT_EMAIL}</a>{' '}
+                                        para no perder tu solicitud.
+                                    </p>
+                                )}
                             </div>
-                            <button onClick={() => setSent(false)} className="px-8 py-3 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-widest">Enviar otro</button>
+                            <button onClick={() => { setSent(false); setForm(EMPTY_FORM); setDelivered(true); }} className="px-8 py-3 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-widest">Enviar otro</button>
                         </div>
                     ) : (
                         <>
@@ -125,8 +116,14 @@ const Contact = () => {
                                     </div>
                                 </div>
 
-                                <button type="submit" className="w-full py-5 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] hover:scale-[1.02] active:scale-95 transition-all shadow-2xl mt-2 min-h-[60px]">
-                                    Solicitar Diagnóstico Gratuito →
+                                {/* Honeypot: oculto para personas, irresistible para bots. */}
+                                <div className="absolute left-[-9999px]" aria-hidden="true">
+                                    <label htmlFor="company-website">No rellenar</label>
+                                    <input id="company-website" name="company-website" type="text" tabIndex={-1} autoComplete="off" value={botTrap} onChange={e => setBotTrap(e.target.value)} />
+                                </div>
+
+                                <button type="submit" disabled={isSending} className="w-full py-5 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] hover:scale-[1.02] active:scale-95 transition-all shadow-2xl mt-2 min-h-[60px] disabled:opacity-50 disabled:hover:scale-100">
+                                    {isSending ? 'Enviando...' : 'Solicitar Diagnóstico Gratuito →'}
                                 </button>
                                 <p className="text-[9px] text-white/20 text-center">Te contactaremos solo si tu negocio es un buen candidato.</p>
                             </form>

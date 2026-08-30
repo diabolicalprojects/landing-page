@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+/*
+  El HTML de la portada llega prerenderizado, así que sin esto el contenido se
+  vería un instante en su posición final antes de que GSAP lo pusiera en el
+  estado inicial de la animación. La clase `js` la añade un script inline en el
+  <head>, antes del primer pintado: si no hay JS no se aplica y el contenido
+  queda visible tal cual.
+*/
+.js .hero-content > *,
+.js .footer-content > * {
+  opacity: 0;
+}
+
 @font-face {
   font-family: 'CODE Bold';
   src: url('/fonts/CODE-Bold.otf') format('opentype');

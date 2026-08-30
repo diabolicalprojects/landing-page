@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { CheckCircle2, X } from 'lucide-react';
 import { cn } from '../../utils/cn';
+import { openWhatsApp, sendLead } from '../../utils/leads';
+import { CONTACT_EMAIL } from '../../config';
 import chatbotIcon from '../../assets/logo/icono-diabolical-chatbot.svg';
+
+const EMPTY_CONTACT = { name: '', company: '', whatsapp: '', email: '' };
 
 const DiabolicalChatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [step, setStep] = useState(0);
     const [answers, setAnswers] = useState({});
-    const [contact, setContact] = useState({ name: '', company: '', whatsapp: '', email: '' });
+    const [contact, setContact] = useState(EMPTY_CONTACT);
+    const [isSending, setIsSending] = useState(false);
+    const [delivered, setDelivered] = useState(true);
+    const [botTrap, setBotTrap] = useState('');
+
+    const panelRef = useRef(null);
+    const triggerRef = useRef(null);
 
     const questions = [
         {
@@ -62,28 +72,6 @@ const DiabolicalChatbot = () => {
         },
     ];
 
-    const openWA = (msg) => {
-        const encoded = encodeURIComponent(msg);
-        const isAndroid = /Android/i.test(navigator.userAgent);
-        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-        let url = `https://api.whatsapp.com/send?phone=524495136907&text=${encoded}`;
-        if (isAndroid) {
-            url = `intent://send/?phone=524495136907&text=${encoded}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
-        } else if (isIOS) {
-            url = `whatsapp://send?phone=524495136907&text=${encoded}`;
-        }
-
-        const a = document.createElement('a');
-        a.href = url;
-        if (!isAndroid && !isIOS) a.target = '_blank';
-        else a.target = '_top';
-        a.rel = 'noopener noreferrer';
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => document.body.removeChild(a), 150);
-    };
-
     useEffect(() => {
         const handler = () => setIsOpen(true);
         window.addEventListener('open-diabolical-chat', handler);
@@ -96,10 +84,60 @@ const DiabolicalChatbot = () => {
         return () => { document.body.style.overflow = ''; };
     }, [isOpen]);
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         setIsOpen(false);
-        setTimeout(() => { setStep(0); setAnswers({}); setContact({ name: '', company: '', whatsapp: '', email: '' }); }, 350);
-    };
+        triggerRef.current?.focus();
+        setTimeout(() => {
+            setStep(0);
+            setAnswers({});
+            setContact(EMPTY_CONTACT);
+            setDelivered(true);
+        }, 350);
+    }, []);
+
+    // Diálogo modal: Escape lo cierra y Tab no puede salirse del panel.
+    useEffect(() => {
+        if (!isOpen) return undefined;
+
+        const focusables = () =>
+            Array.from(
+                panelRef.current?.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                ) ?? []
+            ).filter((el) => !el.hasAttribute('disabled') && el.offsetParent !== null);
+
+        const onKeyDown = (event) => {
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                handleClose();
+                return;
+            }
+            if (event.key !== 'Tab') return;
+
+            const items = focusables();
+            if (items.length === 0) return;
+
+            const first = items[0];
+            const last = items[items.length - 1];
+
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        };
+
+        document.addEventListener('keydown', onKeyDown);
+        // Deja el foco dentro del panel al abrirlo.
+        const timer = setTimeout(() => focusables()[0]?.focus(), 50);
+
+        return () => {
+            document.removeEventListener('keydown', onKeyDown);
+            clearTimeout(timer);
+        };
+    }, [isOpen, step, handleClose]);
 
     const handleAnswer = (value) => {
         setAnswers(prev => ({ ...prev, [questions[step].id]: value }));
@@ -108,23 +146,17 @@ const DiabolicalChatbot = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (botTrap) return;
 
-        try {
-            await fetch('https://n8n.diabolicalservices.tech/webhook/9b0c65c5-32f4-4f80-aa01-0730f9812e88', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    type: 'chatbot',
-                    contact: contact,
-                    answers: answers
-                })
-            });
-        } catch (error) {
-            console.error('Error sending to n8n:', error);
-        }
+        setIsSending(true);
+        const ok = await sendLead({ type: 'chatbot', contact, answers });
+        setDelivered(ok);
+        setIsSending(false);
 
-        const msg = `🔴 *NUEVO DIAGNÓSTICO DIABOLICAL*\n\n*Empresa:* ${contact.company}\n*Nombre:* ${contact.name}\n*WhatsApp:* ${contact.whatsapp}\n*Email:* ${contact.email}\n\n*1. Fricción:* ${answers.friction}\n*2. Volumen:* ${answers.volume}\n*3. Dependencia:* ${answers.dependency}\n*4. Impacto Estimado:* ${answers.budget}\n*5. Potencial:* ${answers.impact}`;
-        openWA(msg);
+        openWhatsApp(
+            `🔴 *NUEVO DIAGNÓSTICO DIABOLICAL*\n\n*Empresa:* ${contact.company}\n*Nombre:* ${contact.name}\n*WhatsApp:* ${contact.whatsapp}\n*Email:* ${contact.email}\n\n*1. Fricción:* ${answers.friction}\n*2. Volumen:* ${answers.volume}\n*3. Dependencia:* ${answers.dependency}\n*4. Impacto Estimado:* ${answers.budget}\n*5. Potencial:* ${answers.impact}`
+        );
+
         setStep(questions.length + 1);
     };
 
@@ -147,8 +179,11 @@ const DiabolicalChatbot = () => {
 
             {/* Floating Trigger Button */}
             <button
+                ref={triggerRef}
                 onClick={() => isOpen ? handleClose() : setIsOpen(true)}
-                aria-label="Diagnóstico Diabolical"
+                aria-label={isOpen ? 'Cerrar diagnóstico Diabolical' : 'Abrir diagnóstico Diabolical'}
+                aria-expanded={isOpen}
+                aria-controls="diabolical-chat-panel"
                 className={cn(
                     "fixed bottom-6 right-5 md:bottom-8 md:right-8 z-[60] w-16 h-16 rounded-full bg-black border border-white/15 flex items-center justify-center transition-all hover:scale-110 active:scale-95",
                     !isOpen && "chatbot-btn-idle"
@@ -163,6 +198,11 @@ const DiabolicalChatbot = () => {
             {/* Chat Panel */}
             {isOpen && (
                 <div
+                    ref={panelRef}
+                    id="diabolical-chat-panel"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="diabolical-chat-title"
                     className="chatbot-panel fixed z-50 flex flex-col bg-[#0a0a0a] border border-white/10 rounded-3xl shadow-2xl overflow-hidden"
                     style={{ bottom: '6rem', right: '1.25rem', width: 'min(calc(100vw - 2.5rem), 22rem)', maxHeight: 'calc(100dvh - 8rem)' }}
                 >
@@ -172,7 +212,7 @@ const DiabolicalChatbot = () => {
                             <img src={chatbotIcon} alt="" width="24" height="24" className="w-6 h-6" />
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-xs font-black uppercase tracking-widest text-white leading-none">Diagnóstico Diabolical</p>
+                            <p id="diabolical-chat-title" className="text-xs font-black uppercase tracking-widest text-white leading-none">Diagnóstico Diabolical</p>
                             <p className="text-[9px] text-white/30 uppercase tracking-widest mt-0.5">Sistema Autónomo · Online</p>
                         </div>
                         <div className="flex items-center gap-1.5 flex-shrink-0">
@@ -198,6 +238,13 @@ const DiabolicalChatbot = () => {
                                 <div className="space-y-2">
                                     <h3 className="text-base font-title uppercase tracking-tight text-white">¡Diagnóstico Enviado!</h3>
                                     <p className="text-xs text-white/50 leading-relaxed">Te contactaremos vía WhatsApp en las próximas horas con tu plan de automatización personalizado.</p>
+                                    {!delivered && (
+                                        <p role="alert" className="text-[11px] text-yellow-500/90 leading-relaxed pt-2">
+                                            No pudimos registrar tus datos automáticamente. Si WhatsApp no se
+                                            abrió, escríbenos a{' '}
+                                            <a href={`mailto:${CONTACT_EMAIL}`} className="text-white underline">{CONTACT_EMAIL}</a>.
+                                        </p>
+                                    )}
                                 </div>
                                 <button onClick={handleClose} className="px-8 py-3 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-widest active:scale-95 transition-transform">Cerrar</button>
                             </div>
@@ -232,7 +279,15 @@ const DiabolicalChatbot = () => {
                                     <input required type="tel" placeholder="WhatsApp (+52 449 000 0000)" aria-label="Teléfono o WhatsApp" value={contact.whatsapp} onChange={e => setContact(p => ({ ...p, whatsapp: e.target.value }))} className={inp} />
                                     <input required type="email" placeholder="tu@correo.com" aria-label="Correo electrónico" value={contact.email} onChange={e => setContact(p => ({ ...p, email: e.target.value }))} className={inp} />
                                 </div>
-                                <button type="submit" className="w-full py-4 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.3em] hover:scale-[1.02] active:scale-95 transition-all min-h-[56px]">Enviar por WhatsApp →</button>
+                                {/* Honeypot: oculto para personas, irresistible para bots. */}
+                                <div className="absolute left-[-9999px]" aria-hidden="true">
+                                    <label htmlFor="chat-website">No rellenar</label>
+                                    <input id="chat-website" name="chat-website" type="text" tabIndex={-1} autoComplete="off" value={botTrap} onChange={e => setBotTrap(e.target.value)} />
+                                </div>
+
+                                <button type="submit" disabled={isSending} className="w-full py-4 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.3em] hover:scale-[1.02] active:scale-95 transition-all min-h-[56px] disabled:opacity-50 disabled:hover:scale-100">
+                                    {isSending ? 'Enviando...' : 'Enviar por WhatsApp →'}
+                                </button>
                                 <p className="text-[9px] text-white/20 text-center">Solo te contactamos si tu negocio es un buen candidato.</p>
                             </form>
                         )}

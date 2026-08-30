@@ -3,7 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Lock, Zap, Search, Share2, Terminal as TerminalIcon, Activity } from 'lucide-react';
 import { cn } from '../utils/cn';
+import { SITE_URL } from '../config';
 import logoCuadradoBlanco from '../assets/logo/LOGO-DIABOLICAL-CUADRADO-BLANCO.svg';
+
+// La sesión vive en una cookie httpOnly emitida por el servidor: el navegador la
+// envía sola y el JS no puede leerla.
+const api = axios.create({ withCredentials: true });
 
 const AdminPage = () => {
     const navigate = useNavigate();
@@ -13,7 +18,7 @@ const AdminPage = () => {
         title: "DIABOLICAL | Elite AI Automation & Design",
         description: "Exponential scaling through autonomous AI systems and high-end digital engineering.",
         keywords: "AI Automation, Elite Design, Business Intelligence, Digital Engineering",
-        siteUrl: "https://diabolicalservices.tech",
+        siteUrl: SITE_URL,
 
         // Social & Brand
         favicon: "/favicon.ico",
@@ -32,9 +37,13 @@ const AdminPage = () => {
     });
     const [isSaving, setIsSaving] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [adminEnabled, setAdminEnabled] = useState(true);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [loginError, setLoginError] = useState("");
+    const [isAuthenticating, setIsAuthenticating] = useState(false);
+    const [status, setStatus] = useState(null);
 
     useEffect(() => {
         if (formData.title) document.title = formData.title;
@@ -45,36 +54,80 @@ const AdminPage = () => {
         return () => document.body.classList.remove('admin-mode');
     }, []);
 
+    // La cookie de sesión es httpOnly, así que el estado de login solo lo sabe
+    // el servidor. Se consulta al montar para no perder la sesión al recargar.
     useEffect(() => {
-        const fetchSettings = async () => {
+        const bootstrap = async () => {
             try {
-                const res = await axios.get('/api/settings');
-                if (res.data) setFormData({ ...formData, ...res.data });
+                const { data } = await api.get('/api/session');
+                setIsLoggedIn(Boolean(data?.authenticated));
+                setAdminEnabled(data?.adminEnabled !== false);
+            } catch {
+                setIsLoggedIn(false);
+            }
+
+            try {
+                const { data } = await api.get('/api/settings');
+                if (data && typeof data === 'object') {
+                    setFormData((prev) => ({ ...prev, ...data }));
+                }
             } catch (error) {
-                console.error("Error fetching settings:", error);
+                console.error("No se pudo cargar la configuración:", error);
             }
         };
-        fetchSettings();
+        bootstrap();
     }, []);
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (username === "admin" && password === "Diabolical1502") {
+        setLoginError("");
+        setIsAuthenticating(true);
+
+        try {
+            const { data } = await api.post('/api/login', { username, password });
+            // Sin servidor Express (p. ej. Firebase Hosting) esta ruta devuelve
+            // el HTML de la SPA con estado 200. Exigir el JSON evita dar por
+            // buena una sesión que no existe.
+            if (data?.ok !== true) {
+                throw new Error('respuesta inesperada');
+            }
             setIsLoggedIn(true);
-        } else {
-            alert("ACCESO DENEGADO: Identidad o Protocolo Inválido");
+            setPassword("");
+        } catch (error) {
+            setLoginError(
+                error?.response?.data?.error || 'Acceso denegado: credenciales inválidas.'
+            );
+        } finally {
+            setIsAuthenticating(false);
+        }
+    };
+
+    const handleLogout = async () => {
+        try {
+            await api.post('/api/logout');
+        } finally {
+            setIsLoggedIn(false);
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSaving(true);
+        setStatus(null);
+
         try {
-            await axios.post('/api/settings', formData);
-            alert('INFRAESTRUCTURA ACTUALIZADA: La información se ha propagado a los motores de búsqueda.');
+            await api.post('/api/settings', formData);
+            setStatus({ ok: true, message: 'Configuración guardada y propagada.' });
         } catch (error) {
-            console.error("Error updating SEO:", error);
-            alert('Error al sincronizar con el centro de mando.');
+            if (error?.response?.status === 401) {
+                setIsLoggedIn(false);
+                setLoginError('La sesión expiró. Vuelve a identificarte.');
+                return;
+            }
+            setStatus({
+                ok: false,
+                message: error?.response?.data?.error || 'No se pudo guardar la configuración.',
+            });
         } finally {
             setIsSaving(false);
         }
@@ -98,17 +151,30 @@ const AdminPage = () => {
                         <h2 className="text-2xl font-title tracking-[0.2em] uppercase text-white">Admin_Access</h2>
                         <p className="text-[9px] uppercase tracking-[0.4em] text-white/30 font-bold">Secure Infrastructure Node</p>
                     </div>
+                    {!adminEnabled && (
+                        <p className="mb-6 text-[10px] leading-relaxed text-yellow-500/80 uppercase tracking-widest">
+                            Panel deshabilitado en el servidor. Configura ADMIN_USERNAME,
+                            ADMIN_PASSWORD_HASH y SESSION_SECRET.
+                        </p>
+                    )}
                     <form onSubmit={handleLogin} className="space-y-5">
                         <div className="space-y-3">
-                            <input type="text" placeholder="USERNAME" className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono text-sm tracking-widest transition-all min-h-[52px]" value={username} onChange={(e) => setUsername(e.target.value)} />
+                            <label htmlFor="admin-username" className="sr-only">Usuario</label>
+                            <input id="admin-username" name="username" type="text" autoComplete="username" placeholder="USERNAME" className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono text-sm tracking-widest transition-all min-h-[52px]" value={username} onChange={(e) => setUsername(e.target.value)} />
                             <div className="relative">
-                                <input type={showPassword ? "text" : "password"} placeholder="AUTH_TOKEN" className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono text-sm tracking-widest transition-all min-h-[52px]" value={password} onChange={(e) => setPassword(e.target.value)} />
-                                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-5 top-1/2 -translate-y-1/2 text-white/20 hover:text-white/60 p-2 transition-colors">
+                                <label htmlFor="admin-password" className="sr-only">Contraseña</label>
+                                <input id="admin-password" name="password" type={showPassword ? "text" : "password"} autoComplete="current-password" placeholder="AUTH_TOKEN" className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-center text-white focus:outline-none focus:border-white/30 font-mono text-sm tracking-widest transition-all min-h-[52px]" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <button type="button" aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'} onClick={() => setShowPassword(!showPassword)} className="absolute right-5 top-1/2 -translate-y-1/2 text-white/20 hover:text-white/60 p-2 transition-colors">
                                     {showPassword ? <Lock size={16} /> : <Zap size={16} />}
                                 </button>
                             </div>
                         </div>
-                        <button className="w-full py-5 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.5em] hover:scale-[1.02] active:scale-95 transition-all shadow-2xl mt-4">UNLOCK_TERMINAL</button>
+                        {loginError && (
+                            <p role="alert" className="text-[10px] uppercase tracking-widest text-red-400/90">{loginError}</p>
+                        )}
+                        <button type="submit" disabled={isAuthenticating || !adminEnabled} className="w-full py-5 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.5em] hover:scale-[1.02] active:scale-95 transition-all shadow-2xl mt-4 disabled:opacity-40 disabled:hover:scale-100">
+                            {isAuthenticating ? 'VERIFICANDO...' : 'UNLOCK_TERMINAL'}
+                        </button>
                     </form>
                 </div>
             </div>
@@ -137,6 +203,7 @@ const AdminPage = () => {
                         <div className={cn("w-1.5 h-1.5 rounded-full", score > 70 ? "bg-green-500" : "bg-yellow-500")} />
                         <span className="text-[8px] md:text-[9px] font-mono text-white/40 uppercase tracking-widest">SEO: {score}%</span>
                     </div>
+                    <button onClick={handleLogout} className="px-4 md:px-6 py-2 glass rounded-full text-[9px] uppercase tracking-widest hover:bg-white hover:text-black transition-all whitespace-nowrap">Cerrar_Sesión</button>
                     <button onClick={() => navigate('/')} className="px-4 md:px-6 py-2 glass rounded-full text-[9px] uppercase tracking-widest hover:bg-white hover:text-black transition-all whitespace-nowrap">Exit_Node</button>
                 </div>
             </header>
@@ -235,6 +302,18 @@ const AdminPage = () => {
                                     <textarea rows="4" className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-white/30 focus:outline-none focus:border-white/30 transition-all font-mono text-[10px]" value={formData.customHeaderScripts} onChange={(e) => setFormData({ ...formData, customHeaderScripts: e.target.value })} />
                                 </div>
                             </div>
+                        )}
+
+                        {status && (
+                            <p
+                                role="status"
+                                className={cn(
+                                    "text-[10px] uppercase tracking-[0.3em] font-bold",
+                                    status.ok ? "text-green-400/90" : "text-red-400/90"
+                                )}
+                            >
+                                {status.message}
+                            </p>
                         )}
 
                         <button

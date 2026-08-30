@@ -1,19 +1,42 @@
-FROM node:20
+# --- Etapa 1: build -------------------------------------------------------
+FROM node:22-alpine AS builder
+
 WORKDIR /app
 
-# Instalación de dependencias
-COPY package*.json ./
-RUN npm install
+# Se copian solo los manifiestos primero para que la capa de dependencias se
+# cachee y no se reinstale en cada cambio de código.
+COPY package.json package-lock.json ./
+RUN npm ci
 
-# Copia de código y construcción
 COPY . .
 RUN npm run build
 
-# Asegurar permisos de la base de datos local
-RUN mkdir -p data && chmod 777 data
+# --- Etapa 2: runtime -----------------------------------------------------
+FROM node:22-alpine AS runtime
 
-EXPOSE 3000
 ENV NODE_ENV=production
 
-# Comando de inicio directo
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev && npm cache clean --force
+
+# Solo lo que el servidor necesita en runtime: nada de código fuente ni de
+# devDependencies en la imagen final.
+COPY --from=builder /app/dist ./dist
+COPY server.js ./
+COPY server ./server
+
+# Volumen para la configuración del panel /admin. Sin montarlo, los cambios
+# guardados se pierden al recrear el contenedor.
+RUN mkdir -p /app/data && chown -R node:node /app/data
+VOLUME ["/app/data"]
+
+USER node
+
+EXPOSE 3000
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+    CMD node -e "fetch('http://127.0.0.1:'+(process.env.PORT||3000)+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+
 CMD ["node", "server.js"]
