@@ -24,6 +24,22 @@ jobs:
     if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
 
     steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Se construye aquí para saber qué debería estar sirviendo producción.
+      # Sin esto no hay forma de distinguir la versión nueva de la anterior.
+      - name: Construir el contenido esperado
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://diabolicalservices.tech' }}
+        run: |
+          npm ci
+          npm run build
+
       - name: Comprobar si hay webhook configurado
         id: check
         env:
@@ -48,19 +64,35 @@ jobs:
         env:
           SITE_URL: ${{ vars.SITE_URL || 'https://diabolicalservices.tech' }}
         run: |
+          # Se compara contra llms.txt porque se genera por completo desde
+          # sectores.json, faq.json y articulos.json: es determinista y cambia
+          # con cualquier commit que toque el contenido publicado. La portada no
+          # sirve: el servidor le inyecta el <head> desde data/settings.json, que
+          # se edita desde /admin y no depende del commit.
+          #
+          # El chequeo anterior buscaba "</head>" y el ID de GTM, que ya estaban
+          # en la versión vieja: pasaba en la primera vuelta siempre, incluso con
+          # el contenedor anterior en pie. Justo el fallo que debía detectar.
+          ESPERADO=dist/llms.txt
+          if [ ! -s "$ESPERADO" ]; then
+            echo "::error title=Build incompleto::No se generó $ESPERADO; no hay con qué comparar."
+            exit 1
+          fi
+
           echo "Comprobando $SITE_URL durante un máximo de 10 minutos..."
           for i in $(seq 1 40); do
-            HTML=$(curl -fsS --max-time 20 "$SITE_URL/" || true)
-            # Marcadores que solo existen en la versión nueva.
-            HEAD_OK=$(printf '%s' "$HTML" | grep -c '</head>' || true)
-            GTM_OK=$(printf '%s' "$HTML" | grep -c 'GTM-P3P29XB5' || true)
-            if [ "$HEAD_OK" -ge 1 ] && [ "$GTM_OK" -ge 1 ]; then
-              echo "Producción actualizada tras $((i * 15))s."
-              exit 0
+            if curl -fsS --max-time 20 "$SITE_URL/llms.txt" -o servido.txt 2>/dev/null; then
+              if cmp -s "$ESPERADO" servido.txt; then
+                echo "Producción sirve el contenido de este commit (tras $((i * 15))s)."
+                exit 0
+              fi
             fi
             sleep 15
           done
-          echo "::error title=El despliegue no llegó a producción::El webhook respondió, pero $SITE_URL sigue sirviendo la versión anterior pasados 10 minutos. Revisa los logs de la plataforma."
+
+          echo "::error title=El despliegue no llegó a producción::El webhook respondió, pero $SITE_URL sigue sin servir el contenido de este commit pasados 10 minutos. El contenedor anterior puede seguir en pie: revisa los logs de la plataforma."
+          echo "--- Diferencias (esperado < / servido >) ---"
+          diff "$ESPERADO" servido.txt | head -40 || true
           exit 1
 
       - name: Verificar que el despliegue quedó correcto
