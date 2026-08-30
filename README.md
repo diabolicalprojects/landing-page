@@ -71,18 +71,42 @@ Las variables `VITE_*` se compilan dentro del bundle público — **nunca pongas
 
 ## Despliegue
 
-### Docker (recomendado: es el que sirve el SEO dinámico)
+### Docker (es el despliegue actual y el que sirve el SEO dinámico)
+
+Cada push a `main` publica la imagen en GitHub Container Registry
+(`.github/workflows/publish-image.yml`, sin secretos que configurar). Desplegar es entonces:
+
+```bash
+docker pull ghcr.io/diabolicalprojects/landing-page:latest
+docker stop diabolical-landing && docker rm diabolical-landing
+docker run -d --name diabolical-landing --restart unless-stopped -p 3000:3000 \
+  --env-file .env \
+  -v diabolical-data:/app/data \
+  ghcr.io/diabolicalprojects/landing-page:latest
+```
+
+Cada versión queda también etiquetada como `sha-<commit>`, así que volver atrás es cambiar la
+etiqueta del `docker run`.
+
+Para construir en el propio servidor en lugar de tirar de la imagen publicada:
 
 ```bash
 docker build -t diabolical-landing .
-docker run -d -p 3000:3000 \
-  --env-file .env \
-  -v diabolical-data:/app/data \
-  diabolical-landing
+docker run -d -p 3000:3000 --env-file .env -v diabolical-data:/app/data diabolical-landing
 ```
 
 El volumen en `/app/data` es necesario: sin él, lo que se guarda desde `/admin` se pierde al
 recrear el contenedor.
+
+Comprobaciones rápidas tras desplegar:
+
+```bash
+curl -sI https://diabolicalservices.tech/ | grep -i content-security-policy   # CSP activa
+curl -s https://diabolicalservices.tech/ | grep -c "GTM-P3P29XB5"            # analítica: 1
+curl -s -o /dev/null -w '%{http_code}\n' https://diabolicalservices.tech/no-existe   # 404
+curl -s -X POST https://diabolicalservices.tech/api/settings \
+  -H 'Content-Type: application/json' -d '{"title":"x"}'                     # 401
+```
 
 ### Firebase Hosting
 
