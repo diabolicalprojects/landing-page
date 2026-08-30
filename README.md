@@ -74,7 +74,22 @@ Las variables `VITE_*` se compilan dentro del bundle público — **nunca pongas
 ### Docker (es el despliegue actual y el que sirve el SEO dinámico)
 
 Cada push a `main` publica la imagen en GitHub Container Registry
-(`.github/workflows/publish-image.yml`, sin secretos que configurar). Desplegar es entonces:
+(`.github/workflows/publish-image.yml`, sin secretos que configurar).
+
+**Despliegue automático.** `.github/workflows/deploy.yml` se encadena a la publicación de la
+imagen, dispara el despliegue y verifica que la versión nueva quedó realmente servida (que la API
+de escritura devuelve 401, que la CSP viaja en las cabeceras y que una ruta inexistente da 404).
+Necesita un único secreto:
+
+1. Copia la URL de despliegue que expone tu plataforma (Coolify, Easypanel, Dokploy, Render,
+   Railway… todas tienen una; suele llamarse *deploy hook* o *webhook*).
+2. Pégala en **Settings → Secrets and variables → Actions → New repository secret** con el nombre
+   `DEPLOY_WEBHOOK_URL`.
+
+Sin ese secreto el workflow no falla: avisa y no hace nada. Si el dominio no es
+`https://diabolicalservices.tech`, define también la variable `SITE_URL` en esa misma pantalla.
+
+**Despliegue manual**, si prefieres no configurar el webhook:
 
 ```bash
 docker pull ghcr.io/diabolicalprojects/landing-page:latest
