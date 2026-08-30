@@ -18,7 +18,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const rootDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const distDir = path.join(rootDir, 'dist');
@@ -46,7 +46,7 @@ if (!shell.includes(MARKER_START) || !shell.includes(MARKER_END)) {
 // El shell se guarda antes de tocar nada: es el index.html tal cual lo dejó Vite.
 fs.writeFileSync(shellFile, shell);
 
-const { render } = await import(path.join(rootDir, '.ssr', 'entry-server.mjs'));
+const { render } = await import(pathToFileURL(path.join(rootDir, '.ssr', 'entry-server.mjs')).href);
 
 function inyectarCabecera(html, ruta) {
     const inicio = html.indexOf(MARKER_START);
