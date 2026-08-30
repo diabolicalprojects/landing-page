@@ -45,3 +45,47 @@ jobs:
 
       - name: Verificar que la imagen construye
         run: docker build -t diabolical-landing:ci .
+
+      # Construir no basta: una dependencia que falte en la etapa de runtime
+      # produce una imagen válida cuyo contenedor muere al arrancar. Cuando eso
+      # pasa, el orquestador conserva el contenedor anterior y da el despliegue
+      # por bueno, así que el sitio se queda en la versión vieja sin que nada
+      # falle a la vista.
+      - name: Verificar que el contenedor arranca y responde
+        run: |
+          docker run -d --name ci-check -p 3000:3000 \
+            -e NODE_ENV=production diabolical-landing:ci
+
+          OK=""
+          for i in $(seq 1 30); do
+            if curl -fsS --max-time 5 http://127.0.0.1:3000/health > /dev/null 2>&1; then
+              echo "El servidor responde tras ${i}s."
+              OK=1
+              break
+            fi
+            sleep 1
+          done
+
+          if [ -z "$OK" ]; then
+            echo "::error title=El contenedor no respondió::/health no contestó en 30 segundos."
+            docker logs ci-check
+            docker rm -f ci-check > /dev/null 2>&1 || true
+            exit 1
+          fi
+
+          # Estas rutas dependen de ficheros que solo existen si la imagen los
+          # copió: son las que delatan una etapa de runtime incompleta.
+          FALLOS=0
+          for ruta in / /automatizacion-para-clinicas /llms.txt /llms-full.txt /robots.txt /sitemap.xml; do
+            CODIGO=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://127.0.0.1:3000$ruta")
+            if [ "$CODIGO" = "200" ]; then
+              echo "  OK $ruta"
+            else
+              echo "::error::$ruta devolvió $CODIGO; se esperaba 200."
+              FALLOS=1
+            fi
+          done
+
+          if [ "$FALLOS" = "1" ]; then docker logs ci-check; fi
+          docker rm -f ci-check > /dev/null
+          exit $FALLOS
