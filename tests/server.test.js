@@ -12,6 +12,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const bcrypt = require('bcryptjs');
+const { SECTORES, RUTAS_PUBLICAS } = require('../server/schema');
 
 const PORT = 4173;
 const BASE = `http://127.0.0.1:${PORT}`;
@@ -153,9 +154,90 @@ test('da metadatos propios a cada ruta y 404 a las desconocidas', async (t) => {
 test('sirve robots.txt y sitemap.xml', async () => {
     const robots = await fetch(`${BASE}/robots.txt`);
     assert.equal(robots.status, 200);
-    assert.match(await robots.text(), /User-agent: \*/);
+    const texto = await robots.text();
+    assert.match(texto, /User-agent: \*/);
+    // El GEO depende de que los rastreadores de IA tengan permiso explícito.
+    for (const bot of ['GPTBot', 'ClaudeBot', 'PerplexityBot', 'Google-Extended']) {
+        assert.match(texto, new RegExp(`User-agent: ${bot}`), `falta ${bot} en robots.txt`);
+    }
+    assert.match(texto, /Disallow: \/admin/);
 
     const sitemap = await fetch(`${BASE}/sitemap.xml`);
     assert.equal(sitemap.status, 200);
-    assert.match(await sitemap.text(), /<urlset/);
+    const xml = await sitemap.text();
+    assert.match(xml, /<urlset/);
+    for (const ruta of RUTAS_PUBLICAS) {
+        assert.ok(xml.includes(`${ruta}<`) || xml.includes(`.tech${ruta}`), `falta ${ruta} en el sitemap`);
+    }
+});
+
+test('sirve llms.txt y llms-full.txt para los motores generativos', async () => {
+    for (const ruta of ['/llms.txt', '/llms-full.txt']) {
+        const res = await fetch(`${BASE}${ruta}`);
+        assert.equal(res.status, 200);
+        assert.match(res.headers.get('content-type'), /text\/plain/);
+        const texto = await res.text();
+        assert.ok(texto.length > 1000, `${ruta} devolvió solo ${texto.length} caracteres`);
+        assert.match(texto, /Diabolical Services/);
+    }
+});
+
+test('cada página de sector se sirve con su contenido y su schema', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    for (const sector of SECTORES) {
+        const ruta = `/automatizacion-para-${sector.slug}`;
+        const res = await fetch(`${BASE}${ruta}`);
+        assert.equal(res.status, 200, `${ruta} no devolvió 200`);
+
+        const html = await res.text();
+        // Prerenderizado: el contenido tiene que estar sin ejecutar JavaScript.
+        assert.ok(html.includes(sector.titular), `${ruta} no trae su titular prerenderizado`);
+        assert.match(html, new RegExp(`<title>${sector.titulo.replace(/[|]/g, '\\|')}`));
+        assert.match(html, new RegExp(`rel="canonical" href="[^"]*${ruta}"`));
+        assert.match(html, /"@type":\s*"Service"/);
+        assert.match(html, /"@type":\s*"BreadcrumbList"/);
+    }
+});
+
+test('las preguntas del FAQPage están visibles en la página', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    // Google exige que lo marcado como FAQPage sea exactamente lo que ve el
+    // visitante. Marcar preguntas que no aparecen en la página es infracción,
+    // y es un fallo que no da ningún síntoma hasta que llega la penalización.
+    const html = await (await fetch(`${BASE}/`)).text();
+    const bloques = [...html.matchAll(/application\/ld\+json">(.*?)<\/script>/gs)].map((m) =>
+        JSON.parse(m[1])
+    );
+    const faq = bloques.find((b) => b['@type'] === 'FAQPage');
+    assert.ok(faq, 'la portada no publica FAQPage');
+
+    const visible = html.replace(/<script[\s\S]*?<\/script>/g, '');
+    for (const entrada of faq.mainEntity) {
+        assert.ok(
+            visible.includes(entrada.name),
+            `la pregunta "${entrada.name}" está en el schema pero no en el HTML visible`
+        );
+    }
+});
+
+test('la portada enlaza a todas las páginas de sector', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    // Sin enlaces internos desde la portada, los buscadores tratarían las
+    // páginas de sector como huérfanas.
+    const html = await (await fetch(`${BASE}/`)).text();
+    for (const sector of SECTORES) {
+        assert.ok(
+            html.includes(`/automatizacion-para-${sector.slug}`),
+            `la portada no enlaza a ${sector.slug}`
+        );
+    }
 });

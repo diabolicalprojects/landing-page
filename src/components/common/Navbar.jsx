@@ -20,6 +20,17 @@ const Navbar = () => {
         };
         window.addEventListener('scroll', handleScroll, { passive: true });
 
+        // El navbar se aclara sobre las secciones de fondo blanco, que solo
+        // existen en la portada. Sin esta comprobación, ScrollTrigger toma el
+        // viewport como referencia cuando el selector no encuentra nada y el
+        // navbar sale en versión clara sobre el fondo negro de las demás
+        // páginas.
+        // isLight ya arranca en false y el navbar se remonta con cada cambio de
+        // ruta, así que basta con no crear los triggers.
+        if (!document.querySelector('#problem') || !document.querySelector('#comparison')) {
+            return () => window.removeEventListener('scroll', handleScroll);
+        }
+
         // Detect white background sections
         const triggers = [
             ScrollTrigger.create({
@@ -82,9 +93,9 @@ const Navbar = () => {
                 "hidden lg:flex items-center gap-10 text-[11px] uppercase tracking-[0.25em] font-bold transition-colors",
                 isLight ? "text-black/60" : "text-white/60"
             )}>
-                <a href="#problem" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Problema</a>
-                <a href="#solutions" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Soluciones</a>
-                <a href="#contact" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Contacto</a>
+                <a href="/#problem" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Problema</a>
+                <a href="/#solutions" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Soluciones</a>
+                <a href="/#contact" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Contacto</a>
             </div>
 
             <div className="flex items-center gap-2 flex-shrink-0">
@@ -116,21 +127,21 @@ const Navbar = () => {
             {isMenuOpen && (
                 <div className="absolute top-[calc(100%+10px)] left-0 w-full rounded-3xl bg-black border border-white/10 backdrop-blur-2xl px-5 py-5 flex flex-col gap-1 lg:hidden shadow-2xl">
                     <a
-                        href="#problem"
+                        href="/#problem"
                         onClick={() => setIsMenuOpen(false)}
                         className="flex items-center text-sm font-title tracking-widest py-4 border-b border-white/10 text-white active:text-white/60 transition-colors"
                     >
                         Problema
                     </a>
                     <a
-                        href="#solutions"
+                        href="/#solutions"
                         onClick={() => setIsMenuOpen(false)}
                         className="flex items-center text-sm font-title tracking-widest py-4 border-b border-white/10 text-white active:text-white/60 transition-colors"
                     >
                         Soluciones
                     </a>
                     <a
-                        href="#contact"
+                        href="/#contact"
                         onClick={() => setIsMenuOpen(false)}
                         className="flex items-center text-sm font-title tracking-widest py-4 border-b border-white/10 text-white active:text-white/60 transition-colors"
                     >

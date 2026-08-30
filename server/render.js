@@ -1,16 +1,20 @@
 const { escapeHtml, serializeJsonLd, sanitizeTrackingId } = require('./html');
-const { ROUTE_META } = require('./seo-defaults');
+const { metadatosPorRuta, datosEstructurados } = require('./schema');
 
 const MARKER_START = '<!-- SEO_INJECT_START -->';
 const MARKER_END = '<!-- SEO_INJECT_END -->';
 
+const RUTA_META = metadatosPorRuta();
+
 /**
- * Construye el bloque <head> con los valores guardados desde /admin, más los
- * metadatos propios de la ruta. Todo lo que viene de settings se escapa: son
- * datos, no markup.
+ * Construye el bloque <head> de una ruta: metadatos editables desde /admin,
+ * más los propios de la ruta y su JSON-LD.
+ *
+ * Todo lo que viene de settings se escapa: son datos, no markup.
  */
 function buildSeoBlock(settings, requestPath, { indexable = true } = {}) {
-    const meta = { robots: 'index, follow', ...settings, ...(ROUTE_META[requestPath] || {}) };
+    const propios = RUTA_META[requestPath] || {};
+    const meta = { robots: 'index, follow', ...settings, ...propios };
 
     const canonical = escapeHtml(`${settings.siteUrl}${requestPath}`);
     const title = escapeHtml(meta.title);
@@ -20,13 +24,26 @@ function buildSeoBlock(settings, requestPath, { indexable = true } = {}) {
     const gtmId = sanitizeTrackingId(settings.googleTagManager);
     const pixelId = sanitizeTrackingId(settings.metaPixel);
 
+    const bloques = datosEstructurados(requestPath)
+        .map((dato) => `    <script type="application/ld+json">${serializeJsonLd(dato)}</script>`)
+        .join('\n');
+
+    // Bloque adicional opcional que se puede cargar desde /admin.
+    const extra = settings.structuredData
+        ? `\n    <script type="application/ld+json">${serializeJsonLd(settings.structuredData)}</script>`
+        : '';
+
     return `${MARKER_START}
     <title>${title}</title>
     <meta name="description" content="${description}">
-    <meta name="keywords" content="${escapeHtml(settings.keywords)}">
+    <meta name="keywords" content="${escapeHtml(meta.keywords || settings.keywords)}">
     <meta name="robots" content="${robots}">
+    <meta name="author" content="Diabolical Services">
     <link rel="canonical" href="${canonical}">
     <link rel="icon" href="${escapeHtml(settings.favicon)}">
+
+    <meta name="geo.region" content="MX-AGU">
+    <meta name="geo.placename" content="Aguascalientes">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="${canonical}">
@@ -43,7 +60,7 @@ function buildSeoBlock(settings, requestPath, { indexable = true } = {}) {
     <meta name="twitter:image" content="${ogImage}">
     <meta name="twitter:site" content="${escapeHtml(settings.twitterHandle)}">
 
-    <script type="application/ld+json">${serializeJsonLd(settings.structuredData)}</script>
+${bloques}${extra}
 ${gtmId ? gtmSnippet(gtmId) : ''}${pixelId ? pixelSnippet(pixelId) : ''}${settings.customHeaderScripts || ''}
     ${MARKER_END}`;
 }
@@ -72,7 +89,7 @@ function pixelSnippet(id) {
 /**
  * Sustituye el bloque marcado dentro del index.html construido. Si los
  * marcadores no están, se avisa y se devuelve el HTML intacto en lugar de
- * fallar en silencio como hacía el `replace('</head>')` anterior.
+ * fallar en silencio.
  */
 function injectSeo(html, settings, requestPath, options) {
     const start = html.indexOf(MARKER_START);
@@ -92,4 +109,4 @@ function injectSeo(html, settings, requestPath, options) {
     );
 }
 
-module.exports = { injectSeo, MARKER_START, MARKER_END };
+module.exports = { injectSeo, buildSeoBlock, MARKER_START, MARKER_END };

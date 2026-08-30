@@ -142,6 +142,40 @@ Sirve `dist/` como estático. **Express no corre**, así que no hay inyección d
 panel `/admin`: los crawlers ven los metadatos estáticos de `index.html`. Es un despliegue válido,
 pero entonces el SEO se edita en `index.html`, no en el panel.
 
+## SEO y GEO
+
+El posicionamiento se genera desde **una sola fuente**: `src/data/sectores.json` y
+`src/data/faq.json`. De ahí salen las páginas, el `<head>`, el JSON-LD, el sitemap y los
+`llms.txt`. Añadir un sector a ese JSON crea su página, su schema, su entrada en el sitemap y su
+bloque en los `llms.txt` sin tocar nada más.
+
+**Páginas por sector.** `/automatizacion-para-<slug>` — una por cada entrada de `sectores.json`,
+con título, descripción, `Service`, `FAQPage` y `BreadcrumbList` propios. Es la ventaja frente a la
+competencia local: nadie segmenta por sector, así que nadie le habla directamente a quien busca
+«automatizar las citas de mi clínica en Aguascalientes».
+
+**Datos estructurados** (`server/schema.js`). Las entidades se enlazan por `@id`
+(`#negocio`, `#website`) para que los buscadores no crean que hay varias empresas distintas.
+La ficha local (dirección exacta, coordenadas, horario, ficha de Google) se publica solo si está
+configurada por entorno — ver `.env.example`. **Rellenarla es la mejora pendiente de mayor
+impacto**: es lo que alimenta el paquete local de Google.
+
+**GEO** (posicionamiento en respuestas de IA):
+
+- `robots.txt` (`server/robots.js`) da permiso explícito a 17 rastreadores de motores generativos
+  (GPTBot, ClaudeBot, PerplexityBot, Google-Extended…). Sin ese permiso, el modelo no puede
+  recomendarte por mucho contenido que publiques.
+- `llms.txt` y `llms-full.txt` (`server/llms.js`) resumen el negocio en texto plano y directo, que
+  es lo que un modelo puede extraer y citar. Incluyen de forma deliberada **lo que no hacemos**:
+  evita recomendaciones equivocadas, que son las que queman la confianza.
+
+> **Regla al escribir contenido:** en `sectores.json` se describen capacidades y problemas típicos
+> del sector, nunca resultados atribuidos a clientes. Cualquier cifra debe venir de un proyecto
+> real y ser defendible; una métrica inventada dentro del JSON-LD es motivo de penalización.
+
+Un test comprueba que las preguntas marcadas como `FAQPage` están visibles en la página. Google
+exige que coincidan, y es un fallo que no da ningún síntoma hasta que llega la penalización.
+
 ## Cómo funciona el SEO
 
 Hay una única fuente de verdad por despliegue:

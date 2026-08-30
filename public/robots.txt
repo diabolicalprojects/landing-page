@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /app-shell.html
-
-Sitemap: https://diabolicalservices.tech/sitemap.xml

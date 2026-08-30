@@ -1,4 +1,5 @@
-require('dotenv').config();
+// quiet: dotenv imprime un banner promocional en cada arranque y en cada build.
+require('dotenv').config({ quiet: true });
 
 const path = require('path');
 
@@ -31,6 +32,28 @@ const config = {
 
     // Dominios externos que la página necesita contactar (webhook de captación de leads).
     n8nOrigin: process.env.N8N_ORIGIN || 'https://n8n.diabolicalservices.tech',
+
+    // --- Ficha local para el JSON-LD ---------------------------------------
+    // Todo esto es opcional y solo se publica si está definido. Son los datos
+    // que Google usa para el paquete local y que los motores de IA citan al
+    // recomendar un proveedor cercano; inventarlos sería publicar información
+    // falsa, así que se omiten mientras no se configuren.
+    streetAddress: process.env.BUSINESS_STREET || '',
+    postalCode: process.env.BUSINESS_POSTAL_CODE || '',
+    latitude: process.env.BUSINESS_LATITUDE || '',
+    longitude: process.env.BUSINESS_LONGITUDE || '',
+    googleMapsUrl: process.env.BUSINESS_MAPS_URL || '',
+    opensAt: process.env.BUSINESS_OPENS || '09:00',
+    closesAt: process.env.BUSINESS_CLOSES || '18:00',
+    openingHours: (process.env.BUSINESS_OPEN_DAYS || '')
+        .split(',')
+        .map((d) => d.trim())
+        .filter(Boolean),
+    // Perfiles oficiales (Instagram, Facebook, LinkedIn, ficha de Google).
+    sameAs: (process.env.BUSINESS_PROFILES || '')
+        .split(',')
+        .map((u) => u.trim())
+        .filter(Boolean),
 };
 
 config.adminEnabled = Boolean(

@@ -1,4 +1,6 @@
-import React, { Suspense, lazy, useSyncExternalStore } from 'react';
+import React, { Suspense, lazy } from 'react';
+
+import { useHydrated } from '../utils/useHydrated';
 
 // Common components
 import CustomCursor from '../components/common/CustomCursor';
@@ -11,6 +13,8 @@ const DiabolicalChatbot = lazy(() => import('../components/common/DiabolicalChat
 import Hero from '../components/sections/Hero';
 import Problem from '../components/sections/Problem';
 import SolutionCards from '../components/sections/SolutionCards';
+import Sectores from '../components/sections/Sectores';
+import Proceso from '../components/sections/Proceso';
 import ComparisonSection from '../components/sections/ComparisonSection';
 import BoldHook from '../components/sections/BoldHook';
 import SuccessStories from '../components/sections/SuccessStories';
@@ -20,10 +24,6 @@ import Contact from '../components/sections/Contact';
 // El <head> (título, descripción, JSON-LD) lo resuelve el servidor antes de
 // enviar el HTML — ver server/render.js. La página no lo toca: reescribirlo
 // desde React solo conseguía pisar los valores buenos con placeholders.
-// Devuelve false durante el prerender y la hidratación, true después.
-const noopSubscribe = () => () => {};
-const useHydrated = () => useSyncExternalStore(noopSubscribe, () => true, () => false);
-
 const LandingPage = () => {
     // El chatbot se monta después de hidratar. Renderizarlo dentro de un
     // <Suspense> durante el prerender dejaba el boundary sin resolver y React
@@ -44,9 +44,11 @@ const LandingPage = () => {
             <Hero />
             <Problem />
             <SolutionCards />
+            <Sectores />
             <SuccessStories />
             <ComparisonSection />
             <BoldHook />
+            <Proceso />
             <FAQSection />
             <Contact />
             <Footer />
