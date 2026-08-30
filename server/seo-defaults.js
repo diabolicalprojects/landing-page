@@ -16,8 +16,10 @@ const config = require('./config');
  */
 const defaults = {
     title: 'Automatización con IA en Aguascalientes | Diabolical Services',
+    // 155 caracteres: por encima de ~160 Google la corta, y lo primero que se
+    // pierde es la llamada a la acción del final.
     description:
-        'Instalamos sistemas de IA que atienden, agendan y dan seguimiento por ti: clínicas, spas, gimnasios, despachos y oficinas en Aguascalientes. Auditoría de fricción gratuita.',
+        'Instalamos sistemas de IA que atienden, agendan y dan seguimiento solos. Clínicas, spas, gimnasios y despachos en Aguascalientes. Auditoría gratuita.',
     keywords:
         'automatización con IA Aguascalientes, agencia de inteligencia artificial, chatbot WhatsApp para negocios, agendar citas automático, automatización de ventas, IA para clínicas, IA para spas, IA para gimnasios',
     siteUrl: config.siteUrl,
