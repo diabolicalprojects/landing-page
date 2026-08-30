@@ -1,0 +1,99 @@
+name: Desplegar
+
+# Dispara el despliegue en el servidor de producción y comprueba que la versión
+# nueva quedó realmente servida.
+#
+# Requiere un único secreto: DEPLOY_WEBHOOK_URL, la URL de despliegue que expone
+# tu plataforma (Coolify, Easypanel, Dokploy, Render, Railway... todas tienen
+# una). Sin ese secreto el workflow no falla: avisa y no hace nada, así que se
+# puede mergear antes de configurarlo.
+#
+# Se encadena a "Publicar imagen" para que el despliegue use una imagen que ya
+# existe en el registro.
+
+on:
+  workflow_run:
+    workflows: ["Publicar imagen"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+
+    steps:
+      - name: Comprobar si hay webhook configurado
+        id: check
+        env:
+          WEBHOOK: ${{ secrets.DEPLOY_WEBHOOK_URL }}
+        run: |
+          if [ -z "$WEBHOOK" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Despliegue no configurado::Falta el secreto DEPLOY_WEBHOOK_URL. Añádelo en Settings → Secrets and variables → Actions y vuelve a lanzar este workflow."
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Disparar el despliegue
+        if: steps.check.outputs.configured == 'true'
+        env:
+          WEBHOOK: ${{ secrets.DEPLOY_WEBHOOK_URL }}
+        run: |
+          curl -fsS --max-time 60 -X POST "$WEBHOOK" -o /dev/null -w 'webhook HTTP %{http_code}\n'
+
+      - name: Esperar a que la versión nueva esté en producción
+        if: steps.check.outputs.configured == 'true'
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://diabolicalservices.tech' }}
+        run: |
+          echo "Comprobando $SITE_URL durante un máximo de 10 minutos..."
+          for i in $(seq 1 40); do
+            HTML=$(curl -fsS --max-time 20 "$SITE_URL/" || true)
+            # Marcadores que solo existen en la versión nueva.
+            HEAD_OK=$(printf '%s' "$HTML" | grep -c '</head>' || true)
+            GTM_OK=$(printf '%s' "$HTML" | grep -c 'GTM-P3P29XB5' || true)
+            if [ "$HEAD_OK" -ge 1 ] && [ "$GTM_OK" -ge 1 ]; then
+              echo "Producción actualizada tras $((i * 15))s."
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "::error title=El despliegue no llegó a producción::El webhook respondió, pero $SITE_URL sigue sirviendo la versión anterior pasados 10 minutos. Revisa los logs de la plataforma."
+          exit 1
+
+      - name: Verificar que el despliegue quedó correcto
+        if: steps.check.outputs.configured == 'true'
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://diabolicalservices.tech' }}
+        run: |
+          FAILED=0
+
+          # La API de escritura debe rechazar peticiones sin sesión. Se usa una
+          # petición sin cuerpo: con la versión desplegada no escribe nada.
+          CODE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 \
+            -X POST "$SITE_URL/api/settings" -H 'Content-Type: application/json' -d '{}')
+          if [ "$CODE" = "401" ] || [ "$CODE" = "503" ]; then
+            echo "✓ POST /api/settings rechazado ($CODE)"
+          else
+            echo "::error::POST /api/settings devolvió $CODE; se esperaba 401 o 503."
+            FAILED=1
+          fi
+
+          if curl -sI --max-time 20 "$SITE_URL/" | grep -qi 'content-security-policy'; then
+            echo "✓ CSP activa"
+          else
+            echo "::error::No se está enviando la cabecera Content-Security-Policy."
+            FAILED=1
+          fi
+
+          CODE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$SITE_URL/esta-ruta-no-existe")
+          if [ "$CODE" = "404" ]; then
+            echo "✓ Rutas desconocidas devuelven 404"
+          else
+            echo "::error::Una ruta inexistente devolvió $CODE; se esperaba 404."
+            FAILED=1
+          fi
+
+          exit $FAILED
