@@ -19,6 +19,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import zlib from 'node:zlib';
 
 const rootDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const distDir = path.join(rootDir, 'dist');
@@ -106,3 +107,54 @@ for (const [nombre, contenido] of Object.entries(estaticos)) {
     fs.writeFileSync(path.join(distDir, nombre), contenido);
     console.log(`[prerender] ${nombre.padEnd(38)} ${(contenido.length / 1024).toFixed(1)} kB`);
 }
+
+// Precompresión de los assets con hash.
+//
+// El middleware `compression` de Express comprime en caliente, y por velocidad
+// usa Brotli de calidad 4: sobre este bundle da 147 kB, MÁS que gzip (145 kB).
+// Como los navegadores modernos anuncian `br` antes que `gzip`, hoy reciben
+// precisamente la peor de las dos versiones.
+//
+// Estos ficheros llevan hash en el nombre y se sirven `immutable`, así que
+// comprimirlos una vez aquí a calidad máxima no cuesta nada en cada petición y
+// baja el bundle a 126 kB. El servidor sirve la variante ya comprimida cuando
+// existe (ver server.js) y `compression` se aparta al ver Content-Encoding.
+const COMPRIMIBLES = /\.(js|css|svg|json|txt|xml|map)$/i;
+const MINIMO_BYTES = 1024;
+
+function precomprimir(dir) {
+    let n = 0;
+    let ahorro = 0;
+    for (const entrada of fs.readdirSync(dir, { withFileTypes: true })) {
+        const ruta = path.join(dir, entrada.name);
+        if (entrada.isDirectory()) {
+            const r = precomprimir(ruta);
+            n += r.n;
+            ahorro += r.ahorro;
+            continue;
+        }
+        if (!COMPRIMIBLES.test(entrada.name) || /\.(br|gz)$/i.test(entrada.name)) continue;
+
+        const datos = fs.readFileSync(ruta);
+        if (datos.length < MINIMO_BYTES) continue;
+
+        const br = zlib.brotliCompressSync(datos, {
+            params: {
+                [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
+                [zlib.constants.BROTLI_PARAM_SIZE_HINT]: datos.length,
+            },
+        });
+        const gz = zlib.gzipSync(datos, { level: zlib.constants.Z_BEST_COMPRESSION });
+
+        fs.writeFileSync(`${ruta}.br`, br);
+        fs.writeFileSync(`${ruta}.gz`, gz);
+        n += 1;
+        ahorro += datos.length - br.length;
+    }
+    return { n, ahorro };
+}
+
+const { n: comprimidos, ahorro } = precomprimir(distDir);
+console.log(
+    `[prerender] precomprimidos ${comprimidos} ficheros (br + gz), ${(ahorro / 1024).toFixed(1)} kB menos que sin comprimir`
+);

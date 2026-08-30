@@ -242,6 +242,37 @@ test('la portada enlaza a todas las páginas de sector', async (t) => {
     }
 });
 
+test('los assets se sirven precomprimidos y brotli gana a gzip', async (t) => {
+    const dirAssets = path.join(__dirname, '..', 'dist', 'assets');
+    if (!fs.existsSync(dirAssets)) return t.skip('requiere npm run build');
+
+    const bundle = fs.readdirSync(dirAssets).find((f) => /^index-.*\.js$/.test(f));
+    assert.ok(bundle, 'no se encontró el bundle principal en dist/assets');
+
+    const pedir = (encoding) =>
+        fetch(`${BASE}/assets/${bundle}`, { headers: { 'Accept-Encoding': encoding } });
+
+    // El navegador real anuncia las tres; debe recibir brotli.
+    const real = await pedir('gzip, deflate, br');
+    assert.equal(real.headers.get('content-encoding'), 'br');
+    assert.match(real.headers.get('content-type') || '', /javascript/);
+    assert.match(real.headers.get('vary') || '', /accept-encoding/i);
+
+    // Brotli al máximo tiene que salir más pequeño que gzip. Cuando no lo es,
+    // significa que se está comprimiendo en caliente a calidad baja, que es
+    // justo el fallo que este precomprimido corrige.
+    const tamBr = fs.statSync(path.join(dirAssets, `${bundle}.br`)).size;
+    const tamGz = fs.statSync(path.join(dirAssets, `${bundle}.gz`)).size;
+    assert.ok(tamBr < tamGz, `brotli (${tamBr}) debería ser menor que gzip (${tamGz})`);
+
+    // Un cliente que solo entiende gzip no puede recibir brotli.
+    const soloGzip = await pedir('gzip');
+    assert.equal(soloGzip.headers.get('content-encoding'), 'gzip');
+
+    // Las variantes no se sirven por su nombre: solo por negociación.
+    assert.equal((await fetch(`${BASE}/assets/${bundle}.br`)).status, 404);
+});
+
 test('las coordenadas de la ficha local se publican como número o no se publican', () => {
     // Estas variables se teclean a mano una sola vez en el panel del
     // orquestador. Con notación española ("21,8853") el JSON-LD validaría pero

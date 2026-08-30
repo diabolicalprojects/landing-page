@@ -146,6 +146,67 @@ app.get('/sitemap.xml', (req, res) => {
 app.get('/app-shell.html', (req, res) => res.redirect(301, '/'));
 app.get('/prerender/*', (req, res) => res.redirect(301, '/'));
 
+// Sirve la variante precomprimida cuando el build la dejó lista.
+//
+// scripts/prerender.mjs escribe un .br y un .gz junto a cada asset con hash,
+// comprimidos a calidad máxima. Eso importa porque `compression` comprime en
+// caliente con Brotli de calidad 4, que sobre el bundle principal produce
+// 147 kB: más que su propio gzip (145 kB) y bastante más que Brotli al máximo
+// (126 kB). Como los navegadores anuncian `br` antes que `gzip`, sin esto
+// reciben la peor de las tres versiones.
+//
+// Solo se aplica a rutas con hash en el nombre (/assets/), que son inmutables:
+// ahí el fichero comprimido no puede quedar desfasado respecto al original.
+const CODIFICACIONES = [
+    { nombre: 'br', extension: '.br' },
+    { nombre: 'gzip', extension: '.gz' },
+];
+
+// Sin punto de montaje a propósito: `app.use('/assets', ...)` recorta el
+// prefijo de req.url dentro del handler y lo restaura al salir, así que la
+// reescritura se perdería antes de llegar a express.static.
+app.use((req, res, next) => {
+    if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+    if (!req.path.startsWith('/assets/')) return next();
+
+    // Las variantes comprimidas se sirven por negociación, nunca por su nombre.
+    // Pedirlas directamente solo lo haría un rastreador, y descargaría un blob
+    // binario con el mismo contenido que el asset original.
+    if (/\.(br|gz)$/i.test(req.path)) return res.sendStatus(404);
+
+    const aceptadas = String(req.headers['accept-encoding'] || '');
+
+    let relativa;
+    try {
+        relativa = decodeURIComponent(req.path);
+    } catch {
+        return next(); // porcentaje mal formado en la URL
+    }
+
+    // Sin esta comprobación un `..` en la ruta alcanzaría ficheros fuera de dist.
+    const raizAssets = path.resolve(config.distPath, 'assets');
+    const destino = path.resolve(config.distPath, '.' + relativa);
+    if (!destino.startsWith(raizAssets + path.sep)) return next();
+
+    for (const { nombre, extension } of CODIFICACIONES) {
+        if (!aceptadas.includes(nombre)) continue;
+        if (!fs.existsSync(destino + extension)) continue;
+
+        // El tipo se toma de la extensión original: el navegador debe recibir
+        // application/javascript, no el tipo del contenedor comprimido.
+        res.type(path.extname(destino));
+        res.setHeader('Content-Encoding', nombre);
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        // Sin Vary, una caché intermedia podría entregar la versión brotli a un
+        // cliente que no la entiende.
+        res.setHeader('Vary', 'Accept-Encoding');
+        req.url = `${req.path}${extension}`;
+        return next();
+    }
+
+    return next();
+});
+
 // `index: false` es imprescindible: si express.static resuelve el index.html de
 // "/" por su cuenta, el handler de abajo nunca corre y la home se queda sin
 // meta-tags inyectados (el bug que dejaba /admin sin efecto sobre la portada).
