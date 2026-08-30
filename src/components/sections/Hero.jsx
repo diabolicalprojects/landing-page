@@ -1,11 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import InteractiveGrid from '../common/InteractiveGrid';
+import { prefiereMenosMovimiento } from '../../utils/movimiento';
 
 const Hero = () => {
     const heroRef = useRef(null);
 
     useEffect(() => {
+        // Con movimiento reducido no se anima nada: la regla de index.css deja
+        // el contenido ya visible, así que salir aquí lo muestra colocado en su
+        // posición final en lugar de esconderlo a la espera de una animación
+        // que no va a ocurrir.
+        if (prefiereMenosMovimiento()) return undefined;
+
         const ctx = gsap.context(() => {
             // fromTo, no from: el HTML viene prerenderizado y el CSS ya deja
             // estos elementos en opacity 0 (regla `.js`), así que un `from`

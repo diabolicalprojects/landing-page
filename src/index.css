@@ -12,6 +12,31 @@
   opacity: 0;
 }
 
+/*
+  Con movimiento reducido no se esconde nada.
+
+  Hero.jsx y Footer.jsx omiten su animación de entrada cuando el sistema pide
+  menos movimiento, y esas animaciones son lo único que devuelve la opacidad a
+  1. Sin esta regla, quien active la preferencia se quedaría con la portada y
+  el pie en blanco: el caso justo contrario al que la preferencia busca.
+
+  No se usa el truco de reducir todas las duraciones a 0.01s: no elimina el
+  parpadeo, solo lo acorta.
+*/
+@media (prefers-reduced-motion: reduce) {
+
+  .js .hero-content > *,
+  .js .footer-content > * {
+    opacity: 1;
+  }
+
+  /* Movimiento decorativo en bucle: es el que peor sienta a quien marca la
+     preferencia, porque no termina nunca. */
+  .animate-float {
+    animation: none;
+  }
+}
+
 @font-face {
   font-family: 'CODE Bold';
   src: url('/fonts/CODE-Bold.otf') format('opentype');

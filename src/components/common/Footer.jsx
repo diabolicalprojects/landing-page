@@ -2,11 +2,16 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import logoHorizontalBlanco from '../../assets/logo/LOGO-DIABOLICAL-HORIZONTAL-BLANCO.svg';
+import { prefiereMenosMovimiento } from '../../utils/movimiento';
 
 const Footer = () => {
     const footerRef = useRef(null);
 
     useEffect(() => {
+        // Mismo criterio que en Hero: con movimiento reducido el pie se muestra
+        // directamente, sin ScrollTrigger ni entrada escalonada.
+        if (prefiereMenosMovimiento()) return undefined;
+
         const ctx = gsap.context(() => {
             gsap.fromTo(".footer-content > *",
                 { y: 40, opacity: 0 },
@@ -38,7 +43,11 @@ const Footer = () => {
                         <img src={logoHorizontalBlanco} alt="Diabolical" width="140" height="28" className="h-6 md:h-7 mb-6 md:mb-8 opacity-80" />
                         <h2 className="text-2xl md:text-4xl font-title mb-4 md:mb-6 leading-[0.9] tracking-tighter">
                             ¿LISTO PARA TU{' '}
-                            <span className="text-white/15 italic">TRANSFORMACIÓN?</span>
+                            {/* /15 daba 1.39:1 sobre el fondo: la palabra que
+                                remata el titular era la que no se leía. /40
+                                mantiene el degradado y sube a 3.7:1, por encima
+                                del 3:1 que pide WCAG para texto grande. */}
+                            <span className="text-white/40 italic">TRANSFORMACIÓN?</span>
                         </h2>
                         <p className="text-sm md:text-base text-white/60 font-light mb-6 md:mb-8 leading-relaxed italic">
                             "La IA no es una herramienta. Es tu nueva <strong className="text-white/70 not-italic">infraestructura de dominio.</strong>"
