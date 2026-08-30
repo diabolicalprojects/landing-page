@@ -27,6 +27,11 @@ COPY --from=builder /app/dist ./dist
 COPY server.js ./
 COPY server ./server
 
+# El servidor lee los sectores y las preguntas frecuentes de src/data para
+# construir el <head>, el sitemap y los llms.txt. Sin esta copia la imagen
+# construye igual pero el contenedor muere al arrancar con MODULE_NOT_FOUND.
+COPY src/data ./src/data
+
 # Volumen para la configuración del panel /admin. Sin montarlo, los cambios
 # guardados se pierden al recrear el contenedor.
 RUN mkdir -p /app/data && chown -R node:node /app/data
