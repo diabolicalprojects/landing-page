@@ -9,6 +9,9 @@ const { buildHelmet, buildCors, loginLimiter, apiLimiter } = require('./server/s
 const { readSettings, writeSettings, ensureDataDir } = require('./server/settings');
 const { injectSeo } = require('./server/render');
 const { escapeHtml } = require('./server/html');
+const { construirRobots } = require('./server/robots');
+const { construirLlms, construirLlmsFull } = require('./server/llms');
+const { RUTAS_PUBLICAS, RUTAS_PRERENDER, archivoPrerender } = require('./server/schema');
 const {
     COOKIE_NAME,
     signSession,
@@ -21,8 +24,10 @@ const {
 const app = express();
 
 // Rutas que sirve React Router. Cualquier otra devuelve 404 real en vez de un
-// soft-404 con estado 200, que Google penaliza.
-const APP_ROUTES = new Set(['/', '/admin', '/politica-privacidad']);
+// soft-404 con estado 200, que Google penaliza. Las públicas salen de
+// server/schema.js para que router, sitemap y prerender no se desincronicen.
+const APP_ROUTES = new Set([...RUTAS_PUBLICAS, '/admin']);
+const PRERENDER = new Set(RUTAS_PRERENDER);
 
 app.set('trust proxy', 1);
 app.disable('x-powered-by');
@@ -98,8 +103,20 @@ app.post('/api/settings', buildCors(), apiLimiter, requireAuth, (req, res) => {
 
 // --- robots.txt y sitemap.xml dinámicos ------------------------------------
 
+// Guía del negocio para los motores generativos. Se sirve como texto plano y
+// se genera de los mismos datos que las páginas, para que no se desactualice.
+app.get('/llms.txt', (req, res) => {
+    res.type('text/plain; charset=utf-8').send(construirLlms());
+});
+
+app.get('/llms-full.txt', (req, res) => {
+    res.type('text/plain; charset=utf-8').send(construirLlmsFull());
+});
+
 app.get('/robots.txt', (req, res) => {
-    res.type('text/plain').send(readSettings().robotsTxt);
+    // Lo editado desde /admin manda; si no, se genera con la lista de
+    // rastreadores de IA (ver server/robots.js).
+    res.type('text/plain').send(readSettings().robotsTxt || construirRobots());
 });
 
 app.get('/sitemap.xml', (req, res) => {
@@ -110,7 +127,7 @@ app.get('/sitemap.xml', (req, res) => {
 
     const today = new Date().toISOString().split('T')[0];
     const baseUrl = escapeHtml(settings.siteUrl);
-    const urls = ['/', '/politica-privacidad']
+    const urls = RUTAS_PUBLICAS
         .map(
             (route) =>
                 `  <url>\n    <loc>${baseUrl}${route}</loc>\n    <lastmod>${today}</lastmod>\n  </url>`
@@ -124,8 +141,10 @@ app.get('/sitemap.xml', (req, res) => {
 
 // --- Estáticos --------------------------------------------------------------
 
-// app-shell.html es un artefacto interno del prerender, no una página.
+// app-shell.html y prerender/ son artefactos internos del build, no páginas.
+// Sin esto quedarían accesibles como URLs duplicadas del contenido real.
 app.get('/app-shell.html', (req, res) => res.redirect(301, '/'));
+app.get('/prerender/*', (req, res) => res.redirect(301, '/'));
 
 // `index: false` es imprescindible: si express.static resuelve el index.html de
 // "/" por su cuenta, el handler de abajo nunca corre y la home se queda sin
@@ -165,10 +184,15 @@ function loadHtml(fileName) {
 }
 
 app.get('*', (req, res) => {
-    const html =
-        req.path === '/'
-            ? loadHtml('index.html')
-            : (loadHtml('app-shell.html') || loadHtml('index.html'));
+    // Cada ruta prerenderizada tiene su propio HTML; el resto reciben el shell
+    // vacío, porque servirles el HTML de otra página obligaría a React a
+    // descartarlo al hidratar.
+    //
+    // El nombre del fichero se deriva de la ruta, así que solo se consulta para
+    // rutas de la lista blanca: construirlo con req.path arbitrario abriría un
+    // path traversal.
+    const prerenderizada = PRERENDER.has(req.path) ? loadHtml(archivoPrerender(req.path)) : null;
+    const html = prerenderizada || loadHtml('app-shell.html') || loadHtml('index.html');
 
     if (!html) {
         return res

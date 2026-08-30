@@ -8,6 +8,11 @@ import ErrorBoundary from './components/common/ErrorBoundary';
 // React a descartar el HTML prerenderizado y mostrar el fallback al hidratar.
 import LandingPage from './pages/LandingPage';
 
+// Las páginas de sector también se prerenderizan y comparten un único
+// componente, así que cargarlas de entrada cuesta muy poco.
+import SectorPage from './pages/SectorPage';
+import { SECTORES } from './data/sectores';
+
 // El resto sí se parte: son rutas secundarias.
 const AdminPage = lazy(() => import('./pages/AdminPage'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
@@ -21,6 +26,16 @@ function App() {
             <Suspense fallback={<div className="min-h-screen bg-black" />}>
                 <Routes>
                     <Route path="/" element={<LandingPage />} />
+                    {/* Una ruta por sector en vez de un parámetro: React Router
+                        solo acepta :params que ocupen un segmento completo, y
+                        "/automatizacion-para-:slug" nunca llegaría a casar. */}
+                    {SECTORES.map((sector) => (
+                        <Route
+                            key={sector.slug}
+                            path={`/automatizacion-para-${sector.slug}`}
+                            element={<SectorPage slug={sector.slug} />}
+                        />
+                    ))}
                     <Route path="/admin" element={<AdminPage />} />
                     <Route path="/politica-privacidad" element={<PrivacyPolicy />} />
                     {/* El servidor ya devuelve 404 para estas rutas; esto evita
