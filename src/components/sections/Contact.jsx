@@ -69,7 +69,7 @@ const Contact = () => {
                         </div>
                     ) : (
                         <>
-                            <h3 className="text-[9px] uppercase tracking-[0.4em] font-black mb-6 md:mb-8 text-center text-white/30">Cuestionario de Fricción</h3>
+                            <h3 className="text-[9px] uppercase tracking-[0.4em] font-black mb-6 md:mb-8 text-center text-white/55">Cuestionario de Fricción</h3>
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="flex flex-col gap-2">
@@ -125,7 +125,7 @@ const Contact = () => {
                                 <button type="submit" disabled={isSending} className="w-full py-5 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] hover:scale-[1.02] active:scale-95 transition-all shadow-2xl mt-2 min-h-[60px] disabled:opacity-50 disabled:hover:scale-100">
                                     {isSending ? 'Enviando...' : 'Solicitar Diagnóstico Gratuito →'}
                                 </button>
-                                <p className="text-[9px] text-white/20 text-center">Te contactaremos solo si tu negocio es un buen candidato.</p>
+                                <p className="text-[9px] text-white/55 text-center">Te contactaremos solo si tu negocio es un buen candidato.</p>
                             </form>
                         </>
                     )}

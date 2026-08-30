@@ -38,7 +38,10 @@ const SolutionCards = () => {
                                 {s.icon}
                             </div>
                             <div>
-                                <span className="text-[8px] font-black tracking-[0.5em] text-white/20 block mb-2 uppercase">{s.tag}</span>
+                                {/* /20 daba 1.66:1: la categoría de cada tarjeta
+                                    era ilegible. /60 sube a 7.4:1 sin cambiar
+                                    tamaño ni maquetación. */}
+                                <span className="text-[8px] font-black tracking-[0.5em] text-white/60 block mb-2 uppercase">{s.tag}</span>
                                 <h3 className="text-lg md:text-xl font-title mb-3 leading-tight">{s.title}</h3>
                                 <p className="text-sm text-white/50 leading-relaxed">{s.desc}</p>
                             </div>

@@ -89,8 +89,10 @@ const Proceso = () => (
                                 {paso.titulo}
                             </h3>
                             <p className="text-white/55 text-sm leading-relaxed font-light">{paso.detalle}</p>
-                            <p className="text-[11px] text-white/40 leading-relaxed">
-                                <span className="uppercase tracking-[0.2em] font-black text-white/30">Tu parte: </span>
+                            {/* A 11px hace falta 4.5:1. /40 daba 3.7 y la
+                                etiqueta en /30 daba 2.5, por debajo las dos. */}
+                            <p className="text-[11px] text-white/55 leading-relaxed">
+                                <span className="uppercase tracking-[0.2em] font-black text-white/65">Tu parte: </span>
                                 {paso.tuParte}
                             </p>
                         </div>
