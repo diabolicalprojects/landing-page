@@ -8,8 +8,10 @@ dist
 .env.*.local
 .DS_Store
 
-# Configuración persistida por el panel /admin
-data/
+# Configuración persistida por el panel /admin.
+# La barra inicial es imprescindible: "data/" a secas también excluiría
+# src/data/, que sí forma parte del código fuente.
+/data/
 
 # Salidas de pruebas y perfilado
 lcp_details.txt

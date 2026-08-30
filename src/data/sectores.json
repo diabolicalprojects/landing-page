@@ -1,0 +1,210 @@
+[
+    {
+        "slug": "clinicas",
+        "nombre": "Clínicas y Consultorios Médicos",
+        "nombreCorto": "Clínicas",
+        "titulo": "Automatización con IA para Clínicas y Consultorios en Aguascalientes",
+        "descripcion": "Agenda tus citas médicas automáticamente por WhatsApp, reduce las ausencias con recordatorios y libera a recepción del teléfono. Instalación en 2 a 4 semanas.",
+        "keywords": "automatización clínicas Aguascalientes, agendar citas médicas WhatsApp, chatbot para consultorio médico, recordatorios de cita automáticos, IA para clínicas",
+        "titular": "Tu recepción no debería vivir contestando WhatsApp",
+        "entradilla": "En una clínica, cada mensaje sin responder es una cita que se va a otro consultorio. Instalamos un sistema que agenda, confirma y recuerda por ti, conectado a la agenda que ya usas.",
+        "dolores": [
+            "Pacientes que escriben fuera de horario y encuentran la conversación en silencio hasta el día siguiente.",
+            "Ausencias que dejan huecos muertos en la agenda porque nadie alcanzó a confirmar.",
+            "Recepción atrapada entre el teléfono, el mostrador y el WhatsApp al mismo tiempo.",
+            "Pacientes que no regresan porque nadie les dio seguimiento después de la consulta."
+        ],
+        "soluciones": [
+            {
+                "titulo": "Agenda que se llena sola",
+                "detalle": "El sistema atiende por WhatsApp a cualquier hora, propone los huecos libres reales y deja la cita puesta en el calendario que ya usas."
+            },
+            {
+                "titulo": "Confirmación y recordatorio automáticos",
+                "detalle": "Recordatorios antes de la cita y confirmación de asistencia, para que los huecos se liberen a tiempo y se puedan reasignar."
+            },
+            {
+                "titulo": "Filtrado antes de llegar a recepción",
+                "detalle": "Preguntas frecuentes, precios, ubicación y preparación previa se responden solas. Recepción solo atiende lo que de verdad necesita a una persona."
+            },
+            {
+                "titulo": "Seguimiento post-consulta",
+                "detalle": "Recordatorios de revisión y de tratamientos de continuidad, sin que nadie tenga que llevar la lista a mano."
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿Se conecta con la agenda que ya usamos en la clínica?",
+                "a": "Sí. El sistema se integra con la agenda y el expediente que ya tengas en uso (Google Calendar, software de consultorio o el CRM que utilices). No pedimos cambiar de herramienta: la automatización se monta encima de lo que ya funciona."
+            },
+            {
+                "q": "¿La IA da diagnósticos o consejos médicos a los pacientes?",
+                "a": "No, y es deliberado. El sistema se limita a tareas administrativas: agendar, confirmar, recordar, responder dudas de horarios, ubicación, costos y preparación. Cualquier consulta clínica se deriva al personal médico. Diagnosticar no es trabajo de un asistente automático."
+            },
+            {
+                "q": "¿Qué pasa con los datos de los pacientes?",
+                "a": "El sistema maneja únicamente los datos necesarios para agendar y contactar. La información clínica permanece en el expediente de la clínica, no en el asistente. Definimos contigo qué campos se tocan y cuáles no antes de instalar nada."
+            },
+            {
+                "q": "¿Cuánto tarda la instalación en una clínica?",
+                "a": "Entre 2 y 4 semanas. Incluye el diseño del flujo conversacional, la conexión con tu agenda, las pruebas con casos reales y el acompañamiento durante las primeras semanas de operación."
+            }
+        ]
+    },
+    {
+        "slug": "spas",
+        "nombre": "Spas y Centros de Estética",
+        "nombreCorto": "Spas y estética",
+        "titulo": "Automatización con IA para Spas y Centros de Estética en Aguascalientes",
+        "descripcion": "Reserva tratamientos por WhatsApp las 24 horas, reduce cancelaciones de última hora y reactiva clientas que dejaron de venir. Instalación en 2 a 4 semanas.",
+        "keywords": "automatización spa Aguascalientes, reservas spa WhatsApp, chatbot centro de estética, agenda automática salón de belleza, IA para spas",
+        "titular": "Tus clientas deciden a las 11 de la noche. Tu agenda debería estar despierta",
+        "entradilla": "En estética, la reserva se pierde en minutos: quien contesta primero se queda con la clienta. Instalamos un sistema que cotiza, reserva y recuerda sin que nadie tenga que estar pendiente del teléfono.",
+        "dolores": [
+            "Mensajes de madrugada o en fin de semana que se responden cuando la clienta ya reservó en otro lado.",
+            "Cancelaciones de última hora que dejan la cabina vacía y sin margen para rellenarla.",
+            "Explicar los mismos precios y duraciones de cada tratamiento veinte veces al día.",
+            "Clientas que vinieron una vez y nunca volvieron porque nadie las volvió a buscar."
+        ],
+        "soluciones": [
+            {
+                "titulo": "Reserva inmediata, a cualquier hora",
+                "detalle": "El sistema explica el tratamiento, da el precio, muestra los horarios disponibles y deja la reserva hecha en el momento."
+            },
+            {
+                "titulo": "Menos cancelaciones",
+                "detalle": "Confirmación y recordatorio automáticos antes de la cita, con opción de reprogramar sola. El hueco liberado se puede ofrecer a alguien más."
+            },
+            {
+                "titulo": "Catálogo que responde solo",
+                "detalle": "Precios, duración, cuidados previos y contraindicaciones de cada tratamiento, contestados al instante y siempre igual de bien."
+            },
+            {
+                "titulo": "Reactivación de clientas",
+                "detalle": "Seguimiento automático a quien lleva tiempo sin volver y recordatorio del siguiente ciclo cuando el tratamiento lo requiere."
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿Puede manejar varios tratamientos con precios y duraciones distintas?",
+                "a": "Sí. Cargamos tu catálogo completo con precio, duración y cabina o especialista requerido, de modo que el sistema no ofrezca horarios imposibles ni reserve dos servicios que necesitan la misma cabina."
+            },
+            {
+                "q": "¿Y si la clienta quiere hablar con una persona?",
+                "a": "Siempre puede. El sistema deriva a tu equipo en cuanto la conversación se sale de lo previsto o la clienta lo pide. El objetivo es que tu gente atienda lo que aporta valor, no que nadie conteste."
+            },
+            {
+                "q": "¿Funciona si atendemos por Instagram además de WhatsApp?",
+                "a": "Sí. WhatsApp es el canal principal en México, pero los mismos flujos se conectan a Instagram y a Facebook para que todo caiga en el mismo lugar y no se pierda ninguna conversación."
+            },
+            {
+                "q": "¿Cuánto tarda la instalación en un spa?",
+                "a": "Entre 2 y 4 semanas, según el tamaño del catálogo y el número de cabinas o especialistas que haya que coordinar en la agenda."
+            }
+        ]
+    },
+    {
+        "slug": "gimnasios",
+        "nombre": "Gimnasios y Estudios de Entrenamiento",
+        "nombreCorto": "Gimnasios",
+        "titulo": "Automatización con IA para Gimnasios y Estudios en Aguascalientes",
+        "descripcion": "Atiende a los interesados al instante, automatiza el recordatorio de mensualidades y recupera a los socios que dejaron de venir. Instalación en 2 a 4 semanas.",
+        "keywords": "automatización gimnasios Aguascalientes, chatbot gimnasio WhatsApp, recuperar socios gimnasio, recordatorio mensualidad automático, IA para gimnasios",
+        "titular": "El problema de tu gimnasio no es llenarlo. Es que no se vacíe",
+        "entradilla": "Captar cuesta caro y la baja es silenciosa: el socio simplemente deja de venir. Instalamos un sistema que atiende al interesado en segundos y detecta al socio que se está enfriando antes de que se dé de baja.",
+        "dolores": [
+            "Interesados que preguntan precios por WhatsApp y no reciben respuesta hasta horas después.",
+            "Mensualidades que se cobran tarde porque el recordatorio depende de que alguien se acuerde.",
+            "Socios que dejan de asistir semanas antes de darse de baja, sin que nadie lo note.",
+            "Clases y horarios explicados uno por uno, todos los días, a cada persona nueva."
+        ],
+        "soluciones": [
+            {
+                "titulo": "Respuesta al interesado en segundos",
+                "detalle": "Precios, horarios, clases y promociones contestados al momento, con la visita o clase de prueba agendada en la misma conversación."
+            },
+            {
+                "titulo": "Cobranza sin perseguir a nadie",
+                "detalle": "Recordatorio automático de renovación antes del vencimiento, con el enlace de pago en el mismo mensaje."
+            },
+            {
+                "titulo": "Aviso temprano de abandono",
+                "detalle": "El sistema detecta al socio que lleva días sin asistir y lanza un contacto de reenganche antes de que la baja sea definitiva."
+            },
+            {
+                "titulo": "Horarios y clases siempre al día",
+                "detalle": "Cambios de horario, cupos y clases especiales comunicados solos, sin depender de que alguien publique el aviso."
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿Se conecta con nuestro sistema de control de acceso o de socios?",
+                "a": "Sí, siempre que el sistema permita integración. De ahí sale la señal más valiosa: quién lleva días sin entrar. Si tu control no es integrable, lo resolvemos con el registro de asistencia que ya lleves, aunque la detección sea algo menos fina."
+            },
+            {
+                "q": "¿Puede cobrar las mensualidades?",
+                "a": "El sistema envía el recordatorio con el enlace de pago de la pasarela que ya uses y confirma cuando el pago entra. No sustituimos tu pasarela ni tocamos los datos de la tarjeta."
+            },
+            {
+                "q": "¿No resulta molesto para el socio recibir mensajes automáticos?",
+                "a": "Depende por completo de cómo se diseñe. Trabajamos con frecuencia baja y mensajes útiles: renovación, cambio de horario y reenganche. Nada de promociones diarias. Un sistema que satura consigue que lo silencien, y entonces deja de servir."
+            },
+            {
+                "q": "¿Cuánto tarda la instalación en un gimnasio?",
+                "a": "Entre 2 y 4 semanas, dependiendo de si hay que integrar el control de acceso y la pasarela de pago o solo el canal de WhatsApp."
+            }
+        ]
+    },
+    {
+        "slug": "despachos-y-oficinas",
+        "nombre": "Despachos y Oficinas Profesionales",
+        "nombreCorto": "Despachos y oficinas",
+        "titulo": "Automatización con IA para Despachos y Oficinas en Aguascalientes",
+        "descripcion": "Filtra prospectos antes de que lleguen a tu equipo, recopila documentación sola y da seguimiento a cada asunto. Instalación en 2 a 4 semanas.",
+        "keywords": "automatización despachos Aguascalientes, IA para despacho contable, chatbot despacho legal, filtrado de prospectos automático, automatización oficinas pequeñas",
+        "titular": "Tu hora facturable no debería irse en pedir documentos por WhatsApp",
+        "entradilla": "En un despacho, el tiempo del equipo es el producto. Instalamos un sistema que califica al prospecto, reúne la documentación y da seguimiento, para que tus profesionales solo toquen lo que requiere criterio.",
+        "dolores": [
+            "Consultas que no encajan con el servicio y aun así consumen una llamada completa.",
+            "Documentación que se pide tres veces y llega incompleta o tarde.",
+            "Asuntos parados porque el seguimiento depende de que alguien recuerde escribir.",
+            "Prospectos buenos que se enfrían mientras el equipo está ocupado con expedientes en curso."
+        ],
+        "soluciones": [
+            {
+                "titulo": "Prospectos calificados antes de la primera llamada",
+                "detalle": "El sistema hace las preguntas de encuadre y solo agenda con tu equipo lo que encaja con los servicios que ofreces."
+            },
+            {
+                "titulo": "Recopilación de documentos automática",
+                "detalle": "Solicita la documentación, la reclama hasta tenerla completa y la deja ordenada donde tu equipo la espera."
+            },
+            {
+                "titulo": "Seguimiento que no se olvida",
+                "detalle": "Cada asunto abierto tiene su cadencia de contacto, con avisos al cliente y al responsable interno."
+            },
+            {
+                "titulo": "Respuestas de siempre, contestadas siempre",
+                "detalle": "Honorarios orientativos, plazos, requisitos y ubicación resueltos al instante, sin ocupar a nadie."
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿La IA da asesoría legal o fiscal a los clientes?",
+                "a": "No. El sistema se ocupa de lo administrativo: encuadrar la consulta, recopilar documentos, agendar y dar seguimiento. Cualquier criterio profesional lo da tu equipo. Automatizar el consejo experto sería, además de arriesgado, exactamente lo contrario de lo que vende un despacho."
+            },
+            {
+                "q": "¿Cómo se maneja la confidencialidad de los expedientes?",
+                "a": "El sistema toca únicamente los datos necesarios para el flujo que se automatiza, y definimos ese alcance contigo por escrito antes de instalar. Los expedientes siguen viviendo donde ya viven, con los mismos permisos."
+            },
+            {
+                "q": "¿Sirve para un despacho de dos o tres personas?",
+                "a": "Es donde más se nota. En un equipo pequeño no hay a quién delegar lo administrativo: se lo reparte la misma gente que factura. Recuperar esas horas tiene un efecto directo e inmediato."
+            },
+            {
+                "q": "¿Cuánto tarda la instalación en un despacho?",
+                "a": "Entre 2 y 4 semanas, según cuántos flujos se automaticen y qué integraciones haga falta montar con las herramientas que ya usan."
+            }
+        ]
+    }
+]
