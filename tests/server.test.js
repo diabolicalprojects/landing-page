@@ -242,6 +242,44 @@ test('la portada enlaza a todas las páginas de sector', async (t) => {
     }
 });
 
+test('las coordenadas de la ficha local se publican como número o no se publican', () => {
+    // Estas variables se teclean a mano una sola vez en el panel del
+    // orquestador. Con notación española ("21,8853") el JSON-LD validaría pero
+    // apuntaría a otro sitio, y un mapa equivocado hace más daño que la
+    // ausencia de mapa. Se prueba en procesos aparte porque config.js lee el
+    // entorno al cargarse.
+    const leerGeo = (latitude, longitude) => {
+        const salida = require('node:child_process').execFileSync(
+            process.execPath,
+            [
+                '-e',
+                "const g = require('./server/schema').datosEstructurados('/')[0].geo;" +
+                    'process.stdout.write(JSON.stringify(g === undefined ? null : g));',
+            ],
+            {
+                cwd: path.join(__dirname, '..'),
+                env: {
+                    ...process.env,
+                    BUSINESS_LATITUDE: latitude,
+                    BUSINESS_LONGITUDE: longitude,
+                },
+                encoding: 'utf8',
+            }
+        );
+        return JSON.parse(salida);
+    };
+
+    const valido = leerGeo('21.8853', '-102.2916');
+    assert.ok(valido, 'unas coordenadas correctas deberían publicarse');
+    assert.equal(typeof valido.latitude, 'number', 'la latitud debe ir como número');
+    assert.equal(typeof valido.longitude, 'number', 'la longitud debe ir como número');
+
+    assert.equal(leerGeo('21,8853', '-102,2916'), null, 'la coma decimal debe omitir el bloque');
+    assert.equal(leerGeo('abc', '-102.2916'), null, 'un valor no numérico debe omitir el bloque');
+    assert.equal(leerGeo('91', '-102.2916'), null, 'una latitud fuera de rango debe omitir el bloque');
+    assert.equal(leerGeo('', ''), null, 'sin configurar no se publica geo');
+});
+
 test('cada artículo del blog se sirve prerenderizado y con su BlogPosting', async (t) => {
     if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
         return t.skip('requiere npm run build');

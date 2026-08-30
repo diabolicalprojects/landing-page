@@ -106,11 +106,27 @@ function negocio() {
     if (config.streetAddress) entidad.address.streetAddress = config.streetAddress;
     if (config.postalCode) entidad.address.postalCode = config.postalCode;
 
-    if (config.latitude && config.longitude) {
+    // Las coordenadas se publican como número, no como el texto que venga de la
+    // variable de entorno. Se teclean a mano una sola vez, y con notación
+    // española ("21,8853") o con un grado pegado saldría un JSON-LD que valida
+    // pero apunta a otro sitio. Si no son números dentro de rango se omite el
+    // bloque entero: la misma regla que para el resto de la ficha, mejor sin
+    // dato que con uno falso.
+    const lat = Number(config.latitude);
+    const lon = Number(config.longitude);
+    const coordenadasValidas =
+        config.latitude !== '' &&
+        config.longitude !== '' &&
+        Number.isFinite(lat) &&
+        Number.isFinite(lon) &&
+        Math.abs(lat) <= 90 &&
+        Math.abs(lon) <= 180;
+
+    if (coordenadasValidas) {
         entidad.geo = {
             '@type': 'GeoCoordinates',
-            latitude: config.latitude,
-            longitude: config.longitude,
+            latitude: lat,
+            longitude: lon,
         };
     }
 
