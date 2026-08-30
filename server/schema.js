@@ -1,4 +1,5 @@
 const SECTORES = require('../src/data/sectores.json');
+const ARTICULOS = require('../src/data/articulos.json');
 const config = require('./config');
 
 const SITE = config.siteUrl;
@@ -15,6 +16,15 @@ const TELEFONO = '+524495136907';
 const EMAIL = 'contacto@diabolicalservices.tech';
 
 const rutaSector = (slug) => `/automatizacion-para-${slug}`;
+const rutaArticulo = (slug) => `/blog/${slug}`;
+
+/** Índice del blog. Existe como constante porque la referencian las migas,
+ *  los metadatos, el JSON-LD y el sitemap, y un literal repetido cinco veces
+ *  es justo el tipo de dato que se desincroniza al renombrar. */
+const RUTA_BLOG = '/blog';
+
+/** Los más recientes primero, igual que en el cliente. */
+const ARTICULOS_POR_FECHA = [...ARTICULOS].sort((a, b) => b.fecha.localeCompare(a.fecha));
 
 /**
  * La entidad principal. `areaServed` y `knowsAbout` son las señales que usan
@@ -200,6 +210,24 @@ function metadatosPorRuta() {
         };
     }
 
+    meta[RUTA_BLOG] = {
+        title: 'Blog sobre automatización con IA para negocios | Diabolical Services',
+        description:
+            'Artículos sobre automatización con inteligencia artificial, posicionamiento en motores generativos y atención por WhatsApp para negocios en Aguascalientes.',
+        keywords:
+            'blog automatización IA, GEO, aparecer en ChatGPT, automatizar WhatsApp negocio, Aguascalientes',
+        robots: 'index, follow',
+    };
+
+    for (const articulo of ARTICULOS) {
+        meta[rutaArticulo(articulo.slug)] = {
+            title: articulo.titulo,
+            description: articulo.descripcion,
+            keywords: articulo.keywords,
+            robots: 'index, follow',
+        };
+    }
+
     return meta;
 }
 
@@ -234,6 +262,64 @@ function datosEstructurados(ruta) {
         ];
     }
 
+    if (ruta === RUTA_BLOG) {
+        return [
+            {
+                '@context': 'https://schema.org',
+                '@type': 'Blog',
+                '@id': `${SITE}${RUTA_BLOG}#blog`,
+                name: 'Blog de Diabolical Services',
+                description:
+                    'Artículos sobre automatización con inteligencia artificial, posicionamiento en motores generativos y atención por WhatsApp para negocios.',
+                url: `${SITE}${RUTA_BLOG}`,
+                inLanguage: 'es-MX',
+                publisher: { '@id': ID_NEGOCIO },
+                blogPost: ARTICULOS_POR_FECHA.map((a) => ({
+                    '@type': 'BlogPosting',
+                    '@id': `${SITE}${rutaArticulo(a.slug)}#articulo`,
+                    headline: a.titular,
+                    url: `${SITE}${rutaArticulo(a.slug)}`,
+                    datePublished: a.fecha,
+                })),
+            },
+            migas([
+                { nombre: 'Inicio', ruta: '/' },
+                { nombre: 'Blog', ruta: RUTA_BLOG },
+            ]),
+        ];
+    }
+
+    const articulo = ARTICULOS.find((a) => rutaArticulo(a.slug) === ruta);
+    if (articulo) {
+        return [
+            {
+                '@context': 'https://schema.org',
+                '@type': 'BlogPosting',
+                '@id': `${SITE}${ruta}#articulo`,
+                headline: articulo.titular,
+                description: articulo.descripcion,
+                url: `${SITE}${ruta}`,
+                mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE}${ruta}` },
+                datePublished: articulo.fecha,
+                dateModified: articulo.actualizado || articulo.fecha,
+                inLanguage: 'es-MX',
+                // Autor y editor son la misma entidad y se referencian por @id en
+                // vez de repetirse: es lo que evita que los motores crean que hay
+                // varias empresas distintas describiéndose en el mismo sitio.
+                author: { '@id': ID_NEGOCIO },
+                publisher: { '@id': ID_NEGOCIO },
+                isPartOf: { '@id': `${SITE}${RUTA_BLOG}#blog` },
+                keywords: articulo.keywords,
+            },
+            faqPage(articulo.faq),
+            migas([
+                { nombre: 'Inicio', ruta: '/' },
+                { nombre: 'Blog', ruta: RUTA_BLOG },
+                { nombre: articulo.titular, ruta },
+            ]),
+        ];
+    }
+
     if (ruta === '/politica-privacidad') {
         return [
             migas([
@@ -247,10 +333,27 @@ function datosEstructurados(ruta) {
 }
 
 /** Rutas indexables, para el router del servidor, el sitemap y el prerender. */
-const RUTAS_PUBLICAS = ['/', ...SECTORES.map((s) => rutaSector(s.slug)), '/politica-privacidad'];
+const RUTAS_PUBLICAS = [
+    '/',
+    ...SECTORES.map((s) => rutaSector(s.slug)),
+    RUTA_BLOG,
+    ...ARTICULOS_POR_FECHA.map((a) => rutaArticulo(a.slug)),
+    '/politica-privacidad',
+];
 
-/** Rutas que se prerenderizan a HTML. El resto reciben el shell vacío. */
-const RUTAS_PRERENDER = ['/', ...SECTORES.map((s) => rutaSector(s.slug))];
+/**
+ * Rutas que se prerenderizan a HTML. El resto reciben el shell vacío.
+ *
+ * El blog entra entero: es contenido de texto y su público son precisamente los
+ * rastreadores que no ejecutan JavaScript. Servirlo como shell vacío haría
+ * inútil el esfuerzo de escribirlo.
+ */
+const RUTAS_PRERENDER = [
+    '/',
+    ...SECTORES.map((s) => rutaSector(s.slug)),
+    RUTA_BLOG,
+    ...ARTICULOS_POR_FECHA.map((a) => rutaArticulo(a.slug)),
+];
 
 /**
  * Fichero del build que corresponde a una ruta. Lo comparten el prerender (que
@@ -262,10 +365,14 @@ function archivoPrerender(ruta) {
 
 module.exports = {
     SECTORES,
+    ARTICULOS,
+    ARTICULOS_POR_FECHA,
     RUTAS_PUBLICAS,
     RUTAS_PRERENDER,
+    RUTA_BLOG,
     FAQ_PORTADA,
     rutaSector,
+    rutaArticulo,
     archivoPrerender,
     metadatosPorRuta,
     datosEstructurados,

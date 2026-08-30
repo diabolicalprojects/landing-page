@@ -55,6 +55,10 @@ const Footer = () => {
                 <div className="flex flex-col md:flex-row justify-between items-center gap-2 pt-6 md:pt-8 border-t border-white/10 text-[9px] font-mono uppercase tracking-[0.3em] text-white/60">
                     <div>Powered by Diabolical Logic — © 2026</div>
                     <div className="flex gap-4">
+                        {/* El blog necesita un enlace desde todas las páginas: sin
+                            él quedaría huérfano, alcanzable solo desde el sitemap. */}
+                        <Link to="/blog" className="hover:text-white transition-colors">Blog</Link>
+                        <span>|</span>
                         <Link to="/politica-privacidad" className="hover:text-white transition-colors">Política de Privacidad</Link>
                         <span>|</span>
                         <span>DIABOLICAL_STABLE_v2.5</span>

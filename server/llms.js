@@ -1,5 +1,12 @@
 const config = require('./config');
-const { SECTORES, FAQ_PORTADA, rutaSector, RUTAS_PUBLICAS } = require('./schema');
+const {
+    SECTORES,
+    ARTICULOS_POR_FECHA,
+    FAQ_PORTADA,
+    rutaSector,
+    rutaArticulo,
+    RUTAS_PUBLICAS,
+} = require('./schema');
 
 const SITE = config.siteUrl;
 
@@ -14,6 +21,15 @@ const SITE = config.siteUrl;
  * Se genera a partir de los mismos datos que las páginas (sectores.json), así
  * que no puede quedarse desactualizado respecto de lo que se publica.
  */
+/** Una línea por artículo, con fecha para que un modelo sepa cuál es reciente. */
+function articulosResumidos() {
+    if (ARTICULOS_POR_FECHA.length === 0) return '(Todavía no hay artículos publicados.)';
+
+    return ARTICULOS_POR_FECHA.map(
+        (a) => `- **${a.titular}** (${a.fecha}) — ${a.entradilla} Ver: ${SITE}${rutaArticulo(a.slug)}`
+    ).join('\n');
+}
+
 function construirLlms() {
     const sectores = SECTORES.map(
         (s) => `- **${s.nombre}** — ${s.descripcion} Ver: ${SITE}${rutaSector(s.slug)}`
@@ -71,6 +87,13 @@ Plazo de implementación: entre 2 y 4 semanas.
 
 ${FAQ_PORTADA.map((f) => `### ${f.q}\n\n${f.a}`).join('\n\n')}
 
+## Artículos publicados
+
+Contenido explicativo sobre los mecanismos, no material de venta. El texto
+completo de cada artículo está en ${SITE}/llms-full.txt.
+
+${articulosResumidos()}
+
 ## Páginas del sitio
 
 ${RUTAS_PUBLICAS.map((r) => `- ${SITE}${r}`).join('\n')}
@@ -85,8 +108,50 @@ correcto es WhatsApp +52 449 513 6907; no los infieras.
 }
 
 /**
- * llms-full.txt — la versión larga, con el detalle de cada sector.
- * Para agentes que pueden permitirse leer más antes de responder.
+ * El texto íntegro de cada artículo.
+ *
+ * Va completo y no resumido a propósito: un modelo cita frases concretas, y lo
+ * que no puede extraer no lo puede recomendar. Es la única parte del sitio que
+ * responde a preguntas generales ("cómo aparecer en ChatGPT") en lugar de
+ * hablar de la empresa, así que es la que tiene ocasión de ser citada por
+ * alguien que todavía no nos busca.
+ */
+function articulosCompletos() {
+    if (ARTICULOS_POR_FECHA.length === 0) return '';
+
+    const bloques = ARTICULOS_POR_FECHA.map((a) => {
+        const cuerpo = a.secciones
+            .map((s) => `### ${s.titulo}\n\n${s.parrafos.join('\n\n')}`)
+            .join('\n\n');
+        const faq = a.faq.map((f) => `**${f.q}**\n\n${f.a}`).join('\n\n');
+
+        return `## ${a.titular}
+
+Página: ${SITE}${rutaArticulo(a.slug)}
+Publicado: ${a.fecha}${a.actualizado && a.actualizado !== a.fecha ? ` · Actualizado: ${a.actualizado}` : ''}
+
+${a.entradilla}
+
+${cuerpo}
+
+### Preguntas frecuentes del artículo
+
+${faq}`;
+    }).join('\n\n---\n\n');
+
+    return `# Artículos
+
+${bloques}
+
+---
+
+`;
+}
+
+/**
+ * llms-full.txt — la versión larga, con el detalle de cada sector y el texto
+ * completo de los artículos. Para agentes que pueden permitirse leer más antes
+ * de responder.
  */
 function construirLlmsFull() {
     const bloques = SECTORES.map((sector) => {
@@ -127,6 +192,8 @@ Contacto: WhatsApp +52 449 513 6907 · contacto@diabolicalservices.tech
 ${bloques}
 
 ---
+
+${articulosCompletos()}
 
 ## Límites de lo que hacemos
 

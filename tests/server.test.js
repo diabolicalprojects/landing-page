@@ -12,7 +12,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const bcrypt = require('bcryptjs');
-const { SECTORES, RUTAS_PUBLICAS } = require('../server/schema');
+const { SECTORES, RUTAS_PUBLICAS, ARTICULOS } = require('../server/schema');
 
 const PORT = 4173;
 const BASE = `http://127.0.0.1:${PORT}`;
@@ -238,6 +238,83 @@ test('la portada enlaza a todas las páginas de sector', async (t) => {
         assert.ok(
             html.includes(`/automatizacion-para-${sector.slug}`),
             `la portada no enlaza a ${sector.slug}`
+        );
+    }
+});
+
+test('cada artículo del blog se sirve prerenderizado y con su BlogPosting', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    for (const articulo of ARTICULOS) {
+        const ruta = `/blog/${articulo.slug}`;
+        const res = await fetch(`${BASE}${ruta}`);
+        assert.equal(res.status, 200, `${ruta} no devolvió 200`);
+
+        const html = await res.text();
+        // El público del blog son justamente los rastreadores que no ejecutan
+        // JavaScript: si el cuerpo no viaja en el HTML, el artículo no sirve.
+        assert.ok(html.includes(articulo.titular), `${ruta} no trae su titular prerenderizado`);
+        assert.ok(
+            html.includes(articulo.secciones[0].parrafos[0].slice(0, 60)),
+            `${ruta} no trae el cuerpo prerenderizado`
+        );
+        assert.match(html, new RegExp(`rel="canonical" href="[^"]*${ruta}"`));
+        assert.match(html, /"@type":\s*"BlogPosting"/);
+        assert.match(html, /"@type":\s*"BreadcrumbList"/);
+    }
+});
+
+test('las preguntas del FAQPage de cada artículo están visibles en la página', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    // Mismo motivo que en la portada: marcar como FAQPage preguntas que no
+    // aparecen en el HTML visible es infracción y no da síntomas hasta la
+    // penalización.
+    for (const articulo of ARTICULOS) {
+        const html = await (await fetch(`${BASE}/blog/${articulo.slug}`)).text();
+        const bloques = [...html.matchAll(/application\/ld\+json">(.*?)<\/script>/gs)].map((m) =>
+            JSON.parse(m[1])
+        );
+        const faq = bloques.find((b) => b['@type'] === 'FAQPage');
+        assert.ok(faq, `${articulo.slug} no publica FAQPage`);
+
+        const visible = html.replace(/<script[\s\S]*?<\/script>/g, '');
+        for (const entrada of faq.mainEntity) {
+            assert.ok(
+                visible.includes(entrada.name),
+                `la pregunta "${entrada.name}" está en el schema de ${articulo.slug} pero no en el HTML visible`
+            );
+        }
+    }
+});
+
+test('el blog está enlazado y sus artículos entran en el sitemap y los llms', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    // El índice tiene que ser alcanzable desde cualquier página, no solo desde
+    // el sitemap, o los artículos quedan huérfanos.
+    const portada = await (await fetch(`${BASE}/`)).text();
+    assert.ok(portada.includes('/blog'), 'la portada no enlaza al blog');
+
+    const indice = await (await fetch(`${BASE}/blog`)).text();
+    const sitemap = await (await fetch(`${BASE}/sitemap.xml`)).text();
+    const llms = await (await fetch(`${BASE}/llms.txt`)).text();
+    const llmsFull = await (await fetch(`${BASE}/llms-full.txt`)).text();
+
+    for (const articulo of ARTICULOS) {
+        assert.ok(indice.includes(`/blog/${articulo.slug}`), `el índice no enlaza a ${articulo.slug}`);
+        assert.ok(sitemap.includes(`/blog/${articulo.slug}`), `${articulo.slug} no está en el sitemap`);
+        assert.ok(llms.includes(articulo.titular), `${articulo.slug} no está en llms.txt`);
+        // En la versión larga va el texto íntegro: es lo que un modelo cita.
+        assert.ok(
+            llmsFull.includes(articulo.secciones[0].parrafos[0]),
+            `el cuerpo de ${articulo.slug} no está en llms-full.txt`
         );
     }
 });

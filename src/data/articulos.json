@@ -1,0 +1,165 @@
+[
+    {
+        "slug": "como-aparecer-en-chatgpt",
+        "titulo": "Cómo aparecer en ChatGPT y otros motores de IA | Diabolical Services",
+        "descripcion": "Qué hace falta para que ChatGPT, Claude, Perplexity o las respuestas de IA de Google mencionen tu negocio: permisos de rastreo, texto extraíble y datos verificables. Guía práctica desde Aguascalientes.",
+        "keywords": "aparecer en ChatGPT, posicionamiento en IA, GEO, generative engine optimization, que mi negocio salga en ChatGPT, Perplexity negocios, AI Overviews",
+        "titular": "Cómo aparecer en ChatGPT y otros motores de IA",
+        "entradilla": "Cada vez más gente pregunta a un modelo en lugar de abrir Google. Si el modelo no puede leer tu sitio, no te menciona: no es cuestión de suerte ni de pagar, sino de tres condiciones técnicas que se pueden revisar en una tarde.",
+        "fecha": "2026-08-30",
+        "actualizado": "2026-08-30",
+        "lectura": "7 min",
+        "secciones": [
+            {
+                "titulo": "El cambio: de diez enlaces azules a una sola respuesta",
+                "parrafos": [
+                    "Un buscador tradicional te devuelve una lista y tú eliges. Un motor generativo devuelve una respuesta ya redactada y, como mucho, cita las fuentes de las que la sacó. La diferencia importa: en una lista de diez resultados hay diez oportunidades de aparecer; en una respuesta única hay dos o tres menciones, y el resto no existe.",
+                    "A esta disciplina se la empieza a llamar GEO (generative engine optimization) o AEO (answer engine optimization). No sustituye al SEO: se apoya en él. Un sitio que ya está bien estructurado para Google parte con ventaja, porque los motores generativos se alimentan en buena medida del mismo rastreo web."
+                ]
+            },
+            {
+                "titulo": "Condición 1: dejar entrar a los rastreadores de IA",
+                "parrafos": [
+                    "Los modelos no leen tu web en el momento de responder. La han leído antes, mediante rastreadores propios, y muchos sitios los bloquean sin saberlo. GPTBot es el de OpenAI, ClaudeBot el de Anthropic, PerplexityBot el de Perplexity, y Google-Extended controla si tu contenido alimenta a Gemini y a las respuestas generadas de Google.",
+                    "Estos rastreadores son distintos del Googlebot de toda la vida y se autorizan por separado en el archivo robots.txt. Bloquearlos es una decisión legítima si no quieres que tu contenido alimente modelos ajenos, pero hay que tomarla a conciencia: mientras estén bloqueados, ningún modelo puede recomendarte por mucho contenido que publiques.",
+                    "La comprobación es inmediata. Abre tudominio.com/robots.txt y busca esos nombres. Si no aparecen y hay un Disallow general, tienes el problema. Si el archivo no existe, el comportamiento por defecto suele ser permisivo, pero conviene declararlo de forma explícita para no depender de la interpretación de cada rastreador."
+                ]
+            },
+            {
+                "titulo": "Condición 2: que haya texto que se pueda extraer y citar",
+                "parrafos": [
+                    "Un modelo cita frases. No cita una imagen bonita, ni un vídeo, ni un carrusel donde el texto está incrustado en el diseño. Muchas webs de negocio local están construidas casi enteramente con imágenes y animaciones: para una persona se ven bien, para un modelo están vacías.",
+                    "Hay un segundo problema, más silencioso: los sitios que solo montan su contenido con JavaScript en el navegador. Google ejecuta JavaScript, pero varios rastreadores de IA no lo hacen o lo hacen a medias. Si el HTML que llega en la primera respuesta del servidor es un contenedor vacío, eso es exactamente lo que ve el modelo. La solución es servir el contenido ya renderizado en el HTML.",
+                    "El texto además tiene que ser afirmativo y concreto. «Soluciones innovadoras a la medida de tu empresa» no es citable porque no dice nada. «Instalamos agendamiento automático por WhatsApp para clínicas en Aguascalientes, con implementación de dos a cuatro semanas» sí lo es: tiene servicio, sector, ciudad y plazo."
+                ]
+            },
+            {
+                "titulo": "Condición 3: datos consistentes y verificables",
+                "parrafos": [
+                    "Los modelos penalizan la ambigüedad. Si tu nombre, dirección y teléfono aparecen de tres formas distintas entre tu web, tu ficha de Google y tus directorios, el sistema no sabe cuál es la entidad real y opta por no arriesgarse a recomendarte.",
+                    "Los datos estructurados (schema.org) ayudan a resolverlo, sobre todo si enlazas las entidades entre sí con identificadores estables en lugar de repetirlas. Una empresa descrita cinco veces con matices distintos puede interpretarse como cinco empresas parecidas.",
+                    "Para un negocio local, la ficha de Google Business Profile completa y coherente con la web sigue siendo la señal más fuerte, y alimenta tanto el paquete local de Google como las respuestas generadas que se apoyan en él."
+                ]
+            },
+            {
+                "titulo": "Sobre llms.txt: qué es y qué no está demostrado",
+                "parrafos": [
+                    "Circula una propuesta llamada llms.txt: un archivo en texto plano, en la raíz del dominio, que resume de qué va el sitio para que un modelo lo entienda sin rastrear cincuenta páginas. La idea es sensata y es barata de implementar.",
+                    "Conviene ser honesto sobre su estado: es una propuesta de la comunidad, no un estándar adoptado oficialmente por OpenAI, Anthropic o Google, y a día de hoy ninguno de los grandes proveedores ha confirmado públicamente que lo use como fuente prioritaria. Quien te lo venda como la clave para salir en ChatGPT te está vendiendo humo.",
+                    "Dicho eso, el ejercicio de escribirlo tiene valor por sí mismo aunque ningún modelo lo leyera: obliga a redactar en texto plano qué hace tu negocio, para quién y con qué límites. Ese mismo texto suele acabar mejorando la web entera."
+                ]
+            },
+            {
+                "titulo": "Di también lo que no haces",
+                "parrafos": [
+                    "Es la parte que casi nadie escribe y la que más rendimiento da. Un modelo que no sabe dónde están tus límites te recomienda para cosas que no ofreces, y esa recomendación termina en una conversación frustrante que quema la confianza de todos: la del cliente, la tuya y la del propio modelo respecto a tu sitio.",
+                    "Declarar «no hacemos campañas de publicidad ni gestión de redes» filtra a quien no encaja antes de que escriba, y hace que las recomendaciones que sí llegan sean mucho más precisas."
+                ]
+            },
+            {
+                "titulo": "Cómo comprobar si funciona",
+                "parrafos": [
+                    "No existe todavía una herramienta equivalente a Search Console para motores generativos, así que la medición es artesanal. Pregunta directamente a ChatGPT, Claude, Perplexity y Gemini por el servicio que ofreces en tu ciudad, sin nombrar tu marca, y anota quién sale. Repítelo cada pocas semanas.",
+                    "Vigila también las visitas cuyo origen es un dominio de IA en tu analítica, y ten presente el punto ciego real de esta disciplina: cuando alguien lee tu nombre en una respuesta generada y luego te busca directamente, esa visita se registra como tráfico directo o de marca. El efecto existe aunque la atribución no lo muestre."
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿Se puede pagar para aparecer en las respuestas de ChatGPT?",
+                "a": "No existe un formato publicitario que compre menciones dentro de las respuestas de ChatGPT, Claude o Perplexity como quien compra un anuncio en Google Ads. Lo que determina que te citen es que tu contenido sea accesible al rastreo, extraíble como texto y consistente con el resto de fuentes. Cualquiera que te ofrezca comprar posiciones en un modelo está vendiendo algo que no controla."
+            },
+            {
+                "q": "¿Cuánto tarda en notarse?",
+                "a": "Depende del ciclo de rastreo e indexación de cada motor, que no es público ni instantáneo. Los cambios técnicos, como abrir el robots.txt a los rastreadores de IA o servir el contenido ya renderizado, hay que hacerlos primero porque son la condición para todo lo demás; el contenido nuevo tarda más en propagarse. Es un trabajo de fondo, no una campaña con fecha de resultado."
+            },
+            {
+                "q": "¿Esto sustituye al SEO tradicional?",
+                "a": "No. Se apoya en él. Los motores generativos se alimentan en buena medida del mismo rastreo web que los buscadores, así que un sitio con buena arquitectura, contenido útil y datos estructurados correctos parte con ventaja. Lo que cambia es el formato de salida y, con él, la manera de escribir: frases autónomas y verificables en lugar de párrafos que solo se entienden en contexto."
+            },
+            {
+                "q": "¿Sirve de algo si soy un negocio local pequeño?",
+                "a": "Precisamente ahí es donde hay más hueco. Las consultas locales y específicas —del tipo «quién automatiza las citas de una clínica en Aguascalientes»— tienen muy poca competencia bien estructurada, porque la mayoría de negocios locales no han tocado nada de esto. Un sitio pequeño pero técnicamente correcto compite bien en ese terreno."
+            }
+        ]
+    },
+    {
+        "slug": "automatizar-whatsapp-negocio",
+        "titulo": "Automatizar WhatsApp en un negocio: qué se puede y qué no | Diabolical Services",
+        "descripcion": "Qué se puede automatizar de verdad en el WhatsApp de un negocio, qué conviene dejar en manos de una persona y qué exige la API oficial de WhatsApp Business. Sin promesas infladas.",
+        "keywords": "automatizar WhatsApp negocio, chatbot WhatsApp Aguascalientes, WhatsApp Business API, agendar citas por WhatsApp, atención automática WhatsApp",
+        "titular": "Automatizar WhatsApp: qué se puede y qué no",
+        "entradilla": "WhatsApp es el canal donde de verdad ocurre la venta en México, y también donde más se pierde. Antes de automatizarlo conviene saber qué permite la plataforma, qué conviene delegar en un sistema y qué no debería salir nunca de manos humanas.",
+        "fecha": "2026-08-30",
+        "actualizado": "2026-08-30",
+        "lectura": "6 min",
+        "secciones": [
+            {
+                "titulo": "Dónde se pierde el dinero en un WhatsApp de negocio",
+                "parrafos": [
+                    "El patrón se repite en clínicas, spas, gimnasios y despachos: los mensajes llegan fuera de horario, en fin de semana o mientras la persona que atiende está ocupada con alguien presencial. Quien pregunta no espera; escribe al siguiente negocio de la lista.",
+                    "El segundo agujero es el seguimiento. Una cotización enviada que nadie retoma, una cita que nadie confirma, un paciente que no vuelve porque nadie le escribió. No se pierden por falta de interés, sino porque depende de que alguien se acuerde en medio de su jornada."
+                ]
+            },
+            {
+                "titulo": "Lo que sí se automatiza bien",
+                "parrafos": [
+                    "Primera respuesta inmediata a cualquier hora, que reconoce lo que se pregunta y mantiene viva la conversación en lugar de dejarla en silencio hasta el día siguiente.",
+                    "Información estable y consultable: horarios, ubicación, servicios, preparación previa a una cita, formas de pago. Son preguntas que se repiten a diario y que no requieren criterio.",
+                    "Agendamiento sobre disponibilidad real, consultando el calendario que el negocio ya usa y escribiendo la cita en él, no en una hoja aparte que luego hay que reconciliar a mano.",
+                    "Confirmaciones y recordatorios antes de la cita, que es lo que permite liberar un hueco a tiempo cuando alguien no va a asistir.",
+                    "Seguimiento escalonado de cotizaciones y de clientes que no cerraron, con un límite claro de cuántos mensajes se envían antes de parar."
+                ]
+            },
+            {
+                "titulo": "Lo que no conviene automatizar",
+                "parrafos": [
+                    "Cualquier cosa que exija criterio profesional. Un sistema no debe dar diagnósticos médicos, consejo legal ni recomendaciones fiscales, por bien que suene la respuesta que sea capaz de redactar. La frontera se define antes de instalar nada y el sistema deriva a una persona en cuanto la cruza.",
+                    "La negociación y el cierre de una venta de cierto tamaño. Automatizar el filtrado previo tiene sentido; automatizar la conversación en la que se decide el precio, no.",
+                    "Las quejas y los conflictos. Un cliente molesto que recibe una respuesta automática se enfada más. Conviene detectar el tono y escalar a una persona de inmediato.",
+                    "El volumen por el volumen. Mandar más mensajes automáticos a más gente no es automatizar, es hacer spam, y en WhatsApp se paga caro: los bloqueos de los usuarios degradan la calidad del número y pueden acabar restringiéndolo."
+                ]
+            },
+            {
+                "titulo": "API oficial, y por qué importa",
+                "parrafos": [
+                    "Automatizar de forma seria exige la API de WhatsApp Business, el canal oficial de Meta. Las alternativas que operan sobre WhatsApp Web simulando a una persona son frágiles y exponen el número a restricciones, porque van contra las condiciones de uso de la plataforma.",
+                    "La vía oficial impone reglas que conviene conocer de antemano. Fuera de la ventana de atención al cliente que se abre cuando el usuario escribe, solo se pueden enviar plantillas aprobadas previamente por Meta, y ese envío tiene coste. El número debe estar verificado y asociado a una cuenta de empresa.",
+                    "Estas restricciones no son un obstáculo, son el marco. Un proyecto que las ignora funciona en la demostración y falla en producción, que es el peor momento posible para descubrirlo."
+                ]
+            },
+            {
+                "titulo": "Sobre integrarse con lo que ya usas",
+                "parrafos": [
+                    "La automatización que obliga a cambiar de agenda, de CRM o de forma de trabajar suele terminar abandonada a las pocas semanas. El equipo vuelve a sus herramientas y el sistema queda de adorno.",
+                    "Tiene más recorrido montarse encima de lo que ya funciona: el calendario que el negocio consulta cada mañana, el CRM donde ya están los contactos, el número de WhatsApp que los clientes ya tienen guardado. La automatización debería ser invisible para el equipo salvo por el trabajo que deja de hacer."
+                ]
+            },
+            {
+                "titulo": "Cómo saber si tu negocio está listo",
+                "parrafos": [
+                    "La automatización multiplica un flujo que ya existe; no lo crea. Si llegan dos mensajes por semana, el problema no es la atención sino la captación, y automatizar no lo resuelve.",
+                    "Las señales de que sí tiene sentido son concretas: mensajes sin responder al final del día, una agenda con huecos que nadie alcanzó a reasignar, cotizaciones enviadas sin seguimiento y una persona del equipo atrapada entre el teléfono, el mostrador y el chat al mismo tiempo."
+                ]
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿El cliente nota que le contesta un sistema?",
+                "a": "Depende de cómo esté diseñado, y la postura honesta es no fingir. Un sistema que se presenta como asistente del negocio, resuelve rápido lo que sabe y pasa a una persona en cuanto hace falta genera mejor experiencia que uno que simula ser humano y se descubre a los tres mensajes. La molestia no viene de que sea automático, viene de quedarse atrapado sin salida."
+            },
+            {
+                "q": "¿Se integra con la agenda y el CRM que ya usamos?",
+                "a": "Esa es la forma correcta de montarlo. El sistema se conecta a las herramientas existentes —Google Calendar, software de consultorio, el CRM que sea— y escribe en ellas. Cambiar de herramientas para poder automatizar suele ser señal de que la solución está mal planteada."
+            },
+            {
+                "q": "¿Cuánto tarda la implementación?",
+                "a": "Entre dos y cuatro semanas para un flujo de atención y agendamiento, incluyendo el diseño de la conversación, la conexión con las herramientas actuales, las pruebas con casos reales y el acompañamiento de las primeras semanas de operación. Los plazos se alargan cuando hay que verificar la cuenta de empresa con Meta por primera vez."
+            },
+            {
+                "q": "¿Qué pasa con los datos de los clientes?",
+                "a": "El sistema debe manejar únicamente los datos necesarios para atender y agendar. La información sensible permanece en el expediente o el sistema del negocio, no en el asistente. Qué campos se tocan y cuáles no se define antes de instalar nada, no después."
+            }
+        ]
+    }
+]

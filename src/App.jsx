@@ -13,6 +13,13 @@ import LandingPage from './pages/LandingPage';
 import SectorPage from './pages/SectorPage';
 import { SECTORES } from './data/sectores';
 
+// El blog también se prerenderiza entero y comparte un componente por tipo de
+// página, así que entra en el bundle principal por el mismo motivo que los
+// sectores: un lazy() obligaría a React a descartar el HTML prerenderizado.
+import BlogPage from './pages/BlogPage';
+import ArticuloPage from './pages/ArticuloPage';
+import { ARTICULOS } from './data/articulos';
+
 // El resto sí se parte: son rutas secundarias.
 const AdminPage = lazy(() => import('./pages/AdminPage'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
@@ -34,6 +41,19 @@ function App() {
                             key={sector.slug}
                             path={`/automatizacion-para-${sector.slug}`}
                             element={<SectorPage slug={sector.slug} />}
+                        />
+                    ))}
+                    <Route path="/blog" element={<BlogPage />} />
+                    {/* Una ruta por artículo, por el mismo motivo que los
+                        sectores: "/blog/:slug" sí casaría, pero declararlas
+                        explícitamente mantiene el router alineado con
+                        RUTAS_PUBLICAS y evita que una ruta inexistente
+                        devuelva 200 con una página vacía en lugar de 404. */}
+                    {ARTICULOS.map((articulo) => (
+                        <Route
+                            key={articulo.slug}
+                            path={`/blog/${articulo.slug}`}
+                            element={<ArticuloPage slug={articulo.slug} />}
                         />
                     ))}
                     <Route path="/admin" element={<AdminPage />} />

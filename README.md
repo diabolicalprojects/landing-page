@@ -154,6 +154,17 @@ con título, descripción, `Service`, `FAQPage` y `BreadcrumbList` propios. Es l
 competencia local: nadie segmenta por sector, así que nadie le habla directamente a quien busca
 «automatizar las citas de mi clínica en Aguascalientes».
 
+**Blog** (`src/data/articulos.json`). Misma mecánica que los sectores: añadir una entrada al JSON
+crea la página `/blog/<slug>`, su `BlogPosting`, su `FAQPage`, su entrada en el sitemap, su línea en
+`llms.txt` y su texto íntegro en `llms-full.txt`, sin tocar nada más. Los artículos se prerenderizan
+enteros porque su público son justamente los rastreadores que no ejecutan JavaScript.
+
+Es la única pieza que no se puede generar con código: las páginas por sector salen de un JSON, pero
+el contenido nuevo y periódico hay que escribirlo. También es lo único del sitio que responde a
+preguntas generales («cómo aparecer en ChatGPT») en lugar de hablar de la empresa, así que es lo que
+tiene ocasión de ser citado por alguien que todavía no nos busca. Aplica la misma regla que
+`sectores.json`: se explican mecanismos y límites, nunca resultados atribuidos a clientes.
+
 **Datos estructurados** (`server/schema.js`). Las entidades se enlazan por `@id`
 (`#negocio`, `#website`) para que los buscadores no crean que hay varias empresas distintas.
 La ficha local (dirección exacta, coordenadas, horario, ficha de Google) se publica solo si está
@@ -235,7 +246,9 @@ server/
   render.js               Inyección del <head> con escapado
   html.js                 Utilidades de escapado
 src/
-  pages/                  LandingPage, AdminPage, PrivacyPolicy, NotFound
+  data/                   sectores.json, faq.json, articulos.json (fuentes de verdad)
+  pages/                  LandingPage, SectorPage, BlogPage, ArticuloPage,
+                          AdminPage, PrivacyPolicy, NotFound
   components/sections/    Secciones de la landing
   components/common/      Navbar, Footer, chatbot, cursor, ErrorBoundary
   utils/leads.js          Envío a n8n y apertura de WhatsApp
