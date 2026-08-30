@@ -76,20 +76,29 @@ Las variables `VITE_*` se compilan dentro del bundle público — **nunca pongas
 Cada push a `main` publica la imagen en GitHub Container Registry
 (`.github/workflows/publish-image.yml`, sin secretos que configurar).
 
-**Despliegue automático.** `.github/workflows/deploy.yml` se encadena a la publicación de la
-imagen, dispara el despliegue y verifica que la versión nueva quedó realmente servida (que la API
-de escritura devuelve 401, que la CSP viaja en las cabeceras y que una ruta inexistente da 404).
-Necesita un único secreto:
+**Producción corre en Dokploy** (proyecto *Diabolical Landing Page* → app *Landing page*),
+construyendo este `Dockerfile` desde la rama `main`. El dominio `diabolicalservices.tech` apunta al
+puerto 3000 del contenedor, y `/app/data` está montado sobre un volumen (`diabolical-landing-data`)
+para que lo que se guarda desde `/admin` sobreviva a los despliegues.
 
-1. Copia la URL de despliegue que expone tu plataforma (Coolify, Easypanel, Dokploy, Render,
-   Railway… todas tienen una; suele llamarse *deploy hook* o *webhook*).
+La app tiene `autoDeploy` activo, pero su fuente es un git genérico **sin la GitHub App
+conectada**, así que nada avisa a Dokploy por sí solo: un push a `main` no despliega hasta que algo
+llama a su webhook.
+
+**Despliegue automático.** `.github/workflows/deploy.yml` se encadena a la publicación de la
+imagen, llama a ese webhook y verifica que la versión nueva quedó realmente servida (que la API de
+escritura devuelve 401, que la CSP viaja en las cabeceras y que una ruta inexistente da 404). Si el
+webhook responde pero producción no cambia, el workflow falla. Necesita un único secreto:
+
+1. En Dokploy, abre la app y copia su **Webhook URL** (pestaña *Deployments*). Tiene la forma
+   `https://admin.diabolicalservices.tech/api/deploy/<token>`.
 2. Pégala en **Settings → Secrets and variables → Actions → New repository secret** con el nombre
    `DEPLOY_WEBHOOK_URL`.
 
-Sin ese secreto el workflow no falla: avisa y no hace nada. Si el dominio no es
-`https://diabolicalservices.tech`, define también la variable `SITE_URL` en esa misma pantalla.
+Sin ese secreto el workflow no falla: avisa y no hace nada. Si el dominio cambiara, define también
+la variable de repositorio `SITE_URL`.
 
-**Despliegue manual**, si prefieres no configurar el webhook:
+**Despliegue manual**, desde Dokploy (botón *Deploy*) o con la imagen publicada:
 
 ```bash
 docker pull ghcr.io/diabolicalprojects/landing-page:latest
