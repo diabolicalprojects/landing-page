@@ -7,8 +7,13 @@ const ComparisonSection = () => {
         { bad: "Ventas perdidas por falta de respuesta.", good: "Cada mensaje es una oportunidad cerrada." },
         { bad: "Vives pegado al celular.", good: "Recuperas tus domingos." },
     ];
+    // Segunda inversión, en espejo: el corte va al revés que en Problem, para
+    // que las dos no se lean como la misma diapositiva repetida.
     return (
-        <section id="comparison" className="py-16 md:py-28 bg-white border-y border-black/10 relative overflow-hidden">
+        <section
+            id="comparison"
+            className="seccion-invertida corte-entrada-espejo corte-salida-espejo py-16 md:py-32 bg-white relative overflow-hidden"
+        >
             <div className="max-w-4xl mx-auto px-5 md:px-6 relative z-10">
                 <div className="text-center mb-8 md:mb-10">
                     <h2 className="text-2xl md:text-3xl font-title uppercase tracking-tighter mb-2 text-black">La Lógica del Ahorro</h2>

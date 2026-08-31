@@ -163,13 +163,102 @@ body::before {
   }
 }
 
+/*
+  Escala de superficies.
+
+  Antes había tres negros —#000000, #030303 y #050505— usados como si
+  diferenciaran secciones. El contraste entre ellos es de 1.03:1: en pantalla
+  son el mismo color, así que cinco secciones seguidas leían como una sola masa
+  plana. Estos tres sí se distinguen, y cada salto significa algo: --superficie-1
+  es el fondo por defecto, --superficie-2 eleva un bloque, --superficie-3 marca
+  el punto más alto de la pila.
+
+  La luz no es una superficie más: es la inversión, y solo la usan las dos
+  secciones que rompen el ritmo a propósito.
+*/
+:root {
+  --superficie-0: #000000;
+  --superficie-1: #0b0b0b;
+  --superficie-2: #141414;
+  --inversion: #ffffff;
+
+  /* Profundidad del corte diagonal entre una sección y la siguiente. Se acota
+     por arriba y por abajo: en móvil un valor en vw se comería media pantalla,
+     y en un monitor ancho el corte se volvería una rampa. */
+  --corte: clamp(28px, 4.5vw, 76px);
+}
+
+.superficie-1 {
+  background-color: var(--superficie-1);
+}
+
+.superficie-2 {
+  background-color: var(--superficie-2);
+}
+
+/*
+  Empalmes.
+
+  El recurso anterior era `border-t border-white/5`: una línea a un 5% de
+  opacidad, invisible, y además puesta solo en 5 de las 10 secciones. Aquí el
+  cambio de fondo deja de ser un frenazo y pasa a ser el sistema: la sección
+  invertida entra y sale en diagonal, y el fondo de la sección anterior asoma
+  por el hueco que deja el corte.
+
+  El padding compensatorio va en la propia regla porque el clip-path recorta
+  todo, contenido incluido: sin él, la primera línea de texto se cortaría en la
+  esquina.
+*/
+.corte-entrada {
+  clip-path: polygon(0 var(--corte), 100% 0, 100% 100%, 0 100%);
+  padding-top: calc(var(--corte) + 4rem);
+}
+
+.corte-salida {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--corte)), 0 100%);
+  padding-bottom: calc(var(--corte) + 4rem);
+}
+
+.corte-entrada.corte-salida {
+  clip-path: polygon(0 var(--corte), 100% 0, 100% calc(100% - var(--corte)), 0 100%);
+}
+
+/* La misma diagonal invertida en el eje X. La segunda sección clara la usa para
+   que las dos inversiones no se lean como la misma diapositiva repetida. */
+.corte-entrada-espejo {
+  clip-path: polygon(0 0, 100% var(--corte), 100% 100%, 0 100%);
+  padding-top: calc(var(--corte) + 4rem);
+}
+
+.corte-salida-espejo {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - var(--corte)));
+  padding-bottom: calc(var(--corte) + 4rem);
+}
+
+.corte-entrada-espejo.corte-salida-espejo {
+  clip-path: polygon(0 0, 100% var(--corte), 100% 100%, 0 calc(100% - var(--corte)));
+}
+
+/*
+  Marca que cruza el límite entre dos secciones.
+
+  `difference` invierte contra lo que tenga debajo, así que el mismo elemento se
+  lee blanco sobre el negro y negro sobre el blanco mientras atraviesa el borde.
+  Es lo que convierte el cambio de fondo en un momento y no en un corte.
+*/
+.cruza-limite {
+  mix-blend-mode: difference;
+  color: #fff;
+  pointer-events: none;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #000;
+  background: var(--superficie-0);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -179,6 +268,47 @@ body::before {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+/* Firefox no admite las pseudoclases de arriba. */
+html {
+  scrollbar-color: #333 var(--superficie-0);
+  scrollbar-width: thin;
+}
+
+/*
+  Superficies que dibuja el navegador.
+
+  La selección, el cursor de texto y el anillo de foco venían con los valores
+  por defecto del navegador, que no pertenecen a ningún sistema de diseño y
+  delatan una página ensamblada. El foco es además un requisito de
+  accesibilidad: sin él no se puede navegar con teclado.
+*/
+::selection {
+  background: var(--inversion);
+  color: var(--superficie-0);
+}
+
+:focus-visible {
+  outline: 2px solid var(--inversion);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* En la sección invertida el anillo blanco desaparecería sobre el blanco. */
+.seccion-invertida :focus-visible {
+  outline-color: var(--superficie-0);
+}
+
+input,
+textarea {
+  caret-color: var(--inversion);
+}
+
+input,
+textarea,
+select {
+  accent-color: var(--inversion);
 }
 
 /* Smooth Scrolling */

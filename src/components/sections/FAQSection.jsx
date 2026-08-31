@@ -16,12 +16,9 @@ const FAQSection = () => {
     };
 
     return (
-        <section id="faq" className="py-16 md:py-28 bg-[#030303] border-t border-white/5 relative">
+        <section id="faq" className="py-16 md:py-28 superficie-2 border-t border-white/5 relative">
             <div className="max-w-4xl mx-auto px-5 md:px-6 relative z-10">
                 <div className="text-center mb-12 md:mb-16">
-                    <div className="inline-block px-3 py-1 bg-white/5 rounded-full mb-4">
-                        <span className="text-[8px] uppercase tracking-[0.4em] text-white/60 font-black">Respuestas</span>
-                    </div>
                     <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-3">Preguntas Frecuentes</h2>
                     <p className="text-white/60 uppercase tracking-[0.3em] text-[9px] font-bold">Claridad técnica sobre la integración de sistemas</p>
                 </div>

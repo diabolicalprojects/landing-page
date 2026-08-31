@@ -54,12 +54,9 @@ const PASOS = [
 ];
 
 const Proceso = () => (
-    <section id="proceso" className="py-16 md:py-28 bg-[#050505] border-t border-white/5 relative">
+    <section id="proceso" className="py-16 md:py-28 superficie-1 border-t border-white/5 relative">
         <div className="max-w-4xl mx-auto px-5 md:px-6 relative z-10">
             <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
-                <div className="inline-block px-3 py-1 bg-white/5 rounded-full mb-4">
-                    <span className="text-[8px] uppercase tracking-[0.4em] text-white/60 font-black">Proceso</span>
-                </div>
                 <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-4 leading-[0.95]">
                     De la primera llamada a <span className="text-white/50 italic">funcionando</span>: 2 a 4 semanas
                 </h2>

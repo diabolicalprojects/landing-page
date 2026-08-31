@@ -1,8 +1,14 @@
 import React from 'react';
 
 const Problem = () => {
+    // Primera inversión. El corte diagonal deja asomar el negro del hero por el
+    // hueco, así que el cambio de fondo se lee como una entrada y no como el
+    // frenazo que era con el borde a 5% de opacidad.
     return (
-        <section id="problem" className="py-20 md:py-32 bg-white relative border-b border-black/10">
+        <section
+            id="problem"
+            className="seccion-invertida corte-entrada corte-salida py-20 md:py-32 bg-white relative"
+        >
             <div className="max-w-6xl mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-center text-left">
                     <div>

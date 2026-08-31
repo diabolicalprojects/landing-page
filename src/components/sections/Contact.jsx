@@ -35,9 +35,6 @@ const Contact = () => {
         <section id="contact" className="py-16 md:py-28 bg-black relative border-t border-white/5">
             <div className="max-w-3xl mx-auto px-5 md:px-6">
                 <div className="text-center mb-10 md:mb-12">
-                    <div className="inline-block px-3 py-1 bg-white/5 rounded-full mb-4">
-                        <span className="text-[8px] uppercase tracking-[0.4em] text-white/60 font-black">Diagnóstico</span>
-                    </div>
                     <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-4 leading-[0.9]">
                         ¿Tu negocio es apto para{' '}
                         <span className="text-white/50 italic">ser autónomo?</span>
@@ -93,7 +90,7 @@ const Contact = () => {
                                 </div>
 
                                 <div className="border-t border-white/5 pt-4 space-y-4">
-                                    <p className="text-[9px] uppercase tracking-[0.4em] text-white/40 font-black text-center">Datos de Contacto</p>
+                                    <p className="text-[9px] uppercase tracking-[0.4em] text-white/55 font-black text-center">Datos de Contacto</p>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div className="flex flex-col gap-2">
                                             <label htmlFor="company-input" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">Nombre de la Empresa</label>

@@ -24,7 +24,7 @@ const SolutionCards = () => {
     ];
 
     return (
-        <section id="solutions" className="py-16 md:py-28 bg-black relative">
+        <section id="solutions" className="py-20 md:py-36 bg-black relative">
             <div className="max-w-6xl mx-auto px-6">
                 <div className="text-center max-w-2xl mx-auto mb-14">
                     <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-3">Soluciones Autónomas</h2>

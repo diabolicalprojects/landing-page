@@ -70,7 +70,7 @@ const Hero = () => {
                     >
                         Obtener mi Auditoría
                     </button>
-                    <div className="hidden md:block text-[10px] uppercase tracking-[0.6em] font-mono text-white/40 border-b border-white/20 pb-2">
+                    <div className="hidden md:block text-[10px] uppercase tracking-[0.6em] font-mono text-white/55 border-b border-white/20 pb-2">
                         [ SYSTEM_STATUS: OPERATIONAL_v2.0 ]
                     </div>
                 </div>

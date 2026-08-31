@@ -36,15 +36,12 @@ const SuccessStories = () => {
     ];
 
     return (
-        <section id="cases" className="py-16 md:py-28 bg-[#050505] border-t border-white/5 relative">
+        <section id="cases" className="py-16 md:py-28 superficie-2 border-t border-white/5 relative">
             {/* Ambient background glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-white/[0.01] blur-[100px] rounded-full pointer-events-none" />
 
             <div className="max-w-6xl mx-auto px-6 relative z-10">
                 <div className="text-center max-w-2xl mx-auto mb-14">
-                    <div className="inline-block px-3 py-1 bg-white/5 rounded-full mb-4">
-                        <span className="text-[8px] uppercase tracking-[0.4em] text-white/60 font-black">Sistemas</span>
-                    </div>
                     <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-3">Qué Instalamos</h2>
                     <p className="text-white/60 uppercase tracking-[0.3em] text-[9px] font-bold">Automatizaciones que quedan operando solas</p>
                 </div>

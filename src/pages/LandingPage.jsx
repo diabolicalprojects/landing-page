@@ -42,6 +42,19 @@ const LandingPage = () => {
 
             <Navbar />
             <Hero />
+
+            {/* Marca que cruza el límite entre el hero y la primera inversión.
+                Va aquí y no dentro de <Problem> porque el clip-path de esa
+                sección recorta también a sus hijos: cualquier elemento suyo
+                que asomara por encima del corte desaparecería.
+                `mix-blend-mode: difference` hace el resto: el mismo texto se
+                lee blanco sobre el negro y negro sobre el blanco. */}
+            <div className="relative z-20 h-0 overflow-visible" aria-hidden="true">
+                <span className="cruza-limite absolute left-5 md:left-[8%] -translate-y-1/2 font-title uppercase tracking-tighter leading-none text-[18vw] md:text-[11vw]">
+                    Menos
+                </span>
+            </div>
+
             <Problem />
             <SolutionCards />
             <Sectores />

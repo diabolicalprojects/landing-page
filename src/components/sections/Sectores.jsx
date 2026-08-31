@@ -10,12 +10,9 @@ import { SECTORES } from '../../data/sectores';
  * los buscadores las tratarían como páginas huérfanas.
  */
 const Sectores = () => (
-    <section id="sectores" className="py-16 md:py-28 bg-black border-t border-white/5 relative">
+    <section id="sectores" className="py-16 md:py-28 superficie-1 border-t border-white/5 relative">
         <div className="max-w-6xl mx-auto px-5 md:px-6 relative z-10">
             <div className="text-center max-w-2xl mx-auto mb-12 md:mb-14">
-                <div className="inline-block px-3 py-1 bg-white/5 rounded-full mb-4">
-                    <span className="text-[8px] uppercase tracking-[0.4em] text-white/60 font-black">Sectores</span>
-                </div>
                 <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-4 leading-[0.95]">
                     Cada negocio pierde clientes <span className="text-white/50 italic">en un punto distinto</span>
                 </h2>
@@ -40,7 +37,7 @@ const Sectores = () => (
                                 {sector.entradilla.split('.')[0]}.
                             </p>
                         </div>
-                        <span className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] font-black text-white/40 group-hover:text-white transition-colors mt-6">
+                        <span className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] font-black text-white/55 group-hover:text-white transition-colors mt-6">
                             Ver soluciones <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                         </span>
                     </Link>
