@@ -42,15 +42,12 @@ const Footer = () => {
                     <div className="w-full md:max-w-2xl">
                         <img src={logoHorizontalBlanco} alt="Diabolical" width="140" height="28" className="h-6 md:h-7 mb-6 md:mb-8 opacity-80" />
                         <h2 className="text-2xl md:text-4xl font-title mb-4 md:mb-6 leading-[0.9] tracking-tighter">
-                            ¿LISTO PARA TU{' '}
-                            {/* /15 daba 1.39:1 sobre el fondo: la palabra que
-                                remata el titular era la que no se leía. /40
-                                mantiene el degradado y sube a 3.7:1, por encima
-                                del 3:1 que pide WCAG para texto grande. */}
-                            <span className="text-white/40 italic">TRANSFORMACIÓN?</span>
+                            ¿EMPEZAMOS POR{' '}
+                            <span className="text-white/40 italic">EL DIAGNÓSTICO?</span>
                         </h2>
-                        <p className="text-sm md:text-base text-white/60 font-light mb-6 md:mb-8 leading-relaxed italic">
-                            "La IA no es una herramienta. Es tu nueva <strong className="text-white/70 not-italic">infraestructura de dominio.</strong>"
+                        <p className="text-sm md:text-base text-white/60 font-light mb-6 md:mb-8 leading-relaxed">
+                            Treinta a cuarenta y cinco minutos de conversación. Sales con el
+                            diagnóstico por escrito, trabajes o no con nosotros.
                         </p>
                         <button
                             onClick={() => window.dispatchEvent(new Event('open-diabolical-chat'))}
