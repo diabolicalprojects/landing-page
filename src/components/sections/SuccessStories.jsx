@@ -36,7 +36,7 @@ const SuccessStories = () => {
     ];
 
     return (
-        <section id="cases" className="py-16 md:py-28 superficie-2 border-t border-white/5 relative">
+        <section id="cases" className="seccion superficie-2 border-t border-white/5 relative">
             {/* Ambient background glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-white/[0.01] blur-[100px] rounded-full pointer-events-none" />
 

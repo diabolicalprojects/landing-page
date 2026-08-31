@@ -7,12 +7,12 @@ const ComparisonSection = () => {
         { bad: "Ventas perdidas por falta de respuesta.", good: "Cada mensaje es una oportunidad cerrada." },
         { bad: "Vives pegado al celular.", good: "Recuperas tus domingos." },
     ];
-    // Segunda inversión, en espejo: el corte va al revés que en Problem, para
-    // que las dos no se lean como la misma diapositiva repetida.
+    // Segunda inversión. Comparte ritmo con Problem a propósito: en la
+    // convención las dos son el mismo tipo de tiempo, no dos efectos distintos.
     return (
         <section
             id="comparison"
-            className="seccion-invertida corte-entrada-espejo corte-salida-espejo py-16 md:py-32 bg-white relative overflow-hidden"
+            className="seccion-amplia seccion-invertida bg-white relative overflow-hidden"
         >
             <div className="max-w-4xl mx-auto px-5 md:px-6 relative z-10">
                 <div className="text-center mb-8 md:mb-10">

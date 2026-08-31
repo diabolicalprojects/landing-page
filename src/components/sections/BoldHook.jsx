@@ -2,7 +2,7 @@ import React from 'react';
 
 const BoldHook = () => {
     return (
-        <section className="py-16 md:py-36 bg-black relative">
+        <section className="seccion-amplia bg-black relative">
             <div className="max-w-4xl mx-auto px-5 md:px-6 text-center">
                 <div className="inline-block px-4 py-1.5 border border-red-500/20 rounded-full mb-6 md:mb-8">
                     <span className="text-[8px] text-red-400 uppercase tracking-[0.5em] font-black animate-pulse">Alerta Financiera</span>

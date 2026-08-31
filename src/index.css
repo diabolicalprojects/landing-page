@@ -181,11 +181,6 @@ body::before {
   --superficie-1: #0b0b0b;
   --superficie-2: #141414;
   --inversion: #ffffff;
-
-  /* Profundidad del corte diagonal entre una sección y la siguiente. Se acota
-     por arriba y por abajo: en móvil un valor en vw se comería media pantalla,
-     y en un monitor ancho el corte se volvería una rampa. */
-  --corte: clamp(28px, 4.5vw, 76px);
 }
 
 .superficie-1 {
@@ -197,59 +192,85 @@ body::before {
 }
 
 /*
-  Empalmes.
+  Ritmo vertical.
 
-  El recurso anterior era `border-t border-white/5`: una línea a un 5% de
-  opacidad, invisible, y además puesta solo en 5 de las 10 secciones. Aquí el
-  cambio de fondo deja de ser un frenazo y pasa a ser el sistema: la sección
-  invertida entra y sale en diagonal, y el fondo de la sección anterior asoma
-  por el hueco que deja el corte.
+  El problema anterior no eran los empalmes sino la ausencia de sistema: ocho de
+  diez secciones eran `py-16 md:py-28`, el mismo aire en todas, y el único
+  recurso de unión era una línea a un 5% de opacidad puesta en la mitad de
+  ellas. Aquí el ritmo es el sistema: tres pasos con una diferencia legible, y
+  el cambio de superficie haciendo el trabajo de separar.
 
-  El padding compensatorio va en la propia regla porque el clip-path recorta
-  todo, contenido incluido: sin él, la primera línea de texto se cortaría en la
-  esquina.
+  Todo cae en la retícula de 8 px. Nada de valores sueltos por sección.
 */
-.corte-entrada {
-  clip-path: polygon(0 var(--corte), 100% 0, 100% 100%, 0 100%);
-  padding-top: calc(var(--corte) + 4rem);
+.seccion {
+  padding-block: clamp(4rem, 8vw, 7rem);
 }
 
-.corte-salida {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--corte)), 0 100%);
-  padding-bottom: calc(var(--corte) + 4rem);
+.seccion-amplia {
+  padding-block: clamp(6rem, 12vw, 11rem);
 }
 
-.corte-entrada.corte-salida {
-  clip-path: polygon(0 var(--corte), 100% 0, 100% calc(100% - var(--corte)), 0 100%);
-}
-
-/* La misma diagonal invertida en el eje X. La segunda sección clara la usa para
-   que las dos inversiones no se lean como la misma diapositiva repetida. */
-.corte-entrada-espejo {
-  clip-path: polygon(0 0, 100% var(--corte), 100% 100%, 0 100%);
-  padding-top: calc(var(--corte) + 4rem);
-}
-
-.corte-salida-espejo {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - var(--corte)));
-  padding-bottom: calc(var(--corte) + 4rem);
-}
-
-.corte-entrada-espejo.corte-salida-espejo {
-  clip-path: polygon(0 0, 100% var(--corte), 100% 100%, 0 calc(100% - var(--corte)));
+.seccion-compacta {
+  padding-block: clamp(3rem, 5vw, 4.5rem);
 }
 
 /*
-  Marca que cruza el límite entre dos secciones.
+  Escala tipográfica.
 
-  `difference` invierte contra lo que tenga debajo, así que el mismo elemento se
-  lee blanco sobre el negro y negro sobre el blanco mientras atraviesa el borde.
-  Es lo que convierte el cambio de fondo en un momento y no en un corte.
+  Antes convivían tamaños de 8, 9, 10 y 11 px usados indistintamente para lo
+  mismo: cuatro pasos que el ojo no distingue, que es exactamente lo que produce
+  una página sin jerarquía. Aquí hay dos registros y nada entre medias, que es la
+  disciplina que sostiene el contraste de escala.
 */
-.cruza-limite {
-  mix-blend-mode: difference;
-  color: #fff;
-  pointer-events: none;
+.etiqueta {
+  font-size: 0.6875rem;
+  /* 11px: el suelo real de lectura. Por debajo hacía falta un contraste que la
+     paleta no puede dar sin romper el registro apagado. */
+  line-height: 1.2;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.etiqueta-mono {
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+  Estados.
+
+  El listón de Linear y Vercel no está en el reposo, está en que todo estado
+  exista y sea distinguible. Antes solo había hover, y apenas.
+*/
+.accion {
+  transition: background-color 140ms ease-out, color 140ms ease-out,
+    border-color 140ms ease-out, transform 140ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accion {
+    transition-duration: 1ms;
+  }
+}
+
+.accion:active {
+  transform: translateY(1px);
+}
+
+.accion:disabled,
+.accion[aria-disabled='true'] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Cifras en tablas y comparativas: sin esto los dígitos bailan de fila a fila. */
+.cifras {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Custom Scrollbar */

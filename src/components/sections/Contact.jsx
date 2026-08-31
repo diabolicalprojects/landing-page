@@ -32,7 +32,7 @@ const Contact = () => {
     const inp = 'w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white text-sm focus:outline-none focus:border-white/30 transition-all min-h-[52px] placeholder:text-white/25';
 
     return (
-        <section id="contact" className="py-16 md:py-28 bg-black relative border-t border-white/5">
+        <section id="contact" className="seccion bg-black relative border-t border-white/5">
             <div className="max-w-3xl mx-auto px-5 md:px-6">
                 <div className="text-center mb-10 md:mb-12">
                     <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-4 leading-[0.9]">

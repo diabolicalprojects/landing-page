@@ -10,7 +10,7 @@ import { SECTORES } from '../../data/sectores';
  * los buscadores las tratarían como páginas huérfanas.
  */
 const Sectores = () => (
-    <section id="sectores" className="py-16 md:py-28 superficie-1 border-t border-white/5 relative">
+    <section id="sectores" className="seccion superficie-1 border-t border-white/5 relative">
         <div className="max-w-6xl mx-auto px-5 md:px-6 relative z-10">
             <div className="text-center max-w-2xl mx-auto mb-12 md:mb-14">
                 <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-4 leading-[0.95]">
