@@ -100,8 +100,22 @@ la variable de repositorio `SITE_URL`.
 
 > **Estado: configurado.** El secreto `DEPLOY_WEBHOOK_URL` ya existe en el repositorio, así que un
 > push a `main` publica la imagen y despliega sin intervención. Hasta entonces cada despliegue se
-> lanzaba a mano desde el panel de Dokploy o por su API, y el workflow pasaba por la rama de "no
-> configurado" dando verde sin hacer nada.
+> lanzaba a mano desde el panel de Dokploy o por su API.
+
+**El webhook necesita cabecera y cuerpo, no basta con un POST.** Dokploy deduce el proveedor por la
+cabecera `x-github-event` y la rama por el cuerpo `{"ref":"refs/heads/main"}`. Un POST pelado
+responde `{"message":"Branch Not Match"}` con código **301**, y como 301 no es un error para
+`curl -f`, el workflow daba verde sin haber desplegado nada. Por eso el paso comprueba el código a
+mano en lugar de fiarse de `curl -f`. Para probarlo desde la terminal:
+
+```bash
+curl -i -X POST "$DEPLOY_WEBHOOK_URL" \
+  -H 'Content-Type: application/json' \
+  -H 'x-github-event: push' \
+  -d '{"ref":"refs/heads/main"}'
+```
+
+Debe responder `200` con `{"message":"Application deployed successfully"}`.
 
 **Despliegue manual**, desde Dokploy (botón *Deploy*) o con la imagen publicada:
 

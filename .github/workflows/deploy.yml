@@ -56,8 +56,29 @@ jobs:
         if: steps.check.outputs.configured == 'true'
         env:
           WEBHOOK: ${{ secrets.DEPLOY_WEBHOOK_URL }}
+          RAMA: ${{ github.ref_name }}
         run: |
-          curl -fsS --max-time 60 -X POST "$WEBHOOK" -o /dev/null -w 'webhook HTTP %{http_code}\n'
+          # Dokploy deduce el proveedor por la cabecera y la rama por el cuerpo.
+          # Un POST pelado devuelve {"message":"Branch Not Match"} con código 301,
+          # y como 301 no es un error para `curl -f`, el paso daba verde sin haber
+          # desplegado nada. De ahí que se compruebe el código a mano.
+          CODIGO=$(curl -sS --max-time 60 -o respuesta.json -w '%{http_code}' \
+            -X POST "$WEBHOOK" \
+            -H 'Content-Type: application/json' \
+            -H 'x-github-event: push' \
+            -d "{\"ref\":\"refs/heads/${RAMA}\"}")
+
+          echo "webhook HTTP $CODIGO"
+          cat respuesta.json || true
+          echo
+
+          case "$CODIGO" in
+            2??) ;;
+            *)
+              echo "::error title=El webhook no aceptó la petición::Respondió $CODIGO en lugar de 2xx. Un 301 con \"Branch Not Match\" significa que la rama del cuerpo no coincide con la configurada en la plataforma."
+              exit 1
+              ;;
+          esac
 
       - name: Esperar a que la versión nueva esté en producción
         if: steps.check.outputs.configured == 'true'
