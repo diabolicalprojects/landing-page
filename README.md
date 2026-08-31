@@ -98,6 +98,11 @@ webhook responde pero producción no cambia, el workflow falla. Necesita un úni
 Sin ese secreto el workflow no falla: avisa y no hace nada. Si el dominio cambiara, define también
 la variable de repositorio `SITE_URL`.
 
+> **Estado: configurado.** El secreto `DEPLOY_WEBHOOK_URL` ya existe en el repositorio, así que un
+> push a `main` publica la imagen y despliega sin intervención. Hasta entonces cada despliegue se
+> lanzaba a mano desde el panel de Dokploy o por su API, y el workflow pasaba por la rama de "no
+> configurado" dando verde sin hacer nada.
+
 **Despliegue manual**, desde Dokploy (botón *Deploy*) o con la imagen publicada:
 
 ```bash
