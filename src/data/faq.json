@@ -1,7 +1,7 @@
 [
   {
     "pregunta": "¿Qué hace exactamente Diabolical?",
-    "respuesta": "Diseñamos e instalamos \"empleados digitales\": sistemas autónomos basados en inteligencia artificial que atienden, agendan y dan seguimiento a tus clientes. No somos una agencia de marketing; construimos la infraestructura técnica que automatiza ventas, atención y operación las 24 horas."
+    "respuesta": "Cubrimos el ciclo completo de un negocio local en Aguascalientes: posicionamiento orgánico y en motores de IA, ficha de Google, Google Ads, sitio web, embudos, identidad de marca, y los sistemas que atienden y agendan solos por WhatsApp. No hace falta contratarlo todo: la auditoría gratuita dice qué te falta hoy y qué no vale la pena todavía."
   },
   {
     "pregunta": "¿Cómo sé si mi negocio está listo para la automatización con IA?",
@@ -34,5 +34,9 @@
   {
     "pregunta": "¿Trabajan fuera de Aguascalientes?",
     "respuesta": "Sí. La sede está en Aguascalientes y ahí trabajamos presencialmente, pero la implementación y el acompañamiento funcionan igual de bien a distancia para negocios de todo México."
+  },
+  {
+    "pregunta": "¿Hacen publicidad y marketing, o solo automatización?",
+    "respuesta": "Las dos cosas. Empezamos siendo solo automatización de atención, y era quedarse en la cuarta parte del problema: de nada sirve contestar en segundos si no llega nadie a quien contestar. Hoy cubrimos captación, conversión, atención, marca y medición. Lo que no hacemos es prometer posiciones en Google ni dentro de una respuesta de IA —nadie controla esos algoritmos— ni llevar comisión sobre tu gasto publicitario."
   }
 ]

@@ -25,9 +25,9 @@ const Hero = () => (
                     </h1>
 
                     <p className="text-base md:text-lg text-white/60 max-w-xl mb-8 md:mb-10 leading-relaxed font-light">
-                        Lo instalamos encima del WhatsApp, la agenda y el CRM que ya usas.
-                        Para clínicas, spas, gimnasios y despachos de Aguascalientes.
-                        Funcionando en 2 a 4 semanas.
+                        Y antes de eso: que te encuentren, que te elijan y saber qué está
+                        fallando. Marketing digital e IA para clínicas, spas, gimnasios y
+                        despachos de Aguascalientes.
                     </p>
 
                     <div className="flex flex-col sm:flex-row sm:items-center gap-4 md:gap-6">

@@ -19,6 +19,7 @@ import { SECTORES } from './data/sectores';
 import BlogPage from './pages/BlogPage';
 import ArticuloPage from './pages/ArticuloPage';
 import { ARTICULOS } from './data/articulos';
+import ServiciosPage from './pages/ServiciosPage';
 
 // El resto sí se parte: son rutas secundarias.
 const AdminPage = lazy(() => import('./pages/AdminPage'));
@@ -43,6 +44,7 @@ function App() {
                             element={<SectorPage slug={sector.slug} />}
                         />
                     ))}
+                    <Route path="/servicios" element={<ServiciosPage />} />
                     <Route path="/blog" element={<BlogPage />} />
                     {/* Una ruta por artículo, por el mismo motivo que los
                         sectores: "/blog/:slug" sí casaría, pero declararlas

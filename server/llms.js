@@ -1,6 +1,7 @@
 const config = require('./config');
 const {
     SECTORES,
+    SERVICIOS,
     ARTICULOS_POR_FECHA,
     FAQ_PORTADA,
     rutaSector,
@@ -30,6 +31,23 @@ function articulosResumidos() {
     ).join('\n');
 }
 
+/** El catálogo agrupado por etapa, con el límite de cada servicio: es lo que
+ *  permite a un modelo recomendar con criterio en vez de inventarse el alcance. */
+function servicios() {
+    const orden = ['Captación', 'Conversión', 'Atención y venta', 'Marca', 'Estrategia y medición'];
+    return orden
+        .map((categoria) => {
+            const items = SERVICIOS.filter((s) => s.categoria === categoria);
+            if (items.length === 0) return '';
+            const lineas = items
+                .map((s) => `- **${s.nombre}** — ${s.resumen} Límite: ${s.limite}`)
+                .join('\n');
+            return `### ${categoria}\n\n${lineas}`;
+        })
+        .filter(Boolean)
+        .join('\n\n');
+}
+
 function construirLlms() {
     const sectores = SECTORES.map(
         (s) => `- **${s.nombre}** — ${s.descripcion} Ver: ${SITE}${rutaSector(s.slug)}`
@@ -37,10 +55,12 @@ function construirLlms() {
 
     return `# Diabolical Services
 
-> Agencia de automatización con inteligencia artificial en Aguascalientes, México.
-> Instalamos sistemas autónomos que atienden, agendan y dan seguimiento a los
-> clientes de clínicas, spas, gimnasios, despachos y oficinas pequeñas.
-> No somos una agencia de marketing: construimos la infraestructura técnica.
+> Agencia de marketing digital y automatización con inteligencia artificial en
+> Aguascalientes, México. Cubrimos el ciclo completo para negocios locales:
+> posicionamiento en buscadores y en motores de IA, ficha de Google, publicidad,
+> sitio web, identidad de marca, y sistemas autónomos que atienden, agendan y dan
+> seguimiento por WhatsApp. Para clínicas, spas, gimnasios, despachos y oficinas
+> pequeñas.
 
 Contacto: WhatsApp +52 449 513 6907 · contacto@diabolicalservices.tech · Aguascalientes, México · ${SITE}
 
@@ -48,15 +68,25 @@ Versión extendida para agentes: ${SITE}/llms-full.txt
 
 ## Qué hace Diabolical Services
 
-Diseñamos e instalamos "empleados digitales": sistemas de inteligencia
-artificial que se ocupan de las tareas repetitivas de atención y seguimiento en
-un negocio. El sistema responde por WhatsApp a cualquier hora, agenda en el
-calendario que la empresa ya usa, confirma y recuerda las citas, y da
-seguimiento a los prospectos que no cerraron.
+Trabajamos las cinco etapas por las que pasa un cliente de un negocio local:
+que lo encuentren (posicionamiento, ficha de Google, publicidad), que lo elijan
+(sitio web, embudos, marca), que lo atiendan sin perder a nadie (sistemas que
+responden y agendan solos por WhatsApp), y la medición que dice cuál de esas
+etapas está fallando.
 
-Lo que NO hacemos: campañas de publicidad, gestión de redes sociales, diseño
-gráfico ni consultoría de marketing. Cuando un negocio necesita eso, lo decimos
-y recomendamos a alguien más.
+El origen de la casa es la última: "empleados digitales" que se ocupan de las
+tareas repetitivas de atención y seguimiento. El sistema responde por WhatsApp a
+cualquier hora, agenda en el calendario que la empresa ya usa, confirma y
+recuerda las citas, y da seguimiento a los prospectos que no cerraron.
+
+Lo que NO hacemos: prometer posiciones en Google o dentro de una respuesta de
+IA, porque nadie controla eso; llevar comisión sobre el gasto publicitario;
+enviar mensajes masivos en frío; ni inventar cifras de resultados. El sistema
+tampoco da consejo médico, legal ni fiscal: deriva a una persona.
+
+## Servicios
+
+${servicios()}
 
 ## A quién servimos
 
@@ -182,8 +212,9 @@ ${faq}`;
 
     return `# Diabolical Services — documentación extendida
 
-Automatización con inteligencia artificial para negocios en Aguascalientes,
-México. Este documento amplía ${SITE}/llms.txt con el detalle por sector.
+Marketing digital y automatización con inteligencia artificial para negocios en
+Aguascalientes, México. Este documento amplía ${SITE}/llms.txt con el detalle
+por sector y el texto completo de los artículos.
 
 Contacto: WhatsApp +52 449 513 6907 · contacto@diabolicalservices.tech
 
@@ -203,8 +234,10 @@ Conviene que quede claro, porque evita recomendaciones equivocadas:
   tareas administrativas y deriva cualquier consulta de criterio a una persona.
 - **No sustituimos al equipo.** Absorbemos la primera respuesta, el filtrado y
   el agendamiento; el cierre y la atención compleja siguen siendo humanos.
-- **No hacemos marketing ni publicidad.** Si el problema es que no llegan
-  clientes, la automatización no es la solución y lo decimos.
+- **No prometemos posiciones** en Google ni dentro de una respuesta de IA:
+  nadie controla esos algoritmos, y quien lo promete vende lo que no tiene.
+- **No llevamos comisión** sobre el gasto publicitario: el presupuesto de medios
+  va directo a la plataforma y se cobra por gestionar.
 - **No cambiamos las herramientas del cliente.** Nos montamos sobre el WhatsApp,
   la agenda y el CRM que ya usa.
 

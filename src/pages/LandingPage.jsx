@@ -9,7 +9,7 @@ import { useHydrated } from '../utils/useHydrated';
 // del servidor (error #419).
 import Hero from '../components/sections/Hero';
 import Hechos from '../components/sections/Hechos';
-import Modulos from '../components/sections/Modulos';
+import Servicios from '../components/sections/Servicios';
 import Mecanismo from '../components/sections/Mecanismo';
 import Sectores from '../components/sections/Sectores';
 import Limites from '../components/sections/Limites';
@@ -40,7 +40,7 @@ const LandingPage = () => {
             <Navbar />
             <Hero />
             <Hechos />
-            <Modulos />
+            <Servicios />
             <Mecanismo />
             <Sectores />
             <Limites />

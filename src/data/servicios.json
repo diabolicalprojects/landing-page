@@ -1,0 +1,138 @@
+[
+    {
+        "slug": "posicionamiento-organico",
+        "categoria": "Captación",
+        "nombre": "Posicionamiento orgánico",
+        "resumen": "Que te encuentren cuando alguien busca tu servicio en Aguascalientes, sin pagar por cada clic.",
+        "detalle": "Trabajamos la estructura del sitio, el contenido y los datos estructurados para que Google entienda qué haces y para quién. Para un negocio local, la mayor parte del resultado viene de dos cosas poco glamurosas: que cada servicio tenga su propia página y que la ficha de Google esté completa.",
+        "limite": "No prometemos posiciones ni plazos: nadie controla el algoritmo. Lo que sí se compromete es el trabajo técnico y el contenido publicado."
+    },
+    {
+        "slug": "ficha-de-google",
+        "categoria": "Captación",
+        "nombre": "Ficha de Google y mapa",
+        "resumen": "El perfil que sale en Google Maps cuando alguien busca tu clínica o tu gimnasio. Es el activo local más descuidado.",
+        "detalle": "Categorías correctas, horarios reales, servicios cargados uno a uno, fotos que no sean del celular en 2019, y un flujo para pedir reseñas sin perseguir a nadie. Es lo que decide si sales en el paquete de tres del mapa.",
+        "limite": "Requiere que el negocio tenga domicilio o zona de servicio verificable. No se puede inventar una ubicación para posicionar."
+    },
+    {
+        "slug": "google-ads",
+        "categoria": "Captación",
+        "nombre": "Google Ads",
+        "resumen": "Aparecer arriba desde el primer día para las búsquedas que sí traen clientes, no para las que traen curiosos.",
+        "detalle": "Campañas de búsqueda con palabras negativas trabajadas desde el inicio, para no pagar por quien busca «gratis» o «cómo hacerlo yo mismo». Se conecta al mismo sistema de atención, así que el clic que entra por anuncio se contesta igual de rápido que el que entra por WhatsApp.",
+        "limite": "El presupuesto de medios lo pagas tú y va directo a Google. Nosotros cobramos por gestionar, no llevamos comisión sobre el gasto."
+    },
+    {
+        "slug": "posicionamiento-en-ia",
+        "categoria": "Captación",
+        "nombre": "Posicionamiento en motores de IA",
+        "resumen": "Que ChatGPT, Claude o Perplexity te mencionen cuando alguien les pide un proveedor en tu ciudad.",
+        "detalle": "Permisos explícitos a los rastreadores de IA, contenido en frases que un modelo pueda citar, datos estructurados enlazados y archivos llms.txt. Casi nadie en el mercado local lo trabaja todavía, y la mayoría de los sitios de la competencia son aplicaciones que un rastreador de IA ve vacías.",
+        "limite": "Ningún proveedor vende posiciones dentro de una respuesta de IA. Quien te lo ofrezca está vendiendo algo que no controla."
+    },
+    {
+        "slug": "sitio-web",
+        "categoria": "Conversión",
+        "nombre": "Diseño y desarrollo web",
+        "resumen": "Un sitio rápido, que se lea en el celular y que exista para los buscadores, no solo para el navegador.",
+        "detalle": "Construido para que cargue rápido y para que el contenido viaje en el HTML servido: es la diferencia entre que un rastreador de IA lea tu sitio entero o lea una página en blanco. Con la agenda y el WhatsApp conectados desde el primer día.",
+        "limite": "No hacemos sitios que dependan de que actualicemos nosotros cada texto: te queda un panel para editar lo que cambia seguido."
+    },
+    {
+        "slug": "embudos-de-venta",
+        "categoria": "Conversión",
+        "nombre": "Embudos de venta",
+        "resumen": "El camino de quien te descubre hasta que agenda, sin puntos donde se caiga.",
+        "detalle": "Página de entrada, formulario corto, respuesta inmediata y seguimiento automático. La mayoría de los embudos rotos no se rompen por diseño: se rompen porque nadie contesta el mensaje que llega el sábado.",
+        "limite": "Un embudo multiplica el tráfico que ya tienes. Si no llega nadie, el problema es de captación y lo decimos."
+    },
+    {
+        "slug": "qr-y-nfc",
+        "categoria": "Conversión",
+        "nombre": "Códigos QR y tarjetas NFC",
+        "resumen": "Del mostrador al WhatsApp de un toque: menú de tratamientos, agendar cita o dejar reseña sin teclear nada.",
+        "detalle": "QR en recepción, en la sala de espera o en el equipo del gimnasio, y tarjetas de contacto sin contacto que se actualizan sin reimprimir. Cada uno lleva su etiqueta de origen, así que se sabe cuál trae gente y cuál está de adorno.",
+        "limite": "Solo tiene sentido si lo que hay al otro lado responde. Un QR que lleva a un WhatsApp desatendido empeora la experiencia."
+    },
+    {
+        "slug": "ia-whatsapp",
+        "categoria": "Atención y venta",
+        "nombre": "IA para WhatsApp",
+        "resumen": "Contesta en segundos a cualquier hora, agenda sobre huecos reales y pasa a una persona cuando toca.",
+        "detalle": "Sobre la API oficial de Meta, con número verificado y plantillas aprobadas. Es el servicio con el que más empezamos, porque en la mayoría de los negocios locales es donde se pierde más dinero sin que se note.",
+        "limite": "No da consejo médico, legal ni fiscal. Cualquier consulta de criterio se deriva a tu equipo."
+    },
+    {
+        "slug": "agentes-y-chatbots",
+        "categoria": "Atención y venta",
+        "nombre": "Agentes y chatbots",
+        "resumen": "El mismo criterio de atención en tu web, en Instagram y en Facebook, no solo en WhatsApp.",
+        "detalle": "Un agente que conoce tu catálogo, tus horarios y tus reglas, respondiendo igual en todos los canales por donde te escriben. Sin repetir configuración canal por canal ni contradecirse entre uno y otro.",
+        "limite": "Se le define por escrito qué no debe responder nunca, antes de encenderlo."
+    },
+    {
+        "slug": "ia-de-ventas",
+        "categoria": "Atención y venta",
+        "nombre": "IA de ventas y seguimiento",
+        "resumen": "Las cotizaciones sin cerrar y los clientes que no regresan dejan de depender de que alguien se acuerde.",
+        "detalle": "Flujos escalonados por WhatsApp y correo, con el contexto de cada caso ya cargado, para que tu equipo entre a cerrar y no a reconstruir la conversación. Con tope de mensajes, porque insistir sin límite quema tu número.",
+        "limite": "El cierre lo hace una persona. La IA prepara el terreno, no negocia el precio."
+    },
+    {
+        "slug": "ia-para-tienda",
+        "categoria": "Atención y venta",
+        "nombre": "IA para tienda en línea",
+        "resumen": "Recuperar carritos abandonados y recomendar lo que de verdad encaja con lo que cada quien vio.",
+        "detalle": "Para clínicas y spas que venden producto además del servicio: recomendaciones según el historial, recuperación de compras a medias y avisos de reposición de lo que se acaba cada mes.",
+        "limite": "Necesita una tienda con tráfico. Si vende dos productos al mes, la automatización no cambia el resultado."
+    },
+    {
+        "slug": "identidad-de-marca",
+        "categoria": "Marca",
+        "nombre": "Identidad de marca y logo",
+        "resumen": "Que tu negocio se vea del tamaño que es, no más chico.",
+        "detalle": "Logo, paleta, tipografía y las aplicaciones que de verdad usas: rótulo, uniformes, recetario, publicaciones y el propio WhatsApp. Entregado con manual, para que quien haga la siguiente pieza no improvise.",
+        "limite": "No rehacemos una marca que ya funciona solo por refrescarla. Si la tuya está bien, lo decimos y nos ahorramos el proyecto."
+    },
+    {
+        "slug": "linkedin-de-empresa",
+        "categoria": "Marca",
+        "nombre": "LinkedIn de empresa",
+        "resumen": "El perfil que revisa un cliente corporativo antes de contestarte, y que casi siempre está abandonado.",
+        "detalle": "Sobre todo para despachos y oficinas profesionales, donde quien decide te busca ahí antes de responder un correo. Perfil completo, publicaciones con criterio y un flujo de contacto que no parece plantilla.",
+        "limite": "No hacemos envíos masivos de mensajes en frío: queman el perfil y no traen clientes que valgan la pena."
+    },
+    {
+        "slug": "presencia-en-eventos",
+        "categoria": "Marca",
+        "nombre": "Presencia en ferias y eventos",
+        "resumen": "Que el stand deje datos de contacto útiles y no una pecera llena de tarjetas que nadie captura.",
+        "detalle": "Registro digital en el stand, seguimiento automático el mismo día del evento —cuando todavía se acuerdan de ti— y todo el contacto cayendo directo a tu CRM en vez de a una libreta.",
+        "limite": "El diseño y el montaje físico del stand no los hacemos: trabajamos con quien te lo arma."
+    },
+    {
+        "slug": "auditoria-de-friccion",
+        "categoria": "Estrategia y medición",
+        "nombre": "Auditoría de fricción",
+        "resumen": "Dónde se te van los clientes y el tiempo, con evidencia y no con opiniones.",
+        "detalle": "Revisamos tu presencia digital, tu flujo de atención y tus tiempos de respuesta reales. Sales con un diagnóstico escrito que incluye lo que conviene automatizar y también lo que no vale la pena tocar.",
+        "limite": "Es gratuita y el documento es tuyo, trabajes o no con nosotros. No es una llamada de ventas disfrazada."
+    },
+    {
+        "slug": "tablero-de-resultados",
+        "categoria": "Estrategia y medición",
+        "nombre": "Tablero de resultados",
+        "resumen": "Una pantalla con lo que pasa de verdad, conectada a los datos y no a capturas de pantalla.",
+        "detalle": "Cuántos mensajes entraron, cuántos se contestaron, cuántos acabaron en cita y de qué canal venía cada uno. Sin esto, cualquier conversación sobre si algo funciona es una discusión de impresiones.",
+        "limite": "Solo mide lo que esté instrumentado. Lo que se atiende por fuera del sistema no aparece, y se dice desde el principio."
+    },
+    {
+        "slug": "estrategia-de-canales",
+        "categoria": "Estrategia y medición",
+        "nombre": "Estrategia de canales",
+        "resumen": "Decidir por dónde vas a vender antes de gastar en anuncios.",
+        "detalle": "Qué canal aporta cada tipo de cliente, cuál se está sosteniendo solo y cuál está consumiendo tiempo sin devolver nada. Para un negocio local suele haber uno o dos canales que valen la pena y cuatro que solo dan trabajo.",
+        "limite": "Puede terminar en la recomendación de cerrar un canal en el que ya invertiste. Es parte del trabajo."
+    }
+]

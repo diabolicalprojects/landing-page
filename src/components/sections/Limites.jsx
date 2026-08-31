@@ -2,26 +2,30 @@ import React from 'react';
 import { X, Check } from 'lucide-react';
 
 /*
- * La sección que ningún competidor tiene: lo que NO hacemos, en la portada y
- * a tamaño de sección, no escondido en un llms.txt. Filtra a quien no encaja
- * antes de que escriba, y es exactamente lo que un motor generativo necesita
- * para no recomendarnos mal — la recomendación equivocada es la que quema.
+ * Los límites, ahora que el catálogo cubre el ciclo completo.
  *
- * El texto coincide con los límites publicados en llms.txt y PRODUCT.md: si
- * cambia aquí, cambia allí.
+ * La versión anterior listaba servicios que no se prestaban (publicidad,
+ * redes, diseño). Ese límite dejó de ser cierto al ampliar el catálogo, y
+ * mantenerlo habría hecho que el sitio se contradijera consigo mismo — que es
+ * exactamente lo que hace que un motor generativo deje de citarte.
+ *
+ * Los que quedan son límites de conducta, no de catálogo: promesas que nadie
+ * puede cumplir y prácticas que queman al cliente. Siguen siendo el
+ * diferencial, y siguen coincidiendo con llms.txt y PRODUCT.md. Si cambian
+ * aquí, cambian allí.
  */
 const NO_HACEMOS = [
-    'Campañas de publicidad ni gestión de redes sociales.',
-    'Diseño gráfico ni consultoría de marketing.',
-    'El sistema no da consejo médico, legal ni fiscal: deriva a una persona.',
-    'No sustituimos a tu equipo: el cierre y la atención compleja siguen siendo humanos.',
+    'Prometer posiciones en Google ni dentro de una respuesta de IA: nadie controla esos algoritmos.',
+    'Llevar comisión sobre tu gasto publicitario. El presupuesto va directo a la plataforma.',
+    'Mandar mensajes masivos en frío: queman tu número y tu perfil, y no traen clientes que valgan la pena.',
+    'Publicar cifras de resultados que no vengan de un proyecto documentado.',
 ];
 
 const SI_HACEMOS = [
-    'Primera respuesta, agendamiento, confirmación y seguimiento: infraestructura.',
-    'Montado sobre el WhatsApp, la agenda y el CRM que ya usas.',
-    'Con la API oficial de Meta, número verificado y plantillas aprobadas.',
-    'Con límites pactados por escrito antes de encender nada.',
+    'Decir qué servicios no te hacen falta todavía, aunque los vendamos.',
+    'Publicar el límite de cada servicio antes de que lo contrates, no después.',
+    'Montarnos sobre el WhatsApp, la agenda y el CRM que ya usas.',
+    'Entregarte el diagnóstico por escrito aunque no trabajes con nosotros.',
 ];
 
 const Limites = () => (
@@ -29,12 +33,11 @@ const Limites = () => (
         <div className="max-w-6xl mx-auto px-5 md:px-8">
             <div className="max-w-2xl mb-12 md:mb-16">
                 <h2 className="text-3xl md:text-5xl font-title uppercase tracking-tighter leading-[0.95] mb-4">
-                    Lo que no hacemos
+                    Lo que no vas a oír aquí
                 </h2>
-                <p className="text-white/55 text-base leading-relaxed font-light">
-                    Decirlo de frente ahorra reuniones a los dos. Si tu problema es que no te
-                    llegan clientes, esto no es lo tuyo: la automatización multiplica un flujo
-                    que ya existe, no lo crea.
+                <p className="text-white/60 text-base leading-relaxed font-light">
+                    Hacemos el ciclo completo, pero hay cosas que no prometemos porque nadie
+                    puede cumplirlas. Decirlo antes ahorra reuniones a los dos.
                 </p>
             </div>
 
@@ -42,7 +45,7 @@ const Limites = () => (
                 <ul className="space-y-4">
                     {NO_HACEMOS.map((item) => (
                         <li key={item} className="flex gap-3.5 text-sm md:text-[15px] text-white/60 leading-relaxed font-light">
-                            <X size={17} className="text-white/35 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                            <X size={17} className="text-white/40 flex-shrink-0 mt-0.5" aria-hidden="true" />
                             {item}
                         </li>
                     ))}

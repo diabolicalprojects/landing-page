@@ -63,6 +63,8 @@ const Footer = () => {
                     <div className="flex gap-4">
                         {/* El blog necesita un enlace desde todas las páginas: sin
                             él quedaría huérfano, alcanzable solo desde el sitemap. */}
+                        <Link to="/servicios" className="hover:text-white transition-colors">Servicios</Link>
+                        <span>|</span>
                         <Link to="/blog" className="hover:text-white transition-colors">Blog</Link>
                         <span>|</span>
                         <Link to="/politica-privacidad" className="hover:text-white transition-colors">Política de Privacidad</Link>

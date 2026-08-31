@@ -1,5 +1,6 @@
 const SECTORES = require('../src/data/sectores.json');
 const ARTICULOS = require('../src/data/articulos.json');
+const SERVICIOS = require('../src/data/servicios.json');
 const config = require('./config');
 
 const SITE = config.siteUrl;
@@ -22,6 +23,7 @@ const rutaArticulo = (slug) => `/blog/${slug}`;
  *  los metadatos, el JSON-LD y el sitemap, y un literal repetido cinco veces
  *  es justo el tipo de dato que se desincroniza al renombrar. */
 const RUTA_BLOG = '/blog';
+const RUTA_SERVICIOS = '/servicios';
 
 /** Los más recientes primero, igual que en el cliente. */
 const ARTICULOS_POR_FECHA = [...ARTICULOS].sort((a, b) => b.fecha.localeCompare(a.fecha));
@@ -43,7 +45,7 @@ function negocio() {
         name: 'Diabolical Services',
         alternateName: 'Diabolical',
         description:
-            'Agencia de automatización con inteligencia artificial en Aguascalientes. Diseñamos e instalamos sistemas autónomos que atienden, agendan y dan seguimiento a los clientes de clínicas, spas, gimnasios, despachos y pequeñas empresas.',
+            'Agencia de marketing digital y automatización con inteligencia artificial en Aguascalientes. Cubrimos el ciclo completo: posicionamiento, publicidad, sitio web, identidad de marca y sistemas autónomos que atienden, agendan y dan seguimiento por WhatsApp. Para clínicas, spas, gimnasios, despachos y pequeñas empresas.',
         url: SITE,
         telephone: TELEFONO,
         email: EMAIL,
@@ -62,34 +64,35 @@ function negocio() {
             { '@type': 'State', name: 'Aguascalientes' },
             { '@type': 'Country', name: 'México' },
         ],
-        serviceType: [
-            'Automatización con inteligencia artificial',
-            'Chatbots y agentes conversacionales',
-            'Automatización de agenda y citas',
-            'Seguimiento automatizado de prospectos',
-            'Integración de sistemas y CRM',
-        ],
+        serviceType: [...new Set(SERVICIOS.map((s) => s.nombre))],
         knowsAbout: [
+            'Marketing digital para negocios locales',
+            'Posicionamiento en buscadores y en motores generativos',
+            'Publicidad en Google',
+            'Diseño y desarrollo web',
+            'Identidad de marca',
             'Inteligencia artificial aplicada a negocios',
             'Automatización de procesos',
             'Chatbots de WhatsApp',
             'Agendamiento automático de citas',
-            'Recuperación de prospectos',
             'Integración con CRM',
         ],
+        // El catálogo sale entero de servicios.json: si se añade un servicio
+        // allí, aparece aquí, en /servicios y en los llms.txt sin tocar nada.
         hasOfferCatalog: {
             '@type': 'OfferCatalog',
-            name: 'Servicios de automatización con IA',
+            name: 'Servicios de marketing digital y automatización con IA',
             itemListElement: [
-                {
+                ...SERVICIOS.map((s) => ({
                     '@type': 'Offer',
+                    category: s.categoria,
                     itemOffered: {
                         '@type': 'Service',
-                        name: 'Auditoría de fricción con IA',
-                        description:
-                            'Diagnóstico gratuito de los procesos manuales donde el negocio pierde prospectos o tiempo, con el plan de automatización que corresponde.',
+                        name: s.nombre,
+                        description: s.resumen,
+                        url: `${SITE}${RUTA_SERVICIOS}#${s.slug}`,
                     },
-                },
+                })),
                 ...SECTORES.map((s) => ({
                     '@type': 'Offer',
                     itemOffered: {
@@ -226,6 +229,15 @@ function metadatosPorRuta() {
         };
     }
 
+    meta[RUTA_SERVICIOS] = {
+        title: 'Servicios de marketing digital e IA en Aguascalientes | Diabolical',
+        description:
+            'Posicionamiento, Google Ads, sitio web, identidad de marca, automatización de WhatsApp y medición. Cada servicio dice qué incluye y dónde se detiene.',
+        keywords:
+            'agencia de marketing digital Aguascalientes, servicios de marketing digital, posicionamiento web, Google Ads Aguascalientes, diseño web, automatización con IA',
+        robots: 'index, follow',
+    };
+
     meta[RUTA_BLOG] = {
         title: 'Blog sobre automatización con IA para negocios | Diabolical Services',
         description:
@@ -274,6 +286,38 @@ function datosEstructurados(ruta) {
             migas([
                 { nombre: 'Inicio', ruta: '/' },
                 { nombre: sector.nombreCorto, ruta },
+            ]),
+        ];
+    }
+
+    if (ruta === RUTA_SERVICIOS) {
+        return [
+            {
+                '@context': 'https://schema.org',
+                '@type': 'CollectionPage',
+                name: 'Servicios de Diabolical Services',
+                url: `${SITE}${RUTA_SERVICIOS}`,
+                inLanguage: 'es-MX',
+                about: { '@id': ID_NEGOCIO },
+                mainEntity: {
+                    '@type': 'ItemList',
+                    itemListElement: SERVICIOS.map((s, i) => ({
+                        '@type': 'ListItem',
+                        position: i + 1,
+                        item: {
+                            '@type': 'Service',
+                            name: s.nombre,
+                            description: s.resumen,
+                            category: s.categoria,
+                            url: `${SITE}${RUTA_SERVICIOS}#${s.slug}`,
+                            provider: { '@id': ID_NEGOCIO },
+                        },
+                    })),
+                },
+            },
+            migas([
+                { nombre: 'Inicio', ruta: '/' },
+                { nombre: 'Servicios', ruta: RUTA_SERVICIOS },
             ]),
         ];
     }
@@ -351,6 +395,7 @@ function datosEstructurados(ruta) {
 /** Rutas indexables, para el router del servidor, el sitemap y el prerender. */
 const RUTAS_PUBLICAS = [
     '/',
+    RUTA_SERVICIOS,
     ...SECTORES.map((s) => rutaSector(s.slug)),
     RUTA_BLOG,
     ...ARTICULOS_POR_FECHA.map((a) => rutaArticulo(a.slug)),
@@ -366,6 +411,7 @@ const RUTAS_PUBLICAS = [
  */
 const RUTAS_PRERENDER = [
     '/',
+    RUTA_SERVICIOS,
     ...SECTORES.map((s) => rutaSector(s.slug)),
     RUTA_BLOG,
     ...ARTICULOS_POR_FECHA.map((a) => rutaArticulo(a.slug)),
@@ -386,6 +432,8 @@ module.exports = {
     RUTAS_PUBLICAS,
     RUTAS_PRERENDER,
     RUTA_BLOG,
+    RUTA_SERVICIOS,
+    SERVICIOS,
     FAQ_PORTADA,
     rutaSector,
     rutaArticulo,

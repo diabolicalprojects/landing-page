@@ -12,7 +12,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const bcrypt = require('bcryptjs');
-const { SECTORES, RUTAS_PUBLICAS, ARTICULOS } = require('../server/schema');
+const { SECTORES, RUTAS_PUBLICAS, ARTICULOS, SERVICIOS } = require('../server/schema');
 
 const PORT = 4173;
 const BASE = `http://127.0.0.1:${PORT}`;
@@ -271,6 +271,70 @@ test('los assets se sirven precomprimidos y brotli gana a gzip', async (t) => {
 
     // Las variantes no se sirven por su nombre: solo por negociación.
     assert.equal((await fetch(`${BASE}/assets/${bundle}.br`)).status, 404);
+});
+
+test('el catálogo de servicios se sirve entero y con su límite', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    const res = await fetch(`${BASE}/servicios`);
+    assert.equal(res.status, 200);
+    const html = await res.text();
+    const visible = html.replace(/<script[\s\S]*?<\/script>/g, '');
+
+    // Cada servicio con su nombre, su resumen y —lo que nos distingue— el
+    // límite publicado antes de contratar, no después.
+    for (const servicio of SERVICIOS) {
+        assert.ok(visible.includes(servicio.nombre), `falta el servicio "${servicio.nombre}"`);
+        assert.ok(visible.includes(servicio.limite), `falta el límite de "${servicio.nombre}"`);
+    }
+
+    assert.match(html, /"@type":\s*"CollectionPage"/);
+    assert.match(html, /"@type":\s*"BreadcrumbList"/);
+
+    // La portada y el pie llevan al catálogo: sin enlaces quedaría huérfano.
+    const portada = await (await fetch(`${BASE}/`)).text();
+    assert.ok(portada.includes('/servicios'), 'la portada no enlaza a /servicios');
+
+    // El catálogo entra en el sitemap y en el texto para modelos.
+    assert.ok((await (await fetch(`${BASE}/sitemap.xml`)).text()).includes('/servicios'));
+    const llms = await (await fetch(`${BASE}/llms.txt`)).text();
+    for (const servicio of SERVICIOS) {
+        assert.ok(llms.includes(servicio.nombre), `${servicio.nombre} no está en llms.txt`);
+        assert.ok(llms.includes(servicio.limite), `el límite de ${servicio.nombre} no está en llms.txt`);
+    }
+});
+
+test('el sitio no se contradice sobre lo que ofrece', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    // Al ampliar el catálogo, las declaraciones de "no hacemos publicidad ni
+    // marketing" dejaron de ser ciertas. Un sitio que se contradice es lo que
+    // hace que un motor generativo deje de citarlo, así que esto se fija.
+    const fuentes = await Promise.all(
+        ['/', '/servicios', '/llms.txt', '/llms-full.txt'].map(async (r) => ({
+            ruta: r,
+            texto: await (await fetch(`${BASE}${r}`)).text(),
+        }))
+    );
+
+    const contradicciones = [
+        'No somos una agencia de marketing',
+        'No hacemos marketing ni publicidad',
+        'campañas de publicidad, gestión de redes sociales, diseño',
+    ];
+
+    for (const { ruta, texto } of fuentes) {
+        for (const frase of contradicciones) {
+            assert.ok(
+                !texto.includes(frase),
+                `${ruta} sigue negando servicios que ahora sí se ofrecen: "${frase}"`
+            );
+        }
+    }
 });
 
 test('las coordenadas de la ficha local se publican como número o no se publican', () => {
