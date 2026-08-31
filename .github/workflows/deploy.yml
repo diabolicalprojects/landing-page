@@ -62,32 +62,32 @@ jobs:
           # Un POST pelado devuelve {"message":"Branch Not Match"} con código 301,
           # y como 301 no es un error para `curl -f`, el paso daba verde sin haber
           # desplegado nada. De ahí que se compruebe el código a mano.
-          # El paso corre con `bash -e`, así que un curl con salida distinta de
-          # cero abortaría aquí mismo y el diagnóstico de abajo no llegaría a
-          # imprimirse. Se captura su código en lugar de dejar que aborte.
-          CODIGO=$(curl -sS --max-time 60 -o respuesta.json -w '%{http_code}' \
-            -X POST "$WEBHOOK" \
-            -H 'Content-Type: application/json' \
-            -H 'x-github-event: push' \
-            -d "{\"ref\":\"refs/heads/${RAMA}\"}" 2> error-curl.txt) || SALIDA_CURL=$?
-          SALIDA_CURL=${SALIDA_CURL:-0}
+          #
+          # Dos pushes seguidos llegan con el build del primero aún en marcha, y
+          # entonces Dokploy puede responder no-2xx de forma transitoria. Por eso
+          # se reintenta: tres intentos con 45 s entre ellos cubren un build
+          # típico. `bash -e` abortaría en la asignación si curl falla, así que
+          # su código se captura en vez de dejarlo abortar.
+          ACEPTADO=""
+          for intento in 1 2 3; do
+            SALIDA_CURL=0
+            CODIGO=$(curl -sS --max-time 60 -o respuesta.json -w '%{http_code}'               -X POST "$WEBHOOK"               -H 'Content-Type: application/json'               -H 'x-github-event: push'               -d "{\"ref\":\"refs/heads/${RAMA}\"}" 2> error-curl.txt) || SALIDA_CURL=$?
 
-          echo "curl salió con $SALIDA_CURL, HTTP ${CODIGO:-(sin respuesta)}"
-          [ -s respuesta.json ] && { echo "respuesta:"; cat respuesta.json; echo; }
-          [ -s error-curl.txt ] && { echo "stderr de curl:"; cat error-curl.txt; }
+            echo "intento $intento: curl salió con $SALIDA_CURL, HTTP ${CODIGO:-(sin respuesta)}"
+            [ -s respuesta.json ] && { echo "  respuesta: $(cat respuesta.json)"; }
+            [ -s error-curl.txt ] && { echo "  stderr: $(cat error-curl.txt)"; }
 
-          if [ "$SALIDA_CURL" -ne 0 ]; then
-            echo "::error title=No se pudo llamar al webhook::curl falló con código $SALIDA_CURL. Si es un 3 (URL mal formada), revisa que el secreto DEPLOY_WEBHOOK_URL no lleve espacios ni un salto de línea al final."
+            case "$SALIDA_CURL:$CODIGO" in
+              0:2??) ACEPTADO=1; break ;;
+            esac
+            [ "$intento" -lt 3 ] && { echo "  reintento en 45 s..."; sleep 45; }
+          done
+
+          if [ -z "$ACEPTADO" ]; then
+            echo "::error title=El webhook no aceptó la petición tras 3 intentos::Último código: curl $SALIDA_CURL, HTTP ${CODIGO:-ninguno}. Un 301 con 'Branch Not Match' es rama equivocada; un fallo de curl con código 3 suele ser un secreto pegado con salto de línea; un no-2xx repetido con la URL correcta apunta a la plataforma ocupada o caída."
             exit 1
           fi
-
-          case "$CODIGO" in
-            2??) echo "Webhook aceptado." ;;
-            *)
-              echo "::error title=El webhook no aceptó la petición::Respondió $CODIGO en lugar de 2xx. Un 301 con 'Branch Not Match' significa que la rama enviada en el cuerpo no coincide con la configurada en la plataforma."
-              exit 1
-              ;;
-          esac
+          echo "Webhook aceptado en el intento $intento."
 
       - name: Esperar a que la versión nueva esté en producción
         if: steps.check.outputs.configured == 'true'
