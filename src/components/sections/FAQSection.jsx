@@ -16,7 +16,7 @@ const FAQSection = () => {
     };
 
     return (
-        <section id="faq" className="seccion superficie-2 border-t border-white/5 relative">
+        <section id="faq" className="seccion superficie-1 border-t border-white/5 relative">
             <div className="max-w-4xl mx-auto px-5 md:px-6 relative z-10">
                 <div className="text-center mb-12 md:mb-16">
                     <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-3">Preguntas Frecuentes</h2>

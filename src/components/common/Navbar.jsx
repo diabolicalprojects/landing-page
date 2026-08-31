@@ -93,8 +93,8 @@ const Navbar = () => {
                 "hidden lg:flex items-center gap-10 text-[11px] uppercase tracking-[0.25em] font-bold transition-colors",
                 isLight ? "text-black/60" : "text-white/60"
             )}>
-                <a href="/#problem" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Problema</a>
-                <a href="/#solutions" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Soluciones</a>
+                <a href="/#modulos" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Módulos</a>
+                <a href="/#mecanismo" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Cómo funciona</a>
                 <a href="/#contact" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Contacto</a>
             </div>
 
@@ -127,18 +127,18 @@ const Navbar = () => {
             {isMenuOpen && (
                 <div className="absolute top-[calc(100%+10px)] left-0 w-full rounded-3xl bg-black border border-white/10 backdrop-blur-2xl px-5 py-5 flex flex-col gap-1 lg:hidden shadow-2xl">
                     <a
-                        href="/#problem"
+                        href="/#modulos"
                         onClick={() => setIsMenuOpen(false)}
                         className="flex items-center text-sm font-title tracking-widest py-4 border-b border-white/10 text-white active:text-white/60 transition-colors"
                     >
-                        Problema
+                        Módulos
                     </a>
                     <a
-                        href="/#solutions"
+                        href="/#mecanismo"
                         onClick={() => setIsMenuOpen(false)}
                         className="flex items-center text-sm font-title tracking-widest py-4 border-b border-white/10 text-white active:text-white/60 transition-colors"
                     >
-                        Soluciones
+                        Cómo funciona
                     </a>
                     <a
                         href="/#contact"

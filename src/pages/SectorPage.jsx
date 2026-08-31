@@ -2,7 +2,6 @@ import React, { Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check, X } from 'lucide-react';
 
-import CustomCursor from '../components/common/CustomCursor';
 import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
 import { getSector, SECTORES } from '../data/sectores';
@@ -27,7 +26,6 @@ const SectorPage = ({ slug }) => {
 
     return (
         <main className="relative bg-black min-h-screen selection:bg-white selection:text-black font-jakarta overflow-x-hidden">
-            <CustomCursor />
             <div className="fixed inset-0 pointer-events-none z-0">
                 <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-white/[0.03] blur-[180px] rounded-full" />
                 <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-white/[0.02] blur-[150px] rounded-full" />

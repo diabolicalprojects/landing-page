@@ -1,45 +1,50 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-
 import { SECTORES } from '../../data/sectores';
 
-/**
- * Puerta de entrada a las páginas por sector. Además de orientar al visitante,
- * es lo que da a esas páginas enlaces internos desde la portada: sin ellos,
- * los buscadores las tratarían como páginas huérfanas.
+/*
+ * Índice de sectores como filas, no como tarjetas decorativas. Cada fila es
+ * una entrada real a la página del sector — el activo SEO más valioso del
+ * sitio — con el dolor del sector como gancho, sacado de la misma fuente
+ * única (sectores.json) que genera esas páginas.
+ *
+ * Un test comprueba que la portada enlaza a las cuatro: si se toca esto, que
+ * los enlaces sobrevivan.
  */
 const Sectores = () => (
-    <section id="sectores" className="seccion superficie-1 border-t border-white/5 relative">
-        <div className="max-w-6xl mx-auto px-5 md:px-6 relative z-10">
-            <div className="text-center max-w-2xl mx-auto mb-12 md:mb-14">
-                <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-4 leading-[0.95]">
-                    Cada negocio pierde clientes <span className="text-white/50 italic">en un punto distinto</span>
+    <section id="sectores" className="seccion bg-black">
+        <div className="max-w-6xl mx-auto px-5 md:px-8">
+            <div className="max-w-2xl mb-10 md:mb-14">
+                <h2 className="text-3xl md:text-5xl font-title uppercase tracking-tighter leading-[0.95] mb-4">
+                    Hecho para tu giro
                 </h2>
-                <p className="text-white/50 text-sm leading-relaxed font-light">
-                    Una clínica los pierde en la agenda; un gimnasio, en la baja silenciosa.
-                    Entra al tuyo y mira dónde se está yendo el dinero.
+                <p className="text-white/55 text-base leading-relaxed font-light">
+                    La fricción de una clínica no es la de un gimnasio. Cada sector tiene su
+                    página, con sus problemas, sus soluciones y sus preguntas.
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+            <div className="border-t border-white/10">
                 {SECTORES.map((sector) => (
                     <Link
                         key={sector.slug}
                         to={`/automatizacion-para-${sector.slug}`}
-                        className="glass-card p-7 md:p-8 rounded-3xl border-white/5 hover:border-white/20 transition-all group flex flex-col justify-between min-h-[190px]"
+                        className="accion group flex items-center justify-between gap-6 py-6 md:py-8 border-b border-white/10 hover:bg-white/[0.03] px-2 md:px-4 -mx-2 md:-mx-4"
                     >
-                        <div>
-                            <h3 className="text-base md:text-lg font-title uppercase tracking-tight text-white mb-3 leading-snug">
+                        <div className="min-w-0">
+                            <h3 className="text-lg md:text-2xl font-title uppercase tracking-tight text-white leading-tight mb-1.5 group-hover:translate-x-1 transition-transform">
                                 {sector.nombre}
                             </h3>
-                            <p className="text-white/50 text-sm leading-relaxed font-light">
-                                {sector.entradilla.split('.')[0]}.
+                            <p className="text-sm text-white/55 leading-relaxed font-light max-w-2xl">
+                                {sector.dolores[0]}
                             </p>
                         </div>
-                        <span className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] font-black text-white/55 group-hover:text-white transition-colors mt-6">
-                            Ver soluciones <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                        </span>
+                        <ArrowRight
+                            size={20}
+                            className="text-white/35 group-hover:text-white group-hover:translate-x-1 transition-all flex-shrink-0"
+                            aria-hidden="true"
+                        />
                     </Link>
                 ))}
             </div>

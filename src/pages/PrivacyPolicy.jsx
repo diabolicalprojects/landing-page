@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import CustomCursor from '../components/common/CustomCursor';
 import logoHorizontalBlanco from '../assets/logo/LOGO-DIABOLICAL-HORIZONTAL-BLANCO.svg';
 
 const PrivacyPolicy = () => {
@@ -12,7 +11,6 @@ const PrivacyPolicy = () => {
 
     return (
         <main className="relative bg-black min-h-screen selection:bg-white selection:text-black font-jakarta overflow-x-hidden text-white flex flex-col justify-between">
-            <CustomCursor />
             
             {/* Ambient Background glows */}
             <div className="fixed inset-0 pointer-events-none z-0">

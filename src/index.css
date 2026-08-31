@@ -1,13 +1,11 @@
 @import "tailwindcss";
 
 /*
-  El HTML de la portada llega prerenderizado, así que sin esto el contenido se
-  vería un instante en su posición final antes de que GSAP lo pusiera en el
-  estado inicial de la animación. La clase `js` la añade un script inline en el
-  <head>, antes del primer pintado: si no hay JS no se aplica y el contenido
-  queda visible tal cual.
+  Solo el pie conserva la entrada por GSAP; el hero anima con CSS puro (ver
+  .entrada al final). La clase `js` la añade un script inline en el <head>,
+  antes del primer pintado: si no hay JS no se aplica y el pie queda visible
+  tal cual, que es como lo leen los rastreadores.
 */
-.js .hero-content > *,
 .js .footer-content > * {
   opacity: 0;
 }
@@ -15,17 +13,16 @@
 /*
   Con movimiento reducido no se esconde nada.
 
-  Hero.jsx y Footer.jsx omiten su animación de entrada cuando el sistema pide
-  menos movimiento, y esas animaciones son lo único que devuelve la opacidad a
-  1. Sin esta regla, quien active la preferencia se quedaría con la portada y
-  el pie en blanco: el caso justo contrario al que la preferencia busca.
+  Footer.jsx omite su animación de entrada cuando el sistema pide menos
+  movimiento, y esa animación es lo único que devuelve la opacidad a 1. Sin
+  esta regla, quien active la preferencia se quedaría con el pie en blanco:
+  el caso justo contrario al que la preferencia busca.
 
   No se usa el truco de reducir todas las duraciones a 0.01s: no elimina el
   parpadeo, solo lo acorta.
 */
 @media (prefers-reduced-motion: reduce) {
 
-  .js .hero-content > *,
   .js .footer-content > * {
     opacity: 1;
   }
@@ -117,51 +114,6 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Custom Cursor — Desktop Only */
-.cursor-dot {
-  width: 6px;
-  height: 6px;
-  background-color: white;
-  border-radius: 50%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 10000;
-  transform: translate(-50%, -50%);
-}
-
-.cursor-outline {
-  width: 32px;
-  height: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s, height 0.3s, border-color 0.3s, opacity 0.3s;
-}
-
-/* Hide custom cursor elements on touch/mobile devices */
-@media (pointer: coarse) {
-
-  .cursor-dot,
-  .cursor-outline {
-    display: none !important;
-  }
-}
-
-/* Apply custom cursor only on fine-pointer (mouse) devices */
-@media (pointer: fine) {
-
-  body:not(.admin-mode),
-  body:not(.admin-mode) * {
-    cursor: none !important;
-  }
-}
 
 /*
   Escala de superficies.
@@ -316,11 +268,6 @@ html {
   border-radius: 2px;
 }
 
-/* En la sección invertida el anillo blanco desaparecería sobre el blanco. */
-.seccion-invertida :focus-visible {
-  outline-color: var(--superficie-0);
-}
-
 input,
 textarea {
   caret-color: var(--inversion);
@@ -422,12 +369,6 @@ html {
   animation: float 6s ease-in-out infinite;
 }
 
-.bg-grid {
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
 
 .hero-logo-container {
   position: relative;
@@ -548,4 +489,37 @@ html {
   border: 1.5px solid rgba(255, 255, 255, 0.3);
   pointer-events: none;
   animation: chatBtnPulse 2.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/*
+  Entrada del primer viewport.
+
+  En CSS y no en GSAP a propósito: la hoja de estilos llega antes del primer
+  pintado, así que no existe el flash que obligaba al truco de la clase `js`,
+  y el contenido prerenderizado se comporta igual con y sin JavaScript.
+*/
+@keyframes entrada {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.entrada {
+  animation: entrada 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.entrada:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entrada {
+    animation: none;
+  }
 }
