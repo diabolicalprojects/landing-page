@@ -62,20 +62,29 @@ jobs:
           # Un POST pelado devuelve {"message":"Branch Not Match"} con código 301,
           # y como 301 no es un error para `curl -f`, el paso daba verde sin haber
           # desplegado nada. De ahí que se compruebe el código a mano.
+          # El paso corre con `bash -e`, así que un curl con salida distinta de
+          # cero abortaría aquí mismo y el diagnóstico de abajo no llegaría a
+          # imprimirse. Se captura su código en lugar de dejar que aborte.
           CODIGO=$(curl -sS --max-time 60 -o respuesta.json -w '%{http_code}' \
             -X POST "$WEBHOOK" \
             -H 'Content-Type: application/json' \
             -H 'x-github-event: push' \
-            -d "{\"ref\":\"refs/heads/${RAMA}\"}")
+            -d "{\"ref\":\"refs/heads/${RAMA}\"}" 2> error-curl.txt) || SALIDA_CURL=$?
+          SALIDA_CURL=${SALIDA_CURL:-0}
 
-          echo "webhook HTTP $CODIGO"
-          cat respuesta.json || true
-          echo
+          echo "curl salió con $SALIDA_CURL, HTTP ${CODIGO:-(sin respuesta)}"
+          [ -s respuesta.json ] && { echo "respuesta:"; cat respuesta.json; echo; }
+          [ -s error-curl.txt ] && { echo "stderr de curl:"; cat error-curl.txt; }
+
+          if [ "$SALIDA_CURL" -ne 0 ]; then
+            echo "::error title=No se pudo llamar al webhook::curl falló con código $SALIDA_CURL. Si es un 3 (URL mal formada), revisa que el secreto DEPLOY_WEBHOOK_URL no lleve espacios ni un salto de línea al final."
+            exit 1
+          fi
 
           case "$CODIGO" in
-            2??) ;;
+            2??) echo "Webhook aceptado." ;;
             *)
-              echo "::error title=El webhook no aceptó la petición::Respondió $CODIGO en lugar de 2xx. Un 301 con \"Branch Not Match\" significa que la rama del cuerpo no coincide con la configurada en la plataforma."
+              echo "::error title=El webhook no aceptó la petición::Respondió $CODIGO en lugar de 2xx. Un 301 con 'Branch Not Match' significa que la rama enviada en el cuerpo no coincide con la configurada en la plataforma."
               exit 1
               ;;
           esac
