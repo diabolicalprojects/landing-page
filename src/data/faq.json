@@ -1,34 +1,38 @@
 [
-    {
-        "pregunta": "¿Qué hace exactamente Diabolical?",
-        "respuesta": "Diseñamos e instalamos \"empleados digitales\": sistemas autónomos basados en inteligencia artificial que atienden, agendan y dan seguimiento a tus clientes. No somos una agencia de marketing; construimos la infraestructura técnica que automatiza ventas, atención y operación las 24 horas."
-    },
-    {
-        "pregunta": "¿Cómo sé si mi negocio está listo para la automatización con IA?",
-        "respuesta": "Si ya tienes un flujo constante de clientes o prospectos (por WhatsApp, Instagram, correo o publicidad pagada) y tu equipo pasa horas respondiendo las mismas preguntas o agendando citas a mano, estás listo. La automatización multiplica un flujo que ya existe; no lo crea de la nada."
-    },
-    {
-        "pregunta": "¿La IA va a reemplazar a mi equipo humano?",
-        "respuesta": "No. La IA se encarga de las tareas repetitivas y de bajo valor —la primera respuesta, el filtrado y el agendamiento 24/7— y libera a tu equipo para el cierre de ventas complejas y la atención estratégica."
-    },
-    {
-        "pregunta": "¿Cómo es el proceso de implementación y cuánto tarda?",
-        "respuesta": "Entre 2 y 4 semanas. Nos encargamos de todo: diseño del flujo conversacional, conexión con tus sistemas actuales (CRM, agenda, bases de datos), pruebas con casos reales y puesta en marcha acompañada."
-    },
-    {
-        "pregunta": "¿Qué es la auditoría de fricción gratuita?",
-        "respuesta": "Un diagnóstico en el que analizamos los cuellos de botella y procesos manuales donde tu negocio pierde prospectos o dinero. Te entregamos un reporte con las soluciones concretas que necesitas, y también con lo que no vale la pena automatizar."
-    },
-    {
-        "pregunta": "¿Para qué tipo de negocios trabajan?",
-        "respuesta": "Clínicas y consultorios, spas y centros de estética, gimnasios y estudios, despachos profesionales y oficinas pequeñas en Aguascalientes y el resto de México. Son negocios con volumen constante de mensajes y una agenda que llenar."
-    },
-    {
-        "pregunta": "¿Necesito cambiar las herramientas que ya uso?",
-        "respuesta": "No. La automatización se monta encima de lo que ya funciona: tu WhatsApp, tu agenda, tu CRM. Cambiar de herramienta es un costo que casi nunca hace falta pagar."
-    },
-    {
-        "pregunta": "¿Trabajan fuera de Aguascalientes?",
-        "respuesta": "Sí. La sede está en Aguascalientes y ahí trabajamos presencialmente, pero la implementación y el acompañamiento funcionan igual de bien a distancia para negocios de todo México."
-    }
+  {
+    "pregunta": "¿Qué hace exactamente Diabolical?",
+    "respuesta": "Diseñamos e instalamos \"empleados digitales\": sistemas autónomos basados en inteligencia artificial que atienden, agendan y dan seguimiento a tus clientes. No somos una agencia de marketing; construimos la infraestructura técnica que automatiza ventas, atención y operación las 24 horas."
+  },
+  {
+    "pregunta": "¿Cómo sé si mi negocio está listo para la automatización con IA?",
+    "respuesta": "Si ya tienes un flujo constante de clientes o prospectos (por WhatsApp, Instagram, correo o publicidad pagada) y tu equipo pasa horas respondiendo las mismas preguntas o agendando citas a mano, estás listo. La automatización multiplica un flujo que ya existe; no lo crea de la nada."
+  },
+  {
+    "pregunta": "¿La IA va a reemplazar a mi equipo humano?",
+    "respuesta": "No. La IA se encarga de las tareas repetitivas y de bajo valor —la primera respuesta, el filtrado y el agendamiento 24/7— y libera a tu equipo para el cierre de ventas complejas y la atención estratégica."
+  },
+  {
+    "pregunta": "¿Cómo es el proceso de implementación y cuánto tarda?",
+    "respuesta": "Entre 2 y 4 semanas. Nos encargamos de todo: diseño del flujo conversacional, conexión con tus sistemas actuales (CRM, agenda, bases de datos), pruebas con casos reales y puesta en marcha acompañada."
+  },
+  {
+    "pregunta": "¿Cuánto cuesta automatizar mi negocio?",
+    "respuesta": "No hay tarifa fija, y publicar una sería inventarla: el precio depende de cuántos flujos se automatizan, con qué herramientas hay que conectarse y si tu cuenta de WhatsApp ya está verificada con Meta. Lo que sí es fijo es cómo se llega a la cifra: la auditoría de fricción es gratuita y termina con un diagnóstico escrito y un presupuesto cerrado. Si el número no te convence, te quedas con el diagnóstico igualmente."
+  },
+  {
+    "pregunta": "¿Qué es la auditoría de fricción gratuita?",
+    "respuesta": "Un diagnóstico en el que analizamos los cuellos de botella y procesos manuales donde tu negocio pierde prospectos o dinero. Te entregamos un reporte con las soluciones concretas que necesitas, y también con lo que no vale la pena automatizar."
+  },
+  {
+    "pregunta": "¿Para qué tipo de negocios trabajan?",
+    "respuesta": "Clínicas y consultorios, spas y centros de estética, gimnasios y estudios, despachos profesionales y oficinas pequeñas en Aguascalientes y el resto de México. Son negocios con volumen constante de mensajes y una agenda que llenar."
+  },
+  {
+    "pregunta": "¿Necesito cambiar las herramientas que ya uso?",
+    "respuesta": "No. La automatización se monta encima de lo que ya funciona: tu WhatsApp, tu agenda, tu CRM. Cambiar de herramienta es un costo que casi nunca hace falta pagar."
+  },
+  {
+    "pregunta": "¿Trabajan fuera de Aguascalientes?",
+    "respuesta": "Sí. La sede está en Aguascalientes y ahí trabajamos presencialmente, pero la implementación y el acompañamiento funcionan igual de bien a distancia para negocios de todo México."
+  }
 ]

@@ -48,6 +48,10 @@
             {
                 "q": "¿Cuánto tarda la instalación en una clínica?",
                 "a": "Entre 2 y 4 semanas. Incluye el diseño del flujo conversacional, la conexión con tu agenda, las pruebas con casos reales y el acompañamiento durante las primeras semanas de operación."
+            },
+            {
+                "q": "¿Cuánto cuesta automatizar la agenda de una clínica?",
+                "a": "Depende del número de médicos y agendas que haya que coordinar, de si el expediente o el software de consultorio permite conexión, y de cuántos tratamientos con preparación previa hay que contemplar. No publicamos tarifa porque sería inventada. La auditoría de fricción es gratuita y sale de ella un presupuesto cerrado, sin compromiso."
             }
         ]
     },
@@ -100,6 +104,10 @@
             {
                 "q": "¿Cuánto tarda la instalación en un spa?",
                 "a": "Entre 2 y 4 semanas, según el tamaño del catálogo y el número de cabinas o especialistas que haya que coordinar en la agenda."
+            },
+            {
+                "q": "¿Cuánto cuesta automatizar las reservas de un spa?",
+                "a": "Depende de cuántos tratamientos haya en el catálogo, de si tienen duraciones y cabinas distintas, y de cuántas personas atienden en paralelo. No hay tarifa publicada porque cada catálogo es distinto. La auditoría de fricción es gratuita y termina con un presupuesto cerrado."
             }
         ]
     },
@@ -152,6 +160,10 @@
             {
                 "q": "¿Cuánto tarda la instalación en un gimnasio?",
                 "a": "Entre 2 y 4 semanas, dependiendo de si hay que integrar el control de acceso y la pasarela de pago o solo el canal de WhatsApp."
+            },
+            {
+                "q": "¿Cuánto cuesta automatizar la atención de un gimnasio?",
+                "a": "Depende de si hay que conectarse al sistema de socios o de control de acceso, de cuántos planes y horarios se manejan, y de si se automatiza también el recordatorio de mensualidades. No publicamos precio porque sería un número inventado. La auditoría de fricción es gratuita y de ahí sale el presupuesto."
             }
         ]
     },
@@ -204,6 +216,10 @@
             {
                 "q": "¿Cuánto tarda la instalación en un despacho?",
                 "a": "Entre 2 y 4 semanas, según cuántos flujos se automaticen y qué integraciones haga falta montar con las herramientas que ya usan."
+            },
+            {
+                "q": "¿Cuánto cuesta automatizar el filtrado de un despacho?",
+                "a": "Depende de cuántos tipos de asunto haya que distinguir al calificar, de qué documentación se pide por adelantado en cada uno, y de si hay que conectarse a un gestor de expedientes. No hay tarifa fija. La auditoría de fricción es gratuita y entrega un presupuesto cerrado."
             }
         ]
     }

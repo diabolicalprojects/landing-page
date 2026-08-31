@@ -42,42 +42,52 @@ const Hero = () => {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0,transparent_100%)]" />
             </div>
 
-            <div className="hero-content relative z-10 w-full mx-auto px-5 text-center max-w-5xl flex flex-col items-center">
-                <div className="hero-logo-container mb-10 md:mb-20 animate-float">
-                    <div className="hero-glow !scale-125" />
+            <div className="hero-content relative z-10 w-full mx-auto px-5 md:px-8 max-w-6xl">
+                {/* El logo baja de tamaño: en el primer viewport manda lo que se
+                    ofrece, no quién lo ofrece. La marca ya está en el navbar. */}
+                <div className="hero-logo-container mb-10 md:mb-14">
+                    <div className="hero-glow" />
                     <img
                         src="/logo-cuadrado-blanco.svg"
-                        alt="Diabolical Logo"
+                        alt="Diabolical Services"
                         width="208"
                         height="208"
-                        className="w-28 h-28 sm:w-40 sm:h-40 md:w-52 md:h-52 glitch-logo"
+                        className="w-16 h-16 md:w-20 md:h-20 glitch-logo"
                     />
                 </div>
 
-                <h1 className="text-4xl sm:text-5xl md:text-7xl font-title mb-6 md:mb-10 leading-[0.9] tracking-tighter text-white uppercase drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] max-w-full">
-                    Vende más con{' '}
-                    <span className="text-white/10 outline-text">Inteligencia Artificial</span>
+                {/* El h1 anterior era "Vende más con Inteligencia Artificial": servía
+                    para cualquier empresa del planeta, sin ciudad, sin sector y sin
+                    mecanismo. Este nombra el objeto que el cliente reconoce (su
+                    WhatsApp) y las tres cosas que el sistema hace, en una frase que
+                    se sostiene sola fuera de la página: que es lo que un motor
+                    generativo puede citar. */}
+                <h1 className="text-4xl sm:text-5xl md:text-7xl font-title mb-6 md:mb-8 leading-[0.9] tracking-tighter text-white uppercase max-w-4xl">
+                    Tu WhatsApp contesta, agenda y da seguimiento{' '}
+                    <span className="text-white/40">solo</span>
                 </h1>
 
-                <p className="text-base sm:text-lg md:text-2xl text-white/70 max-w-2xl mx-auto mb-10 md:mb-16 leading-relaxed font-light tracking-wide px-2">
-                    Instalamos sistemas de IA que venden, responden y recuperan clientes por ti mientras tú escalas.
+                <p className="text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mb-10 md:mb-12 leading-relaxed font-light">
+                    Lo instalamos encima del WhatsApp, la agenda y el CRM que ya usas.
+                    Para clínicas, spas, gimnasios y despachos de Aguascalientes.
+                    Funcionando en dos a cuatro semanas.
                 </p>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8 w-full">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 md:gap-6 w-full">
                     <button
                         onClick={() => window.dispatchEvent(new Event('open-diabolical-chat'))}
                         className="w-full sm:w-auto px-10 py-5 bg-white text-black rounded-full font-black text-xs md:text-sm uppercase tracking-[0.3em] md:tracking-[0.4em] hover:invert transition-all duration-500 magnetic-btn shadow-[0_0_40px_rgba(255,255,255,0.2)] min-h-[56px] flex items-center justify-center"
                     >
-                        Obtener mi Auditoría
+                        Pedir el diagnóstico gratuito
                     </button>
-                    <div className="hidden md:block text-[10px] uppercase tracking-[0.6em] font-mono text-white/55 border-b border-white/20 pb-2">
-                        [ SYSTEM_STATUS: OPERATIONAL_v2.0 ]
-                    </div>
+                    <p className="text-sm text-white/50 leading-relaxed max-w-xs font-light">
+                        Sales con el diagnóstico escrito aunque no trabajes con nosotros.
+                    </p>
                 </div>
             </div>
 
             <div className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 opacity-30 flex flex-col items-center gap-4">
-                <span className="text-[9px] uppercase tracking-[0.4em] font-mono hidden sm:block">Scroll to explore</span>
+                <span className="text-[9px] uppercase tracking-[0.4em] font-mono hidden sm:block">Desliza para ver</span>
                 <div className="w-px h-16 md:h-24 bg-gradient-to-b from-white to-transparent" />
             </div>
         </section>
