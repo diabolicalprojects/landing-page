@@ -1,33 +1,39 @@
 import React from 'react';
-import ChatDemo from './ChatDemo';
+import CicloPanel from './CicloPanel';
 
 /*
- * Primer viewport: la oferta a la izquierda, el mecanismo demostrándose a la
- * derecha. Es la composición del estándar que este sitio eligió (ver contrato
- * de dirección en index.html): enseñar el producto vale más que describirlo,
- * y una conversación resolviéndose sola es lo único que este negocio puede
- * probar sin inventar cifras.
+ * Primer viewport: la posición a la izquierda, el ciclo completo a la derecha.
  *
- * Sin animación de entrada de GSAP a propósito: el HTML llega prerenderizado
- * y se muestra al instante — mejor LCP, ningún flash, y funciona idéntico sin
+ * La versión anterior tenía de titular "Tu WhatsApp contesta, agenda y da
+ * seguimiento solo" y una demo de WhatsApp como pieza central. Encerraba a una
+ * agencia de IA completa en un solo servicio: quien llegaba entendía que aquí
+ * solo se hacen chatbots. El titular ahora nombra las tres cosas que el negocio
+ * necesita —que lo encuentren, que lo elijan, que no pierda a nadie— y el panel
+ * enseña las cinco etapas con sus servicios.
+ *
+ * Sin animación de entrada de GSAP a propósito: el HTML llega prerenderizado y
+ * se muestra al instante — mejor LCP, ningún flash, y funciona idéntico sin
  * JavaScript, que es como lo leen los rastreadores de motores generativos. La
- * entrada sutil la pone CSS (ver .entrada en index.css) y se anula sola con
- * prefers-reduced-motion.
+ * entrada la pone CSS (.entrada en index.css) y reduced-motion la anula.
  */
 const Hero = () => (
     <section className="relative w-full overflow-hidden bg-black pt-32 md:pt-44 pb-16 md:pb-24">
         <div className="relative z-10 w-full mx-auto px-5 md:px-8 max-w-6xl">
             <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center">
                 <div className="entrada">
+                    <p className="etiqueta text-white/60 mb-5">
+                        Agencia de IA · Aguascalientes
+                    </p>
+
                     <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-title leading-[0.92] tracking-tighter text-white uppercase mb-6 md:mb-8">
-                        Tu WhatsApp contesta, agenda y da seguimiento{' '}
-                        <span className="text-white/40">solo</span>
+                        Que te encuentren, que te elijan y que{' '}
+                        <span className="text-white/40">nadie se quede sin respuesta</span>
                     </h1>
 
                     <p className="text-base md:text-lg text-white/60 max-w-xl mb-8 md:mb-10 leading-relaxed font-light">
-                        Y antes de eso: que te encuentren, que te elijan y saber qué está
-                        fallando. Marketing digital e IA para clínicas, spas, gimnasios y
-                        despachos de Aguascalientes.
+                        Inteligencia artificial aplicada a las cinco etapas por las que pasa un
+                        cliente, no solo al chat. Posicionamiento, publicidad, sitio web, marca,
+                        atención automática y la medición que dice cuál de ellas está fallando.
                     </p>
 
                     <div className="flex flex-col sm:flex-row sm:items-center gap-4 md:gap-6">
@@ -44,7 +50,7 @@ const Hero = () => (
                 </div>
 
                 <div className="entrada flex lg:justify-end">
-                    <ChatDemo />
+                    <CicloPanel />
                 </div>
             </div>
         </div>

@@ -10,6 +10,7 @@ import { useHydrated } from '../utils/useHydrated';
 import Hero from '../components/sections/Hero';
 import Hechos from '../components/sections/Hechos';
 import Servicios from '../components/sections/Servicios';
+import EjemploAtencion from '../components/sections/EjemploAtencion';
 import Mecanismo from '../components/sections/Mecanismo';
 import Sectores from '../components/sections/Sectores';
 import Limites from '../components/sections/Limites';
@@ -41,6 +42,7 @@ const LandingPage = () => {
             <Hero />
             <Hechos />
             <Servicios />
+            <EjemploAtencion />
             <Mecanismo />
             <Sectores />
             <Limites />

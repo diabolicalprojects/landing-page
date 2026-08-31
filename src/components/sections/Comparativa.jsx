@@ -9,24 +9,28 @@ import React from 'react';
  */
 const PARES = [
     {
+        hoy: 'Quien te busca en Google encuentra antes a tu competencia.',
+        despues: 'Sales tú, con una página por servicio y la ficha del mapa completa.',
+    },
+    {
+        hoy: 'Si alguien le pregunta a ChatGPT por tu giro, no apareces.',
+        despues: 'Tu sitio se puede leer y citar: casi nadie del mercado local lo trabaja.',
+    },
+    {
+        hoy: 'Tu web tarda en cargar y no dice a qué te dedicas exactamente.',
+        despues: 'Carga rápido, se lee en el celular y lleva a agendar sin rodeos.',
+    },
+    {
         hoy: 'El mensaje de las 9 de la noche se contesta mañana.',
         despues: 'Se contesta en segundos, y si trae cita, sale agendada.',
     },
     {
-        hoy: 'Recepción atrapada entre el mostrador, el teléfono y el chat.',
-        despues: 'El sistema absorbe lo repetitivo; tu equipo atiende personas.',
-    },
-    {
-        hoy: 'Huecos muertos porque nadie alcanzó a confirmar.',
-        despues: 'Confirmación y recordatorio automáticos; el hueco se libera a tiempo.',
-    },
-    {
-        hoy: 'Cotizaciones enviadas que nadie retoma.',
-        despues: 'Seguimiento escalonado con tope de mensajes, sin depender de la memoria.',
+        hoy: 'Nadie sabe qué canal trae clientes y cuál solo da trabajo.',
+        despues: 'Un tablero con los números reales de cada canal, hasta la cita.',
     },
     {
         hoy: 'El dueño pegado al celular hasta el domingo.',
-        despues: 'El celular trabaja; el domingo vuelve a ser tuyo.',
+        despues: 'El sistema trabaja; el domingo vuelve a ser tuyo.',
     },
 ];
 

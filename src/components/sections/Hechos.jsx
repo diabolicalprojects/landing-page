@@ -8,9 +8,9 @@ import React from 'react';
  * tarda?, ¿me obligan a cambiar de herramientas?, ¿qué arriesgo?
  */
 const HECHOS = [
-    { dato: 'API oficial de Meta', detalle: 'Nada de WhatsApp Web simulado: número verificado y plantillas aprobadas.' },
-    { dato: '2 a 4 semanas', detalle: 'De la primera llamada a funcionando, con pruebas sobre tus casos reales.' },
-    { dato: 'Sobre tus herramientas', detalle: 'Tu WhatsApp, tu agenda y tu CRM. No te hacemos cambiar de sistema.' },
+    { dato: '17 servicios', detalle: 'En las cinco etapas del ciclo, y cada uno publica dónde se detiene.' },
+    { dato: 'Todo medido', detalle: 'Un tablero con datos reales, no capturas de pantalla en un PDF.' },
+    { dato: 'Sobre tus herramientas', detalle: 'Tu web, tu agenda, tu CRM y tu WhatsApp. No te hacemos cambiar de sistema.' },
     { dato: 'Diagnóstico por escrito', detalle: 'La auditoría es gratuita y el documento es tuyo, trabajes o no con nosotros.' },
 ];
 

@@ -20,34 +20,34 @@ const PASOS = [
     },
     {
         n: '02',
-        titulo: 'Diseño del flujo',
+        titulo: 'Plan y prioridades',
         plazo: 'Semana 1',
         detalle:
-            'Definimos qué contesta el sistema, qué deriva a una persona y con qué tono. Aquí se decide lo que nunca debe responder solo.',
-        tuParte: 'Revisar el guion y corregir lo que no suene a ti.',
+            'De todo lo que sale en la auditoría, decidimos qué se hace primero y qué puede esperar. Casi nunca conviene arrancar con las cinco etapas a la vez.',
+        tuParte: 'Revisar el plan y decirnos qué no encaja con tu realidad.',
     },
     {
         n: '03',
-        titulo: 'Integración',
+        titulo: 'Ejecución',
         plazo: 'Semanas 2 y 3',
         detalle:
-            'Lo conectamos a tu WhatsApp, tu agenda y tu CRM. No cambiamos tus herramientas: el sistema se monta encima de lo que ya usas.',
-        tuParte: 'Darnos los accesos. Nada más.',
+            'Se construye lo acordado —sitio, campañas, marca o automatización— montado encima de las herramientas que ya usas. No te hacemos cambiar de sistema.',
+        tuParte: 'Darnos los accesos y aprobar lo que lleve tu nombre.',
     },
     {
         n: '04',
         titulo: 'Pruebas con casos reales',
         plazo: 'Semana 3',
         detalle:
-            'Antes de que hable con un cliente, el sistema pasa por tus casos difíciles: el que regatea, el que pregunta algo raro, el que se equivoca de servicio.',
+            'Nada sale a producción sin pasar por tus casos difíciles: el cliente que regatea, la búsqueda rara, el anuncio que atrae a quien no encaja.',
         tuParte: 'Probarlo tú mismo y decirnos qué falla.',
     },
     {
         n: '05',
-        titulo: 'Puesta en marcha y ajuste',
+        titulo: 'Medición y ajuste',
         plazo: 'Semana 4 en adelante',
         detalle:
-            'Arranca en vivo y lo afinamos con las conversaciones reales de las primeras semanas. Un sistema que nadie ajusta se degrada.',
+            'Arranca en vivo, el tablero empieza a dar números y se corrige con lo que dicen. Una campaña o un sistema que nadie ajusta se degrada solo.',
         tuParte: 'Avisarnos cuando algo no te cuadre.',
     },
 ];
@@ -60,7 +60,7 @@ const Mecanismo = () => (
                     De la llamada a funcionando: 2 a 4 semanas
                 </h2>
                 <p className="text-white/55 text-base leading-relaxed font-light">
-                    Esto es lo que pasa, cuándo pasa, y cuánto tiempo tuyo se lleva cada paso.
+                    El mismo proceso para cualquiera de las cinco etapas. Esto es lo que pasa, cuándo pasa, y cuánto tiempo tuyo se lleva cada paso.
                 </p>
             </div>
 
