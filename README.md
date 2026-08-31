@@ -167,9 +167,20 @@ tiene ocasión de ser citado por alguien que todavía no nos busca. Aplica la mi
 
 **Datos estructurados** (`server/schema.js`). Las entidades se enlazan por `@id`
 (`#negocio`, `#website`) para que los buscadores no crean que hay varias empresas distintas.
-La ficha local (dirección exacta, coordenadas, horario, ficha de Google) se publica solo si está
-configurada por entorno — ver `.env.example`. **Rellenarla es la mejora pendiente de mayor
-impacto**: es lo que alimenta el paquete local de Google.
+**Diabolical Services es un negocio de área de servicio, no un local visitable.** No hay oficina
+abierta al público, así que el JSON-LD publica `addressLocality`, `addressRegion` y `addressCountry`
+—dónde opera la empresa— pero **no** calle, número ni coordenadas. Eso es lo correcto para esta
+categoría: una dirección exacta implica que se puede ir, y publicar una que no existe hace más daño
+que no publicar ninguna.
+
+El alcance lo declara `areaServed`: Aguascalientes de forma presencial, el resto de México a
+distancia. Es lo mismo que dicen los `llms.txt`, así que las dos fuentes no se contradicen.
+
+Los campos `BUSINESS_*` de `.env.example` siguen ahí y el código los publica **solo si están
+definidos**, sin necesidad de tocar nada. Si algún día abre una sede con atención al público, basta
+con rellenarlos en el entorno. Las coordenadas se validan antes de publicarse: si no son números
+dentro de rango —el caso típico es teclearlas con coma decimal— se omite el bloque `geo` entero en
+lugar de publicar un mapa que apunta a otro sitio.
 
 **GEO** (posicionamiento en respuestas de IA):
 
