@@ -23,7 +23,7 @@ const PASOS = [
         titulo: 'Plan y prioridades',
         plazo: 'Semana 1',
         detalle:
-            'De todo lo que sale en la auditoría, decidimos qué se hace primero y qué puede esperar. Casi nunca conviene arrancar con las cinco etapas a la vez.',
+            'De todo lo que sale en la auditoría, decidimos qué se automatiza primero y qué puede esperar. Casi nunca conviene cambiar todo a la vez.',
         tuParte: 'Revisar el plan y decirnos qué no encaja con tu realidad.',
     },
     {
@@ -31,7 +31,7 @@ const PASOS = [
         titulo: 'Ejecución',
         plazo: 'Semanas 2 y 3',
         detalle:
-            'Se construye lo acordado —sitio, campañas, marca o automatización— montado encima de las herramientas que ya usas. No te hacemos cambiar de sistema.',
+            'Se construye lo acordado —sitio, integración o automatización— montado encima de las herramientas que ya usas. No te hacemos cambiar de sistema.',
         tuParte: 'Darnos los accesos y aprobar lo que lleve tu nombre.',
     },
     {
@@ -39,7 +39,7 @@ const PASOS = [
         titulo: 'Pruebas con casos reales',
         plazo: 'Semana 3',
         detalle:
-            'Nada sale a producción sin pasar por tus casos difíciles: el cliente que regatea, la búsqueda rara, el anuncio que atrae a quien no encaja.',
+            'Nada sale a producción sin pasar por tus casos difíciles: el cliente que regatea, la consulta rara o el caso que requiere derivación humana.',
         tuParte: 'Probarlo tú mismo y decirnos qué falla.',
     },
     {
@@ -47,7 +47,7 @@ const PASOS = [
         titulo: 'Medición y ajuste',
         plazo: 'Semana 4 en adelante',
         detalle:
-            'Arranca en vivo, el tablero empieza a dar números y se corrige con lo que dicen. Una campaña o un sistema que nadie ajusta se degrada solo.',
+            'Arranca en vivo, el tablero empieza a dar números y se corrige con lo que dicen. Un sistema que nadie ajusta se degrada solo.',
         tuParte: 'Avisarnos cuando algo no te cuadre.',
     },
 ];
@@ -60,7 +60,7 @@ const Mecanismo = () => (
                     De la llamada a funcionando: 2 a 4 semanas
                 </h2>
                 <p className="text-white/55 text-base leading-relaxed font-light">
-                    El mismo proceso para cualquiera de las cinco etapas. Esto es lo que pasa, cuándo pasa, y cuánto tiempo tuyo se lleva cada paso.
+                    El mismo proceso para cada implementación. Esto es lo que pasa, cuándo pasa, y cuánto tiempo tuyo se lleva cada paso.
                 </p>
             </div>
 

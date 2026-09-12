@@ -45,7 +45,7 @@ function negocio() {
         name: 'Diabolical Services',
         alternateName: 'Diabolical',
         description:
-            'Agencia de marketing digital y automatización con inteligencia artificial en Aguascalientes. Cubrimos el ciclo completo: posicionamiento, publicidad, sitio web, identidad de marca y sistemas autónomos que atienden, agendan y dan seguimiento por WhatsApp. Para clínicas, spas, gimnasios, despachos y pequeñas empresas.',
+            'Infraestructura digital y automatización con inteligencia artificial para negocios en Aguascalientes. Instalamos sitio web, posicionamiento orgánico y en motores de IA, ficha de Google, y sistemas que atienden, agendan y dan seguimiento por WhatsApp. Para clínicas, spas, gimnasios, despachos y pequeñas empresas.',
         url: SITE,
         telephone: TELEFONO,
         email: EMAIL,
@@ -66,11 +66,8 @@ function negocio() {
         ],
         serviceType: [...new Set(SERVICIOS.map((s) => s.nombre))],
         knowsAbout: [
-            'Marketing digital para negocios locales',
             'Posicionamiento en buscadores y en motores generativos',
-            'Publicidad en Google',
             'Diseño y desarrollo web',
-            'Identidad de marca',
             'Inteligencia artificial aplicada a negocios',
             'Automatización de procesos',
             'Chatbots de WhatsApp',
@@ -81,7 +78,7 @@ function negocio() {
         // allí, aparece aquí, en /servicios y en los llms.txt sin tocar nada.
         hasOfferCatalog: {
             '@type': 'OfferCatalog',
-            name: 'Servicios de marketing digital y automatización con IA',
+            name: 'Servicios de infraestructura digital y automatización con IA',
             itemListElement: [
                 ...SERVICIOS.map((s) => ({
                     '@type': 'Offer',
@@ -230,11 +227,11 @@ function metadatosPorRuta() {
     }
 
     meta[RUTA_SERVICIOS] = {
-        title: 'Servicios de marketing digital e IA en Aguascalientes | Diabolical',
+        title: 'Servicios de automatización con IA en Aguascalientes | Diabolical',
         description:
-            'Posicionamiento, Google Ads, sitio web, identidad de marca, automatización de WhatsApp y medición. Cada servicio dice qué incluye y dónde se detiene.',
+            'Sitio web, posicionamiento orgánico y en motores de IA, ficha de Google, automatización de WhatsApp y medición. Cada servicio dice qué incluye y dónde se detiene.',
         keywords:
-            'agencia de marketing digital Aguascalientes, servicios de marketing digital, posicionamiento web, Google Ads Aguascalientes, diseño web, automatización con IA',
+            'automatización con IA Aguascalientes, servicios de automatización, posicionamiento web, SEO local, GEO, sitio web, WhatsApp',
         robots: 'index, follow',
     };
 

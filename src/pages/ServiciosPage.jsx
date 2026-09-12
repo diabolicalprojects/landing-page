@@ -42,6 +42,10 @@ const ServiciosPage = () => {
                         recorrido que hace un cliente. Cada uno dice qué incluye y qué no, porque
                         lo segundo ahorra más reuniones que lo primero.
                     </p>
+                    <p className="text-sm text-white/50 leading-relaxed font-light max-w-2xl mt-4">
+                        No hacemos campañas de publicidad, gestión de redes, branding ni diseño
+                        gráfico. Nos enfocamos en infraestructura digital y automatización operativa.
+                    </p>
                 </div>
             </section>
 

@@ -6,10 +6,9 @@ import CicloPanel from './CicloPanel';
  *
  * La versión anterior tenía de titular "Tu WhatsApp contesta, agenda y da
  * seguimiento solo" y una demo de WhatsApp como pieza central. Encerraba a una
- * agencia de IA completa en un solo servicio: quien llegaba entendía que aquí
- * solo se hacen chatbots. El titular ahora nombra las tres cosas que el negocio
- * necesita —que lo encuentren, que lo elijan, que no pierda a nadie— y el panel
- * enseña las cinco etapas con sus servicios.
+ * estudio de automatización en un solo servicio: quien llegaba entendía que aquí
+ * solo se hacen chatbots. El titular nombra el recorrido operativo que se cubre
+ * sin prometer campañas, publicidad ni branding.
  *
  * Sin animación de entrada de GSAP a propósito: el HTML llega prerenderizado y
  * se muestra al instante — mejor LCP, ningún flash, y funciona idéntico sin
@@ -31,9 +30,9 @@ const Hero = () => (
                     </h1>
 
                     <p className="text-base md:text-lg text-white/60 max-w-xl mb-8 md:mb-10 leading-relaxed font-light">
-                        Inteligencia artificial aplicada a las cinco etapas por las que pasa un
-                        cliente, no solo al chat. Posicionamiento, publicidad, sitio web, marca,
-                        atención automática y la medición que dice cuál de ellas está fallando.
+                        Infraestructura digital y automatización para que tu negocio responda,
+                        agende y dé seguimiento sin perder contexto. Sitio web, posicionamiento
+                        orgánico y en IA, atención automática y medición del proceso.
                     </p>
 
                     <div className="flex flex-col sm:flex-row sm:items-center gap-4 md:gap-6">

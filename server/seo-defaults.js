@@ -15,13 +15,13 @@ const config = require('./config');
  * /admin duplicaría las etiquetas.
  */
 const defaults = {
-    title: 'Agencia de IA y Marketing en Aguascalientes | Diabolical',
+    title: 'Automatización con IA para negocios en Aguascalientes | Diabolical',
     // 150 caracteres: por encima de ~160 Google la corta, y lo primero que
     // se pierde es lo del final.
     description:
-        'Agencia de IA en Aguascalientes: posicionamiento, Google Ads, sitio web, marca y atención automática. 17 servicios, cada uno con su alcance publicado.',
+        'Automatización con IA en Aguascalientes: atención, agendamiento y seguimiento por WhatsApp, sitio web, SEO/GEO y medición con alcance publicado.',
     keywords:
-        'agencia de IA Aguascalientes, agencia de marketing digital Aguascalientes, inteligencia artificial para negocios, posicionamiento web Aguascalientes, Google Ads Aguascalientes, diseño web, automatización con IA, chatbot WhatsApp',
+        'automatización con IA Aguascalientes, inteligencia artificial para negocios, posicionamiento web Aguascalientes, SEO local, GEO, sitio web, chatbot WhatsApp, agendamiento automático',
     siteUrl: config.siteUrl,
     favicon: '/favicon.svg',
     ogImage: `${config.siteUrl}/og-image.png`,

@@ -23,7 +23,7 @@ import SERVICIOS from './servicios.json';
  * Campos:
  *   slug       identidad estable, usada en anclas y en el JSON-LD
  *   categoria  agrupador visible: Captación, Conversión, Atención y venta,
- *              Marca, Estrategia y medición
+ *              Estrategia y medición
  *   nombre     el título del servicio
  *   resumen    una frase que se sostiene sola fuera de la página
  *   detalle    qué incluye de verdad, en concreto
@@ -38,7 +38,7 @@ export const CATEGORIAS = [
     'Captación',
     'Conversión',
     'Atención y venta',
-    'Marca',
+
     'Estrategia y medición',
 ];
 

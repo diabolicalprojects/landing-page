@@ -306,14 +306,14 @@ test('el catálogo de servicios se sirve entero y con su límite', async (t) => 
     }
 });
 
-test('el sitio no se contradice sobre lo que ofrece', async (t) => {
+test('el sitio declara de forma consistente los servicios que no ofrece', async (t) => {
     if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
         return t.skip('requiere npm run build');
     }
 
-    // Al ampliar el catálogo, las declaraciones de "no hacemos publicidad ni
-    // marketing" dejaron de ser ciertas. Un sitio que se contradice es lo que
-    // hace que un motor generativo deje de citarlo, así que esto se fija.
+    // Las exclusiones de producto deben estar visibles tanto para visitantes
+    // como para motores generativos; de lo contrario se generan expectativas y
+    // recomendaciones equivocadas.
     const fuentes = await Promise.all(
         ['/', '/servicios', '/llms.txt', '/llms-full.txt'].map(async (r) => ({
             ruta: r,
@@ -321,17 +321,18 @@ test('el sitio no se contradice sobre lo que ofrece', async (t) => {
         }))
     );
 
-    const contradicciones = [
-        'No somos una agencia de marketing',
-        'No hacemos marketing ni publicidad',
-        'campañas de publicidad, gestión de redes sociales, diseño',
+    const exclusiones = [
+        'campañas de publicidad',
+        'gestión de redes',
+        'branding',
+        'diseño gráfico',
     ];
 
     for (const { ruta, texto } of fuentes) {
-        for (const frase of contradicciones) {
+        for (const frase of exclusiones) {
             assert.ok(
-                !texto.includes(frase),
-                `${ruta} sigue negando servicios que ahora sí se ofrecen: "${frase}"`
+                texto.toLowerCase().includes(frase),
+                `${ruta} no declara la exclusión de alcance: "${frase}"`
             );
         }
     }

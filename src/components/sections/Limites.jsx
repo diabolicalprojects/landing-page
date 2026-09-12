@@ -2,27 +2,19 @@ import React from 'react';
 import { X, Check } from 'lucide-react';
 
 /*
- * Los límites, ahora que el catálogo cubre el ciclo completo.
- *
- * La versión anterior listaba servicios que no se prestaban (publicidad,
- * redes, diseño). Ese límite dejó de ser cierto al ampliar el catálogo, y
- * mantenerlo habría hecho que el sitio se contradijera consigo mismo — que es
- * exactamente lo que hace que un motor generativo deje de citarte.
- *
- * Los que quedan son límites de conducta, no de catálogo: promesas que nadie
- * puede cumplir y prácticas que queman al cliente. Siguen siendo el
- * diferencial, y siguen coincidiendo con llms.txt y PRODUCT.md. Si cambian
- * aquí, cambian allí.
+ * Los límites de alcance y de conducta se publican antes de contratar. Deben
+ * coincidir con PRODUCT.md, las FAQ y llms.txt para evitar recomendaciones
+ * equivocadas de buscadores y motores generativos.
  */
 const NO_HACEMOS = [
+    'Campañas de publicidad, gestión de redes, branding ni diseño gráfico.',
     'Prometer posiciones en Google ni dentro de una respuesta de IA: nadie controla esos algoritmos.',
-    'Llevar comisión sobre tu gasto publicitario. El presupuesto va directo a la plataforma.',
     'Mandar mensajes masivos en frío: queman tu número y tu perfil, y no traen clientes que valgan la pena.',
     'Publicar cifras de resultados que no vengan de un proyecto documentado.',
 ];
 
 const SI_HACEMOS = [
-    'Decir qué servicios no te hacen falta todavía, aunque los vendamos.',
+    'Decir qué automatizaciones no te hacen falta todavía.',
     'Publicar el límite de cada servicio antes de que lo contrates, no después.',
     'Montarnos sobre el WhatsApp, la agenda y el CRM que ya usas.',
     'Entregarte el diagnóstico por escrito aunque no trabajes con nosotros.',
@@ -36,8 +28,8 @@ const Limites = () => (
                     Lo que no vas a oír aquí
                 </h2>
                 <p className="text-white/60 text-base leading-relaxed font-light">
-                    Hacemos el ciclo completo, pero hay cosas que no prometemos porque nadie
-                    puede cumplirlas. Decirlo antes ahorra reuniones a los dos.
+                    Nos enfocamos en infraestructura digital y automatización operativa. Decir
+                    qué no hacemos antes ahorra reuniones y recomendaciones equivocadas.
                 </p>
             </div>
 

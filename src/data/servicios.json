@@ -15,14 +15,7 @@
         "detalle": "Categorías correctas, horarios reales, servicios cargados uno a uno, fotos que no sean del celular en 2019, y un flujo para pedir reseñas sin perseguir a nadie. Es lo que decide si sales en el paquete de tres del mapa.",
         "limite": "Requiere que el negocio tenga domicilio o zona de servicio verificable. No se puede inventar una ubicación para posicionar."
     },
-    {
-        "slug": "google-ads",
-        "categoria": "Captación",
-        "nombre": "Google Ads",
-        "resumen": "Aparecer arriba desde el primer día para las búsquedas que sí traen clientes, no para las que traen curiosos.",
-        "detalle": "Campañas de búsqueda con palabras negativas trabajadas desde el inicio, para no pagar por quien busca «gratis» o «cómo hacerlo yo mismo». Se conecta al mismo sistema de atención, así que el clic que entra por anuncio se contesta igual de rápido que el que entra por WhatsApp.",
-        "limite": "El presupuesto de medios lo pagas tú y va directo a Google. Nosotros cobramos por gestionar, no llevamos comisión sobre el gasto."
-    },
+
     {
         "slug": "posicionamiento-en-ia",
         "categoria": "Captación",
@@ -87,30 +80,7 @@
         "detalle": "Para clínicas y spas que venden producto además del servicio: recomendaciones según el historial, recuperación de compras a medias y avisos de reposición de lo que se acaba cada mes.",
         "limite": "Necesita una tienda con tráfico. Si vende dos productos al mes, la automatización no cambia el resultado."
     },
-    {
-        "slug": "identidad-de-marca",
-        "categoria": "Marca",
-        "nombre": "Identidad de marca y logo",
-        "resumen": "Que tu negocio se vea del tamaño que es, no más chico.",
-        "detalle": "Logo, paleta, tipografía y las aplicaciones que de verdad usas: rótulo, uniformes, recetario, publicaciones y el propio WhatsApp. Entregado con manual, para que quien haga la siguiente pieza no improvise.",
-        "limite": "No rehacemos una marca que ya funciona solo por refrescarla. Si la tuya está bien, lo decimos y nos ahorramos el proyecto."
-    },
-    {
-        "slug": "linkedin-de-empresa",
-        "categoria": "Marca",
-        "nombre": "LinkedIn de empresa",
-        "resumen": "El perfil que revisa un cliente corporativo antes de contestarte, y que casi siempre está abandonado.",
-        "detalle": "Sobre todo para despachos y oficinas profesionales, donde quien decide te busca ahí antes de responder un correo. Perfil completo, publicaciones con criterio y un flujo de contacto que no parece plantilla.",
-        "limite": "No hacemos envíos masivos de mensajes en frío: queman el perfil y no traen clientes que valgan la pena."
-    },
-    {
-        "slug": "presencia-en-eventos",
-        "categoria": "Marca",
-        "nombre": "Presencia en ferias y eventos",
-        "resumen": "Que el stand deje datos de contacto útiles y no una pecera llena de tarjetas que nadie captura.",
-        "detalle": "Registro digital en el stand, seguimiento automático el mismo día del evento —cuando todavía se acuerdan de ti— y todo el contacto cayendo directo a tu CRM en vez de a una libreta.",
-        "limite": "El diseño y el montaje físico del stand no los hacemos: trabajamos con quien te lo arma."
-    },
+
     {
         "slug": "auditoria-de-friccion",
         "categoria": "Estrategia y medición",

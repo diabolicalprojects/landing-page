@@ -20,7 +20,7 @@ const AdminPage = () => {
         keywords: "AI Automation, Elite Design, Business Intelligence, Digital Engineering",
         siteUrl: SITE_URL,
 
-        // Social & Brand
+        // Metadatos sociales
         favicon: "/favicon.ico",
         ogImage: "",
         twitterHandle: "@diabolical",
@@ -213,7 +213,7 @@ const AdminPage = () => {
                 <aside className="w-20 md:w-64 border-r border-white/5 bg-black flex flex-col p-4 gap-2">
                     {[
                         { id: 'seo', icon: <Search size={18} />, label: 'SEO Core' },
-                        { id: 'social', icon: <Share2 size={18} />, label: 'Social & Branding' },
+                        { id: 'social', icon: <Share2 size={18} />, label: 'Social Metadata' },
                         { id: 'tech', icon: <TerminalIcon size={18} />, label: 'Technical XML/IA' },
                         { id: 'analytics', icon: <Activity size={18} />, label: 'Tracking Tags' }
                     ].map(tab => (
