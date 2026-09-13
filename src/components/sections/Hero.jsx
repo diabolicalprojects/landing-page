@@ -22,7 +22,7 @@ const Hero = () => (
             <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center">
                 <div className="entrada">
                     <p className="etiqueta text-white/60 mb-5">
-                        Aguascalientes · Clínicas, spas, gimnasios y despachos
+                        Aguascalientes · Negocios que agendan
                     </p>
 
                     <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-title leading-[0.92] tracking-tighter text-white uppercase mb-6 md:mb-8">
@@ -44,11 +44,11 @@ const Hero = () => (
                                 }
                                 window.dispatchEvent(new Event('open-diabolical-chat'));
                             }}
-                            className="accion w-full sm:w-auto px-9 py-4 bg-white text-black rounded-full font-black text-xs md:text-sm uppercase tracking-[0.2em] hover:bg-white/85 min-h-[56px] flex items-center justify-center"
+                            className="accion w-full sm:w-auto px-9 py-4 bg-white text-black rounded-full font-black text-xs md:text-sm uppercase tracking-[0.2em] hover:bg-white/85 min-h-[56px] flex items-center justify-center whitespace-nowrap shrink-0"
                         >
                             Quiero mi diagnóstico gratis
                         </button>
-                        <p className="text-sm text-white/55 leading-snug max-w-[16rem] font-light">
+                        <p className="text-sm text-white/70 leading-snug max-w-[16rem] font-light">
                             Te lo entregamos por escrito. Sin costo, trabajes o no con nosotros después.
                         </p>
                     </div>
