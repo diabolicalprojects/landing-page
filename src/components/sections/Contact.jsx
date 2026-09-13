@@ -36,7 +36,7 @@ const Contact = () => {
         setSent(true);
     };
 
-    const inp = 'w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white text-sm focus:outline-none focus:border-white/30 transition-all min-h-[52px] placeholder:text-white/25';
+    const inp = 'w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white text-base focus:border-white/25 transition-colors duration-[140ms] ease-out min-h-[52px] placeholder:text-white/25';
 
     return (
         <section id="contact" className="seccion bg-black relative border-t border-white/5">
@@ -46,7 +46,7 @@ const Contact = () => {
                         Cuéntanos cómo trabajas hoy y{' '}
                         <span className="text-white/50 italic">te decimos qué automatizar</span>
                     </h2>
-                    <p className="text-white/50 text-sm max-w-xl mx-auto italic font-light leading-relaxed">
+                    <p className="text-white/60 text-sm max-w-xl mx-auto italic font-light leading-relaxed">
                         Son <strong className="text-white/70 not-italic">7 campos y menos de dos minutos</strong>. Trabajamos con negocios que ya tienen clientes y quieren dejar de atenderlos a mano.
                     </p>
                 </div>
@@ -69,15 +69,15 @@ const Contact = () => {
                                     </p>
                                 )}
                             </div>
-                            <button onClick={() => { setSent(false); setForm(EMPTY_FORM); setDelivered(true); }} className="px-8 py-3 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-widest">Enviar otro</button>
+                            <button onClick={() => { setSent(false); setForm(EMPTY_FORM); setDelivered(true); }} className="accion px-9 py-4 bg-white text-black rounded-full font-black text-xs uppercase tracking-[0.2em] min-h-[56px] hover:bg-white/85">Enviar otro</button>
                         </div>
                     ) : (
                         <>
-                            <h3 className="text-[9px] uppercase tracking-[0.4em] font-black mb-6 md:mb-8 text-center text-white/55">Diagnóstico en 7 preguntas</h3>
+                            <h3 className="etiqueta text-white/60 mb-6 md:mb-8 text-center">Diagnóstico en 7 preguntas</h3>
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="flex flex-col gap-2">
-                                        <label htmlFor="source-select" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">¿Cómo llegan tus clientes?</label>
+                                        <label htmlFor="source-select" className="etiqueta text-white/60">¿Cómo llegan tus clientes?</label>
                                         <select id="source-select" value={form.source} onChange={e => setForm(p => ({ ...p, source: e.target.value }))} className={inp + ' appearance-none'}>
                                             <option className="bg-black">WhatsApp / Instagram</option>
                                             <option className="bg-black">Boca en Boca</option>
@@ -86,35 +86,35 @@ const Contact = () => {
                                         </select>
                                     </div>
                                     <div className="flex flex-col gap-2">
-                                        <label htmlFor="people-input" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">¿Cuántas personas atienden hoy?</label>
+                                        <label htmlFor="people-input" className="etiqueta text-white/60">¿Cuántas personas atienden hoy?</label>
                                         <input id="people-input" type="number" placeholder="Ej: 3" aria-label="Cantidad de personas que atienden" value={form.people} onChange={e => setForm(p => ({ ...p, people: e.target.value }))} className={inp} />
                                     </div>
                                 </div>
 
                                 <div className="flex flex-col gap-2">
-                                    <label htmlFor="aspiration-input" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">Si fuera automático, ¿qué harías con tu tiempo libre?</label>
+                                    <label htmlFor="aspiration-input" className="etiqueta text-white/60">Si fuera automático, ¿qué harías con tu tiempo libre?</label>
                                     <input id="aspiration-input" type="text" placeholder="Ej: escalar, viajar, pasar tiempo con mi familia..." aria-label="Qué harías con tu tiempo libre" value={form.aspiration} onChange={e => setForm(p => ({ ...p, aspiration: e.target.value }))} className={inp} />
                                 </div>
 
                                 <div className="border-t border-white/5 pt-4 space-y-4">
-                                    <p className="text-[9px] uppercase tracking-[0.4em] text-white/55 font-black text-center">Datos de Contacto</p>
+                                    <p className="etiqueta text-white/60 text-center">Datos de Contacto</p>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div className="flex flex-col gap-2">
-                                            <label htmlFor="company-input" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">Nombre de la Empresa</label>
+                                            <label htmlFor="company-input" className="etiqueta text-white/60">Nombre de la Empresa</label>
                                             <input id="company-input" required type="text" placeholder="Empresa" aria-label="Nombre de la empresa" value={form.company} onChange={e => setForm(p => ({ ...p, company: e.target.value }))} className={inp} />
                                         </div>
                                         <div className="flex flex-col gap-2">
-                                            <label htmlFor="name-input" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">Tu nombre (Contacto)</label>
+                                            <label htmlFor="name-input" className="etiqueta text-white/60">Tu nombre (Contacto)</label>
                                             <input id="name-input" required type="text" placeholder="Nombre" aria-label="Nombre" value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} className={inp} />
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                                         <div className="flex flex-col gap-2">
-                                            <label htmlFor="whatsapp-input" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">WhatsApp</label>
+                                            <label htmlFor="whatsapp-input" className="etiqueta text-white/60">WhatsApp</label>
                                             <input id="whatsapp-input" required type="tel" placeholder="+52 449 000 0000" aria-label="Número de WhatsApp" value={form.whatsapp} onChange={e => setForm(p => ({ ...p, whatsapp: e.target.value }))} className={inp} />
                                         </div>
                                         <div className="flex flex-col gap-2">
-                                            <label htmlFor="email-input" className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">Correo electrónico</label>
+                                            <label htmlFor="email-input" className="etiqueta text-white/60">Correo electrónico</label>
                                             <input id="email-input" required type="email" placeholder="tu@correo.com" aria-label="Correo electrónico" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} className={inp} />
                                         </div>
                                     </div>
@@ -126,10 +126,10 @@ const Contact = () => {
                                     <input id="company-website" name="company-website" type="text" tabIndex={-1} autoComplete="off" value={botTrap} onChange={e => setBotTrap(e.target.value)} />
                                 </div>
 
-                                <button type="submit" disabled={isSending} className="w-full py-5 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] hover:scale-[1.02] active:scale-95 transition-all shadow-2xl mt-2 min-h-[60px] disabled:opacity-50 disabled:hover:scale-100">
+                                <button type="submit" disabled={isSending} className="accion w-full py-5 bg-white text-black rounded-full font-black text-xs uppercase tracking-[0.25em] hover:bg-white/85 shadow-2xl mt-2 min-h-[60px]">
                                     {isSending ? 'Enviando...' : 'Pedir mi diagnóstico gratis →'}
                                 </button>
-                                <p className="text-[9px] text-white/55 text-center">Al enviar se abre tu WhatsApp con el resumen ya escrito. Solo tienes que darle enviar.</p>
+                                <p className="text-sm text-white/70 text-center leading-snug">Al enviar se abre tu WhatsApp con el resumen ya escrito. Solo tienes que darle enviar.</p>
                             </form>
                         </>
                     )}
