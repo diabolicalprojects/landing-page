@@ -22,29 +22,34 @@ const Hero = () => (
             <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center">
                 <div className="entrada">
                     <p className="etiqueta text-white/60 mb-5">
-                        Agencia de IA · Aguascalientes
+                        Aguascalientes · Clínicas, spas, gimnasios y despachos
                     </p>
 
                     <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-title leading-[0.92] tracking-tighter text-white uppercase mb-6 md:mb-8">
-                        Que te encuentren, que te elijan y que{' '}
-                        <span className="text-white/40">nadie se quede sin respuesta</span>
+                        Algún punto de tu negocio está perdiendo clientes.{' '}
+                        <span className="text-white/40">Te decimos cuál, gratis.</span>
                     </h1>
 
                     <p className="text-base md:text-lg text-white/60 max-w-xl mb-8 md:mb-10 leading-relaxed font-light">
-                        Inteligencia artificial aplicada a las cinco etapas por las que pasa un
-                        cliente, no solo al chat. Posicionamiento, publicidad, sitio web, marca,
-                        atención automática y la medición que dice cuál de ellas está fallando.
+                        Revisamos tu sitio, tu Google, tu WhatsApp y tu seguimiento, y te
+                        decimos por escrito dónde se te están yendo los clientes. Si después
+                        quieres, lo arreglamos nosotros.
                     </p>
 
                     <div className="flex flex-col sm:flex-row sm:items-center gap-4 md:gap-6">
                         <button
-                            onClick={() => window.dispatchEvent(new Event('open-diabolical-chat'))}
+                            onClick={() => {
+                                if (typeof window.gtag === 'function') {
+                                    window.gtag('event', 'cta_click', { cta_id: 'hero_diagnostico' });
+                                }
+                                window.dispatchEvent(new Event('open-diabolical-chat'));
+                            }}
                             className="accion w-full sm:w-auto px-9 py-4 bg-white text-black rounded-full font-black text-xs md:text-sm uppercase tracking-[0.2em] hover:bg-white/85 min-h-[56px] flex items-center justify-center"
                         >
-                            Pedir el diagnóstico gratuito
+                            Quiero mi diagnóstico gratis
                         </button>
                         <p className="text-sm text-white/55 leading-snug max-w-[16rem] font-light">
-                            Sales con el diagnóstico escrito aunque no trabajes con nosotros.
+                            Te lo entregamos por escrito. Sin costo, trabajes o no con nosotros después.
                         </p>
                     </div>
                 </div>

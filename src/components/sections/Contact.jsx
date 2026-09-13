@@ -20,6 +20,13 @@ const Contact = () => {
         setIsSending(true);
         const ok = await sendLead({ type: 'contact_form', ...form });
         setDelivered(ok);
+        if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+            window.gtag('event', 'generate_lead', {
+                form_id: 'contact_form',
+                delivered: ok,
+                lead_source: form.source,
+            });
+        }
         setIsSending(false);
 
         openWhatsApp(
@@ -36,11 +43,11 @@ const Contact = () => {
             <div className="max-w-3xl mx-auto px-5 md:px-6">
                 <div className="text-center mb-10 md:mb-12">
                     <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-4 leading-[0.9]">
-                        ¿Tu negocio es apto para{' '}
-                        <span className="text-white/50 italic">ser autónomo?</span>
+                        Cuéntanos cómo trabajas hoy y{' '}
+                        <span className="text-white/50 italic">te decimos qué automatizar</span>
                     </h2>
                     <p className="text-white/50 text-sm max-w-xl mx-auto italic font-light leading-relaxed">
-                        "Solo trabajamos con negocios que tienen <strong className="text-white/70 not-italic">flujo de clientes</strong> y quieren dejar de operarlos manualmente."
+                        Son <strong className="text-white/70 not-italic">7 campos y menos de dos minutos</strong>. Trabajamos con negocios que ya tienen clientes y quieren dejar de atenderlos a mano.
                     </p>
                 </div>
 
@@ -51,8 +58,8 @@ const Contact = () => {
                                 <CheckCircle2 size={28} className="text-white" />
                             </div>
                             <div>
-                                <h3 className="text-lg font-title uppercase text-white mb-2">¡Mensaje Enviado!</h3>
-                                <p className="text-sm text-white/50 leading-relaxed">Te contactaremos pronto por WhatsApp para presentarte tu plan de automatización.</p>
+                                <h3 className="text-lg font-title uppercase text-white mb-2">¡Listo, lo recibimos!</h3>
+                                <p className="text-sm text-white/50 leading-relaxed">Se abrió tu WhatsApp con el resumen. Dale enviar y seguimos por ahí.</p>
                                 {!delivered && (
                                     <p role="alert" className="mt-4 text-xs text-yellow-500/90 leading-relaxed">
                                         No pudimos registrar tus datos automáticamente. Si WhatsApp no
@@ -66,7 +73,7 @@ const Contact = () => {
                         </div>
                     ) : (
                         <>
-                            <h3 className="text-[9px] uppercase tracking-[0.4em] font-black mb-6 md:mb-8 text-center text-white/55">Cuestionario de Fricción</h3>
+                            <h3 className="text-[9px] uppercase tracking-[0.4em] font-black mb-6 md:mb-8 text-center text-white/55">Diagnóstico en 7 preguntas</h3>
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="flex flex-col gap-2">
@@ -120,9 +127,9 @@ const Contact = () => {
                                 </div>
 
                                 <button type="submit" disabled={isSending} className="w-full py-5 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] hover:scale-[1.02] active:scale-95 transition-all shadow-2xl mt-2 min-h-[60px] disabled:opacity-50 disabled:hover:scale-100">
-                                    {isSending ? 'Enviando...' : 'Solicitar Diagnóstico Gratuito →'}
+                                    {isSending ? 'Enviando...' : 'Pedir mi diagnóstico gratis →'}
                                 </button>
-                                <p className="text-[9px] text-white/55 text-center">Te contactaremos solo si tu negocio es un buen candidato.</p>
+                                <p className="text-[9px] text-white/55 text-center">Al enviar se abre tu WhatsApp con el resumen ya escrito. Solo tienes que darle enviar.</p>
                             </form>
                         </>
                     )}
