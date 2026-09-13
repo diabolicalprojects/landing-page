@@ -49,6 +49,19 @@ const config = {
         .split(',')
         .map((d) => d.trim())
         .filter(Boolean),
+    // --- IndexNow ----------------------------------------------------------
+    // Avisa a Bing, Yandex y Seznam en cuanto se publica o cambia una URL, sin
+    // esperar a que pasen a rastrear. Importa porque el índice de Bing es del
+    // que tira la búsqueda de ChatGPT: sin estar ahí no hay cita posible.
+    //
+    // La clave es pública por diseño: el buscador comprueba que quien envía las
+    // URLs controla el dominio pidiendo /{clave}.txt con la clave dentro. Solo
+    // se acepta hexadecimal de 8 a 128 caracteres porque va literal en una ruta
+    // de Express; cualquier otra cosa se ignora en vez de montar la ruta.
+    indexNowKey: /^[a-f0-9]{8,128}$/i.test(process.env.INDEXNOW_KEY || '')
+        ? process.env.INDEXNOW_KEY
+        : '',
+
     // Perfiles oficiales (Instagram, Facebook, LinkedIn, ficha de Google).
     sameAs: (process.env.BUSINESS_PROFILES || '')
         .split(',')

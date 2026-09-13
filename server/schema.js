@@ -259,12 +259,27 @@ function metadatosPorRuta() {
     return meta;
 }
 
-/** Los bloques JSON-LD que corresponden a una ruta. */
-function datosEstructurados(ruta) {
-    if (ruta === '/') {
-        return [negocio(), sitioWeb(), faqPage(FAQ_PORTADA)];
-    }
+/**
+ * Ficha del negocio sin el catálogo, para las páginas que no son la portada.
+ *
+ * Las subpáginas apuntan al proveedor con {'@id': ID_NEGOCIO}, y ese
+ * identificador solo estaba definido en la portada. Un motor generativo que
+ * rastrea /automatizacion-para-clinicas y nada más se encontraba un proveedor
+ * sin nombre, sin teléfono y sin ciudad: una referencia colgando. Esto la
+ * resuelve en la propia página.
+ *
+ * Se quitan el catálogo de ofertas, serviceType y knowsAbout porque son ~4 kB
+ * que ya están en la portada y en /servicios, y repetirlos en cada página no
+ * añade información nueva sobre quién es el proveedor.
+ */
+function negocioCompacto() {
+    // eslint-disable-next-line no-unused-vars
+    const { hasOfferCatalog, serviceType, knowsAbout, ...ficha } = negocio();
+    return ficha;
+}
 
+/** Los bloques JSON-LD que corresponden a una ruta. */
+function bloquesDeRuta(ruta) {
     const sector = SECTORES.find((s) => rutaSector(s.slug) === ruta);
     if (sector) {
         return [
@@ -359,6 +374,11 @@ function datosEstructurados(ruta) {
                 headline: articulo.titular,
                 description: articulo.descripcion,
                 url: `${SITE}${ruta}`,
+                // Google no da resultado enriquecido de artículo sin imagen, y
+                // los motores generativos la usan en la tarjeta de la cita.
+                // Mientras no haya una por artículo se usa la del sitio, que es
+                // real y está publicada; dejarlo vacío descarta la página.
+                image: articulo.imagen ? `${SITE}${articulo.imagen}` : `${SITE}/og-image.png`,
                 mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE}${ruta}` },
                 datePublished: articulo.fecha,
                 dateModified: articulo.actualizado || articulo.fecha,
@@ -390,6 +410,33 @@ function datosEstructurados(ruta) {
     }
 
     return [];
+}
+
+/**
+ * Los bloques JSON-LD de una ruta, con la ficha del negocio delante.
+ *
+ * La portada lleva la ficha completa; el resto una compacta. Así cualquier
+ * página, leída sola, dice quién la publica.
+ */
+function datosEstructurados(ruta) {
+    if (ruta === '/') {
+        return [negocio(), sitioWeb(), faqPage(FAQ_PORTADA)];
+    }
+
+    const bloques = bloquesDeRuta(ruta);
+    return bloques.length > 0 ? [negocioCompacto(), ...bloques] : [];
+}
+
+/**
+ * Fechas de un artículo del blog, o null si la ruta no es un artículo.
+ * Lo consume render.js para poner og:type=article y sus fechas: hasta ahora
+ * cada entrada del blog se anunciaba a las redes y a los motores como si fuera
+ * la portada de un sitio.
+ */
+function articuloDeRuta(ruta) {
+    const articulo = ARTICULOS.find((a) => rutaArticulo(a.slug) === ruta);
+    if (!articulo) return null;
+    return { publicado: articulo.fecha, modificado: articulo.actualizado || articulo.fecha };
 }
 
 /** Rutas indexables, para el router del servidor, el sitemap y el prerender. */
@@ -440,4 +487,5 @@ module.exports = {
     archivoPrerender,
     metadatosPorRuta,
     datosEstructurados,
+    articuloDeRuta,
 };

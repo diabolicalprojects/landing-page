@@ -1,5 +1,5 @@
 const { escapeHtml, serializeJsonLd, sanitizeTrackingId } = require('./html');
-const { metadatosPorRuta, datosEstructurados } = require('./schema');
+const { metadatosPorRuta, datosEstructurados, articuloDeRuta } = require('./schema');
 
 const MARKER_START = '<!-- SEO_INJECT_START -->';
 const MARKER_END = '<!-- SEO_INJECT_END -->';
@@ -24,6 +24,10 @@ function buildSeoBlock(settings, requestPath, { indexable = true } = {}) {
     const gtmId = sanitizeTrackingId(settings.googleTagManager);
     const pixelId = sanitizeTrackingId(settings.metaPixel);
 
+    // Una entrada del blog anunciada como og:type=website pierde la tarjeta de
+    // artículo en las redes y no le dice a ningún motor cuándo se publicó.
+    const articulo = articuloDeRuta(requestPath);
+
     const bloques = datosEstructurados(requestPath)
         .map((dato) => `    <script type="application/ld+json">${serializeJsonLd(dato)}</script>`)
         .join('\n');
@@ -45,7 +49,13 @@ function buildSeoBlock(settings, requestPath, { indexable = true } = {}) {
     <meta name="geo.region" content="MX-AGU">
     <meta name="geo.placename" content="Aguascalientes">
 
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="${articulo ? 'article' : 'website'}">${
+        articulo
+            ? `
+    <meta property="article:published_time" content="${escapeHtml(articulo.publicado)}">
+    <meta property="article:modified_time" content="${escapeHtml(articulo.modificado)}">`
+            : ''
+    }
     <meta property="og:url" content="${canonical}">
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${description}">

@@ -139,6 +139,25 @@ app.get('/sitemap.xml', (req, res) => {
     );
 });
 
+// Una URL, una versión. `/servicios/` devolvía un 404 mientras `/servicios`
+// devolvía la página: cualquier enlace externo escrito con barra final se
+// perdía, y un rastreador que normaliza las URLs con barra no encontraba nada.
+// Solo redirige a rutas de la lista blanca, así que no puede convertirse en un
+// redirector abierto.
+app.get(/^\/(.+)\/$/, (req, res, next) => {
+    const sinBarra = req.path.slice(0, -1);
+    if (!APP_ROUTES.has(sinBarra)) return next();
+    return res.redirect(301, sinBarra + req.url.slice(req.path.length));
+});
+
+// Fichero de verificación de IndexNow. Se registra la ruta exacta al arrancar,
+// en vez de un patrón, para que no pueda ensombrecer a robots.txt ni a llms.txt.
+if (config.indexNowKey) {
+    app.get(`/${config.indexNowKey}.txt`, (req, res) => {
+        res.type('text/plain').send(config.indexNowKey);
+    });
+}
+
 // --- Estáticos --------------------------------------------------------------
 
 // app-shell.html y prerender/ son artefactos internos del build, no páginas.
