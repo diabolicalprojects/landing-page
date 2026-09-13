@@ -26,8 +26,8 @@ const Hero = () => (
                     </p>
 
                     <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-title leading-[0.92] tracking-tighter text-white uppercase mb-6 md:mb-8">
-                        Que te encuentren, que te elijan y que{' '}
-                        <span className="text-white/40">nadie se quede sin respuesta</span>
+                        Algún punto de tu negocio está perdiendo clientes.{' '}
+                        <span className="text-white/40">Te decimos cuál,</span> gratis.
                     </h1>
 
                     <p className="text-base md:text-lg text-white/60 max-w-xl mb-8 md:mb-10 leading-relaxed font-light">
