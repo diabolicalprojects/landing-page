@@ -29,6 +29,24 @@ const RUTA_SERVICIOS = '/servicios';
 const ARTICULOS_POR_FECHA = [...ARTICULOS].sort((a, b) => b.fecha.localeCompare(a.fecha));
 
 /**
+ * Descripción de un servicio para los datos estructurados: el resumen MÁS su
+ * límite.
+ *
+ * El límite (qué NO hace el servicio y dónde se detiene) estaba en el texto
+ * visible y en los llms.txt, pero no aquí: el bloque Service publicaba solo el
+ * resumen. Es la parte más original del catálogo y quedaba invisible justo en
+ * la capa que los buscadores y los motores generativos leen con más fiabilidad,
+ * que además es la que permite a un modelo recomendar con criterio en vez de
+ * inventarse el alcance.
+ *
+ * Los dos textos ya están a la vista en /servicios, así que juntarlos no rompe
+ * la regla de que el schema diga lo mismo que ve el visitante.
+ */
+function descripcionServicio(servicio) {
+    return servicio.limite ? `${servicio.resumen} Límite: ${servicio.limite}` : servicio.resumen;
+}
+
+/**
  * La entidad principal. `areaServed` y `knowsAbout` son las señales que usan
  * los motores generativos para decidir si esta empresa responde a una consulta
  * local sobre automatización.
@@ -89,7 +107,7 @@ function negocio() {
                     itemOffered: {
                         '@type': 'Service',
                         name: s.nombre,
-                        description: s.resumen,
+                        description: descripcionServicio(s),
                         url: `${SITE}${RUTA_SERVICIOS}#${s.slug}`,
                     },
                 })),
@@ -322,7 +340,7 @@ function bloquesDeRuta(ruta) {
                         item: {
                             '@type': 'Service',
                             name: s.nombre,
-                            description: s.resumen,
+                            description: descripcionServicio(s),
                             category: s.categoria,
                             url: `${SITE}${RUTA_SERVICIOS}#${s.slug}`,
                             provider: { '@id': ID_NEGOCIO },
