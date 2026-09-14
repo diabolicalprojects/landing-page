@@ -20,7 +20,12 @@ const { injectSeo } = require('./server/render');
 const { escapeHtml, serializeJson } = require('./server/html');
 const { construirRobots } = require('./server/robots');
 const { construirLlms, construirLlmsFull } = require('./server/llms');
-const { RUTAS_PUBLICAS, RUTAS_PRERENDER, archivoPrerender } = require('./server/schema');
+const {
+    RUTAS_PUBLICAS,
+    RUTAS_PRERENDER,
+    REDIRECCIONES,
+    archivoPrerender,
+} = require('./server/schema');
 const {
     COOKIE_NAME,
     signSession,
@@ -254,6 +259,18 @@ if (config.indexNowKey) {
 // Sin esto quedarían accesibles como URLs duplicadas del contenido real.
 app.get('/app-shell.html', (req, res) => res.redirect(301, '/'));
 app.get('/prerender/*', (req, res) => res.redirect(301, '/'));
+
+/*
+ * Direcciones antiguas que ya estaban indexadas.
+ *
+ * Al pasar los sectores de /automatizacion-para-X a /sectores/X, esas URLs
+ * seguían existiendo en el índice de Google y en enlaces de fuera. Devolverles
+ * un 404 tiraría a la basura todo lo que esas páginas hubieran ganado; un 301
+ * traslada esa autoridad a la dirección nueva.
+ */
+for (const [vieja, nueva] of Object.entries(REDIRECCIONES)) {
+    app.get(vieja, (req, res) => res.redirect(301, nueva));
+}
 
 // Sirve la variante precomprimida cuando el build la dejó lista.
 //

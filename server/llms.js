@@ -185,7 +185,7 @@ ${bloques}
  */
 function construirLlmsFull() {
     const bloques = SECTORES.map((sector) => {
-        const dolores = sector.dolores.map((d) => `- ${d}`).join('\n');
+        const momentos = sector.momentos.map((m) => `- ${m}`).join('\n');
         const soluciones = sector.soluciones
             .map((s) => `- **${s.titulo}.** ${s.detalle}`)
             .join('\n');
@@ -197,9 +197,9 @@ Página: ${SITE}${rutaSector(sector.slug)}
 
 ${sector.entradilla}
 
-### Fricción típica del sector
+### Un día con el sistema puesto
 
-${dolores}
+${momentos}
 
 ### Qué instalamos
 

@@ -53,7 +53,7 @@ const Servicios = () => {
                             <div className="mt-6 grid gap-x-8 gap-y-7 md:grid-cols-2 lg:grid-cols-3">
                                 {grupo.servicios.map((servicio) => (
                                     <article key={servicio.slug}>
-                                        <h4 className="text-[1.0625rem] font-extrabold leading-tight tracking-tight text-white">
+                                        <h4 className="cuerpo-destacado font-extrabold leading-tight tracking-tight text-white">
                                             {servicio.nombre}
                                         </h4>
                                         <p className="cuerpo mt-2">{servicio.resumen}</p>

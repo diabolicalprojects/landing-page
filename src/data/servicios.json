@@ -5,7 +5,13 @@
     "nombre": "Posicionamiento orgánico",
     "resumen": "Que te encuentren cuando alguien busca tu servicio en Aguascalientes, sin pagar por cada clic.",
     "detalle": "Trabajamos la estructura del sitio, el contenido y los datos estructurados para que Google entienda qué haces y para quién. Para un negocio local, la mayor parte del resultado viene de dos cosas poco glamurosas: que cada servicio tenga su propia página y que la ficha de Google esté completa.",
-    "limite": "No prometemos posiciones ni plazos: nadie controla el algoritmo. Lo que sí se compromete es el trabajo técnico y el contenido publicado."
+    "limite": "No prometemos posiciones ni plazos: nadie controla el algoritmo. Lo que sí se compromete es el trabajo técnico y el contenido publicado.",
+    "incluye": [
+      "Revisión técnica del sitio: velocidad, estructura y cómo lo leen los buscadores.",
+      "Una página propia por cada servicio y por cada zona que quieran trabajar.",
+      "Los textos escritos para responder lo que la gente busca de verdad.",
+      "Informe mensual de posiciones, con lo que subió y lo que falta."
+    ]
   },
   {
     "slug": "ficha-de-google",
@@ -13,7 +19,13 @@
     "nombre": "Ficha de Google y mapa",
     "resumen": "El perfil que sale en Google Maps cuando alguien busca tu clínica o tu gimnasio. Es el activo local más descuidado.",
     "detalle": "Categorías correctas, horarios reales, servicios cargados uno a uno, fotos que no sean del celular en 2019, y un flujo para pedir reseñas sin perseguir a nadie. Es lo que decide si sales en el paquete de tres del mapa.",
-    "limite": "Requiere que el negocio tenga domicilio o zona de servicio verificable. No se puede inventar una ubicación para posicionar."
+    "limite": "Requiere que el negocio tenga domicilio o zona de servicio verificable. No se puede inventar una ubicación para posicionar.",
+    "incluye": [
+      "Alta o reclamación de la ficha y verificación del negocio.",
+      "Categorías, servicios, horarios y zona de cobertura bien cargados.",
+      "Fotografías y publicaciones periódicas para que la ficha se vea activa.",
+      "Respuesta a reseñas y seguimiento de cuántas personas llegan por ahí."
+    ]
   },
   {
     "slug": "google-ads",
@@ -21,7 +33,13 @@
     "nombre": "Google Ads",
     "resumen": "Aparecer arriba desde el primer día para las búsquedas que sí traen clientes, no para las que traen curiosos.",
     "detalle": "Campañas de búsqueda con palabras negativas trabajadas desde el inicio, para no pagar por quien busca «gratis» o «cómo hacerlo yo mismo». Se conecta al mismo sistema de atención, así que el clic que entra por anuncio se contesta igual de rápido que el que entra por WhatsApp.",
-    "limite": "El presupuesto de medios lo pagas tú y va directo a Google. Nosotros cobramos por gestionar, no llevamos comisión sobre el gasto."
+    "limite": "El presupuesto de medios lo pagas tú y va directo a Google. Nosotros cobramos por gestionar, no llevamos comisión sobre el gasto.",
+    "incluye": [
+      "Estructura de campañas por servicio y por intención de búsqueda.",
+      "Palabras clave y, sobre todo, las negativas que evitan gasto inútil.",
+      "Anuncios y páginas de destino escritos para convertir, no solo para atraer.",
+      "Revisión semanal del gasto y ajuste de lo que no rinde."
+    ]
   },
   {
     "slug": "posicionamiento-en-ia",
@@ -29,7 +47,13 @@
     "nombre": "Posicionamiento en motores de IA",
     "resumen": "Que ChatGPT, Claude o Perplexity te mencionen cuando alguien les pide un proveedor en tu ciudad.",
     "detalle": "Permisos explícitos a los rastreadores de IA, contenido en frases que un modelo pueda citar, datos estructurados enlazados y archivos llms.txt. Casi nadie en el mercado local lo trabaja todavía, y la mayoría de los sitios de la competencia son aplicaciones que un rastreador de IA ve vacías.",
-    "limite": "Ningún proveedor vende posiciones dentro de una respuesta de IA. Quien te lo ofrezca está vendiendo algo que no controla."
+    "limite": "Ningún proveedor vende posiciones dentro de una respuesta de IA. Quien te lo ofrezca está vendiendo algo que no controla.",
+    "incluye": [
+      "Preparación del sitio para que los motores de IA puedan leerlo y citarlo.",
+      "Ficheros llms.txt y datos estructurados que describen el negocio con precisión.",
+      "Contenido redactado en frases autónomas, que es lo que un modelo cita.",
+      "Seguimiento de en qué respuestas aparece el negocio y con qué palabras."
+    ]
   },
   {
     "slug": "sitio-web",
@@ -37,7 +61,13 @@
     "nombre": "Diseño y desarrollo web",
     "resumen": "Un sitio rápido, que se lea en el celular y que exista para los buscadores, no solo para el navegador.",
     "detalle": "Construido para que cargue rápido y para que el contenido viaje en el HTML servido: es la diferencia entre que un rastreador de IA lea tu sitio entero o lea una página en blanco. Con la agenda y el WhatsApp conectados desde el primer día.",
-    "limite": "No hacemos sitios que dependan de que actualicemos nosotros cada texto: te queda un panel para editar lo que cambia seguido."
+    "limite": "No hacemos sitios que dependan de que actualicemos nosotros cada texto: te queda un panel para editar lo que cambia seguido.",
+    "incluye": [
+      "Diseño a medida, sin plantillas recicladas.",
+      "Desarrollo rápido y legible en móvil, que es donde deciden sus clientes.",
+      "Un asistente dentro del propio sitio que resuelve dudas sin sacar al visitante.",
+      "Panel para que su equipo edite los textos sin llamar a nadie."
+    ]
   },
   {
     "slug": "embudos-de-venta",
@@ -45,7 +75,13 @@
     "nombre": "Embudos de venta",
     "resumen": "El camino de quien te descubre hasta que agenda, sin puntos donde se caiga.",
     "detalle": "Página de entrada, formulario corto, respuesta inmediata y seguimiento automático. La mayoría de los embudos rotos no se rompen por diseño: se rompen porque nadie contesta el mensaje que llega el sábado.",
-    "limite": "Un embudo multiplica el tráfico que ya tienes. Si no llega nadie, el problema es de captación y lo decimos."
+    "limite": "Un embudo multiplica el tráfico que ya tienes. Si no llega nadie, el problema es de captación y lo decimos.",
+    "incluye": [
+      "Mapa del recorrido real desde que alguien los descubre hasta que compra.",
+      "Páginas de destino por campaña, con una sola acción clara en cada una.",
+      "Formularios y mecánicas de captación conectadas a su CRM.",
+      "Secuencias de seguimiento para quien preguntó y todavía no decidió."
+    ]
   },
   {
     "slug": "ia-whatsapp",
@@ -53,7 +89,13 @@
     "nombre": "IA para WhatsApp",
     "resumen": "Contesta en segundos a cualquier hora, agenda sobre huecos reales y pasa a una persona cuando toca.",
     "detalle": "Sobre la API oficial de Meta, con número verificado y plantillas aprobadas. Es el servicio con el que más empezamos, porque en la mayoría de los negocios locales es donde se pierde más dinero sin que se note.",
-    "limite": "No da consejo médico, legal ni fiscal. Cualquier consulta de criterio se deriva a tu equipo."
+    "limite": "No da consejo médico, legal ni fiscal. Cualquier consulta de criterio se deriva a tu equipo.",
+    "incluye": [
+      "Número verificado y API oficial de Meta, como exige la plataforma.",
+      "Guion completo de la conversación, aprobado por ustedes antes de programarse.",
+      "Conexión con la agenda, el CRM y el catálogo que ya utilizan.",
+      "Traspaso a una persona en cuanto la conversación lo requiere."
+    ]
   },
   {
     "slug": "agentes-y-chatbots",
@@ -61,7 +103,13 @@
     "nombre": "Agentes y chatbots",
     "resumen": "El mismo criterio de atención en tu web, en Instagram y en Facebook, no solo en WhatsApp.",
     "detalle": "Un agente que conoce tu catálogo, tus horarios y tus reglas, respondiendo igual en todos los canales por donde te escriben. Sin repetir configuración canal por canal ni contradecirse entre uno y otro.",
-    "limite": "Se le define por escrito qué no debe responder nunca, antes de encenderlo."
+    "limite": "Se le define por escrito qué no debe responder nunca, antes de encenderlo.",
+    "incluye": [
+      "Un agente por canal: sitio web, Instagram, Facebook o el que corresponda.",
+      "Base de conocimiento con la información real del negocio.",
+      "Reglas claras de qué responde y qué deriva a una persona.",
+      "Revisión de conversaciones y ajuste continuo del guion."
+    ]
   },
   {
     "slug": "ia-de-ventas",
@@ -69,7 +117,13 @@
     "nombre": "IA de ventas y seguimiento",
     "resumen": "Las cotizaciones sin cerrar y los clientes que no regresan dejan de depender de que alguien se acuerde.",
     "detalle": "Flujos escalonados por WhatsApp y correo, con el contexto de cada caso ya cargado, para que tu equipo entre a cerrar y no a reconstruir la conversación. Con tope de mensajes, porque insistir sin límite quema tu número.",
-    "limite": "El cierre lo hace una persona. La IA prepara el terreno, no negocia el precio."
+    "limite": "El cierre lo hace una persona. La IA prepara el terreno, no negocia el precio.",
+    "incluye": [
+      "Seguimiento escalonado a cada cotización enviada, en los plazos que definan.",
+      "Recuperación de conversaciones que quedaron a medias.",
+      "Registro de cada contacto en el CRM, con su estado al día.",
+      "Avisos al equipo cuando un prospecto muestra intención de cerrar."
+    ]
   },
   {
     "slug": "ia-para-tienda",
@@ -77,7 +131,13 @@
     "nombre": "IA para tienda en línea",
     "resumen": "Recuperar carritos abandonados y recomendar lo que de verdad encaja con lo que cada quien vio.",
     "detalle": "Para clínicas y spas que venden producto además del servicio: recomendaciones según el historial, recuperación de compras a medias y avisos de reposición de lo que se acaba cada mes.",
-    "limite": "Necesita una tienda con tráfico. Si vende dos productos al mes, la automatización no cambia el resultado."
+    "limite": "Necesita una tienda con tráfico. Si vende dos productos al mes, la automatización no cambia el resultado.",
+    "incluye": [
+      "Conexión con el catálogo y las existencias reales de su tienda.",
+      "Respuestas sobre tallas, materiales, envíos y políticas.",
+      "Recuperación de carritos abandonados en el momento oportuno.",
+      "Avisos automáticos del estado de cada pedido."
+    ]
   },
   {
     "slug": "identidad-de-marca",
@@ -85,7 +145,13 @@
     "nombre": "Identidad de marca y logo",
     "resumen": "Que tu negocio se vea del tamaño que es, no más chico.",
     "detalle": "Logo, paleta, tipografía y las aplicaciones que de verdad usas: rótulo, uniformes, recetario, publicaciones y el propio WhatsApp. Entregado con manual, para que quien haga la siguiente pieza no improvise.",
-    "limite": "No rehacemos una marca que ya funciona solo por refrescarla. Si la tuya está bien, lo decimos y nos ahorramos el proyecto."
+    "limite": "No rehacemos una marca que ya funciona solo por refrescarla. Si la tuya está bien, lo decimos y nos ahorramos el proyecto.",
+    "incluye": [
+      "Logotipo y sus versiones para cada uso, con los archivos originales.",
+      "Paleta, tipografías y reglas de aplicación reunidas en un manual.",
+      "Plantillas listas para redes, documentos y presentaciones.",
+      "Todos los archivos entregados y de su propiedad, sin ataduras."
+    ]
   },
   {
     "slug": "presencia-en-eventos",
@@ -93,7 +159,13 @@
     "nombre": "Activaciones digitales para expos y eventos",
     "resumen": "Una experiencia digital en tu stand que capta al visitante y guarda su contacto sin una sola hoja de papel.",
     "detalle": "Montamos la mecánica completa de la activación: una pantalla o un código que el visitante usa en el stand, un registro que recoge sus datos en el momento y el seguimiento automático que le llega al día siguiente, cuando todavía se acuerda de ti. Se prepara antes del evento y se entrega funcionando el primer día.",
-    "limite": "Producimos la parte digital de la activación. El stand físico, el mobiliario y el personal del evento corren por tu cuenta."
+    "limite": "Producimos la parte digital de la activación. El stand físico, el mobiliario y el personal del evento corren por tu cuenta.",
+    "incluye": [
+      "Mecánica digital de la activación, pensada para el flujo real del stand.",
+      "Pantalla interactiva o código que el visitante usa en el momento.",
+      "Captura de contactos sin papel, ordenada y lista para su CRM.",
+      "Seguimiento automático al día siguiente, cuando todavía se acuerdan de ustedes."
+    ]
   },
   {
     "slug": "auditoria-de-friccion",
@@ -101,6 +173,12 @@
     "nombre": "Auditoría de fricción",
     "resumen": "Dónde se te van los clientes y el tiempo, con evidencia y no con opiniones.",
     "detalle": "Revisamos tu presencia digital, tu flujo de atención y tus tiempos de respuesta reales. Sales con un diagnóstico escrito que incluye lo que conviene automatizar y también lo que no vale la pena tocar.",
-    "limite": "Es gratuita y el documento es tuyo, trabajes o no con nosotros. No es una llamada de ventas disfrazada."
+    "limite": "Es gratuita y el documento es tuyo, trabajes o no con nosotros. No es una llamada de ventas disfrazada.",
+    "incluye": [
+      "Recorrido completo del camino que hace hoy un cliente suyo.",
+      "Identificación de los puntos donde se pierden prospectos o tiempo.",
+      "Prioridades ordenadas por lo que más rinde con menos esfuerzo.",
+      "Documento escrito que es suyo, trabajen o no con nosotros."
+    ]
   }
 ]

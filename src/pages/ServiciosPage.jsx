@@ -1,111 +1,96 @@
-import React, { Suspense, lazy } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 
-import Navbar from '../components/common/Navbar';
-import Footer from '../components/common/Footer';
-import { SERVICIOS_POR_CATEGORIA, SERVICIOS } from '../data/servicios';
-import { useHydrated } from '../utils/useHydrated';
+import Pagina, { Migas } from '../components/common/Pagina';
+import Enlace from '../components/common/Enlace';
+import MotionGrafico from '../motion/MotionGrafico';
+import { SERVICIOS_POR_CATEGORIA } from '../data/servicios';
 
-const DiabolicalChatbot = lazy(() => import('../components/common/DiabolicalChatbot'));
-
-/**
- * Catálogo completo con el detalle y el límite de cada servicio. El <head>
- * (título, descripción y el JSON-LD con Service y BreadcrumbList) lo resuelve
- * el servidor — ver server/schema.js.
+/*
+ * Índice de servicios.
  *
- * Todo el texto viaja en el HTML servido, que es la diferencia frente a los
- * dos competidores locales: sus catálogos solo existen después de ejecutar
- * JavaScript, así que un rastreador de motor generativo no los ve.
+ * Agrupados por el recorrido real de un cliente y no por disciplina: que le
+ * encuentren, que le elijan, que le atiendan sin perder a nadie, que le
+ * recuerden, y saber si funciona.
+ *
+ * Cada servicio enlaza a su propia página. El resumen y el alcance salen de
+ * src/data/servicios.json, la misma fuente de la que server/schema.js construye
+ * el catálogo de ofertas y server/llms.js la guía para motores de IA.
  */
-const ServiciosPage = () => {
-    const mostrarChatbot = useHydrated();
+const ServiciosPage = () => (
+    <Pagina>
+        <Migas ruta={[{ texto: 'Servicios' }]} />
 
-    return (
-        <main className="relative bg-black min-h-screen text-white font-jakarta overflow-x-hidden">
-            <Navbar />
+        <section className="zona-oscura seccion">
+            <div className="contenedor">
+                <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-12">
+                    <header className="lg:col-span-7">
+                        <p className="insignia">Catálogo</p>
+                        <h1 className="titular-xl mt-5">
+                            Servicios de inteligencia artificial{' '}
+                            <span className="titular-apagado">para negocios en Aguascalientes.</span>
+                        </h1>
+                        <p className="cuerpo-l mt-7">
+                            Trece servicios repartidos en las cinco etapas del recorrido de un
+                            cliente. Cada uno tiene su página con lo que incluye y hasta dónde
+                            llega, porque conviene saberlo antes de contratar.
+                        </p>
 
-            <section className="pt-32 md:pt-44 pb-12 md:pb-16 px-5 md:px-8">
-                <div className="max-w-4xl mx-auto">
-                    <nav aria-label="Ruta de navegación" className="mb-8">
-                        <ol className="flex items-center gap-2 etiqueta text-white/60">
-                            <li><Link to="/" className="hover:text-white transition-colors">Inicio</Link></li>
-                            <li aria-hidden="true">/</li>
-                            <li className="text-white/70">Servicios</li>
-                        </ol>
-                    </nav>
+                        <Enlace destino="/contacto" className="boton boton-acento mt-9">
+                            Solicitar auditoría gratuita
+                            <ArrowRight size={16} aria-hidden="true" />
+                        </Enlace>
+                    </header>
 
-                    <h1 className="text-4xl md:text-6xl font-title uppercase tracking-tighter leading-[0.92] mb-6">
-                        Qué hacemos y dónde nos detenemos
-                    </h1>
-                    <p className="text-base md:text-lg text-white/60 leading-relaxed font-light max-w-2xl">
-                        {SERVICIOS.length} servicios para negocios de Aguascalientes, ordenados por el
-                        recorrido que hace un cliente. Cada uno dice qué incluye y qué no, porque
-                        lo segundo ahorra más reuniones que lo primero.
-                    </p>
+                    <div className="lg:col-span-5">
+                        <MotionGrafico
+                            escena="nucleo"
+                            prioridad
+                            etiqueta="La marca de Diabolical en el centro, con los canales del negocio conectados alrededor."
+                        />
+                    </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            {SERVICIOS_POR_CATEGORIA.map((grupo, i) => (
-                <section
-                    key={grupo.categoria}
-                    className={`seccion px-5 md:px-8 ${i % 2 === 0 ? 'superficie-1' : 'bg-black'}`}
-                >
-                    <div className="max-w-4xl mx-auto">
-                        <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter leading-tight mb-10 md:mb-12">
-                            {grupo.categoria}
+        <section className="zona-oscura zona-oscura-1 seccion">
+            <div className="contenedor space-y-14 md:space-y-20">
+                {SERVICIOS_POR_CATEGORIA.map((grupo, indice) => (
+                    <div key={grupo.categoria}>
+                        <h2 className="flex items-baseline gap-3 border-b border-white/[0.09] pb-3">
+                            <span className="etiqueta-mono text-white/55">
+                                {String(indice + 1).padStart(2, '0')}
+                            </span>
+                            <span className="etiqueta text-white/70">{grupo.categoria}</span>
+                            <span className="etiqueta-mono ml-auto text-white/55">
+                                {grupo.servicios.length}
+                            </span>
                         </h2>
 
-                        <div className="space-y-10 md:space-y-12">
+                        <ul className="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                             {grupo.servicios.map((servicio) => (
-                                <article key={servicio.slug} id={servicio.slug} className="scroll-mt-28">
-                                    <h3 className="text-xl md:text-2xl font-title uppercase tracking-tight text-white leading-tight mb-3">
-                                        {servicio.nombre}
-                                    </h3>
-                                    <p className="text-base text-white/75 leading-relaxed mb-3 max-w-2xl">
-                                        {servicio.resumen}
-                                    </p>
-                                    <p className="text-sm md:text-[15px] text-white/60 leading-relaxed font-light mb-4 max-w-2xl">
-                                        {servicio.detalle}
-                                    </p>
-                                    <p className="text-sm text-white/55 leading-relaxed max-w-2xl border-l-2 border-white/15 pl-4">
-                                        <span className="text-white/75 font-semibold">Dónde se detiene: </span>
-                                        {servicio.limite}
-                                    </p>
-                                </article>
+                                <li key={servicio.slug}>
+                                    <Enlace
+                                        destino={`/servicios/${servicio.slug}`}
+                                        className="tarjeta tarjeta-enlace flex h-full flex-col p-6"
+                                    >
+                                        <h3 className="text-[1rem] font-extrabold leading-tight tracking-tight text-white">
+                                            {servicio.nombre}
+                                        </h3>
+                                        <p className="cuerpo mt-2.5 flex-1">{servicio.resumen}</p>
+                                        <span className="etiqueta mt-5 inline-flex items-center gap-1.5 text-white/55">
+                                            Ver el detalle
+                                            <ArrowUpRight size={13} aria-hidden="true" />
+                                        </span>
+                                    </Enlace>
+                                </li>
                             ))}
-                        </div>
+                        </ul>
                     </div>
-                </section>
-            ))}
-
-            <section className="seccion-amplia px-5 md:px-8 superficie-2">
-                <div className="max-w-3xl mx-auto">
-                    <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter leading-[0.95] mb-5">
-                        No hace falta contratarlo todo
-                    </h2>
-                    <p className="text-white/60 text-base leading-relaxed font-light mb-8 max-w-2xl">
-                        La auditoría de fricción dice cuáles de estos servicios te hacen falta hoy y
-                        cuáles no valen la pena todavía. Es gratuita y el diagnóstico es tuyo,
-                        trabajes o no con nosotros.
-                    </p>
-                    <button
-                        onClick={() => window.dispatchEvent(new Event('open-diabolical-chat'))}
-                        className="accion px-9 py-4 bg-white text-black rounded-full font-black text-xs md:text-sm uppercase tracking-[0.2em] hover:bg-white/85 min-h-[56px]"
-                    >
-                        Pedir el diagnóstico gratuito
-                    </button>
-                </div>
-            </section>
-
-            <Footer />
-
-            {mostrarChatbot && (
-                <Suspense fallback={null}>
-                    <DiabolicalChatbot />
-                </Suspense>
-            )}
-        </main>
-    );
-};
+                ))}
+            </div>
+        </section>
+    </Pagina>
+);
 
 export default ServiciosPage;

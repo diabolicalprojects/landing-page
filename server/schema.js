@@ -16,7 +16,17 @@ const ID_WEBSITE = `${SITE}/#website`;
 const TELEFONO = '+524495136907';
 const EMAIL = 'contacto@diabolicalservices.tech';
 
-const rutaSector = (slug) => `/automatizacion-para-${slug}`;
+/*
+ * El sitio pasa de una landing a varias paginas. Las rutas de sector cambian de
+ * /automatizacion-para-X a /sectores/X porque la frase clave del negocio pasa a
+ * ser "inteligencia artificial para X" y la URL tiene que acompanarla.
+ *
+ * Las viejas NO se borran: se redirigen con 301 desde server.js (ver
+ * REDIRECCIONES). Una URL indexada que devuelve 404 tira a la basura todo lo
+ * que esa pagina hubiera ganado.
+ */
+const rutaSector = (slug) => `/sectores/${slug}`;
+const rutaServicio = (slug) => `/servicios/${slug}`;
 const rutaArticulo = (slug) => `/blog/${slug}`;
 
 /** Índice del blog. Existe como constante porque la referencian las migas,
@@ -24,6 +34,25 @@ const rutaArticulo = (slug) => `/blog/${slug}`;
  *  es justo el tipo de dato que se desincroniza al renombrar. */
 const RUTA_BLOG = '/blog';
 const RUTA_SERVICIOS = '/servicios';
+const RUTA_SECTORES = '/sectores';
+const RUTA_NOSOTROS = '/nosotros';
+const RUTA_CONTACTO = '/contacto';
+
+/*
+ * Direcciones antiguas que ya estaban indexadas, con su destino actual.
+ *
+ * Escritas a mano y no derivadas de SECTORES a proposito: la lista tiene que
+ * reflejar lo que Google ya tiene indexado, no lo que existe hoy. El caso que
+ * lo demuestra es /automatizacion-para-spas, cuyo slug ya no existe —el sector
+ * pasó a llamarse salones-de-belleza— y que aun asi debe llevar a algun sitio
+ * util en lugar de a un 404.
+ */
+const REDIRECCIONES = {
+    '/automatizacion-para-clinicas': rutaSector('clinicas'),
+    '/automatizacion-para-spas': rutaSector('salones-de-belleza'),
+    '/automatizacion-para-gimnasios': rutaSector('gimnasios'),
+    '/automatizacion-para-despachos-y-oficinas': rutaSector('despachos-y-oficinas'),
+};
 
 /** Los más recientes primero, igual que en el cliente. */
 const ARTICULOS_POR_FECHA = [...ARTICULOS].sort((a, b) => b.fecha.localeCompare(a.fecha));
@@ -63,7 +92,7 @@ function negocio() {
         name: 'Diabolical Services',
         alternateName: 'Diabolical',
         description:
-            'Agencia de marketing digital y automatización con inteligencia artificial en Aguascalientes. Cubrimos el ciclo completo: posicionamiento, publicidad, sitio web, identidad de marca y sistemas autónomos que atienden, agendan y dan seguimiento por WhatsApp. Para clínicas, spas, gimnasios, despachos y pequeñas empresas.',
+            'Inteligencia artificial para negocios en Aguascalientes. Diseñamos e instalamos sistemas que atienden, agendan y dan seguimiento sobre las herramientas que la empresa ya utiliza, además de posicionamiento, publicidad, sitio web e identidad de marca. Para inmobiliarias, salones de belleza, clínicas, gimnasios, despachos y comercio.',
         url: SITE,
         telephone: TELEFONO,
         email: EMAIL,
@@ -99,7 +128,7 @@ function negocio() {
         // allí, aparece aquí, en /servicios y en los llms.txt sin tocar nada.
         hasOfferCatalog: {
             '@type': 'OfferCatalog',
-            name: 'Servicios de marketing digital y automatización con IA',
+            name: 'Servicios de inteligencia artificial para negocios en Aguascalientes',
             itemListElement: [
                 ...SERVICIOS.map((s) => ({
                     '@type': 'Offer',
@@ -108,14 +137,14 @@ function negocio() {
                         '@type': 'Service',
                         name: s.nombre,
                         description: descripcionServicio(s),
-                        url: `${SITE}${RUTA_SERVICIOS}#${s.slug}`,
+                        url: `${SITE}${rutaServicio(s.slug)}`,
                     },
                 })),
                 ...SECTORES.map((s) => ({
                     '@type': 'Offer',
                     itemOffered: {
                         '@type': 'Service',
-                        name: `Automatización para ${s.nombre}`,
+                        name: s.titular,
                         description: s.descripcion,
                         url: `${SITE}${rutaSector(s.slug)}`,
                     },
@@ -248,11 +277,47 @@ function metadatosPorRuta() {
     }
 
     meta[RUTA_SERVICIOS] = {
-        title: 'Servicios de marketing digital e IA en Aguascalientes | Diabolical',
+        title: 'Servicios de inteligencia artificial en Aguascalientes | Diabolical',
         description:
-            'Posicionamiento, Google Ads, sitio web, identidad de marca, automatización de WhatsApp y medición. Cada servicio dice qué incluye y dónde se detiene.',
+            'Trece servicios de inteligencia artificial para negocios en Aguascalientes: posicionamiento, Google Ads, sitio web, marca, atención automática y auditoría. Cada uno con su alcance publicado.',
         keywords:
-            'agencia de marketing digital Aguascalientes, servicios de marketing digital, posicionamiento web, Google Ads Aguascalientes, diseño web, automatización con IA',
+            'inteligencia artificial para negocios en Aguascalientes, servicios de inteligencia artificial, agencia de IA Aguascalientes, automatización con IA, posicionamiento web Aguascalientes',
+        robots: 'index, follow',
+    };
+
+    for (const servicio of SERVICIOS) {
+        meta[rutaServicio(servicio.slug)] = {
+            title: `${servicio.nombre} en Aguascalientes | Diabolical`,
+            description: servicio.resumen,
+            keywords: `${servicio.nombre.toLowerCase()} Aguascalientes, inteligencia artificial para negocios en Aguascalientes, ${servicio.categoria.toLowerCase()}`,
+            robots: 'index, follow',
+        };
+    }
+
+    meta[RUTA_SECTORES] = {
+        title: 'Inteligencia artificial por sector en Aguascalientes | Diabolical',
+        description:
+            'Inteligencia artificial para inmobiliarias, salones de belleza, clínicas, gimnasios, despachos y comercio en Aguascalientes. Cada giro con su propio sistema.',
+        keywords:
+            'inteligencia artificial para negocios en Aguascalientes, IA por sector, automatización por giro, agencia de IA Aguascalientes',
+        robots: 'index, follow',
+    };
+
+    meta[RUTA_NOSOTROS] = {
+        title: 'Quiénes somos | Diabolical Services, agencia de IA en Aguascalientes',
+        description:
+            'Somos una agencia de inteligencia artificial en Aguascalientes. Diseñamos e instalamos sistemas que atienden, agendan y dan seguimiento sobre las herramientas que el negocio ya usa.',
+        keywords:
+            'agencia de inteligencia artificial Aguascalientes, quiénes somos Diabolical Services, empresa de IA Aguascalientes',
+        robots: 'index, follow',
+    };
+
+    meta[RUTA_CONTACTO] = {
+        title: 'Contacto | Inteligencia artificial para negocios en Aguascalientes',
+        description:
+            'Solicita la auditoría de fricción gratuita. Salimos de ella con un diagnóstico escrito de qué conviene automatizar en tu negocio y qué no.',
+        keywords:
+            'contacto agencia de IA Aguascalientes, auditoría de fricción gratuita, inteligencia artificial para negocios en Aguascalientes',
         robots: 'index, follow',
     };
 
@@ -298,6 +363,105 @@ function negocioCompacto() {
 
 /** Los bloques JSON-LD que corresponden a una ruta. */
 function bloquesDeRuta(ruta) {
+    /*
+     * Página de un servicio.
+     *
+     * Cada una declara su Service enlazado al proveedor por @id y sus migas.
+     * Sin las migas, un resultado de búsqueda de una página profunda aparece
+     * suelto, sin decir de qué sección del sitio viene.
+     */
+    const servicio = SERVICIOS.find((x) => rutaServicio(x.slug) === ruta);
+    if (servicio) {
+        return [
+            {
+                '@context': 'https://schema.org',
+                '@type': 'Service',
+                name: servicio.nombre,
+                description: servicio.resumen,
+                url: `${SITE}${ruta}`,
+                serviceType: servicio.categoria,
+                provider: { '@id': ID_NEGOCIO },
+                areaServed: [
+                    { '@type': 'City', name: 'Aguascalientes' },
+                    { '@type': 'Country', name: 'México' },
+                ],
+                // El alcance publicado entra en el marcado, no solo en la
+                // página: es lo que permite a un motor generativo recomendar
+                // con criterio en lugar de por parecido.
+                termsOfService: servicio.limite,
+            },
+            negocioCompacto(),
+            migas([
+                { nombre: 'Inicio', ruta: '/' },
+                { nombre: 'Servicios', ruta: RUTA_SERVICIOS },
+                { nombre: servicio.nombre, ruta },
+            ]),
+        ];
+    }
+
+    if (ruta === RUTA_SECTORES) {
+        return [
+            {
+                '@context': 'https://schema.org',
+                '@type': 'CollectionPage',
+                name: 'Inteligencia artificial por sector',
+                url: `${SITE}${RUTA_SECTORES}`,
+                inLanguage: 'es-MX',
+                about: { '@id': ID_NEGOCIO },
+                mainEntity: {
+                    '@type': 'ItemList',
+                    itemListElement: SECTORES.map((x, i) => ({
+                        '@type': 'ListItem',
+                        position: i + 1,
+                        name: x.titular,
+                        url: `${SITE}${rutaSector(x.slug)}`,
+                    })),
+                },
+            },
+            negocioCompacto(),
+            migas([
+                { nombre: 'Inicio', ruta: '/' },
+                { nombre: 'Sectores', ruta: RUTA_SECTORES },
+            ]),
+        ];
+    }
+
+    if (ruta === RUTA_NOSOTROS) {
+        return [
+            {
+                '@context': 'https://schema.org',
+                '@type': 'AboutPage',
+                name: 'Quiénes somos',
+                url: `${SITE}${RUTA_NOSOTROS}`,
+                inLanguage: 'es-MX',
+                mainEntity: { '@id': ID_NEGOCIO },
+            },
+            negocioCompacto(),
+            migas([
+                { nombre: 'Inicio', ruta: '/' },
+                { nombre: 'Quiénes somos', ruta: RUTA_NOSOTROS },
+            ]),
+        ];
+    }
+
+    if (ruta === RUTA_CONTACTO) {
+        return [
+            {
+                '@context': 'https://schema.org',
+                '@type': 'ContactPage',
+                name: 'Contacto',
+                url: `${SITE}${RUTA_CONTACTO}`,
+                inLanguage: 'es-MX',
+                mainEntity: { '@id': ID_NEGOCIO },
+            },
+            negocioCompacto(),
+            migas([
+                { nombre: 'Inicio', ruta: '/' },
+                { nombre: 'Contacto', ruta: RUTA_CONTACTO },
+            ]),
+        ];
+    }
+
     const sector = SECTORES.find((s) => rutaSector(s.slug) === ruta);
     if (sector) {
         return [
@@ -318,6 +482,7 @@ function bloquesDeRuta(ruta) {
             faqPage(sector.faq),
             migas([
                 { nombre: 'Inicio', ruta: '/' },
+                { nombre: 'Sectores', ruta: RUTA_SECTORES },
                 { nombre: sector.nombreCorto, ruta },
             ]),
         ];
@@ -342,7 +507,7 @@ function bloquesDeRuta(ruta) {
                             name: s.nombre,
                             description: descripcionServicio(s),
                             category: s.categoria,
-                            url: `${SITE}${RUTA_SERVICIOS}#${s.slug}`,
+                            url: `${SITE}${rutaServicio(s.slug)}`,
                             provider: { '@id': ID_NEGOCIO },
                         },
                     })),
@@ -460,8 +625,12 @@ function articuloDeRuta(ruta) {
 /** Rutas indexables, para el router del servidor, el sitemap y el prerender. */
 const RUTAS_PUBLICAS = [
     '/',
+    RUTA_NOSOTROS,
     RUTA_SERVICIOS,
+    ...SERVICIOS.map((s) => rutaServicio(s.slug)),
+    RUTA_SECTORES,
     ...SECTORES.map((s) => rutaSector(s.slug)),
+    RUTA_CONTACTO,
     RUTA_BLOG,
     ...ARTICULOS_POR_FECHA.map((a) => rutaArticulo(a.slug)),
     '/politica-privacidad',
@@ -483,8 +652,12 @@ const RUTAS_PUBLICAS = [
  */
 const RUTAS_PRERENDER = [
     '/',
+    RUTA_NOSOTROS,
     RUTA_SERVICIOS,
+    ...SERVICIOS.map((s) => rutaServicio(s.slug)),
+    RUTA_SECTORES,
     ...SECTORES.map((s) => rutaSector(s.slug)),
+    RUTA_CONTACTO,
     RUTA_BLOG,
     ...ARTICULOS_POR_FECHA.map((a) => rutaArticulo(a.slug)),
     '/politica-privacidad',
@@ -506,9 +679,14 @@ module.exports = {
     RUTAS_PRERENDER,
     RUTA_BLOG,
     RUTA_SERVICIOS,
+    RUTA_SECTORES,
+    RUTA_NOSOTROS,
+    RUTA_CONTACTO,
+    REDIRECCIONES,
     SERVICIOS,
     FAQ_PORTADA,
     rutaSector,
+    rutaServicio,
     rutaArticulo,
     archivoPrerender,
     metadatosPorRuta,

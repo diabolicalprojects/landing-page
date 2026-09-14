@@ -12,7 +12,15 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const bcrypt = require('bcryptjs');
-const { SECTORES, RUTAS_PUBLICAS, ARTICULOS, SERVICIOS } = require('../server/schema');
+const {
+    SECTORES,
+    RUTAS_PUBLICAS,
+    ARTICULOS,
+    SERVICIOS,
+    REDIRECCIONES,
+    rutaSector,
+    rutaServicio,
+} = require('../server/schema');
 
 const PORT = 4173;
 const BASE = `http://127.0.0.1:${PORT}`;
@@ -188,7 +196,7 @@ test('cada página de sector se sirve con su contenido y su schema', async (t) =
     }
 
     for (const sector of SECTORES) {
-        const ruta = `/automatizacion-para-${sector.slug}`;
+        const ruta = rutaSector(sector.slug);
         const res = await fetch(`${BASE}${ruta}`);
         assert.equal(res.status, 200, `${ruta} no devolvió 200`);
 
@@ -236,7 +244,7 @@ test('la portada enlaza a todas las páginas de sector', async (t) => {
     const html = await (await fetch(`${BASE}/`)).text();
     for (const sector of SECTORES) {
         assert.ok(
-            html.includes(`/automatizacion-para-${sector.slug}`),
+            html.includes(rutaSector(sector.slug)),
             `la portada no enlaza a ${sector.slug}`
         );
     }
@@ -283,11 +291,10 @@ test('el catálogo de servicios se sirve entero y con su límite', async (t) => 
     const html = await res.text();
     const visible = html.replace(/<script[\s\S]*?<\/script>/g, '');
 
-    // Cada servicio con su nombre, su resumen y —lo que nos distingue— el
-    // límite publicado antes de contratar, no después.
+    // El índice lleva el nombre y el resumen de los trece.
     for (const servicio of SERVICIOS) {
         assert.ok(visible.includes(servicio.nombre), `falta el servicio "${servicio.nombre}"`);
-        assert.ok(visible.includes(servicio.limite), `falta el límite de "${servicio.nombre}"`);
+        assert.ok(visible.includes(servicio.resumen), `falta el resumen de "${servicio.nombre}"`);
     }
 
     assert.match(html, /"@type":\s*"CollectionPage"/);
@@ -449,5 +456,77 @@ test('el blog está enlazado y sus artículos entran en el sitemap y los llms', 
             llmsFull.includes(articulo.secciones[0].parrafos[0]),
             `el cuerpo de ${articulo.slug} no está en llms-full.txt`
         );
+    }
+});
+
+
+test('cada servicio tiene su página, con su alcance publicado', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    /*
+     * Lo que nos distingue es publicar hasta dónde llega cada servicio ANTES de
+     * contratar. Al pasar a multipágina ese texto se movió del índice a la
+     * página de cada servicio; lo que no puede es dejar de estar.
+     */
+    for (const servicio of SERVICIOS) {
+        const ruta = rutaServicio(servicio.slug);
+        const res = await fetch(`${BASE}${ruta}`);
+        assert.equal(res.status, 200, `${ruta} no devolvió 200`);
+
+        const html = await res.text();
+        const visible = html.replace(/<script[\s\S]*?<\/script>/g, '');
+
+        assert.ok(visible.includes(servicio.limite), `${ruta} no publica su alcance`);
+        assert.ok(visible.includes(servicio.resumen), `${ruta} no trae su resumen`);
+        assert.match(html, new RegExp(`rel="canonical" href="[^"]*${ruta}"`));
+        assert.match(html, /"@type":\s*"BreadcrumbList"/);
+    }
+});
+
+test('las direcciones antiguas de sector redirigen en lugar de morir', async () => {
+    /*
+     * Al pasar los sectores de /automatizacion-para-X a /sectores/X, las URLs
+     * viejas seguían indexadas y enlazadas desde fuera. Un 404 tiraría a la
+     * basura toda la autoridad que esas páginas hubieran ganado.
+     */
+    for (const [vieja, nueva] of Object.entries(REDIRECCIONES)) {
+        const res = await fetch(`${BASE}${vieja}`, { redirect: 'manual' });
+        assert.equal(res.status, 301, `${vieja} no devolvió 301`);
+        assert.equal(res.headers.get('location'), nueva, `${vieja} apunta a otro sitio`);
+    }
+});
+
+test('las páginas nuevas del sitio se sirven con su contenido', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    // La frase clave del negocio tiene que viajar en el h1 de la portada y en
+    // el de cada sector: es lo que un motor generativo lee para saber a quién
+    // recomendar, y ningún otro encabezado pesa lo que pesa el h1.
+    const portada = await (await fetch(`${BASE}/`)).text();
+    assert.match(
+        portada,
+        /<h1[^>]*>[\s\S]{0,300}Inteligencia artificial[\s\S]{0,120}para negocios en Aguascalientes/,
+        'la portada no lleva la frase clave en el h1'
+    );
+
+    for (const sector of SECTORES) {
+        const html = await (await fetch(`${BASE}${rutaSector(sector.slug)}`)).text();
+        assert.ok(
+            html.includes(sector.titular),
+            `${sector.slug} no lleva su titular en la página`
+        );
+        assert.match(sector.titular, /^Inteligencia artificial para /);
+    }
+
+    for (const ruta of ['/nosotros', '/sectores', '/contacto']) {
+        const res = await fetch(`${BASE}${ruta}`);
+        assert.equal(res.status, 200, `${ruta} no devolvió 200`);
+        const html = await res.text();
+        assert.match(html, /<h1/, `${ruta} no trae h1 prerenderizado`);
+        assert.match(html, new RegExp(`rel="canonical" href="[^"]*${ruta}"`));
     }
 });

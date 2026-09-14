@@ -122,7 +122,7 @@ test('lo editado desde el panel sale en el HTML servido', async (t) => {
     );
     // Se fusiona, no se reemplaza: editar un campo no borra los vecinos.
     assert.ok(
-        html.includes('Tu negocio no duerme.'),
+        html.includes('Inteligencia artificial'),
         'editar un campo borró los demás del mismo bloque'
     );
 
@@ -137,7 +137,10 @@ test('el contenido se puede devolver al de fábrica', async (t) => {
 
     const html = await portada();
     assert.ok(!html.includes('algo-que-se-va-a-deshacer'), 'restablecer no limpió la página');
-    assert.ok(html.includes('Tú sí.'), 'restablecer no devolvió el texto de fábrica');
+    assert.ok(
+        html.includes('para negocios en Aguascalientes'),
+        'restablecer no devolvió el texto de fábrica'
+    );
 });
 
 test('el contenido guardado se escapa en lugar de ejecutarse', async (t) => {

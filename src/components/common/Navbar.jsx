@@ -101,7 +101,7 @@ const Navbar = () => {
 
             <ul
                 className={cn(
-                    'hidden items-center gap-8 text-[0.8125rem] font-semibold tracking-tight lg:flex',
+                    'hidden items-center gap-8 text-[0.9375rem] font-semibold tracking-tight lg:flex',
                     sobreClaro ? 'text-black/65' : 'text-white/65'
                 )}
             >
@@ -123,7 +123,7 @@ const Navbar = () => {
             <div className="flex flex-shrink-0 items-center gap-2">
                 <Enlace
                     destino={cta?.destino}
-                    className="boton boton-acento hidden min-h-[2.75rem] px-5 text-[0.8125rem] sm:inline-flex"
+                    className="boton boton-acento hidden min-h-[2.75rem] px-5 text-[0.9375rem] sm:inline-flex"
                 >
                     {cta?.texto}
                     <ArrowRight size={14} aria-hidden="true" />
