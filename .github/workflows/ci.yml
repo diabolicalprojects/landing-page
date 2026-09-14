@@ -75,8 +75,13 @@ jobs:
 
           # Estas rutas dependen de ficheros que solo existen si la imagen los
           # copió: son las que delatan una etapa de runtime incompleta.
+          #
+          # Se cubre una de cada familia (portada, sector, servicio, página
+          # suelta) porque cada una se sirve por un camino distinto, y los
+          # cuatro ficheros generados, que son los que faltan cuando la etapa de
+          # runtime se queda a medias.
           FALLOS=0
-          for ruta in / /automatizacion-para-clinicas /llms.txt /llms-full.txt /robots.txt /sitemap.xml; do
+          for ruta in / /nosotros /sectores/clinicas /servicios/sitio-web /contacto /llms.txt /llms-full.txt /robots.txt /sitemap.xml; do
             CODIGO=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://127.0.0.1:3000$ruta")
             if [ "$CODIGO" = "200" ]; then
               echo "  OK $ruta"
@@ -85,6 +90,31 @@ jobs:
               FALLOS=1
             fi
           done
+
+          # Las direcciones de sector anteriores siguen indexadas en Google. Un
+          # 404 tiraría a la basura lo que esas páginas hubieran ganado, así que
+          # el 301 se comprueba aquí y no se descubre meses después en Search
+          # Console.
+          for ruta in /automatizacion-para-clinicas /automatizacion-para-spas; do
+            CODIGO=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://127.0.0.1:3000$ruta")
+            DESTINO=$(curl -s -o /dev/null -w '%{redirect_url}' --max-time 10 "http://127.0.0.1:3000$ruta")
+            if [ "$CODIGO" = "301" ]; then
+              echo "  OK $ruta -> $DESTINO"
+            else
+              echo "::error::$ruta devolvió $CODIGO; se esperaba 301."
+              FALLOS=1
+            fi
+          done
+
+          # Una ruta inventada tiene que devolver 404 de verdad. Un 200 con la
+          # página vacía es un soft-404, y Google lo penaliza.
+          CODIGO=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://127.0.0.1:3000/esta-ruta-no-existe")
+          if [ "$CODIGO" = "404" ]; then
+            echo "  OK 404 en ruta desconocida"
+          else
+            echo "::error::Una ruta inexistente devolvió $CODIGO; se esperaba 404."
+            FALLOS=1
+          fi
 
           if [ "$FALLOS" = "1" ]; then docker logs ci-check; fi
           docker rm -f ci-check > /dev/null
