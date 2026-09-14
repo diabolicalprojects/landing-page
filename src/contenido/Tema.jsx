@@ -31,8 +31,8 @@ const escala = (valor, respaldo) => {
 
 export function variablesDeTema(tema = {}) {
     return {
-        '--acento': color(tema.acento, '#FF4A1C'),
-        '--acento-claro': color(tema.acentoClaro, '#C2320B'),
+        '--acento': color(tema.acento, '#FFFFFF'),
+        '--acento-claro': color(tema.acentoClaro, '#0A0A0A'),
         '--acento-tinta': color(tema.acentoTinta, '#0A0A0A'),
         '--superficie-0': color(tema.fondo, '#000000'),
         '--superficie-1': color(tema.superficie1, '#0B0B0B'),

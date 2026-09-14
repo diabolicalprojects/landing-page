@@ -57,8 +57,14 @@
    ========================================================================== */
 
 :root {
-  --acento: #FF4A1C;
-  --acento-claro: #C2320B;
+  /*
+    El acento es la INVERSION de la zona, no un color.
+    Blanco sobre negro, negro sobre papel. El sistema es monocromo: el contraste
+    hace todo el trabajo que en otras casas hace un color de marca, y por eso
+    cada pieza que destaca tiene que ganarselo con peso, tamano o superficie.
+  */
+  --acento: #FFFFFF;
+  --acento-claro: #0A0A0A;
   --acento-tinta: #0A0A0A;
 
   --superficie-0: #000000;
@@ -72,8 +78,6 @@
   --radio: 1.5rem;
   --escala-titulo: 1;
   --escala-texto: 1;
-
-  --ruido: 0.045;
 
   /* Curva única de toda la página. Una sola desaceleración, reconocible. */
   --salida: cubic-bezier(0.16, 1, 0.3, 1);
@@ -105,6 +109,7 @@
   --tarjeta: rgba(255, 255, 255, 0.028);
   --tarjeta-alta: rgba(255, 255, 255, 0.06);
   --acento-zona: var(--acento);
+  --acento-tinta-zona: var(--superficie-0);
   --inverso-fondo: #ffffff;
   --inverso-texto: var(--superficie-0);
   --sombra-tarjeta: none;
@@ -131,6 +136,7 @@
   --tarjeta: #ffffff;
   --tarjeta-alta: #ffffff;
   --acento-zona: var(--acento-claro);
+  --acento-tinta-zona: #ffffff;
   --inverso-fondo: var(--superficie-0);
   --inverso-texto: #ffffff;
   /* Desplazamiento y desenfoque de verdad: un halo sin offset es decoración,
@@ -155,19 +161,6 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-}
-
-/* Grano. Unifica las dos zonas: sobre negro rompe el plano digital y sobre
-   papel lo acerca a papel de verdad. Va fijo para que no se arrastre al
-   desplazar, que es lo que delataría que es una textura pegada. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: var(--ruido);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 html {
@@ -372,14 +365,20 @@ html {
   box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
 }
 
+/*
+  .boton-acento existe solo como alias de .boton-primario. Con el sistema
+  monocromo el acento ES la inversion de la zona, asi que los dos eran la misma
+  cosa con dos nombres. Se conserva el nombre para no romper el contenido
+  guardado desde el panel.
+*/
 .boton-acento {
-  background: var(--acento);
-  color: var(--acento-tinta);
+  background: var(--inverso-fondo);
+  color: var(--inverso-texto);
 }
 
 .boton-acento:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 34px -10px color-mix(in oklab, var(--acento) 55%, transparent);
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
 }
 
 .boton-fantasma {
@@ -485,8 +484,8 @@ html {
   pointer-events: none;
   border-radius: 999px;
   filter: blur(90px);
-  opacity: 0.5;
-  background: radial-gradient(circle, color-mix(in oklab, var(--acento) 40%, transparent) 0%, transparent 70%);
+  opacity: 0.9;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, transparent 70%);
 }
 
 .glass {
@@ -514,29 +513,39 @@ html {
    ========================================================================== */
 
 ::selection {
-  background: var(--acento);
-  color: var(--acento-tinta);
+  background: #ffffff;
+  color: var(--superficie-0);
+}
+
+.zona-clara ::selection {
+  background: var(--tinta);
+  color: var(--papel);
 }
 
 :focus-visible {
-  outline: 2px solid var(--acento);
+  outline: 2px solid #ffffff;
   outline-offset: 3px;
   border-radius: 4px;
 }
 
 .zona-clara :focus-visible {
-  outline-color: var(--acento-claro);
+  outline-color: var(--tinta);
 }
 
 input,
 textarea {
-  caret-color: var(--acento);
+  caret-color: #ffffff;
 }
 
 input,
 textarea,
 select {
-  accent-color: var(--acento);
+  accent-color: #ffffff;
+}
+
+.zona-clara input,
+.zona-clara textarea {
+  caret-color: var(--tinta);
 }
 
 ::-webkit-scrollbar {
@@ -594,34 +603,6 @@ select {
   animation-delay: 0.27s;
 }
 
-/* Marquesina de integraciones. Se duplica la lista en el markup y se desplaza
-   justo la mitad, que es lo que hace que el bucle no dé el salto. */
-@keyframes deslizar {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.marquesina {
-  display: flex;
-  width: max-content;
-  animation: deslizar 42s linear infinite;
-}
-
-.marquesina-marco {
-  overflow: hidden;
-  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-}
-
-.marquesina-marco:hover .marquesina {
-  animation-play-state: paused;
-}
-
 /* Latido del punto "en vivo". Es el único bucle de la página y solo marca que
    el sistema está atendiendo ahora mismo, que es justo lo que se está
    afirmando al lado. */
@@ -662,7 +643,6 @@ select {
     transform: none;
   }
 
-  .marquesina,
   .latido {
     animation: none;
   }

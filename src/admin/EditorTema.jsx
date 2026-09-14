@@ -13,22 +13,15 @@ import React from 'react';
  * tipográfico a la tercera edición.
  */
 
+/*
+ * El sistema es monocromo y el acento es la inversión de cada zona, no un
+ * color: blanco sobre negro, negro sobre papel. Por eso aquí no hay selector de
+ * acento — dejar elegir uno sería dejar romper el sistema desde el panel.
+ *
+ * Lo que sí se puede ajustar es la profundidad de los negros y el tono del
+ * papel, que es donde un ajuste fino sí mejora el resultado.
+ */
 const COLORES = [
-    {
-        clave: 'acento',
-        nombre: 'Color de acento',
-        ayuda: 'El naranja de los botones principales y los detalles. Sobre fondo negro.',
-    },
-    {
-        clave: 'acentoClaro',
-        nombre: 'Acento sobre fondo claro',
-        ayuda: 'Una versión más oscura del acento, para que se lea en las secciones de papel.',
-    },
-    {
-        clave: 'acentoTinta',
-        nombre: 'Texto sobre el acento',
-        ayuda: 'El color de las letras dentro de un botón naranja.',
-    },
     { clave: 'fondo', nombre: 'Fondo principal', ayuda: 'El negro base de la página.' },
     { clave: 'superficie1', nombre: 'Fondo alterno', ayuda: 'El negro de las secciones intercaladas.' },
     { clave: 'superficie2', nombre: 'Fondo elevado', ayuda: 'Para bloques que deben destacar sobre el fondo.' },

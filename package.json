@@ -20,6 +20,7 @@
     "verify": "npm run lint && npm run build && npm test"
   },
   "dependencies": {
+    "@remotion/player": "^4.0.400",
     "axios": "^1.13.6",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
@@ -35,6 +36,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.18.3",
+    "remotion": "^4.0.400",
     "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {

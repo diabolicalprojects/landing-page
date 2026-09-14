@@ -26,6 +26,7 @@ import ServiciosPage from './pages/ServiciosPage';
 // a prerenderizarse, y con lazy() el servidor solo emitía el fallback vacío del
 // Suspense. Ese era el motivo de que Google recibiera la página en blanco.
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import HojaEscenas from './pages/_HojaEscenas';
 
 // El resto sí se parte: son rutas secundarias que no se prerenderizan.
 const AdminPage = lazy(() => import('./pages/AdminPage'));
@@ -68,6 +69,7 @@ function App() {
                         />
                     ))}
                     <Route path="/admin" element={<AdminPage />} />
+                    <Route path="/_escenas" element={<HojaEscenas />} />
                     <Route path="/politica-privacidad" element={<PrivacyPolicy />} />
                     {/* El servidor ya devuelve 404 para estas rutas; esto evita
                         que el visitante se quede con una pantalla en blanco. */}
