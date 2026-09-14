@@ -21,9 +21,13 @@ import ArticuloPage from './pages/ArticuloPage';
 import { ARTICULOS } from './data/articulos';
 import ServiciosPage from './pages/ServiciosPage';
 
-// El resto sí se parte: son rutas secundarias.
+// La política de privacidad entra por el mismo motivo que las anteriores: pasa
+// a prerenderizarse, y con lazy() el servidor solo emitía el fallback vacío del
+// Suspense. Ese era el motivo de que Google recibiera la página en blanco.
+import PrivacyPolicy from './pages/PrivacyPolicy';
+
+// El resto sí se parte: son rutas secundarias que no se prerenderizan.
 const AdminPage = lazy(() => import('./pages/AdminPage'));
-const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // El Router lo pone quien monta la app: BrowserRouter en main.jsx (navegador) y
