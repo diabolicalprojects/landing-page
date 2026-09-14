@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, AlertCircle } from 'lucide-react';
 import { openWhatsApp, sendLead } from '../../utils/leads';
 import { CONTACT_EMAIL } from '../../config';
 
@@ -55,7 +55,7 @@ const Contact = () => {
                     {sent ? (
                         <div className="flex flex-col items-center text-center py-10 gap-5">
                             <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-                                <CheckCircle2 size={28} className="text-white" />
+                                {delivered ? <CheckCircle2 size={28} className="text-white" /> : <AlertCircle size={28} className="text-white" />}
                             </div>
                             <div>
                                 <h3 className="text-lg font-title uppercase text-white mb-2">{delivered ? '¡Listo, lo recibimos!' : 'Falta un paso'}</h3>

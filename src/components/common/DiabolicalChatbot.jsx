@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { CheckCircle2, X } from 'lucide-react';
+import { CheckCircle2, AlertCircle, X } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { openWhatsApp, sendLead } from '../../utils/leads';
 import { CONTACT_EMAIL } from '../../config';
@@ -239,7 +239,7 @@ const DiabolicalChatbot = () => {
                         {isSuccess && (
                             <div className="flex flex-col items-center text-center py-8 gap-5">
                                 <div className="w-16 h-16 rounded-full bg-white/5 border border-white/15 flex items-center justify-center">
-                                    <CheckCircle2 size={28} className="text-white" />
+                                    {delivered ? <CheckCircle2 size={28} className="text-white" /> : <AlertCircle size={28} className="text-white" />}
                                 </div>
                                 <div className="space-y-2">
                                     <h3 className="text-base font-title uppercase tracking-tight text-white">{delivered ? '¡Listo, lo recibimos!' : 'Falta un paso'}</h3>
