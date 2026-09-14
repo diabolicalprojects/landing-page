@@ -8,15 +8,26 @@ web
 
 ## Users
 
-Dueños y encargados de negocios pequeños de Aguascalientes, México: clínicas y
-consultorios médicos, spas y centros de estética, gimnasios y estudios de
-entrenamiento, y despachos y oficinas profesionales. De 1 a 50 empleados.
+Dueños y encargados de negocios pequeños de Aguascalientes, México. De 1 a 50
+empleados. Seis giros con la fricción ya mapeada:
 
-La situación real es siempre la misma: llega un flujo constante de mensajes por
-WhatsApp y hay una agenda que llenar, pero quien atiende está a la vez en el
-mostrador, al teléfono y en el chat. Los mensajes fuera de horario se quedan sin
-responder hasta el día siguiente, y para entonces el cliente ya reservó en otro
-sitio.
+- **Inmobiliarias**: el lead que pregunta por una propiedad a las once de la
+  noche y se enfría antes de que el asesor lo vea.
+- **Salones de belleza y centros de estética**: quien atiende tiene las manos en
+  un tinte y el teléfono lleva seis mensajes.
+- **Clínicas y consultorios médicos**: la recepción no puede estar en el
+  mostrador y en el chat a la vez.
+- **Gimnasios y estudios de entrenamiento**: preguntan el precio, nadie contesta
+  en el momento, se van al de enfrente.
+- **Despachos y oficinas profesionales**: media hora al día explicando lo mismo
+  por teléfono.
+- **Comercio y tienda en línea**: carritos abandonados y preguntas de talla de
+  madrugada.
+
+La situación de fondo es siempre la misma: llega un flujo constante de mensajes
+y hay una agenda que llenar, pero quien atiende está a la vez en el mostrador,
+al teléfono y en el chat. Lo que entra fuera de horario se queda sin responder
+hasta el día siguiente, y para entonces el cliente ya reservó en otro sitio.
 
 Quien decide es el dueño, y evalúa desde el móvil, casi siempre en un hueco
 entre dos tareas. No es un comprador técnico: no le interesa qué modelo de IA
@@ -24,12 +35,29 @@ se usa, le interesa dejar de perder citas.
 
 ## Product Purpose
 
-Diseñar e instalar sistemas autónomos que atienden, agendan y dan seguimiento
-por WhatsApp, conectados a las herramientas que el negocio ya usa. La empresa se
-define como constructora de infraestructura, no como agencia de marketing.
+Agencia de inteligencia artificial. Tres frentes que se venden juntos porque un
+interesado se pierde justo en las costuras entre ellos:
+
+1. **Sitios web con IA dentro** — desde una landing hasta una tienda en línea,
+   con un asistente que resuelve dentro del propio sitio.
+2. **Agendamiento automático** — sobre el calendario real del negocio, con
+   confirmación, recordatorio y reagenda.
+3. **Automatizaciones a medida** — lo que hoy se hace copiando y pegando: pasar
+   un lead al CRM, armar una cotización, mandar el contrato, avisar al equipo.
+
+Alrededor, un catálogo de 17 servicios en cinco etapas (captación, conversión,
+atención y venta, marca, estrategia y medición).
+
+Todo se monta sobre las herramientas que el negocio ya usa. No se cambia de
+sistema a nadie.
 
 Éxito para el visitante: entender en un vistazo si su negocio es candidato, y
 solicitar la auditoría de fricción gratuita.
+
+**Corrección de rumbo registrada.** Durante un tiempo el sitio se leía como si
+solo se vendieran chatbots de WhatsApp. WhatsApp sigue siendo el canal donde
+ocurre la venta, pero es UNO de los frentes, no la oferta. Cualquier texto que
+vuelva a cerrar la oferta a WhatsApp es una regresión.
 
 ## Positioning
 
@@ -93,7 +121,20 @@ cuadrado blanco. **El logo y el nombre son intocables.**
 **El chatbot de diagnóstico y el embudo a WhatsApp son intocables** en su
 mecánica: el diálogo, el envío al webhook de n8n y la apertura de WhatsApp con
 mensaje prellenado siguen funcionando igual. Puede cambiar cómo se ven y cómo se
-entra a ellos.
+entra a ellos. Desde 2026-09-14 el prospecto se guarda ADEMÁS en el propio
+servidor, porque antes un fallo del webhook era un prospecto perdido sin rastro.
+
+**Voz: diablillos de la tecnología.** Traviesa, directa, mexicana y siempre con
+intención de venta. «Conocemos el desmadre de tu giro», «Somos diablillos, no
+estafadores», «Hecho por diablillos en Aguascalientes». La travesura está en el
+tono, nunca en lo que se promete: la sección de límites es la más seria del
+sitio y ahí no se bromea. Ni corporativo ni payaso.
+
+**El contenido del sitio se edita desde `/admin`, no desde el código.** Los
+textos, los botones, los enlaces, las tarjetas, el color de acento y la escala
+tipográfica viven en `data/contenido.json` (volumen), fusionados sobre
+`src/data/contenido.json` (fábrica). Quien toque la portada tiene que preguntarse
+antes si eso debería ser editable en vez de estar escrito en un componente.
 
 Contacto: WhatsApp +52 449 513 6907 · contacto@diabolicalservices.tech
 
@@ -141,6 +182,10 @@ comentarios descartados):
 | diabolicalservices.tech | 1352 palabras | 1 | 10 | 43 | 3 |
 | inedito.digital | 8 palabras | 0 | 0 | 0 | 2 |
 | mangospacemarketing.app | 9 palabras | 0 | 0 | 0 | 0 |
+
+Tras el rediseño del 14-09-2026 la portada sirve **2045 palabras** renderizadas,
+con un solo h1 y sin saltos de nivel de encabezado. La ventaja se amplió, que
+era el objetivo.
 
 Los dos competidores son aplicaciones de cliente con el contenedor vacío: sirven
 un cascarón y montan todo el contenido con JavaScript. Google lo ejecuta y los

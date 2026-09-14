@@ -21,3 +21,6 @@ screenshots/
 
 # Build intermedio del prerender
 .ssr/
+video/public/
+video/out/
+video/node_modules/
