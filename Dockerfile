@@ -49,6 +49,13 @@ COPY --from=prod-deps /app/node_modules ./node_modules
 # Solo lo que el servidor necesita en runtime: nada de código fuente ni de
 # devDependencies en la imagen final.
 COPY --from=builder /app/dist ./dist
+
+# Bundle de servidor. Es lo que permite que el servidor renderice cada página
+# con el contenido que el equipo edita desde /admin, en vez de servir el HTML
+# congelado del build. Sin esta copia el sitio arranca igual, pero cualquier
+# edición dejaría de salir en el HTML que leen Google y los motores de IA.
+COPY --from=builder /app/.ssr ./.ssr
+
 COPY server.js ./
 COPY server ./server
 

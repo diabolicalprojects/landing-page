@@ -30,7 +30,11 @@ function buildHelmet() {
                 defaultSrc: ["'self'"],
                 baseUri: ["'self'"],
                 objectSrc: ["'none'"],
-                frameAncestors: ["'none'"],
+                // 'self' y no 'none': el panel /admin muestra el sitio real
+                // dentro de un <iframe> para la vista previa en vivo. Sigue
+                // bloqueando que lo enmarque cualquier otro dominio, que es de
+                // lo que protege esta directiva (clickjacking).
+                frameAncestors: ["'self'"],
                 formAction: ["'self'"],
                 scriptSrc: ["'self'", "'unsafe-inline'", ...GOOGLE_TAG, ...GOOGLE_ANALYTICS, ...META_PIXEL],
                 scriptSrcAttr: ["'none'"],
@@ -44,7 +48,7 @@ function buildHelmet() {
                     ...GOOGLE_ANALYTICS,
                     ...META_PIXEL,
                 ],
-                frameSrc: [...GOOGLE_TAG],
+                frameSrc: ["'self'", ...GOOGLE_TAG],
                 manifestSrc: ["'self'"],
                 upgradeInsecureRequests: config.nodeEnv === 'production' ? [] : null,
             },
@@ -88,4 +92,18 @@ const apiLimiter = rateLimit({
     message: { error: 'Demasiadas peticiones.' },
 });
 
-module.exports = { buildHelmet, buildCors, loginLimiter, apiLimiter };
+/*
+ * Alta de prospectos: la única ruta de escritura que no exige sesión, y por eso
+ * la que un bot intentaría inundar. Veinte envíos por IP cada diez minutos deja
+ * holgura de sobra a una persona que se equivoca y reenvía, y corta en seco el
+ * relleno automático.
+ */
+const leadLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000,
+    limit: 20,
+    standardHeaders: 'draft-7',
+    legacyHeaders: false,
+    message: { error: 'Demasiados envíos. Espera unos minutos.' },
+});
+
+module.exports = { buildHelmet, buildCors, loginLimiter, apiLimiter, leadLimiter };

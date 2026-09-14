@@ -1,61 +1,97 @@
-import React, { useState } from 'react';
-import { cn } from '../../utils/cn';
-import faqs from '../../data/faq.json';
+import React, { useId, useState } from 'react';
+import { Plus } from 'lucide-react';
 
-/**
- * Las preguntas salen de src/data/faq.json, el mismo archivo del que
+import faqs from '../../data/faq.json';
+import { useBloque } from '../../contenido';
+import EncabezadoSeccion from '../common/EncabezadoSeccion';
+
+/*
+ * Preguntas frecuentes. Segunda inversión a claro.
+ *
+ * Las preguntas salen de src/data/faq.json, el mismo fichero del que
  * server/schema.js construye el FAQPage. Google exige que lo marcado en el
- * schema sea exactamente lo que ve el visitante: si fueran dos listas
- * separadas, acabarían divergiendo y el marcado sería infractor.
+ * schema sea exactamente lo que ve el visitante: dos listas separadas
+ * acabarían divergiendo y el marcado pasaría a ser infractor.
+ *
+ * Las respuestas están SIEMPRE en el DOM, solo ocultas con hidden. Montarlas al
+ * abrir dejaría la mitad del texto citable de la página fuera del HTML servido,
+ * que es justo la ventaja que este sitio tiene sobre la competencia local.
  */
 const FAQSection = () => {
-    const [openIndex, setOpenIndex] = useState(null);
+    const [abierta, setAbierta] = useState(null);
+    const idBase = useId();
 
-    const toggleFAQ = (index) => {
-        setOpenIndex(openIndex === index ? null : index);
-    };
+    const { visible, insignia, titulo } = useBloque('faq');
+
+    if (visible === false) return null;
 
     return (
-        <section id="faq" className="seccion superficie-1 border-t border-white/5 relative">
-            <div className="max-w-4xl mx-auto px-5 md:px-6 relative z-10">
-                <div className="text-center mb-12 md:mb-16">
-                    <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-3">Preguntas Frecuentes</h2>
-                    <p className="text-white/60 uppercase tracking-[0.3em] text-[9px] font-bold">Claridad técnica sobre la integración de sistemas</p>
-                </div>
+        <section id="faq" className="zona-clara seccion-amplia">
+            <div className="contenedor">
+                <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+                    <div className="lg:col-span-4">
+                        <EncabezadoSeccion id="faq" insignia={insignia} titulo={titulo} />
+                    </div>
 
-                <div className="space-y-4">
-                    {faqs.map((faq, i) => {
-                        const isOpen = openIndex === i;
-                        return (
-                            <div 
-                                key={i} 
-                                className="glass-card rounded-2xl border border-white/5 hover:border-white/10 transition-all duration-300 overflow-hidden"
-                            >
-                                <button
-                                    onClick={() => toggleFAQ(i)}
-                                    className="w-full text-left px-6 py-5 flex justify-between items-center gap-4 text-white hover:text-white/80 transition-colors"
-                                >
-                                    <span className="text-sm md:text-base font-bold tracking-wide">{faq.pregunta}</span>
-                                    <span className={cn(
-                                        "w-6 h-6 rounded-full bg-white/5 flex items-center justify-center text-xs transition-transform duration-300 flex-shrink-0",
-                                        isOpen && "rotate-45"
-                                    )}>
-                                        ＋
-                                    </span>
-                                </button>
-                                <div 
-                                    className={cn(
-                                        "transition-all duration-300 ease-in-out overflow-hidden",
-                                        isOpen ? "max-h-[32rem] border-t border-white/5" : "max-h-0"
-                                    )}
-                                >
-                                    <p className="px-6 py-5 text-xs md:text-sm text-white/50 leading-relaxed font-light">
-                                        {faq.respuesta}
-                                    </p>
-                                </div>
-                            </div>
-                        );
-                    })}
+                    <div className="lg:col-span-8">
+                        <ul className="space-y-2.5">
+                            {faqs.map((faq, i) => {
+                                const estaAbierta = abierta === i;
+                                const idPanel = `${idBase}-panel-${i}`;
+                                const idBoton = `${idBase}-boton-${i}`;
+
+                                return (
+                                    <li key={faq.pregunta} className="tarjeta overflow-hidden">
+                                        <h3>
+                                            <button
+                                                type="button"
+                                                id={idBoton}
+                                                aria-expanded={estaAbierta}
+                                                aria-controls={idPanel}
+                                                onClick={() => setAbierta(estaAbierta ? null : i)}
+                                                className="flex w-full items-center justify-between gap-5 px-5 py-5 text-left md:px-7 md:py-6"
+                                            >
+                                                <span className="text-[1rem] font-bold leading-snug tracking-tight md:text-[1.0625rem]">
+                                                    {faq.pregunta}
+                                                </span>
+                                                <span
+                                                    className="flex h-8 w-8 flex-none items-center justify-center rounded-full transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                                                    style={{
+                                                        background: estaAbierta
+                                                            ? 'var(--acento-claro)'
+                                                            : 'var(--papel-2)',
+                                                        color: estaAbierta
+                                                            ? '#ffffff'
+                                                            : 'var(--texto-1)',
+                                                        transform: estaAbierta
+                                                            ? 'rotate(45deg)'
+                                                            : 'none',
+                                                    }}
+                                                    aria-hidden="true"
+                                                >
+                                                    <Plus size={16} />
+                                                </span>
+                                            </button>
+                                        </h3>
+
+                                        <div
+                                            id={idPanel}
+                                            role="region"
+                                            aria-labelledby={idBoton}
+                                            hidden={!estaAbierta}
+                                        >
+                                            <p
+                                                className="cuerpo max-w-none px-5 pb-6 md:px-7 md:pb-7"
+                                                style={{ borderTop: '1px solid var(--linea)', paddingTop: '1.25rem' }}
+                                            >
+                                                {faq.respuesta}
+                                            </p>
+                                        </div>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>

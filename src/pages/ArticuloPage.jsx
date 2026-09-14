@@ -57,7 +57,7 @@ const ArticuloPage = ({ slug }) => {
                 <header className="pt-32 md:pt-44 pb-10 md:pb-14 px-5 md:px-6">
                     <div className="max-w-3xl mx-auto">
                         <nav aria-label="Ruta de navegación" className="mb-8">
-                            <ol className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] text-white/30 font-bold">
+                            <ol className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] text-white/55 font-bold">
                                 <li><Link to="/" className="hover:text-white transition-colors">Inicio</Link></li>
                                 <li aria-hidden="true">/</li>
                                 <li><Link to="/blog" className="hover:text-white transition-colors">Blog</Link></li>
@@ -72,7 +72,7 @@ const ArticuloPage = ({ slug }) => {
                             {articulo.entradilla}
                         </p>
 
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.3em] text-white/30 font-bold border-t border-white/5 pt-6">
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.3em] text-white/55 font-bold border-t border-white/5 pt-6">
                             <time dateTime={articulo.fecha}>{fechaLegible(articulo.fecha)}</time>
                             {articulo.lectura ? (
                                 <>
@@ -125,7 +125,7 @@ const ArticuloPage = ({ slug }) => {
                             <details key={i} className="glass-card rounded-2xl border-white/5 group">
                                 <summary className="cursor-pointer list-none p-6 flex justify-between items-center gap-4">
                                     <h3 className="text-sm font-bold text-white leading-snug">{item.q}</h3>
-                                    <span className="text-white/30 text-xl leading-none flex-shrink-0 group-open:rotate-45 transition-transform" aria-hidden="true">+</span>
+                                    <span className="text-white/55 text-xl leading-none flex-shrink-0 group-open:rotate-45 transition-transform" aria-hidden="true">+</span>
                                 </summary>
                                 <p className="px-6 pb-6 text-white/55 text-sm leading-relaxed font-light">{item.a}</p>
                             </details>
@@ -158,12 +158,12 @@ const ArticuloPage = ({ slug }) => {
             <section className="relative z-10 py-12 md:py-16 px-5 md:px-6 border-t border-white/5">
                 <div className="max-w-3xl mx-auto">
                     <div className="flex items-center justify-between gap-4 mb-6">
-                        <h2 className="text-[9px] uppercase tracking-[0.4em] text-white/30 font-black">
+                        <h2 className="text-[9px] uppercase tracking-[0.4em] text-white/55 font-black">
                             {otros.length > 0 ? 'Seguir leyendo' : 'Blog'}
                         </h2>
                         <Link
                             to="/blog"
-                            className="text-[9px] uppercase tracking-[0.3em] text-white/40 hover:text-white transition-colors font-bold flex items-center gap-2"
+                            className="text-[9px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors font-bold flex items-center gap-2"
                         >
                             <ArrowLeft size={12} /> Todos los artículos
                         </Link>

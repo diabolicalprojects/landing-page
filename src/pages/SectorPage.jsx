@@ -37,7 +37,7 @@ const SectorPage = ({ slug }) => {
             <section className="relative z-10 pt-32 md:pt-44 pb-14 md:pb-20 px-5 md:px-6">
                 <div className="max-w-4xl mx-auto">
                     <nav aria-label="Ruta de navegación" className="mb-8">
-                        <ol className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] text-white/30 font-bold">
+                        <ol className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] text-white/55 font-bold">
                             <li><Link to="/" className="hover:text-white transition-colors">Inicio</Link></li>
                             <li aria-hidden="true">/</li>
                             <li className="text-white/60">{sector.nombreCorto}</li>
@@ -81,7 +81,7 @@ const SectorPage = ({ slug }) => {
                     <h2 className="text-2xl md:text-3xl font-title uppercase tracking-tighter mb-3">
                         Lo que está pasando hoy
                     </h2>
-                    <p className="text-[9px] uppercase tracking-[0.3em] text-white/40 font-bold mb-10">
+                    <p className="text-[9px] uppercase tracking-[0.3em] text-white/55 font-bold mb-10">
                         Fricción típica del sector
                     </p>
 
@@ -102,7 +102,7 @@ const SectorPage = ({ slug }) => {
                     <h2 className="text-2xl md:text-3xl font-title uppercase tracking-tighter mb-3">
                         Lo que instalamos
                     </h2>
-                    <p className="text-[9px] uppercase tracking-[0.3em] text-white/40 font-bold mb-12">
+                    <p className="text-[9px] uppercase tracking-[0.3em] text-white/55 font-bold mb-12">
                         Sistemas autónomos conectados a lo que ya usas
                     </p>
 
@@ -128,7 +128,7 @@ const SectorPage = ({ slug }) => {
                     <h2 className="text-2xl md:text-3xl font-title uppercase tracking-tighter mb-3">
                         Preguntas frecuentes
                     </h2>
-                    <p className="text-[9px] uppercase tracking-[0.3em] text-white/40 font-bold mb-10">
+                    <p className="text-[9px] uppercase tracking-[0.3em] text-white/55 font-bold mb-10">
                         {sector.nombreCorto}
                     </p>
 
@@ -137,7 +137,7 @@ const SectorPage = ({ slug }) => {
                             <details key={i} className="glass-card rounded-2xl border-white/5 group">
                                 <summary className="cursor-pointer list-none p-6 flex justify-between items-center gap-4">
                                     <h3 className="text-sm font-bold text-white leading-snug">{item.q}</h3>
-                                    <span className="text-white/30 text-xl leading-none flex-shrink-0 group-open:rotate-45 transition-transform" aria-hidden="true">+</span>
+                                    <span className="text-white/55 text-xl leading-none flex-shrink-0 group-open:rotate-45 transition-transform" aria-hidden="true">+</span>
                                 </summary>
                                 <p className="px-6 pb-6 text-white/55 text-sm leading-relaxed font-light">{item.a}</p>
                             </details>
@@ -169,7 +169,7 @@ const SectorPage = ({ slug }) => {
                 páginas y evitan que cada una quede aislada del resto. */}
             <section className="relative z-10 py-12 md:py-16 px-5 md:px-6 border-t border-white/5">
                 <div className="max-w-4xl mx-auto">
-                    <h2 className="text-[9px] uppercase tracking-[0.4em] text-white/30 font-black mb-6">
+                    <h2 className="text-[9px] uppercase tracking-[0.4em] text-white/55 font-black mb-6">
                         Otros sectores
                     </h2>
                     <div className="flex flex-wrap gap-3">

@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import ErrorBoundary from './components/common/ErrorBoundary';
+import Tema from './contenido/Tema';
 
 // La portada se carga en el bundle principal a propósito: es el 99% del tráfico
 // y además es la ruta que se prerenderiza, así que un lazy() aquí obligaría a
@@ -35,6 +36,10 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 function App() {
     return (
         <ErrorBoundary>
+            {/* Las variables de tema van aquí y no en la portada: /servicios,
+                /blog y las páginas de sector usan los mismos tokens, y sin esto
+                el acento y la escala editados solo se aplicarían en la home. */}
+            <Tema />
             <Suspense fallback={<div className="min-h-screen bg-black" />}>
                 <Routes>
                     <Route path="/" element={<LandingPage />} />

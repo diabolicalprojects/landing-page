@@ -219,7 +219,7 @@ const DiabolicalChatbot = () => {
                         </div>
                         <div className="flex-1 min-w-0">
                             <p id="diabolical-chat-title" className="text-xs font-black uppercase tracking-widest text-white leading-none">Diagnóstico Diabolical</p>
-                            <p className="text-[9px] text-white/30 uppercase tracking-widest mt-0.5">Sistema Autónomo · Online</p>
+                            <p className="text-[9px] text-white/55 uppercase tracking-widest mt-0.5">Sistema Autónomo · Online</p>
                         </div>
                         <div className="flex items-center gap-1.5 flex-shrink-0">
                             <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />

@@ -62,8 +62,17 @@ function inyectarCabecera(html, ruta) {
 
 let total = 0;
 
+/*
+ * El prerender siempre usa el contenido de fábrica, nunca el editado: este HTML
+ * se hornea en la imagen y la edición vive en el volumen, que en el momento del
+ * build no existe. Es el respaldo para cuando el render en caliente no está
+ * disponible, y server/contenido.js solo lo sirve mientras nadie haya editado
+ * nada, justo el caso en el que este HTML es exacto.
+ */
+const contenidoDeFabrica = require('../src/data/contenido.json');
+
 for (const ruta of RUTAS_PRERENDER) {
-    const markup = render(ruta);
+    const markup = render(ruta, contenidoDeFabrica);
 
     if (!markup || markup.length < 500) {
         throw new Error(

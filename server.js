@@ -5,10 +5,19 @@ const compression = require('compression');
 const cookieParser = require('cookie-parser');
 
 const config = require('./server/config');
-const { buildHelmet, buildCors, loginLimiter, apiLimiter } = require('./server/security');
+const { buildHelmet, buildCors, loginLimiter, apiLimiter, leadLimiter } = require('./server/security');
 const { readSettings, writeSettings, ensureDataDir } = require('./server/settings');
+const {
+    leerContenido,
+    escribirContenido,
+    restablecerContenido,
+    esPersonalizado,
+    BASE: CONTENIDO_BASE,
+} = require('./server/contenido');
+const { registrarLead, listarLeads, marcarLead, resumenLeads } = require('./server/leads');
+const { prepararSsr, renderizar, estadoSsr } = require('./server/ssr');
 const { injectSeo } = require('./server/render');
-const { escapeHtml } = require('./server/html');
+const { escapeHtml, serializeJson } = require('./server/html');
 const { construirRobots } = require('./server/robots');
 const { construirLlms, construirLlmsFull } = require('./server/llms');
 const { RUTAS_PUBLICAS, RUTAS_PRERENDER, archivoPrerender } = require('./server/schema');
@@ -99,6 +108,71 @@ app.post('/api/settings', buildCors(), apiLimiter, requireAuth, (req, res) => {
         console.error('[settings] Error al guardar:', error);
         res.status(500).json({ error: 'No se pudo guardar la configuración' });
     }
+});
+
+// --- Contenido editable ----------------------------------------------------
+
+// Lectura pública: es el mismo contenido que ya viaja dentro del HTML servido,
+// así que no revela nada. La expone para que el panel pueda cargar el estado
+// actual antes de identificarse y para poder comprobarlo desde fuera.
+app.get('/api/contenido', buildCors(), apiLimiter, (req, res) => {
+    const { valor, version } = leerContenido();
+    res.json({ contenido: valor, version, base: CONTENIDO_BASE });
+});
+
+app.post('/api/contenido', buildCors(), apiLimiter, requireAuth, (req, res) => {
+    try {
+        const resultado = escribirContenido(req.body);
+        if (!resultado.ok) return res.status(400).json({ error: resultado.error });
+        res.json({ success: true, version: resultado.version });
+    } catch (error) {
+        console.error('[contenido] Error al guardar:', error);
+        res.status(500).json({ error: 'No se pudo guardar el contenido.' });
+    }
+});
+
+// Vuelve al contenido de fábrica. Es la salida de emergencia cuando una edición
+// deja la página inservible y no se acierta a deshacerla a mano.
+app.post('/api/contenido/restablecer', buildCors(), apiLimiter, requireAuth, (req, res) => {
+    try {
+        res.json({ success: true, ...restablecerContenido() });
+    } catch (error) {
+        console.error('[contenido] Error al restablecer:', error);
+        res.status(500).json({ error: 'No se pudo restablecer el contenido.' });
+    }
+});
+
+// --- Bandeja de prospectos -------------------------------------------------
+
+/*
+ * Alta pública. El formulario y el chatbot siguen enviando a n8n igual que
+ * siempre; esto es una copia local que además convierte un fallo del webhook en
+ * un prospecto guardado en vez de un prospecto perdido.
+ *
+ * Usa leadLimiter, más estrecho que el de la API general: es la única ruta de
+ * escritura sin sesión, y la que un bot intentaría inundar.
+ */
+app.post('/api/leads', buildCors(), leadLimiter, (req, res) => {
+    try {
+        const resultado = registrarLead(req.body, { origen: req.get('referer') || '' });
+        if (!resultado.ok) return res.status(400).json({ error: resultado.error });
+        res.status(201).json({ success: true });
+    } catch (error) {
+        console.error('[leads] Error al registrar:', error);
+        res.status(500).json({ error: 'No se pudo registrar el envío.' });
+    }
+});
+
+app.get('/api/leads', buildCors(), apiLimiter, requireAuth, (req, res) => {
+    const limite = Math.min(Number(req.query.limite) || 100, 300);
+    const desde = Math.max(Number(req.query.desde) || 0, 0);
+    res.json({ ...listarLeads({ limite, desde }), resumen: resumenLeads() });
+});
+
+app.patch('/api/leads/:id', buildCors(), apiLimiter, requireAuth, (req, res) => {
+    const resultado = marcarLead(req.params.id, req.body || {});
+    if (!resultado.ok) return res.status(400).json({ error: resultado.error });
+    res.json({ success: true, ...resultado });
 });
 
 // --- robots.txt y sitemap.xml dinámicos ------------------------------------
@@ -279,31 +353,110 @@ function loadHtml(fileName) {
     return html;
 }
 
-app.get('*', (req, res) => {
-    // Cada ruta prerenderizada tiene su propio HTML; el resto reciben el shell
-    // vacío, porque servirles el HTML de otra página obligaría a React a
-    // descartarlo al hidratar.
-    //
-    // El nombre del fichero se deriva de la ruta, así que solo se consulta para
-    // rutas de la lista blanca: construirlo con req.path arbitrario abriría un
-    // path traversal.
-    const prerenderizada = PRERENDER.has(req.path) ? loadHtml(archivoPrerender(req.path)) : null;
-    const html = prerenderizada || loadHtml('app-shell.html') || loadHtml('index.html');
+const ETIQUETA_ROOT = '<div id="root">';
 
-    if (!html) {
-        return res
-            .status(503)
-            .type('text/plain')
-            .send('El build no existe todavía. Ejecuta `npm run build`.');
+/*
+ * Identidad del build.
+ *
+ * El ETag de una página tiene que cambiar cuando cambia CUALQUIERA de las dos
+ * cosas que la componen: el contenido editado y el código desplegado.
+ *
+ * Con solo la versión del contenido había un agujero serio: un despliegue que
+ * tocara únicamente código dejaba el ETag idéntico, el navegador revalidaba,
+ * recibía 304 y seguía usando el HTML guardado. Ese HTML apunta a los assets
+ * con hash del build ANTERIOR, que ya no existen en dist. Resultado para quien
+ * ya había visitado el sitio: página en blanco hasta vaciar la caché.
+ *
+ * dist/build-id.txt es la huella del código fuente de este commit y la genera
+ * el propio build (scripts/build-id.mjs), así que sirve exactamente para esto.
+ */
+const idBuild = (() => {
+    try {
+        return fs.readFileSync(path.join(config.distPath, 'build-id.txt'), 'utf8').trim().slice(0, 12);
+    } catch {
+        // Sin build todavía; el servidor responde 503 igualmente más abajo.
+        return 'sin-build';
+    }
+})();
+
+/**
+ * Construye el HTML de una ruta con el contenido actual.
+ *
+ * Tres caminos, en este orden:
+ *
+ *   1. Render en caliente. Es el normal: coge el shell del build y le mete el
+ *      markup recién renderizado con el contenido que hay guardado ahora. Lo
+ *      que se edita en el panel sale aquí, y por tanto lo ven los rastreadores.
+ *   2. HTML estático del build, solo si NADIE ha editado nada. Con el contenido
+ *      de fábrica ese HTML sigue siendo exacto.
+ *   3. Shell vacío. Si hay contenido editado y el render en caliente no está
+ *      disponible, servir el estático daría texto viejo y además React lo
+ *      tiraría al hidratar por no coincidir. Vale más montar en cliente.
+ *
+ * El nombre del fichero se deriva de la ruta, así que solo se consulta para
+ * rutas de la lista blanca: construirlo con un req.path arbitrario abriría un
+ * path traversal.
+ */
+async function construirPagina(ruta, { indexable }) {
+    const { valor, version } = leerContenido();
+
+    let html = null;
+
+    if (PRERENDER.has(ruta)) {
+        const renderizado = await renderizar(ruta);
+        if (renderizado) {
+            const shell = loadHtml('app-shell.html') || loadHtml('index.html');
+            if (shell) {
+                html = shell.replace(
+                    ETIQUETA_ROOT,
+                    `${ETIQUETA_ROOT}${renderizado.markup}`
+                );
+            }
+        } else if (!esPersonalizado()) {
+            html = loadHtml(archivoPrerender(ruta));
+        }
     }
 
-    const isKnownRoute = APP_ROUTES.has(req.path);
+    html = html || loadHtml('app-shell.html') || loadHtml('index.html');
+    if (!html) return null;
 
-    res.setHeader('Cache-Control', 'no-cache');
-    return res
-        .status(isKnownRoute ? 200 : 404)
-        .type('html')
-        .send(injectSeo(html, readSettings(), req.path, { indexable: isKnownRoute }));
+    // El contenido viaja en el propio HTML para que React hidrate con el mismo
+    // dato con el que se generó el markup. Si llegara por fetch después, la
+    // página parpadearía del texto de fábrica al editado en cada carga.
+    html = html.replace(
+        ETIQUETA_ROOT,
+        `<script>window.__CONTENIDO__=${serializeJson(valor)}</script>${ETIQUETA_ROOT}`
+    );
+
+    return { html: injectSeo(html, readSettings(), ruta, { indexable }), version };
+}
+
+app.get('*', async (req, res, next) => {
+    try {
+        const isKnownRoute = APP_ROUTES.has(req.path);
+        const pagina = await construirPagina(req.path, { indexable: isKnownRoute });
+
+        if (!pagina) {
+            return res
+                .status(503)
+                .type('text/plain')
+                .send('El build no existe todavía. Ejecuta `npm run build`.');
+        }
+
+        // Build + contenido: las dos cosas que pueden cambiar esta página. Si
+        // faltara cualquiera de las dos, un 304 devolvería HTML desfasado.
+        res.setHeader('Cache-Control', 'no-cache');
+        res.setHeader('ETag', `W/"${idBuild}-${pagina.version}"`);
+
+        return res
+            .status(isKnownRoute ? 200 : 404)
+            .type('html')
+            .send(pagina.html);
+    } catch (error) {
+        // Express 4 no captura el rechazo de un handler async: sin este catch,
+        // un fallo aquí deja la petición colgada hasta que el cliente desiste.
+        return next(error);
+    }
 });
 
 // Red de seguridad: cualquier error no capturado devuelve 500 en vez de dejar
@@ -311,9 +464,42 @@ app.get('*', (req, res) => {
 // argumentos son obligatorios para que Express lo trate como manejador de
 // errores, aunque `next` no se use.
 app.use((error, req, res, next) => {
-    console.error('[server] Error no capturado:', error);
     if (res.headersSent) return;
+
+    /*
+     * Cuerpo demasiado grande o JSON mal formado.
+     *
+     * express.json rechaza estas dos antes de que el handler llegue a correr, y
+     * sin este caso salían como «Error interno del servidor»: el panel decía
+     * que el fallo era nuestro cuando el problema era un pegado enorme o un
+     * JSON roto, y quien editaba no tenía forma de saber qué corregir.
+     */
+    if (error?.type === 'entity.too.large') {
+        return res.status(413).json({
+            error: 'El contenido enviado es demasiado grande. Acorta los textos o usa menos elementos.',
+        });
+    }
+    if (error?.type === 'entity.parse.failed') {
+        return res.status(400).json({ error: 'El contenido enviado no es JSON válido.' });
+    }
+
+    console.error('[server] Error no capturado:', error);
     res.status(500).type('text/plain').send('Error interno del servidor');
+});
+
+// El bundle de servidor se carga al arrancar, no en la primera petición: así el
+// coste del import no se lo come el primer visitante, y si falta se ve en los
+// logs del arranque en vez de descubrirse cuando alguien edita algo.
+prepararSsr().then(() => {
+    const { disponible, motivoFallo } = estadoSsr();
+    if (disponible) {
+        console.log('[ssr] Render en caliente activo: lo editado en /admin sale en el HTML servido.');
+    } else {
+        console.warn(
+            `[ssr] Sin render en caliente (${motivoFallo}). Se sirve el HTML del build; ` +
+                'el contenido editado desde /admin solo se verá tras hidratar.'
+        );
+    }
 });
 
 const server = app.listen(config.port, '0.0.0.0', () => {

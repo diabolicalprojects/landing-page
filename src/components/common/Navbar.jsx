@@ -1,157 +1,168 @@
-import React, { useEffect, useState } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Menu, X } from 'lucide-react';
+
 import { cn } from '../../utils/cn';
-
-gsap.registerPlugin(ScrollTrigger);
-
+import { useBloque } from '../../contenido';
+import Enlace from './Enlace';
 import logoHorizontalNegro from '../../assets/logo/LOGO-DIABOLICAL-HORIZONTAL-NEGRO.svg';
 import logoHorizontalBlanco from '../../assets/logo/LOGO-DIABOLICAL-HORIZONTAL-BLANCO.svg';
 
+/*
+ * Barra flotante.
+ *
+ * Se invierte al pasar por encima de una sección clara. La versión anterior lo
+ * resolvía con dos ScrollTrigger atados a #problem y #comparison —dos secciones
+ * que ya no existen—, así que llevaba tiempo sin invertir nada.
+ *
+ * Ahora pregunta a las propias secciones: busca los elementos .zona-clara y
+ * comprueba si alguno cruza la franja donde está la barra. No hace falta
+ * registrarlas en ningún sitio y funciona igual si mañana se añade otra.
+ */
+
+const ALTURA_BARRA = 72;
+
 const Navbar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isLight, setIsLight] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [desplazado, setDesplazado] = useState(false);
+    const [sobreClaro, setSobreClaro] = useState(false);
+    const [menuAbierto, setMenuAbierto] = useState(false);
+    const zonasRef = useRef([]);
+
+    const { enlaces = [], cta } = useBloque('nav');
 
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
+        zonasRef.current = Array.from(document.querySelectorAll('.zona-clara'));
+
+        let pendiente = false;
+        const medir = () => {
+            pendiente = false;
+            setDesplazado(window.scrollY > 24);
+            setSobreClaro(
+                zonasRef.current.some((zona) => {
+                    const { top, bottom } = zona.getBoundingClientRect();
+                    return top <= ALTURA_BARRA && bottom >= ALTURA_BARRA;
+                })
+            );
         };
-        window.addEventListener('scroll', handleScroll, { passive: true });
 
-        // El navbar se aclara sobre las secciones de fondo blanco, que solo
-        // existen en la portada. Sin esta comprobación, ScrollTrigger toma el
-        // viewport como referencia cuando el selector no encuentra nada y el
-        // navbar sale en versión clara sobre el fondo negro de las demás
-        // páginas.
-        // isLight ya arranca en false y el navbar se remonta con cada cambio de
-        // ruta, así que basta con no crear los triggers.
-        if (!document.querySelector('#problem') || !document.querySelector('#comparison')) {
-            return () => window.removeEventListener('scroll', handleScroll);
-        }
+        // El scroll dispara muchísimo más rápido de lo que la pantalla pinta;
+        // sin el rAF se recalcularían rectángulos que nadie llega a ver.
+        const alDesplazar = () => {
+            if (pendiente) return;
+            pendiente = true;
+            requestAnimationFrame(medir);
+        };
 
-        // Detect white background sections
-        const triggers = [
-            ScrollTrigger.create({
-                trigger: "#problem",
-                start: "top 80px",
-                end: "bottom 80px",
-                id: "prob-trigger",
-                onToggle: self => {
-                    if (self.isActive) {
-                        setIsLight(true);
-                    } else {
-                        const compActive = ScrollTrigger.getById('comp-trigger')?.isActive;
-                        setIsLight(!!compActive);
-                    }
-                }
-            }),
-            ScrollTrigger.create({
-                trigger: "#comparison",
-                start: "top 80px",
-                end: "bottom 80px",
-                id: "comp-trigger",
-                onToggle: self => {
-                    if (self.isActive) {
-                        setIsLight(true);
-                    } else {
-                        const probActive = ScrollTrigger.getById('prob-trigger')?.isActive;
-                        setIsLight(!!probActive);
-                    }
-                }
-            })
-        ];
+        medir();
+        window.addEventListener('scroll', alDesplazar, { passive: true });
+        window.addEventListener('resize', alDesplazar, { passive: true });
 
         return () => {
-            window.removeEventListener('scroll', handleScroll);
-            triggers.forEach(t => t.kill());
+            window.removeEventListener('scroll', alDesplazar);
+            window.removeEventListener('resize', alDesplazar);
         };
     }, []);
 
+    // Cerrar con Escape: un menú a pantalla completa sin salida por teclado deja
+    // atrapado a quien no usa ratón.
+    useEffect(() => {
+        if (!menuAbierto) return undefined;
+        const alPulsar = (evento) => {
+            if (evento.key === 'Escape') setMenuAbierto(false);
+        };
+        document.addEventListener('keydown', alPulsar);
+        return () => document.removeEventListener('keydown', alPulsar);
+    }, [menuAbierto]);
+
+    const abrirChat = () => {
+        setMenuAbierto(false);
+        window.dispatchEvent(new Event('open-diabolical-chat'));
+    };
+
     return (
         <nav
+            aria-label="Principal"
             className={cn(
-                "fixed top-3 md:top-5 left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-out px-4 md:px-8 py-2.5 md:py-4 rounded-full flex items-center justify-between gap-4 md:gap-12 w-[94%] max-w-7xl",
-                isLight
-                    ? (isScrolled ? "bg-white/90 backdrop-blur-xl border border-black/10 shadow-xl" : "bg-white/70 backdrop-blur-xl border border-black/10")
-                    : (isScrolled ? "glass" : "bg-black/70 backdrop-blur-xl border border-white/10")
+                'fixed left-1/2 top-3 z-50 flex w-[94%] max-w-6xl -translate-x-1/2 items-center justify-between gap-4 rounded-full px-4 py-2.5 transition-[background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:top-5 md:gap-10 md:px-6 md:py-3',
+                sobreClaro
+                    ? 'border border-black/10 bg-white/85 backdrop-blur-xl'
+                    : 'border border-white/10 bg-black/70 backdrop-blur-xl',
+                desplazado && 'shadow-[0_10px_40px_-16px_rgba(0,0,0,0.7)]'
             )}
         >
-            <div className="flex items-center gap-3 min-w-0">
+            <Enlace destino="/" className="flex min-h-[2.25rem] min-w-0 items-center py-1" aria-label="Diabolical, inicio">
                 <img
-                    src={isLight ? logoHorizontalNegro : logoHorizontalBlanco}
+                    src={sobreClaro ? logoHorizontalNegro : logoHorizontalBlanco}
                     alt="Diabolical"
                     width="150"
                     height="30"
-                    className="h-5 md:h-8 transition-all flex-shrink-0"
+                    className="h-5 flex-shrink-0 md:h-7"
                 />
-            </div>
+            </Enlace>
 
-            {/* Desktop Navigation */}
-            <div className={cn(
-                "hidden lg:flex items-center gap-10 text-[11px] uppercase tracking-[0.25em] font-bold transition-colors",
-                isLight ? "text-black/60" : "text-white/60"
-            )}>
-                <a href="/servicios" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Servicios</a>
-                <a href="/#mecanismo" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Cómo funciona</a>
-                <a href="/#contact" className={cn("hover:opacity-100 transition-opacity", !isLight && "hover:text-white")}>Contacto</a>
-            </div>
+            <ul
+                className={cn(
+                    'hidden items-center gap-8 text-[0.8125rem] font-semibold tracking-tight lg:flex',
+                    sobreClaro ? 'text-black/65' : 'text-white/65'
+                )}
+            >
+                {enlaces.map((enlace) => (
+                    <li key={enlace.id ?? enlace.texto}>
+                        <Enlace
+                            destino={enlace.destino}
+                            className={cn(
+                                'inline-flex min-h-[1.75rem] items-center py-1 transition-colors duration-150',
+                                sobreClaro ? 'hover:text-black' : 'hover:text-white'
+                            )}
+                        >
+                            {enlace.texto}
+                        </Enlace>
+                    </li>
+                ))}
+            </ul>
 
-            <div className="flex items-center gap-2 flex-shrink-0">
-                {/* CTA shown on medium+ screens */}
+            <div className="flex flex-shrink-0 items-center gap-2">
+                <Enlace
+                    destino={cta?.destino}
+                    className="boton boton-acento hidden min-h-[2.75rem] px-5 text-[0.8125rem] sm:inline-flex"
+                >
+                    {cta?.texto}
+                    <ArrowRight size={14} aria-hidden="true" />
+                </Enlace>
+
                 <button
-                    onClick={() => window.dispatchEvent(new Event('open-diabolical-chat'))}
+                    type="button"
+                    onClick={() => setMenuAbierto(!menuAbierto)}
+                    aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
+                    aria-expanded={menuAbierto}
                     className={cn(
-                        "hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-tighter transition-all magnetic-btn whitespace-nowrap",
-                        isLight ? "bg-black text-white hover:bg-black/80" : "bg-white text-black hover:bg-white/90"
+                        'flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full transition-colors lg:hidden',
+                        sobreClaro
+                            ? 'bg-black/5 text-black active:bg-black/10'
+                            : 'bg-white/10 text-white active:bg-white/20'
                     )}
                 >
-                    Auditoría <ArrowRight size={12} />
-                </button>
-
-                {/* Mobile Menu Toggle */}
-                <button
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
-                    className={cn(
-                        "lg:hidden flex items-center justify-center w-10 h-10 rounded-full transition-colors flex-shrink-0",
-                        isLight ? "text-black bg-black/5 active:bg-black/10" : "text-white bg-white/10 active:bg-white/20"
-                    )}
-                >
-                    {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
+                    {menuAbierto ? <X size={18} /> : <Menu size={18} />}
                 </button>
             </div>
 
-            {/* Mobile Menu Overlay */}
-            {isMenuOpen && (
-                <div className="absolute top-[calc(100%+10px)] left-0 w-full rounded-3xl bg-black border border-white/10 backdrop-blur-2xl px-5 py-5 flex flex-col gap-1 lg:hidden shadow-2xl">
-                    <a
-                        href="/servicios"
-                        onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center text-sm font-title tracking-widest py-4 border-b border-white/10 text-white active:text-white/60 transition-colors"
-                    >
-                        Servicios
-                    </a>
-                    <a
-                        href="/#mecanismo"
-                        onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center text-sm font-title tracking-widest py-4 border-b border-white/10 text-white active:text-white/60 transition-colors"
-                    >
-                        Cómo funciona
-                    </a>
-                    <a
-                        href="/#contact"
-                        onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center text-sm font-title tracking-widest py-4 border-b border-white/10 text-white active:text-white/60 transition-colors"
-                    >
-                        Contacto
-                    </a>
+            {menuAbierto && (
+                <div className="absolute left-0 top-[calc(100%+10px)] flex w-full flex-col rounded-3xl border border-white/10 bg-black px-5 py-3 shadow-2xl lg:hidden">
+                    {enlaces.map((enlace) => (
+                        <Enlace
+                            key={enlace.id ?? enlace.texto}
+                            destino={enlace.destino}
+                            onClick={() => setMenuAbierto(false)}
+                            className="border-b border-white/10 py-4 text-[0.9375rem] font-bold tracking-tight text-white transition-colors active:text-white/60"
+                        >
+                            {enlace.texto}
+                        </Enlace>
+                    ))}
                     <button
-                        onClick={() => { setIsMenuOpen(false); window.dispatchEvent(new Event('open-diabolical-chat')); }}
-                        className="w-full flex items-center justify-center py-4 rounded-full font-black text-sm uppercase tracking-widest mt-3 bg-white text-black active:scale-95 transition-transform"
+                        type="button"
+                        onClick={abrirChat}
+                        className="boton boton-acento mt-4 mb-1 w-full"
                     >
-                        Obtener Auditoría
+                        {cta?.texto}
                     </button>
                 </div>
             )}
