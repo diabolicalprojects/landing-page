@@ -4,50 +4,61 @@ import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
 import { useHydrated } from '../utils/useHydrated';
 
-// La portada se prerenderiza entera: todo directo, nada de lazy() en las
-// secciones — un boundary sin resolver haría que React descartara el HTML
-// del servidor (error #419).
+// Nada de lazy() en las secciones: la portada se renderiza entera en el
+// servidor, y un boundary sin resolver haría que React descartara ese HTML al
+// hidratar (error #419) y volviera a montarlo todo en cliente.
 import Hero from '../components/sections/Hero';
-import Hechos from '../components/sections/Hechos';
-import Servicios from '../components/sections/Servicios';
+import Stack from '../components/sections/Stack';
+import Pilares from '../components/sections/Pilares';
+import Verticales from '../components/sections/Verticales';
+import Proceso from '../components/sections/Proceso';
 import EjemploAtencion from '../components/sections/EjemploAtencion';
-import Mecanismo from '../components/sections/Mecanismo';
-import Sectores from '../components/sections/Sectores';
-import Limites from '../components/sections/Limites';
+import Servicios from '../components/sections/Servicios';
 import Comparativa from '../components/sections/Comparativa';
+import Limites from '../components/sections/Limites';
 import FAQSection from '../components/sections/FAQSection';
+import CierreCta from '../components/sections/CierreCta';
 import Contact from '../components/sections/Contact';
 
 const DiabolicalChatbot = lazy(() => import('../components/common/DiabolicalChatbot'));
 
 /*
- * Portada. El orden es la narrativa:
+ * Portada.
  *
- *   Hero        la oferta y el mecanismo demostrándose (ChatDemo)
- *   Hechos      lo verificable, donde la convención pone logos que no tenemos
- *   Modulos     qué se instala, con el límite de cada pieza
- *   Mecanismo   cómo y en cuánto tiempo, con lo que cuesta al cliente
- *   Sectores    entradas a las páginas por giro (el activo SEO)
- *   Limites     lo que NO hacemos — el diferencial de la casa
- *   Comparativa la semana del dueño, antes y después
- *   FAQ         responde lo que queda (alimenta el schema FAQPage)
- *   Contact     el embudo: formulario → n8n → WhatsApp (intocable)
+ * El orden es la narrativa, y el fondo es el ritmo. Diez secciones del mismo
+ * negro se leen como una sola masa plana, así que la página invierte a claro
+ * tres veces, y siempre donde cambia el tema de conversación:
+ *
+ *   Hero          negro      la frase y la prueba: el sistema a las 2:14
+ *   Stack         negro·1    sobre qué se monta, sin cambiarte de herramientas
+ *   Pilares       negro      los tres frentes, cada uno con su escena
+ *   Verticales    negro·1    tu giro, por la escena en la que pierdes al cliente
+ *   Proceso       CLARO      cómo se hace y en cuánto  ← cambia el tema
+ *   Ejemplo       negro      el mecanismo funcionando en un teléfono
+ *   Servicios     negro·1    el catálogo, cada uno con su alcance
+ *   Comparativa   CLARO      tu semana, antes y después  ← cambia el tema
+ *   Limites       negro      lo que no hacemos, por escrito
+ *   FAQ           CLARO      lo que queda por preguntar  ← cambia el tema
+ *   Cierre        CLARO      la tarjeta negra incrustada: el contraste máximo
+ *   Contacto      negro      el embudo a n8n y WhatsApp (intocable)
  */
 const LandingPage = () => {
     const mostrarChatbot = useHydrated();
 
     return (
-        <main className="relative bg-black min-h-screen text-white font-jakarta overflow-x-hidden">
+        <main className="font-jakarta relative min-h-screen overflow-x-hidden bg-black text-white">
             <Navbar />
             <Hero />
-            <Hechos />
-            <Servicios />
+            <Stack />
+            <Pilares />
+            <Verticales />
+            <Proceso />
             <EjemploAtencion />
-            <Mecanismo />
-            <Sectores />
-            <Limites />
+            <Servicios />
             <Comparativa />
+            <Limites />
             <FAQSection />
+            <CierreCta />
             <Contact />
             <Footer />
 

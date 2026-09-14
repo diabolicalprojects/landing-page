@@ -473,6 +473,13 @@ const RUTAS_PUBLICAS = [
  * El blog entra entero: es contenido de texto y su público son precisamente los
  * rastreadores que no ejecutan JavaScript. Servirlo como shell vacío haría
  * inútil el esfuerzo de escribirlo.
+ *
+ * La política de privacidad también, y se había quedado fuera: está en
+ * RUTAS_PUBLICAS, o sea que entra en el sitemap y se sirve con `index, follow`,
+ * pero al no prerenderizarse devolvía el shell vacío. Google pedía la página,
+ * la leía sin una sola palabra y la descartaba. Toda ruta pública tiene que
+ * estar aquí; si alguna vez hay una que no deba prerenderizarse, lo que sobra
+ * es su presencia en el sitemap, no su contenido.
  */
 const RUTAS_PRERENDER = [
     '/',
@@ -480,6 +487,7 @@ const RUTAS_PRERENDER = [
     ...SECTORES.map((s) => rutaSector(s.slug)),
     RUTA_BLOG,
     ...ARTICULOS_POR_FECHA.map((a) => rutaArticulo(a.slug)),
+    '/politica-privacidad',
 ];
 
 /**

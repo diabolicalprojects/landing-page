@@ -1,0 +1,266 @@
+{
+  "version": 1,
+  "tema": {
+    "acento": "#FF4A1C",
+    "acentoClaro": "#C2320B",
+    "acentoTinta": "#0A0A0A",
+    "fondo": "#000000",
+    "superficie1": "#0B0B0B",
+    "superficie2": "#151515",
+    "papel": "#F2F1EE",
+    "papel2": "#E6E4DF",
+    "tinta": "#0A0A0A",
+    "radio": "1.5rem",
+    "escalaTitulo": 1,
+    "escalaTexto": 1
+  },
+  "nav": {
+    "enlaces": [
+      { "id": "nav-servicios", "texto": "Servicios", "destino": "/servicios" },
+      { "id": "nav-como", "texto": "Cómo trabajamos", "destino": "#proceso" },
+      { "id": "nav-giros", "texto": "Para quién", "destino": "#verticales" },
+      { "id": "nav-blog", "texto": "Blog", "destino": "/blog" }
+    ],
+    "cta": { "texto": "Auditoría gratis", "destino": "#contacto" }
+  },
+  "hero": {
+    "visible": true,
+    "fraseA": "Tu negocio no duerme.",
+    "fraseB": "Tú sí.",
+    "apoyo": "Agencia de IA en Aguascalientes. Sitios web, agendamiento automático y automatizaciones a medida que atienden y cotizan a cualquier hora, sobre las herramientas que ya usas.",
+    "ctaPrimario": { "texto": "Quiero mi auditoría gratis", "destino": "#contacto" },
+    "ctaSecundario": { "texto": "Ver los 17 servicios", "destino": "/servicios" },
+    "pie": "Auditoría sin costo · Respuesta el mismo día · Sin permanencia",
+    "escena": {
+      "titulo": "Guardia nocturna",
+      "reloj": "02:14",
+      "etiqueta": "En operación",
+      "eventos": [
+        { "hora": "01:52", "canal": "WhatsApp", "texto": "Cotización enviada a Laura M." },
+        { "hora": "02:03", "canal": "Sitio web", "texto": "Cita agendada · jueves 10:30" },
+        { "hora": "02:11", "canal": "Instagram", "texto": "Pregunta respondida y clasificada" },
+        { "hora": "02:14", "canal": "Agenda", "texto": "Recordatorio programado a 24 h" }
+      ],
+      "nota": "Escena ilustrativa del sistema en marcha, no de un cliente real."
+    }
+  },
+  "stack": {
+    "visible": true,
+    "titulo": "Se monta encima de lo que ya usas. No te cambiamos de herramientas.",
+    "piezas": [
+      "WhatsApp Business",
+      "Google Calendar",
+      "Instagram",
+      "Facebook",
+      "Google Ads",
+      "Shopify",
+      "n8n",
+      "Notion",
+      "Sheets",
+      "Stripe"
+    ]
+  },
+  "pilares": {
+    "visible": true,
+    "insignia": "Qué hacemos",
+    "titulo": "Tres frentes. Un solo sistema.",
+    "entradilla": "No vendemos un chatbot suelto. Conectamos captación, sitio y atención para que un interesado no se pierda entre los tres.",
+    "items": [
+      {
+        "id": "pilar-sitios",
+        "icono": "monitor",
+        "titulo": "Sitios web con IA dentro",
+        "texto": "Desde una landing de una página hasta una tienda en línea. Rápidos, indexables y con un asistente que responde dentro del propio sitio en vez de mandar al visitante a buscar tu teléfono.",
+        "detalle": "Next-gen en el HTML servido: el contenido viaja sin ejecutar JavaScript, que es como lo leen los rastreadores de los motores de IA.",
+        "destino": "/servicios"
+      },
+      {
+        "id": "pilar-agenda",
+        "icono": "calendar",
+        "titulo": "Agendamiento automático",
+        "texto": "El interesado pregunta por WhatsApp, el sistema consulta tu calendario real, ofrece huecos que existen y confirma. Después recuerda la cita y reagenda si hace falta.",
+        "detalle": "Sobre tu agenda actual. Ni una herramienta nueva que aprender.",
+        "destino": "/servicios"
+      },
+      {
+        "id": "pilar-automatizacion",
+        "icono": "workflow",
+        "titulo": "Automatizaciones a medida",
+        "texto": "Lo que hoy haces copiando y pegando: pasar un lead al CRM, armar una cotización, mandar el contrato, avisar al equipo. Lo mapeamos y lo dejamos corriendo solo.",
+        "detalle": "Se diseña sobre tu proceso real, no sobre una plantilla.",
+        "destino": "/servicios"
+      }
+    ]
+  },
+  "verticales": {
+    "visible": true,
+    "insignia": "Para quién",
+    "titulo": "Conocemos el desmadre de tu giro.",
+    "entradilla": "Cada negocio pierde clientes en un punto distinto. Estos son los que tenemos mapeados de memoria.",
+    "items": [
+      {
+        "id": "vert-inmobiliarias",
+        "nombre": "Inmobiliarias",
+        "gancho": "El lead que pregunta a las 11 de la noche por una propiedad.",
+        "texto": "Responde la ficha completa, filtra presupuesto y zona, agenda la visita y avisa al asesor que le toca. El portal manda el contacto; el sistema lo atiende antes de que se enfríe.",
+        "puntos": ["Ficha y precio al instante", "Filtro de presupuesto y zona", "Visita agendada al asesor de turno"],
+        "destino": "/servicios"
+      },
+      {
+        "id": "vert-belleza",
+        "nombre": "Salones de belleza y estética",
+        "gancho": "Tienes las manos en un tinte y el teléfono lleva seis mensajes.",
+        "texto": "Cotiza servicios, ofrece los huecos reales de cada estilista, cobra el anticipo si lo pides y manda el recordatorio. Las ausencias bajan porque nadie se olvida.",
+        "puntos": ["Precios por servicio", "Huecos por estilista", "Recordatorio y reagenda"],
+        "destino": "/automatizacion-para-spas"
+      },
+      {
+        "id": "vert-clinicas",
+        "nombre": "Clínicas y consultorios",
+        "gancho": "La recepción no puede estar en el mostrador y en el chat a la vez.",
+        "texto": "Primera respuesta inmediata, preparación previa de la consulta y confirmación. Sin dar consejo médico jamás: en cuanto la conversación lo pide, pasa a una persona.",
+        "puntos": ["Sin consejo clínico", "Confirmación y recordatorio", "Derivación a persona"],
+        "destino": "/automatizacion-para-clinicas"
+      },
+      {
+        "id": "vert-gimnasios",
+        "nombre": "Gimnasios y estudios",
+        "gancho": "Preguntan el precio, no contestas en el momento, se van al de enfrente.",
+        "texto": "Planes y horarios al instante, clase de prueba agendada y seguimiento a quien preguntó y no cerró. El seguimiento es donde se recupera la mayoría.",
+        "puntos": ["Planes y horarios", "Clase de prueba", "Seguimiento escalonado"],
+        "destino": "/automatizacion-para-gimnasios"
+      },
+      {
+        "id": "vert-despachos",
+        "nombre": "Despachos y oficinas",
+        "gancho": "Media hora al día explicando lo mismo por teléfono.",
+        "texto": "Filtra el tipo de asunto, recoge los datos del caso, agenda la primera cita y arma el expediente. Sin opinar de nada legal ni fiscal.",
+        "puntos": ["Filtro por tipo de asunto", "Datos recogidos antes de la cita", "Cero asesoría automatizada"],
+        "destino": "/automatizacion-para-despachos-y-oficinas"
+      },
+      {
+        "id": "vert-comercio",
+        "nombre": "Comercio y tienda en línea",
+        "gancho": "Carritos abandonados y preguntas de talla a las tres de la mañana.",
+        "texto": "Resuelve dudas de producto, consulta existencias, recupera el carrito y avisa cuando el pedido sale. Conectado a tu tienda, no a un catálogo aparte.",
+        "puntos": ["Dudas de producto y existencias", "Recuperación de carrito", "Avisos de pedido"],
+        "destino": "/servicios"
+      }
+    ]
+  },
+  "proceso": {
+    "visible": true,
+    "insignia": "Cómo trabajamos",
+    "titulo": "De la primera llamada a tenerlo corriendo.",
+    "entradilla": "Entre dos y cuatro semanas según lo que haya que conectar. Sin permanencia y sin comisión sobre tu gasto en publicidad.",
+    "pasos": [
+      {
+        "id": "paso-1",
+        "titulo": "Auditoría de fricción",
+        "duracion": "Día 1 · sin costo",
+        "texto": "Vemos por dónde se te escapan los prospectos y cuánto tiempo se va en tareas repetidas. Te decimos también qué NO conviene automatizar: si tu negocio recibe dos mensajes a la semana, automatizar no te va a servir de nada y preferimos decírtelo."
+      },
+      {
+        "id": "paso-2",
+        "titulo": "Diseño del flujo",
+        "duracion": "Días 2 a 5",
+        "texto": "Escribimos el guion completo: qué contesta, con qué datos, cuándo pasa a una persona y qué no debe decir nunca. Lo apruebas tú antes de que se programe una sola línea."
+      },
+      {
+        "id": "paso-3",
+        "titulo": "Conexión y pruebas",
+        "duracion": "Semanas 2 a 3",
+        "texto": "Enlazamos WhatsApp, tu agenda, tu CRM y tu sitio. Probamos con conversaciones reales del negocio hasta que no quede ningún hueco raro."
+      },
+      {
+        "id": "paso-4",
+        "titulo": "Arranque y ajuste",
+        "duracion": "Semana 4 en adelante",
+        "texto": "Arranca en vivo con revisión de conversaciones. Lo que el sistema falle, se corrige sobre la marcha. Tú ves todo desde un tablero y puedes tomar cualquier chat cuando quieras."
+      }
+    ],
+    "nota": "El precio se cotiza a medida después de la auditoría. No tenemos tarifa publicada porque no hay dos negocios con el mismo enredo."
+  },
+  "demo": {
+    "visible": true,
+    "insignia": "Una muestra",
+    "titulo": "Así se ve por dentro.",
+    "entradilla": "Una conversación de un jueves a las 21:47, cuando ya cerraste. El sistema cotiza, consulta la agenda real y confirma.",
+    "nota": "Conversación de ejemplo para mostrar el mecanismo. No es un cliente real."
+  },
+  "servicios": {
+    "visible": true,
+    "insignia": "Catálogo",
+    "titulo": "Diecisiete servicios. Cada uno con su límite escrito.",
+    "entradilla": "Debajo de cada servicio dice hasta dónde llega. Preferimos que lo sepas antes de contratar y no después.",
+    "cta": { "texto": "Ver el catálogo completo", "destino": "/servicios" }
+  },
+  "limites": {
+    "visible": true,
+    "insignia": "Reglas de la casa",
+    "titulo": "Somos diablillos, no estafadores.",
+    "entradilla": "Esto es lo que no vas a ver aquí, por escrito y desde antes de que nos contrates.",
+    "items": [
+      "Prometerte posiciones en Google ni dentro de una respuesta de IA. Nadie controla esos algoritmos, y quien te lo jure te está vendiendo humo.",
+      "Llevarnos comisión sobre tu gasto publicitario. Tu presupuesto va completo a la plataforma y la factura la ves tú.",
+      "Mandar mensajes masivos en frío. Queman tu número, tu perfil y tu reputación; no lo hacemos ni aunque lo pidas.",
+      "Publicar cifras de resultados que no vengan de un proyecto documentado. Si algún día ves un número aquí, va a tener nombre y fecha.",
+      "Dejar que el sistema dé consejo médico, legal o fiscal. En cuanto la conversación va por ahí, pasa a una persona."
+    ]
+  },
+  "faq": {
+    "visible": true,
+    "insignia": "Dudas frecuentes",
+    "titulo": "Lo que todos preguntan antes de decidirse."
+  },
+  "cta": {
+    "visible": true,
+    "titulo": "¿Le entramos?",
+    "texto": "La auditoría no cuesta y no compromete a nada. Salimos de ahí con un diagnóstico escrito de dónde pierdes prospectos y qué se puede automatizar en tu caso.",
+    "boton": { "texto": "Pedir mi auditoría gratis", "destino": "#contacto" },
+    "alternativa": { "texto": "O escríbenos directo por WhatsApp", "destino": "whatsapp" }
+  },
+  "contacto": {
+    "visible": true,
+    "titulo": "Cuéntanos cómo trabajas hoy",
+    "subtitulo": "y te decimos qué automatizar",
+    "entradilla": "Son siete campos y menos de dos minutos. Trabajamos con negocios que ya tienen clientes y quieren dejar de atenderlos a mano.",
+    "boton": "Pedir mi diagnóstico gratis",
+    "pie": "Al enviar se abre tu WhatsApp con el resumen ya escrito. Solo tienes que darle enviar."
+  },
+  "footer": {
+    "visible": true,
+    "lema": "Agencia de inteligencia artificial en Aguascalientes.",
+    "columnas": [
+      {
+        "id": "col-servicios",
+        "titulo": "Servicios",
+        "enlaces": [
+          { "texto": "Catálogo completo", "destino": "/servicios" },
+          { "texto": "Sitios web con IA", "destino": "/servicios" },
+          { "texto": "Agendamiento automático", "destino": "/servicios" },
+          { "texto": "Automatizaciones a medida", "destino": "/servicios" }
+        ]
+      },
+      {
+        "id": "col-giros",
+        "titulo": "Por giro",
+        "enlaces": [
+          { "texto": "Clínicas y consultorios", "destino": "/automatizacion-para-clinicas" },
+          { "texto": "Spas y estética", "destino": "/automatizacion-para-spas" },
+          { "texto": "Gimnasios y estudios", "destino": "/automatizacion-para-gimnasios" },
+          { "texto": "Despachos y oficinas", "destino": "/automatizacion-para-despachos-y-oficinas" }
+        ]
+      },
+      {
+        "id": "col-casa",
+        "titulo": "La casa",
+        "enlaces": [
+          { "texto": "Blog", "destino": "/blog" },
+          { "texto": "Política de privacidad", "destino": "/politica-privacidad" }
+        ]
+      }
+    ],
+    "legal": "Diabolical Services · Aguascalientes, México"
+  }
+}

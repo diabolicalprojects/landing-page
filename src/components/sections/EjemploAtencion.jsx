@@ -1,41 +1,92 @@
 import React from 'react';
+
+import { useBloque } from '../../contenido';
+import EncabezadoSeccion from '../common/EncabezadoSeccion';
 import ChatDemo from './ChatDemo';
 
 /*
- * Un ejemplo concreto de una de las cinco etapas: la atención.
+ * La muestra.
  *
- * Estaba en el hero, donde definía a la agencia entera como "los del chatbot".
- * Aquí ilustra una capacidad dentro de su contexto, que es lo que sabe hacer:
- * es la única demostración real que existe hoy, y enseñar vale más que
- * describir. La conversación va en HTML plano, así que también la leen los
- * rastreadores que no ejecutan JavaScript.
+ * Es lo único que este producto puede demostrar sin inventar nada: no afirma un
+ * resultado, enseña el flujo. Va dentro de un marco de teléfono porque así es
+ * como el cliente lo va a vivir de verdad, y porque una conversación flotando
+ * en el vacío se lee como una captura pegada.
+ *
+ * Al lado, lo que hace el sistema en esos cuatro mensajes, desglosado. El
+ * teléfono enseña el QUÉ; la columna explica el CÓMO sin obligar a deducirlo.
  */
-const EjemploAtencion = () => (
-    <section id="ejemplo" className="seccion superficie-1">
-        <div className="max-w-6xl mx-auto px-5 md:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 lg:gap-16 items-center">
-                <div className="max-w-xl">
-                    <p className="etiqueta text-white/60 mb-4">Etapa 3 · Atención y venta</p>
-                    <h2 className="text-3xl md:text-5xl font-title uppercase tracking-tighter leading-[0.95] mb-5">
-                        Así se ve una etapa funcionando
-                    </h2>
-                    <p className="text-white/60 text-base leading-relaxed font-light mb-4">
-                        De poco sirve posicionar y anunciar si el mensaje de las nueve de la noche
-                        se queda sin contestar hasta mañana. Esta es la etapa con la que empezó la
-                        casa, y la que más rápido se nota.
-                    </p>
-                    <p className="text-white/60 text-base leading-relaxed font-light">
-                        Las otras cuatro se ven igual de concretas en el diagnóstico: qué está
-                        pasando hoy en tu negocio, con evidencia.
-                    </p>
-                </div>
+const PASOS = [
+    {
+        titulo: 'Contesta en segundos',
+        texto: 'A cualquier hora, sin que nadie tenga el teléfono en la mano.',
+    },
+    {
+        titulo: 'Consulta la agenda real',
+        texto: 'Ofrece huecos que existen de verdad, no una promesa de «te confirmamos».',
+    },
+    {
+        titulo: 'Cierra y registra',
+        texto: 'Agenda, deja el recordatorio programado y anota el prospecto donde lo veas.',
+    },
+    {
+        titulo: 'Sabe cuándo parar',
+        texto: 'En cuanto la conversación pide criterio humano, la pasa a una persona.',
+    },
+];
 
-                <div className="flex lg:justify-end">
-                    <ChatDemo />
+const EjemploAtencion = () => {
+    const { visible, insignia, titulo, entradilla, nota } = useBloque('demo');
+
+    if (visible === false) return null;
+
+    return (
+        <section id="demo" className="zona-oscura seccion">
+            <div className="contenedor">
+                <EncabezadoSeccion
+                    id="demo"
+                    insignia={insignia}
+                    titulo={titulo}
+                    entradilla={entradilla}
+                />
+
+                <div className="mt-12 grid items-center gap-12 md:mt-16 lg:grid-cols-12 lg:gap-16">
+                    <figure className="m-0 flex flex-col items-center lg:col-span-5 lg:items-start">
+                        <div className="marco-telefono w-full max-w-[19rem]">
+                            <ChatDemo />
+                        </div>
+                        {/* La etiqueta de honestidad va a tamaño legible y
+                            debajo de la pieza, no en letra de contrato: es una
+                            simulación y se dice de frente. */}
+                        <figcaption className="mt-4 max-w-[19rem] text-xs leading-relaxed text-white/55">
+                            {nota}
+                        </figcaption>
+                    </figure>
+
+                    <ol className="lg:col-span-7">
+                        {PASOS.map((paso, i) => (
+                            <li
+                                key={paso.titulo}
+                                className="flex items-start gap-5 border-t border-white/[0.09] py-6 first:border-t-0 first:pt-0"
+                            >
+                                <span
+                                    className="cifras etiqueta-mono mt-1 flex-none"
+                                    style={{ color: 'var(--acento)' }}
+                                >
+                                    {String(i + 1).padStart(2, '0')}
+                                </span>
+                                <div>
+                                    <h3 className="text-lg font-extrabold tracking-tight text-white">
+                                        {paso.titulo}
+                                    </h3>
+                                    <p className="cuerpo mt-1.5">{paso.texto}</p>
+                                </div>
+                            </li>
+                        ))}
+                    </ol>
                 </div>
             </div>
-        </div>
-    </section>
-);
+        </section>
+    );
+};
 
 export default EjemploAtencion;

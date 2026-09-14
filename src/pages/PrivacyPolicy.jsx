@@ -31,11 +31,11 @@ const PrivacyPolicy = () => {
             <section className="relative z-10 w-full max-w-3xl mx-auto px-6 py-12 md:py-20 flex-1">
                 <div className="glass-card p-8 md:p-14 rounded-3xl border-white/10 shadow-2xl space-y-8">
                     <div>
-                        <span className="text-[8px] font-black tracking-[0.4em] text-white/30 uppercase">Legal / Privacidad</span>
+                        <span className="text-[8px] font-black tracking-[0.4em] text-white/55 uppercase">Legal / Privacidad</span>
                         <h1 className="text-3xl md:text-5xl font-title uppercase tracking-tighter mt-2 leading-[0.9]">
                             Política de <br /><span className="text-white/20 italic">Privacidad</span>
                         </h1>
-                        <p className="text-[9px] font-mono tracking-widest text-white/30 uppercase mt-4">Última actualización: 14 de Junio, 2026</p>
+                        <p className="text-[9px] font-mono tracking-widest text-white/55 uppercase mt-4">Última actualización: 14 de Junio, 2026</p>
                     </div>
 
                     <div className="space-y-6 text-sm text-white/60 leading-relaxed font-light">
@@ -86,7 +86,7 @@ const PrivacyPolicy = () => {
             </section>
 
             {/* Footer Copy */}
-            <footer className="relative z-10 w-full max-w-5xl mx-auto px-6 py-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-[9px] font-mono uppercase tracking-[0.3em] text-white/30">
+            <footer className="relative z-10 w-full max-w-5xl mx-auto px-6 py-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-[9px] font-mono uppercase tracking-[0.3em] text-white/55">
                 <div>© 2026 Diabolical Services. Todos los derechos reservados.</div>
                 <div className="flex gap-4">
                     <Link to="/" className="hover:text-white transition-colors">Volver al Inicio</Link>

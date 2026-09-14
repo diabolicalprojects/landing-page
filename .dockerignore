@@ -20,3 +20,8 @@ eslint.config.mjs
 .local
 README.md
 .ssr
+
+# Estudio de video (Remotion). Tiene su propio node_modules y NO entra en la
+# imagen: meterlo obligaria a npm ci a instalarlo en cada despliegue, y este
+# build ya murio tres veces por falta de memoria en el servidor.
+video

@@ -235,33 +235,69 @@ Google Tag Manager (`GTM-P3P29XB5`) y Google Analytics (`G-7C6BCDND8S`) viven **
 `googleTagManager` y `customHeaderScripts` del panel van vacíos por defecto: rellenarlos duplicaría
 las etiquetas.
 
-## Prerender
+## Render: build y caliente
 
 `npm run build` hace tres pasos:
 
 1. `vite build` — bundle de cliente en `dist/`.
-2. `vite build --config vite.config.ssr.js` — build de servidor en `.ssr/` (temporal).
-3. `node scripts/prerender.mjs` — renderiza la portada a HTML y la escribe en `dist/index.html`.
+2. `vite build --config vite.config.ssr.js` — build de servidor en `.ssr/`.
+3. `node scripts/prerender.mjs` — renderiza las 10 rutas a HTML dentro de `dist/`.
 
-Resultado: quien pida `/` recibe la landing entera en el HTML, sin necesidad de ejecutar
-JavaScript. Los crawlers que no ejecutan JS (buscadores secundarios, previsualizadores de enlaces,
-rastreadores de LLMs) antes veían un `<div id="root">` vacío.
+En producción el servidor **no sirve ese HTML directamente**. Usa el bundle de `.ssr/` para
+renderizar cada página en el momento, con el contenido que hay guardado ahora, y cachea el
+resultado por `(ruta, versión del contenido)`. Es lo que hace que un cambio hecho en `/admin`
+aparezca en el HTML servido sin recompilar ni desplegar — y ahí está la diferencia entre que Google
+y los rastreadores de motores de IA lean el texto nuevo o sigan leyendo el del último despliegue.
 
-El shell vacío queda en `dist/app-shell.html` y es lo que se sirve en el resto de rutas: darles la
-portada prerenderizada obligaría a React a descartarla al hidratar.
+El HTML del build es el respaldo, y solo se sirve **mientras nadie haya editado nada**: con el
+contenido de fábrica es exacto. Si alguien editó y el bundle de servidor no está disponible, se
+sirve el shell vacío y se monta en cliente; servir el estático daría texto viejo y además React lo
+tiraría al hidratar por no coincidir.
 
-Dos detalles que hay que respetar al tocar animaciones de entrada:
+Por eso el `Dockerfile` copia `.ssr/` a la imagen final. Sin esa copia el sitio arranca igual, pero
+pierde la propiedad entera.
 
-- Un script inline en `<head>` añade la clase `js` al `<html>` antes del primer pintado. La regla
-  `.js .hero-content > *` de `index.css` deja esos elementos en `opacity: 0` para que el contenido
-  prerenderizado no se vea un instante antes de que GSAP lo anime. Sin JS la clase no se aplica y
-  el contenido queda visible.
-- Por eso las animaciones usan `gsap.fromTo(...)`, no `gsap.from(...)`, y no limpian la opacidad
-  con `clearProps`: hacerlo devolvería el elemento a la regla CSS que lo esconde.
+El contenido viaja además en `window.__CONTENIDO__` para que React hidrate con el mismo dato con el
+que se generó el markup. Se serializa con `serializeJson`, que escapa `<` y los separadores de
+línea U+2028/U+2029: sin eso, un `</script>` o un párrafo pegado desde Word parten la página.
 
-`LandingPage` se importa de forma directa (no con `lazy`) porque es la ruta prerenderizada, y el
-chatbot se monta tras hidratar: un `<Suspense>` sin resolver durante el prerender hacía que React
-descartara todo el HTML del servidor (error #419).
+El `ETag` lleva **la huella del build y la versión del contenido**. Con solo el contenido había un
+agujero serio: un despliegue que tocara únicamente código dejaba el ETag idéntico, el navegador
+recibía 304 y reutilizaba HTML que apunta a assets con hash que ya no existen — página en blanco
+para quien había visitado antes.
+
+`LandingPage` se importa de forma directa (no con `lazy`) porque es una ruta renderizada en
+servidor, y el chatbot se monta tras hidratar: un `<Suspense>` sin resolver durante el render hacía
+que React descartara todo el HTML del servidor (error #419).
+
+## Contenido editable y panel
+
+El panel `/admin` es un CMS. Edita el contenido con el sitio real al lado, en un `<iframe>` que
+recibe el borrador por `postMessage` en cada tecla.
+
+```
+src/data/contenido.json     contenido de fábrica (en el repo, nunca se escribe)
+        v  fusionado debajo de
+data/contenido.json         lo editado (en el volumen)
+```
+
+La fusión es profunda y los arrays se reemplazan enteros: fusionarlos por índice haría imposible
+borrar una tarjeta, porque la de fábrica reaparecería debajo. Si el fichero del volumen se corrompe
+o se borra, el sitio vuelve al de fábrica en vez de quedarse en blanco.
+
+`server/contenido.js` y `src/contenido/index.jsx` implementan **la misma fusión**. Si divergen, el
+HTML servido y el que React reconstruye al hidratar dejan de coincidir y React tira el servidor
+entero.
+
+Las variables de tema (`acento`, `papel`, escalas, radio) salen como custom properties en un
+`<style>` propio. Todo valor se valida por forma antes de escribirse: un color es exactamente
+`#rgb`, `#rrggbb` o `#rrggbbaa`, y cualquier otra cosa cae al de fábrica. Sin eso, un `}` en un
+campo de texto cierra la regla y lo siguiente es CSS arbitrario.
+
+**Prospectos.** El formulario y el chatbot siguen enviando a n8n igual que siempre; se añadió una
+copia local en `data/leads.jsonl` porque antes un fallo del webhook era un prospecto perdido sin
+que nadie se enterara. Un JSON por línea, solo se añade al final, y el estado (nuevo / atendido /
+descartado) vive aparte para no tener que reescribir el registro.
 
 ## Estructura
 
@@ -273,23 +309,37 @@ server/
   auth.js                 Login bcrypt + sesión HMAC en cookie httpOnly
   settings.js             Lectura/escritura de data/settings.json
   seo-defaults.js         Metadatos por defecto y por ruta
+  contenido.js            Contenido editable: fusión, validación y versión
+  leads.js                Bandeja de prospectos (JSONL + estados)
+  ssr.js                  Render en caliente con caché por versión
   render.js               Inyección del <head> con escapado
   html.js                 Utilidades de escapado
 src/
-  data/                   sectores.json, faq.json, articulos.json (fuentes de verdad)
+  data/                   contenido.json, sectores.json, servicios.json, faq.json,
+                          articulos.json (fuentes de verdad)
+  contenido/              Proveedor de contenido y variables de tema
+  admin/                  Editor de campos, vista previa, prospectos, tema
   pages/                  LandingPage, SectorPage, BlogPage, ArticuloPage,
                           AdminPage, PrivacyPolicy, NotFound
   components/sections/    Secciones de la landing
   components/common/      Navbar, Footer, chatbot, cursor, ErrorBoundary
-  utils/leads.js          Envío a n8n y apertura de WhatsApp
+  utils/leads.js          Envío a n8n + copia local, y apertura de WhatsApp
   config.js               Configuración del cliente (VITE_*)
 tests/server.test.js      Pruebas de humo del servidor
+tests/cms.test.js         Contenido editable, prospectos y caché
+video/                    Estudio de Remotion (proyecto aparte, ver video/README.md)
 ```
 
 ## Seguridad
 
-- La API de escritura (`POST /api/settings`) exige sesión válida. La lectura es pública porque
-  devuelve los mismos metadatos que ya salen en el HTML.
+- Las APIs de escritura (`POST /api/settings`, `POST /api/contenido`) exigen sesión válida. La
+  lectura es pública porque devuelve lo mismo que ya sale en el HTML.
+- `POST /api/leads` es la única escritura sin sesión: el formulario público. Va con su propio
+  límite (20 envíos por IP cada 10 minutos), recorta a texto plano, tope de 40 campos y descarta
+  caracteres de control. Leer la bandeja sí exige sesión: son datos personales de terceros.
+- `frame-ancestors` es `'self'` y no `'none'` porque el panel muestra el sitio real en un
+  `<iframe>` para la vista previa. Sigue bloqueando a cualquier otro dominio, que es de lo que
+  protege esa directiva. La vista previa solo acepta mensajes del mismo origen.
 - Las credenciales del panel **nunca** llegan al navegador: se validan en el servidor con bcrypt.
 - La cookie de sesión es `httpOnly` + `sameSite=strict`, y `secure` en producción.
 - Login limitado a 5 intentos por 15 minutos; el resto de la API a 60 peticiones por minuto.

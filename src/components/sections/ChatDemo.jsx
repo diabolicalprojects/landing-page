@@ -2,15 +2,16 @@ import React from 'react';
 import { Check, CheckCheck } from 'lucide-react';
 
 /*
- * La demostración del mecanismo: una conversación de WhatsApp resolviéndose
- * sola, fuera de horario. Es la pieza central del hero porque es lo único que
- * este producto puede probar sin inventar nada — no afirma resultados, enseña
- * el flujo. Está etiquetada como simulación a la vista, no en letra pequeña.
+ * La conversación de ejemplo, sin marco propio: quien la monta decide si va en
+ * un teléfono, en una ventana o suelta.
  *
- * Va en HTML plano a propósito: las palabras de la conversación viajan en el
- * prerender, así que también las leen los rastreadores que no ejecutan
- * JavaScript. El verde es el del propio WhatsApp: color semántico del canal,
- * no un acento decorativo del sitio.
+ * Va en HTML plano a propósito. Las palabras de la conversación viajan en el
+ * HTML servido, así que también las leen los rastreadores que no ejecutan
+ * JavaScript — que es exactamente la ventaja que este sitio tiene sobre la
+ * competencia local.
+ *
+ * El verde es el de WhatsApp: color semántico del canal que se está retratando,
+ * no un acento del sitio. Por eso no sale de los tokens del tema.
  */
 const MENSAJES = [
     { de: 'cliente', hora: '9:47 p.m.', texto: 'Hola, ¿tienen cita para limpieza dental esta semana?' },
@@ -20,49 +21,57 @@ const MENSAJES = [
 ];
 
 const ChatDemo = () => (
-    <figure className="w-full max-w-md" aria-label="Ejemplo de un flujo de agendamiento automático por WhatsApp">
-        <div className="rounded-2xl border border-white/10 bg-[#0b141a] overflow-hidden shadow-2xl">
-            {/* Cabecera del chat */}
-            <div className="flex items-center gap-3 px-4 py-3 bg-[#1f2c33] border-b border-black/40">
-                <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
-                    <img src="/logo-cuadrado-blanco.svg" alt="" width="20" height="20" className="w-5 h-5 opacity-90" />
-                </div>
-                <div className="min-w-0">
-                    <p className="text-sm text-white font-semibold leading-tight truncate">Clínica — recepción</p>
-                    <p className="text-[11px] text-[#25d366] leading-tight">en línea</p>
-                </div>
-                <span className="ml-auto etiqueta-mono text-white/70">9:47 p.m.</span>
-            </div>
-
-            {/* Mensajes */}
-            <div className="px-3 py-4 space-y-2 bg-[url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%224%22 height=%224%22%3E%3Crect width=%224%22 height=%224%22 fill=%22%230b141a%22/%3E%3C/svg%3E')]">
-                {MENSAJES.map((m, i) => (
-                    <div key={i} className={`flex ${m.de === 'sistema' ? 'justify-end' : 'justify-start'}`}>
-                        <div
-                            className={`max-w-[85%] rounded-lg px-3 py-2 text-[13px] leading-snug text-white/95 ${
-                                m.de === 'sistema' ? 'bg-[#005c4b] rounded-tr-none' : 'bg-[#1f2c33] rounded-tl-none'
-                            }`}
-                        >
-                            <p>{m.texto}</p>
-                            <span className="flex items-center justify-end gap-1 mt-1 text-[10px] text-white/80">
-                                {m.hora}
-                                {m.de === 'sistema'
-                                    ? <CheckCheck size={13} className="text-[#53bdeb]" aria-hidden="true" />
-                                    : <Check size={13} aria-hidden="true" />}
-                            </span>
-                        </div>
-                    </div>
-                ))}
-            </div>
+    <div
+        className="flex h-full flex-col bg-[#0b141a]"
+        aria-label="Ejemplo de un flujo de agendamiento automático por WhatsApp"
+        role="img"
+    >
+        <div className="flex items-center gap-3 border-b border-black/40 bg-[#1f2c33] px-4 py-3">
+            <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-white/10">
+                <img
+                    src="/logo-cuadrado-blanco.svg"
+                    alt=""
+                    width="20"
+                    height="20"
+                    className="h-5 w-5 opacity-90"
+                />
+            </span>
+            <span className="min-w-0">
+                <span className="block truncate text-sm font-semibold leading-tight text-white">
+                    Clínica — recepción
+                </span>
+                <span className="block text-[11px] leading-tight text-[#25d366]">en línea</span>
+            </span>
+            <span className="etiqueta-mono ml-auto text-white/70">9:47 p.m.</span>
         </div>
 
-        {/* La etiqueta de honestidad va fuera de la tarjeta y a tamaño legible:
-            es simulación y se dice de frente, no en letra de contrato. */}
-        <figcaption className="mt-3 text-xs text-white/60 leading-relaxed">
-            Simulación de un flujo real de agendamiento. Las 9:47 p.m. no son casualidad:
-            el mensaje fuera de horario es el que hoy se queda sin contestar.
-        </figcaption>
-    </figure>
+        <div className="flex-1 space-y-2 px-3 py-4">
+            {MENSAJES.map((m) => (
+                <div
+                    key={m.texto}
+                    className={`flex ${m.de === 'sistema' ? 'justify-end' : 'justify-start'}`}
+                >
+                    <div
+                        className={`max-w-[86%] rounded-lg px-3 py-2 text-[13px] leading-snug text-white/95 ${
+                            m.de === 'sistema'
+                                ? 'rounded-tr-none bg-[#005c4b]'
+                                : 'rounded-tl-none bg-[#1f2c33]'
+                        }`}
+                    >
+                        <span className="block">{m.texto}</span>
+                        <span className="mt-1 flex items-center justify-end gap-1 text-[10px] text-white/80">
+                            {m.hora}
+                            {m.de === 'sistema' ? (
+                                <CheckCheck size={13} className="text-[#53bdeb]" aria-hidden="true" />
+                            ) : (
+                                <Check size={13} aria-hidden="true" />
+                            )}
+                        </span>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
 );
 
 export default ChatDemo;

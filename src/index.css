@@ -1,38 +1,8 @@
 @import "tailwindcss";
 
-/*
-  Solo el pie conserva la entrada por GSAP; el hero anima con CSS puro (ver
-  .entrada al final). La clase `js` la añade un script inline en el <head>,
-  antes del primer pintado: si no hay JS no se aplica y el pie queda visible
-  tal cual, que es como lo leen los rastreadores.
-*/
-.js .footer-content > * {
-  opacity: 0;
-}
-
-/*
-  Con movimiento reducido no se esconde nada.
-
-  Footer.jsx omite su animación de entrada cuando el sistema pide menos
-  movimiento, y esa animación es lo único que devuelve la opacidad a 1. Sin
-  esta regla, quien active la preferencia se quedaría con el pie en blanco:
-  el caso justo contrario al que la preferencia busca.
-
-  No se usa el truco de reducir todas las duraciones a 0.01s: no elimina el
-  parpadeo, solo lo acorta.
-*/
-@media (prefers-reduced-motion: reduce) {
-
-  .js .footer-content > * {
-    opacity: 1;
-  }
-
-  /* Movimiento decorativo en bucle: es el que peor sienta a quien marca la
-     preferencia, porque no termina nunca. */
-  .animate-float {
-    animation: none;
-  }
-}
+/* ==========================================================================
+   TIPOGRAFÍA
+   ========================================================================== */
 
 @font-face {
   font-family: 'CODE Bold';
@@ -78,84 +48,144 @@
   --radius-custom: 3rem;
 }
 
-.outline-text {
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
-  color: transparent !important;
-}
+/* ==========================================================================
+   TOKENS
+   --------------------------------------------------------------------------
+   Los valores de :root los vuelve a declarar <Tema> con lo que hay guardado en
+   el panel, así que estos son el respaldo: lo que se ve si el contenido
+   editable no llega. Tienen que coincidir con los de src/contenido/Tema.jsx.
+   ========================================================================== */
 
 :root {
-  --noise-opacity: 0.05;
+  --acento: #FF4A1C;
+  --acento-claro: #C2320B;
+  --acento-tinta: #0A0A0A;
+
+  --superficie-0: #000000;
+  --superficie-1: #0B0B0B;
+  --superficie-2: #151515;
+
+  --papel: #F2F1EE;
+  --papel-2: #E6E4DF;
+  --tinta: #0A0A0A;
+
+  --radio: 1.5rem;
+  --escala-titulo: 1;
+  --escala-texto: 1;
+
+  --ruido: 0.045;
+
+  /* Curva única de toda la página. Una sola desaceleración, reconocible. */
+  --salida: cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* --------------------------------------------------------------------------
+   Zonas.
+
+   La página alterna negro y papel a propósito: diez secciones seguidas del
+   mismo negro se leen como una sola masa, y el corte a claro es lo que marca
+   dónde empieza un capítulo nuevo.
+
+   Cada zona redefine los mismos nombres —texto, líneas, tarjetas, acento— así
+   que un componente se escribe UNA vez y funciona en las dos. Sin esto haría
+   falta una variante clara de cada tarjeta, cada botón y cada borde, y es
+   exactamente ahí donde un sistema se desincroniza.
+
+   Los grises secundarios están elegidos por contraste medido, no a ojo:
+   #5A5650 sobre papel da 6,4:1 y rgba(255,255,255,.72) sobre negro da 10,8:1.
+   -------------------------------------------------------------------------- */
+
+.zona-oscura {
+  --fondo: var(--superficie-0);
+  --texto-1: #ffffff;
+  --texto-2: rgba(255, 255, 255, 0.72);
+  --texto-3: rgba(255, 255, 255, 0.52);
+  --linea: rgba(255, 255, 255, 0.10);
+  --linea-fuerte: rgba(255, 255, 255, 0.20);
+  --tarjeta: rgba(255, 255, 255, 0.028);
+  --tarjeta-alta: rgba(255, 255, 255, 0.06);
+  --acento-zona: var(--acento);
+  --inverso-fondo: #ffffff;
+  --inverso-texto: var(--superficie-0);
+  --sombra-tarjeta: none;
+
+  background-color: var(--fondo);
+  color: var(--texto-1);
+}
+
+.zona-oscura-1 {
+  --fondo: var(--superficie-1);
+}
+
+.zona-oscura-2 {
+  --fondo: var(--superficie-2);
+}
+
+.zona-clara {
+  --fondo: var(--papel);
+  --texto-1: var(--tinta);
+  --texto-2: #5A5650;
+  --texto-3: #6E6A63;
+  --linea: rgba(10, 10, 10, 0.12);
+  --linea-fuerte: rgba(10, 10, 10, 0.24);
+  --tarjeta: #ffffff;
+  --tarjeta-alta: #ffffff;
+  --acento-zona: var(--acento-claro);
+  --inverso-fondo: var(--superficie-0);
+  --inverso-texto: #ffffff;
+  /* Desplazamiento y desenfoque de verdad: un halo sin offset es decoración,
+     no profundidad. */
+  --sombra-tarjeta: 0 1px 2px rgba(10, 10, 10, 0.04), 0 8px 24px -12px rgba(10, 10, 10, 0.12);
+
+  background-color: var(--fondo);
+  color: var(--texto-1);
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
 
 body {
   margin: 0;
-  background-color: var(--color-absolute-black);
-  color: var(--color-pure-white);
+  background-color: var(--superficie-0);
+  color: #ffffff;
   font-family: var(--font-jakarta);
   font-weight: 400;
-  /* Increased weight for legibility */
-  font-size: 18px;
-  /* Larger base font */
+  font-size: calc(17px * var(--escala-texto));
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Global Noise Overlay */
+/* Grano. Unifica las dos zonas: sobre negro rompe el plano digital y sobre
+   papel lo acerca a papel de verdad. Va fijo para que no se arrastre al
+   desplazar, que es lo que delataría que es una textura pegada. */
 body::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: var(--noise-opacity);
+  opacity: var(--ruido);
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-
-/*
-  Escala de superficies.
-
-  Antes había tres negros —#000000, #030303 y #050505— usados como si
-  diferenciaran secciones. El contraste entre ellos es de 1.03:1: en pantalla
-  son el mismo color, así que cinco secciones seguidas leían como una sola masa
-  plana. Estos tres sí se distinguen, y cada salto significa algo: --superficie-1
-  es el fondo por defecto, --superficie-2 eleva un bloque, --superficie-3 marca
-  el punto más alto de la pila.
-
-  La luz no es una superficie más: es la inversión, y solo la usan las dos
-  secciones que rompen el ritmo a propósito.
-*/
-:root {
-  --superficie-0: #000000;
-  --superficie-1: #0b0b0b;
-  --superficie-2: #141414;
-  --inversion: #ffffff;
+html {
+  scroll-behavior: smooth;
+  scrollbar-color: #333 var(--superficie-0);
+  scrollbar-width: thin;
 }
 
-.superficie-1 {
-  background-color: var(--superficie-1);
-}
+/* ==========================================================================
+   RITMO VERTICAL
+   --------------------------------------------------------------------------
+   Tres pasos con diferencia legible entre ellos. El cambio de zona hace el
+   trabajo de separar; la línea a bajísima opacidad que se usaba antes no
+   separaba nada.
+   ========================================================================== */
 
-.superficie-2 {
-  background-color: var(--superficie-2);
-}
-
-/*
-  Ritmo vertical.
-
-  El problema anterior no eran los empalmes sino la ausencia de sistema: ocho de
-  diez secciones eran `py-16 md:py-28`, el mismo aire en todas, y el único
-  recurso de unión era una línea a un 5% de opacidad puesta en la mitad de
-  ellas. Aquí el ritmo es el sistema: tres pasos con una diferencia legible, y
-  el cambio de superficie haciendo el trabajo de separar.
-
-  Todo cae en la retícula de 8 px. Nada de valores sueltos por sección.
-*/
 .seccion {
-  padding-block: clamp(4rem, 8vw, 7rem);
+  padding-block: clamp(4.5rem, 8vw, 7.5rem);
 }
 
 .seccion-amplia {
@@ -163,21 +193,81 @@ body::before {
 }
 
 .seccion-compacta {
-  padding-block: clamp(3rem, 5vw, 4.5rem);
+  padding-block: clamp(2.5rem, 4vw, 3.5rem);
 }
 
-/*
-  Escala tipográfica.
+.contenedor {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
 
-  Antes convivían tamaños de 8, 9, 10 y 11 px usados indistintamente para lo
-  mismo: cuatro pasos que el ojo no distingue, que es exactamente lo que produce
-  una página sin jerarquía. Aquí hay dos registros y nada entre medias, que es la
-  disciplina que sostiene el contraste de escala.
-*/
+@media (min-width: 768px) {
+  .contenedor {
+    padding-inline: 2rem;
+  }
+}
+
+/* ==========================================================================
+   ESCALA TIPOGRÁFICA
+   --------------------------------------------------------------------------
+   Dos registros y nada entre medias. La escala del panel multiplica, así que
+   subirla agranda la jerarquía entera sin descomponerla.
+   ========================================================================== */
+
+.titular-xl {
+  font-size: calc(clamp(2.5rem, 7.2vw, 5.25rem) * var(--escala-titulo));
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.titular-l {
+  font-size: calc(clamp(2rem, 4.6vw, 3.5rem) * var(--escala-titulo));
+  line-height: 1.03;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.titular-m {
+  font-size: calc(clamp(1.375rem, 2.2vw, 1.75rem) * var(--escala-titulo));
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+/* El segundo color del titular. Las referencias lo resuelven con dos tonos del
+   mismo gris, no con un degradado: el peso y el tono hacen el contraste. */
+.titular-apagado {
+  color: var(--texto-3);
+}
+
+.cuerpo-l {
+  font-size: calc(1.0625rem * var(--escala-texto));
+  line-height: 1.6;
+  color: var(--texto-2);
+  max-width: 46ch;
+}
+
+@media (min-width: 768px) {
+  .cuerpo-l {
+    font-size: calc(1.1875rem * var(--escala-texto));
+  }
+}
+
+.cuerpo {
+  font-size: calc(0.9375rem * var(--escala-texto));
+  line-height: 1.62;
+  color: var(--texto-2);
+  max-width: 62ch;
+}
+
 .etiqueta {
   font-size: 0.6875rem;
-  /* 11px: el suelo real de lectura. Por debajo hacía falta un contraste que la
-     paleta no puede dar sin romper el registro apagado. */
   line-height: 1.2;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -192,42 +282,266 @@ body::before {
   font-variant-numeric: tabular-nums;
 }
 
-/*
-  Estados.
-
-  El listón de Linear y Vercel no está en el reposo, está en que todo estado
-  exista y sea distinguible. Antes solo había hover, y apenas.
-*/
-.accion {
-  transition: background-color 140ms ease-out, color 140ms ease-out,
-    border-color 140ms ease-out, transform 140ms ease-out;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .accion {
-    transition-duration: 1ms;
-  }
-}
-
-.accion:active {
-  transform: translateY(1px);
-}
-
-.accion:disabled,
-.accion[aria-disabled='true'] {
-  opacity: 0.4;
-  cursor: not-allowed;
-  transform: none;
-}
-
-/* Cifras en tablas y comparativas: sin esto los dígitos bailan de fila a fila. */
 .cifras {
   font-variant-numeric: tabular-nums;
 }
 
-/* Custom Scrollbar */
+.font-title {
+  font-family: var(--font-title);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   COMPONENTES
+   ========================================================================== */
+
+/* Insignia de sección. En las referencias marca de qué va el capítulo antes de
+   que empiece; aquí además es el ancla a la que apunta la navegación. */
+.insignia {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem 0.375rem 0.625rem;
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  background: var(--tarjeta);
+  color: var(--texto-2);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.insignia::before {
+  content: "";
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 999px;
+  background: var(--acento-zona);
+  flex: none;
+}
+
+/* Tarjeta. Una sola definición para las dos zonas: en oscuro es un velo sobre
+   el fondo, en claro es papel elevado. */
+.tarjeta {
+  background: var(--tarjeta);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-tarjeta);
+  transition: background-color 220ms var(--salida), border-color 220ms var(--salida),
+    transform 220ms var(--salida), box-shadow 220ms var(--salida);
+}
+
+.tarjeta-enlace:hover {
+  background: var(--tarjeta-alta);
+  border-color: var(--linea-fuerte);
+  transform: translateY(-3px);
+}
+
+.zona-clara .tarjeta-enlace:hover {
+  box-shadow: 0 2px 4px rgba(10, 10, 10, 0.05), 0 18px 40px -16px rgba(10, 10, 10, 0.22);
+}
+
+/* Botones. Tres jerarquías y nada más. */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.25rem;
+  padding-inline: 1.625rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 140ms var(--salida), color 140ms var(--salida),
+    border-color 140ms var(--salida), transform 140ms var(--salida),
+    box-shadow 140ms var(--salida);
+}
+
+.boton-primario {
+  background: var(--inverso-fondo);
+  color: var(--inverso-texto);
+}
+
+.boton-primario:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
+}
+
+.boton-acento {
+  background: var(--acento);
+  color: var(--acento-tinta);
+}
+
+.boton-acento:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 34px -10px color-mix(in oklab, var(--acento) 55%, transparent);
+}
+
+.boton-fantasma {
+  background: transparent;
+  color: var(--texto-1);
+  border-color: var(--linea-fuerte);
+}
+
+.boton-fantasma:hover {
+  background: var(--tarjeta-alta);
+  border-color: var(--texto-3);
+}
+
+.boton:active {
+  transform: translateY(1px);
+}
+
+.boton:disabled,
+.boton[aria-disabled='true'] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Enlace de texto con subrayado que se dibuja, no que aparece. */
+.enlace {
+  color: var(--texto-1);
+  text-decoration: none;
+  background-image: linear-gradient(var(--acento-zona), var(--acento-zona));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 220ms var(--salida);
+  padding-bottom: 1px;
+}
+
+.enlace:hover {
+  background-size: 100% 1px;
+}
+
+/* Marco de dispositivo. Las referencias enseñan el producto dentro de una
+   ventana o un teléfono en lugar de describirlo; esto es ese marco. */
+.marco {
+  position: relative;
+  border-radius: 1.25rem;
+  border: 1px solid var(--linea-fuerte);
+  background: var(--superficie-1);
+  overflow: hidden;
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.9);
+}
+
+.zona-clara .marco {
+  box-shadow: 0 24px 60px -30px rgba(10, 10, 10, 0.35);
+}
+
+.marco-barra {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.marco-punto {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  flex: none;
+}
+
+.marco-telefono {
+  border-radius: 2rem;
+  border: 6px solid #1c1c1c;
+  background: var(--superficie-0);
+  box-shadow: 0 40px 90px -45px rgba(0, 0, 0, 0.95), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   FONDOS
+   ========================================================================== */
+
+/* Rejilla en perspectiva. Es el suelo de la escena del hero: da profundidad sin
+   una sola imagen y se desvanece con una máscara en vez de cortarse en seco. */
+.rejilla {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--linea) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--linea) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
+}
+
+/* Resplandor. Un solo foco cálido, arriba, como en las referencias oscuras. */
+.resplandor {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 999px;
+  filter: blur(90px);
+  opacity: 0.5;
+  background: radial-gradient(circle, color-mix(in oklab, var(--acento) 40%, transparent) 0%, transparent 70%);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(32px) saturate(160%);
+  -webkit-backdrop-filter: blur(32px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.6);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background-color 400ms var(--salida), border-color 400ms var(--salida);
+}
+
+/* ==========================================================================
+   SUPERFICIES DEL NAVEGADOR
+   --------------------------------------------------------------------------
+   Selección, cursor, foco y barra de desplazamiento vienen con los valores por
+   defecto del navegador, que no pertenecen a ningún sistema de diseño. El foco
+   es además requisito de accesibilidad: sin él no se navega con teclado.
+   ========================================================================== */
+
+::selection {
+  background: var(--acento);
+  color: var(--acento-tinta);
+}
+
+:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.zona-clara :focus-visible {
+  outline-color: var(--acento-claro);
+}
+
+input,
+textarea {
+  caret-color: var(--acento);
+}
+
+input,
+textarea,
+select {
+  accent-color: var(--acento);
+}
+
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -243,199 +557,137 @@ body::before {
   background: #555;
 }
 
-/* Firefox no admite las pseudoclases de arriba. */
-html {
-  scrollbar-color: #333 var(--superficie-0);
-  scrollbar-width: thin;
-}
+/* ==========================================================================
+   MOVIMIENTO
+   ========================================================================== */
 
 /*
-  Superficies que dibuja el navegador.
-
-  La selección, el cursor de texto y el anillo de foco venían con los valores
-  por defecto del navegador, que no pertenecen a ningún sistema de diseño y
-  delatan una página ensamblada. El foco es además un requisito de
-  accesibilidad: sin él no se puede navegar con teclado.
+  Entrada del primer viewport, en CSS y no en JS a propósito: la hoja de estilos
+  llega antes del primer pintado, así que no hay parpadeo y el contenido
+  renderizado en servidor se comporta igual con y sin JavaScript.
 */
-::selection {
-  background: var(--inversion);
-  color: var(--superficie-0);
+@keyframes entrada {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-:focus-visible {
-  outline: 2px solid var(--inversion);
-  outline-offset: 3px;
-  border-radius: 2px;
+.entrada {
+  animation: entrada 0.7s var(--salida) both;
 }
 
-input,
-textarea {
-  caret-color: var(--inversion);
+.entrada-2 {
+  animation-delay: 0.09s;
 }
 
-input,
-textarea,
-select {
-  accent-color: var(--inversion);
+.entrada-3 {
+  animation-delay: 0.18s;
 }
 
-/* Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
+.entrada-4 {
+  animation-delay: 0.27s;
 }
 
-/* Utility Classes */
-.terminal-text {
-  font-family: 'Azeret Mono', monospace;
+/* Marquesina de integraciones. Se duplica la lista en el markup y se desplaza
+   justo la mitad, que es lo que hace que el bucle no dé el salto. */
+@keyframes deslizar {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(32px) saturate(160%);
-  -webkit-backdrop-filter: blur(32px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.6);
+.marquesina {
+  display: flex;
+  width: max-content;
+  animation: deslizar 42s linear infinite;
 }
 
-.glass-light {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.marquesina-marco {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
 }
 
-.glass-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+.marquesina-marco:hover .marquesina {
+  animation-play-state: paused;
 }
 
-.glass-card:hover {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
-}
-
-.font-title {
-  font-family: var(--font-title);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-
-.heading-lg {
-  font-size: clamp(2rem, 5vw, 4.5rem);
-  line-height: 1.1;
-  letter-spacing: 0.1em;
-}
-
-.heading-md {
-  font-size: clamp(1.5rem, 3.5vw, 3rem);
-  line-height: 1.2;
-  letter-spacing: 0.08em;
-}
-
-.magnetic-btn {
-  position: relative;
-  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.char {
-  display: inline-block;
-}
-
-/* Hero Animations */
-@keyframes float {
-  0% {
-    transform: translateY(0px) rotate(0deg);
+/* Latido del punto "en vivo". Es el único bucle de la página y solo marca que
+   el sistema está atendiendo ahora mismo, que es justo lo que se está
+   afirmando al lado. */
+@keyframes latido {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 
   50% {
-    transform: translateY(-20px) rotate(1deg);
-  }
-
-  100% {
-    transform: translateY(0px) rotate(0deg);
+    opacity: 0.45;
+    transform: scale(0.82);
   }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+.latido {
+  animation: latido 2.4s var(--salida) infinite;
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
+/*
+  Movimiento reducido.
 
+  No se reduce todo a 0.01s: eso no quita el parpadeo, solo lo acorta. Se quita
+  el desplazamiento y se conservan opacidad y color, que son los que llevan
+  significado. Y sobre todo: nada puede quedar invisible por haber desactivado
+  la animación que lo hacía aparecer.
+*/
+@media (prefers-reduced-motion: reduce) {
 
-.hero-logo-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.hero-logo-container::before {
-  content: '';
-  position: absolute;
-  width: 120%;
-  height: 120%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-  z-index: -1;
-}
-
-.glitch-logo {
-  filter: contrast(1.5) brightness(1.2);
-  transition: all 0.3s ease;
-}
-
-.glitch-logo:hover {
-  animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
-  filter: contrast(2) brightness(1.5) drop-shadow(0 0 20px rgba(255, 255, 255, 0.4));
-}
-
-@keyframes glitch {
-  0% {
-    transform: translate(0);
+  html {
+    scroll-behavior: auto;
   }
 
-  20% {
-    transform: translate(-2px, 2px);
+  .entrada {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 
-  40% {
-    transform: translate(-2px, -2px);
+  .marquesina,
+  .latido {
+    animation: none;
   }
 
-  60% {
-    transform: translate(2px, 2px);
+  .boton:hover,
+  .tarjeta-enlace:hover {
+    transform: none;
   }
 
-  80% {
-    transform: translate(2px, -2px);
-  }
-
-  100% {
-    transform: translate(0);
+  .js .footer-content > * {
+    opacity: 1;
   }
 }
 
-.hero-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-  filter: blur(60px);
-  z-index: -1;
-  pointer-events: none;
+/* El pie conserva su entrada por GSAP. La clase `js` la añade un script inline
+   en el <head> antes del primer pintado: sin JavaScript no se aplica y el pie
+   queda visible tal cual, que es como lo leen los rastreadores. */
+.js .footer-content > * {
+  opacity: 0;
 }
 
-/* Diabolical Chatbot Animations */
+/* ==========================================================================
+   CHATBOT
+   ========================================================================== */
+
 @keyframes chatSlideIn {
   from {
     opacity: 0;
@@ -444,7 +696,7 @@ html {
 
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: none;
   }
 }
 
@@ -463,6 +715,7 @@ html {
     transform: scale(1);
     opacity: 0.8;
   }
+
   100% {
     transform: scale(1.35);
     opacity: 0;
@@ -470,7 +723,7 @@ html {
 }
 
 .chatbot-panel {
-  animation: chatSlideIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: chatSlideIn 0.38s var(--salida) forwards;
 }
 
 .chatbot-backdrop {
@@ -488,38 +741,51 @@ html {
   border-radius: 50%;
   border: 1.5px solid rgba(255, 255, 255, 0.3);
   pointer-events: none;
-  animation: chatBtnPulse 2.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  animation: chatBtnPulse 2.5s var(--salida) infinite;
 }
 
-/*
-  Entrada del primer viewport.
+@media (prefers-reduced-motion: reduce) {
 
-  En CSS y no en GSAP a propósito: la hoja de estilos llega antes del primer
-  pintado, así que no existe el flash que obligaba al truco de la clase `js`,
-  y el contenido prerenderizado se comporta igual con y sin JavaScript.
-*/
-@keyframes entrada {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
+  .chatbot-panel,
+  .chatbot-backdrop,
+  .chatbot-btn-idle::after {
+    animation: none;
   }
 
-  to {
+  .chatbot-panel {
     opacity: 1;
     transform: none;
   }
 }
 
-.entrada {
-  animation: entrada 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+/* Compatibilidad: clase de transición heredada que siguen usando el formulario
+   y el chatbot. */
+.accion {
+  transition: background-color 140ms var(--salida), color 140ms var(--salida),
+    border-color 140ms var(--salida), transform 140ms var(--salida);
 }
 
-.entrada:nth-child(2) {
-  animation-delay: 0.12s;
+.accion:active {
+  transform: translateY(1px);
+}
+
+.accion:disabled,
+.accion[aria-disabled='true'] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .entrada {
-    animation: none;
+  .accion {
+    transition-duration: 1ms;
   }
+}
+
+.superficie-1 {
+  background-color: var(--superficie-1);
+}
+
+.superficie-2 {
+  background-color: var(--superficie-2);
 }

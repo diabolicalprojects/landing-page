@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import ErrorBoundary from './components/common/ErrorBoundary';
+import Tema from './contenido/Tema';
 
 // La portada se carga en el bundle principal a propósito: es el 99% del tráfico
 // y además es la ruta que se prerenderiza, así que un lazy() aquí obligaría a
@@ -21,9 +22,13 @@ import ArticuloPage from './pages/ArticuloPage';
 import { ARTICULOS } from './data/articulos';
 import ServiciosPage from './pages/ServiciosPage';
 
-// El resto sí se parte: son rutas secundarias.
+// La política de privacidad entra por el mismo motivo que las anteriores: pasa
+// a prerenderizarse, y con lazy() el servidor solo emitía el fallback vacío del
+// Suspense. Ese era el motivo de que Google recibiera la página en blanco.
+import PrivacyPolicy from './pages/PrivacyPolicy';
+
+// El resto sí se parte: son rutas secundarias que no se prerenderizan.
 const AdminPage = lazy(() => import('./pages/AdminPage'));
-const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // El Router lo pone quien monta la app: BrowserRouter en main.jsx (navegador) y
@@ -31,6 +36,10 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 function App() {
     return (
         <ErrorBoundary>
+            {/* Las variables de tema van aquí y no en la portada: /servicios,
+                /blog y las páginas de sector usan los mismos tokens, y sin esto
+                el acento y la escala editados solo se aplicarían en la home. */}
+            <Tema />
             <Suspense fallback={<div className="min-h-screen bg-black" />}>
                 <Routes>
                     <Route path="/" element={<LandingPage />} />

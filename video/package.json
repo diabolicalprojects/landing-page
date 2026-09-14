@@ -1,0 +1,23 @@
+{
+  "name": "diabolical-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Estudio de video de Diabolical. Aislado del sitio a propósito: ver README.",
+  "type": "module",
+  "scripts": {
+    "preparar": "node scripts/preparar.mjs",
+    "prestudio": "npm run preparar",
+    "studio": "remotion studio",
+    "prerender": "npm run preparar",
+    "render": "remotion render GuardiaCuadrada out/guardia-cuadrada.mp4 && remotion render GuardiaHorizontal out/guardia-horizontal.mp4",
+    "preog": "npm run preparar",
+    "og": "remotion still GuardiaHorizontal ../public/og-image.png --frame=200"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.400",
+    "@remotion/google-fonts": "^4.0.400",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "remotion": "4.0.400"
+  }
+}

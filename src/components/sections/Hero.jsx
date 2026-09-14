@@ -1,65 +1,87 @@
 import React from 'react';
-import CicloPanel from './CicloPanel';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+
+import { useBloque } from '../../contenido';
+import PanelGuardia from './PanelGuardia';
 
 /*
- * Primer viewport: la posición a la izquierda, el ciclo completo a la derecha.
+ * Primer viewport.
  *
- * La versión anterior tenía de titular "Tu WhatsApp contesta, agenda y da
- * seguimiento solo" y una demo de WhatsApp como pieza central. Encerraba a una
- * agencia de IA completa en un solo servicio: quien llegaba entendía que aquí
- * solo se hacen chatbots. El titular ahora nombra las tres cosas que el negocio
- * necesita —que lo encuentren, que lo elijan, que no pierda a nadie— y el panel
- * enseña las cinco etapas con sus servicios.
+ * Una sola frase y una sola acción. Lo que antes ocupaba este sitio era un
+ * titular de tres líneas que intentaba nombrar el servicio, el sector y el
+ * mecanismo a la vez; nadie lee eso en un móvil entre dos tareas.
  *
- * Sin animación de entrada de GSAP a propósito: el HTML llega prerenderizado y
- * se muestra al instante — mejor LCP, ningún flash, y funciona idéntico sin
- * JavaScript, que es como lo leen los rastreadores de motores generativos. La
- * entrada la pone CSS (.entrada en index.css) y reduced-motion la anula.
+ * A la izquierda la frase y la acción. A la derecha el sistema trabajando de
+ * madrugada, que es la prueba de la frase. El suelo es una rejilla en
+ * perspectiva con un foco cálido detrás: profundidad sin una sola imagen.
  */
-const Hero = () => (
-    <section className="relative w-full overflow-hidden bg-black pt-32 md:pt-44 pb-16 md:pb-24">
-        <div className="relative z-10 w-full mx-auto px-5 md:px-8 max-w-6xl">
-            <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center">
-                <div className="entrada">
-                    <p className="etiqueta text-white/60 mb-5">
-                        Aguascalientes · Negocios que agendan
-                    </p>
 
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-title leading-[0.92] tracking-tighter text-white uppercase mb-6 md:mb-8">
-                        Algún punto de tu negocio está perdiendo clientes.{' '}
-                        <span className="text-white/40">Te decimos cuál,</span> gratis.
-                    </h1>
+const Destino = ({ destino, children, ...resto }) => {
+    if (!destino) return null;
+    // Las rutas internas van por el router; las anclas y lo externo, por <a>:
+    // meter un ancla en <Link> haría que React Router intentara navegar a ella.
+    const esRuta = destino.startsWith('/');
+    const Componente = esRuta ? Link : 'a';
+    const props = esRuta ? { to: destino } : { href: destino };
+    return (
+        <Componente {...props} {...resto}>
+            {children}
+        </Componente>
+    );
+};
 
-                    <p className="text-base md:text-lg text-white/60 max-w-xl mb-8 md:mb-10 leading-relaxed font-light">
-                        Revisamos tu sitio, tu Google, tu WhatsApp y tu seguimiento, y te
-                        decimos por escrito dónde se te están yendo los clientes. Si después
-                        quieres, lo arreglamos nosotros.
-                    </p>
+const Hero = () => {
+    const hero = useBloque('hero');
 
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 md:gap-6">
-                        <button
-                            onClick={() => {
-                                if (typeof window.gtag === 'function') {
-                                    window.gtag('event', 'cta_click', { cta_id: 'hero_diagnostico' });
-                                }
-                                window.dispatchEvent(new Event('open-diabolical-chat'));
-                            }}
-                            className="accion w-full sm:w-auto px-9 py-4 bg-white text-black rounded-full font-black text-xs md:text-sm uppercase tracking-[0.2em] hover:bg-white/85 min-h-[56px] flex items-center justify-center whitespace-nowrap shrink-0"
-                        >
-                            Quiero mi diagnóstico gratis
-                        </button>
-                        <p className="text-sm text-white/70 leading-snug max-w-[16rem] font-light">
-                            Te lo entregamos por escrito. Sin costo, trabajes o no con nosotros después.
+    if (hero.visible === false) return null;
+
+    return (
+        <section className="zona-oscura relative overflow-hidden pb-20 pt-32 md:pb-28 md:pt-40">
+            <div className="rejilla" aria-hidden="true" />
+            <div
+                className="resplandor left-1/2 top-[-14rem] h-[30rem] w-[46rem] -translate-x-1/2"
+                aria-hidden="true"
+            />
+
+            <div className="contenedor relative">
+                <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-10">
+                    <div className="lg:col-span-6 xl:col-span-6">
+                        <h1 className="titular-xl entrada">
+                            <span className="titular-apagado block">{hero.fraseA}</span>
+                            <span className="block">{hero.fraseB}</span>
+                        </h1>
+
+                        <p className="cuerpo-l entrada entrada-2 mt-7">{hero.apoyo}</p>
+
+                        <div className="entrada entrada-3 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+                            <Destino
+                                destino={hero.ctaPrimario?.destino}
+                                className="boton boton-acento"
+                            >
+                                {hero.ctaPrimario?.texto}
+                                <ArrowRight size={16} aria-hidden="true" />
+                            </Destino>
+                            <Destino
+                                destino={hero.ctaSecundario?.destino}
+                                className="boton boton-fantasma"
+                            >
+                                {hero.ctaSecundario?.texto}
+                            </Destino>
+                        </div>
+
+                        <p className="etiqueta-mono entrada entrada-3 mt-7 text-white/55">
+                            {hero.pie}
                         </p>
                     </div>
-                </div>
 
-                <div className="entrada flex lg:justify-end">
-                    <CicloPanel />
+                    <div className="entrada entrada-4 lg:col-span-6 xl:col-span-6">
+                        <PanelGuardia />
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-);
+        </section>
+    );
+};
 
 export default Hero;
