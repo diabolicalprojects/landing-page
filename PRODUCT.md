@@ -59,6 +59,16 @@ solo se vendieran chatbots de WhatsApp. WhatsApp sigue siendo el canal donde
 ocurre la venta, pero es UNO de los frentes, no la oferta. Cualquier texto que
 vuelva a cerrar la oferta a WhatsApp es una regresión.
 
+**Frase clave del negocio: «Inteligencia artificial para negocios en
+Aguascalientes».** Va literal en el h1 de la portada, y cada sector la declina en
+el suyo («Inteligencia artificial para inmobiliarias»). Todo el trabajo de SEO,
+GEO y AEO se orienta a esa frase; un titular ingenioso que no la contenga la deja
+fuera del sitio entero, porque ningún otro encabezado pesa lo que pesa el h1.
+
+**Catálogo: 13 servicios.** Se retiraron LinkedIn de empresa, tarjetas NFC,
+tablero de resultados y estrategia de canales. «Presencia en ferias» pasó a
+«Activaciones digitales para expos y eventos».
+
 ## Positioning
 
 Segmentación por sector. Ningún competidor local segmenta, así que quien busca
@@ -124,11 +134,26 @@ mensaje prellenado siguen funcionando igual. Puede cambiar cómo se ven y cómo 
 entra a ellos. Desde 2026-09-14 el prospecto se guarda ADEMÁS en el propio
 servidor, porque antes un fallo del webhook era un prospecto perdido sin rastro.
 
-**Voz: diablillos de la tecnología.** Traviesa, directa, mexicana y siempre con
-intención de venta. «Conocemos el desmadre de tu giro», «Somos diablillos, no
-estafadores», «Hecho por diablillos en Aguascalientes». La travesura está en el
-tono, nunca en lo que se promete: la sección de límites es la más seria del
-sitio y ahí no se bromea. Ni corporativo ni payaso.
+**Voz: formal, de usted, con guiño diabólico.** Profesional sin caer en lo
+técnico: nada de vocabulario que un dueño de negocio no maneje. El juego con lo
+diabólico entra donde suma y siempre en positivo — «la parte más endiablada del
+día», «un aliado incansable», «dicen que el diablo está en los detalles: estos
+son los nuestros». Nunca en algo que inquiete.
+
+**Se habla de lo que SÍ ofrecemos.** Nada de describirle al visitante lo que hace
+mal hoy ni lo que podría perder. «Somos diablillos, no estafadores» se retiró por
+sugerir justo lo contrario de lo que pretendía; en su lugar, «Compromisos que
+firmamos con gusto». Las páginas de sector cuentan un día CON el sistema puesto,
+no la fricción que se sufre sin él. Esta regla vale para todo texto nuevo.
+
+**Identidad visual: monocromo.** Blanco y negro, sin color de marca. El acento
+es la inversión de la zona, no un tono. Se probó un ámbar y se retiró: en este
+sistema el contraste es el único recurso de jerarquía, y eso es lo que lo
+distingue. No se introduce un color de acento.
+
+**El logotipo aparece animado en al menos tres superficies** —portada, quiénes
+somos y contacto— más una escena propia por servicio y por sector. Las
+animaciones las mueve Remotion **dentro de la web**, no como video.
 
 **El contenido del sitio se edita desde `/admin`, no desde el código.** Los
 textos, los botones, los enlaces, las tarjetas, el color de acento y la escala
@@ -184,8 +209,17 @@ comentarios descartados):
 | mangospacemarketing.app | 9 palabras | 0 | 0 | 0 | 0 |
 
 Tras el rediseño del 14-09-2026 la portada sirve **2045 palabras** renderizadas,
-con un solo h1 y sin saltos de nivel de encabezado. La ventaja se amplió, que
-era el objetivo.
+con un solo h1 y sin saltos de nivel de encabezado.
+
+El mismo día el sitio pasó de una landing a **28 rutas renderizadas en
+servidor**: inicio, nosotros, índice de servicios más una página por cada uno de
+los trece, índice de sectores más una por cada uno de los seis, contacto, blog y
+privacidad. Cada página nueva es superficie indexable que la competencia local no
+tiene, y la ventaja estructural se multiplica por el número de páginas.
+
+Las rutas de sector cambiaron de `/automatizacion-para-X` a `/sectores/X`. Las
+antiguas devuelven 301 y **no deben borrarse**: estaban indexadas, y un 404
+tiraría a la basura lo que esas páginas hubieran ganado.
 
 Los dos competidores son aplicaciones de cliente con el contenedor vacío: sirven
 un cascarón y montan todo el contenido con JavaScript. Google lo ejecuta y los

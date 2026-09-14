@@ -270,6 +270,58 @@ para quien había visitado antes.
 servidor, y el chatbot se monta tras hidratar: un `<Suspense>` sin resolver durante el render hacía
 que React descartara todo el HTML del servidor (error #419).
 
+## Estructura del sitio
+
+28 rutas, todas renderizadas en servidor y todas en el sitemap:
+
+```
+/                          inicio
+/nosotros                  quiénes somos
+/servicios                 índice del catálogo
+/servicios/<slug>          una por cada uno de los 13 servicios
+/sectores                  índice de sectores
+/sectores/<slug>           una por cada uno de los 6 sectores
+/contacto                  auditoría y formulario
+/blog, /blog/<slug>        índice y artículos
+/politica-privacidad
+```
+
+Las rutas salen de `server/schema.js` (`RUTAS_PUBLICAS`), que alimenta a la vez
+el router del servidor, el sitemap, el prerender y los `llms.txt`. El router de
+React las declara una por una en lugar de con un `:parametro`: así no puede
+desincronizarse de esa lista, y una dirección inventada devuelve 404 de verdad
+en lugar de 200 con una página vacía.
+
+**Redirecciones.** Los sectores vivían en `/automatizacion-para-<slug>`. Esas
+URLs están indexadas, así que devuelven **301** a su equivalente en `/sectores/`.
+La lista (`REDIRECCIONES` en `server/schema.js`) se escribe a mano y no se deriva
+de los slugs actuales, porque tiene que reflejar lo que Google ya tiene
+indexado: `/automatizacion-para-spas` ya no existe como slug —el sector pasó a
+llamarse `salones-de-belleza`— y aun así tiene que llevar a algún sitio útil.
+
+## Escenas animadas
+
+Veintidós ilustraciones (`src/motion/`): tres de marca, trece de servicio y seis
+de sector. Son SVG con `viewBox`, no imágenes.
+
+Una escena recibe `frame` y `fps` por props y dibuja. No llama a ningún hook de
+Remotion, y ese es el motivo de que pueda dibujarse en el servidor sin que
+Remotion exista:
+
+```
+servidor / prefers-reduced-motion   →  <Escena frame={poster} />   HTML puro
+la escena entra en pantalla          →  Remotion la anima          trozo aparte
+la escena sale de pantalla           →  se pausa
+```
+
+`src/motion/Reproductor.jsx` es el **único** fichero que importa `remotion` y
+`@remotion/player`, así que Vite se los lleva a un chunk propio: 39 kB brotli que
+solo se descargan cuando hace falta. El bundle crítico no paga nada.
+
+Las utilidades de tiempo (`src/motion/tiempo.js`) son propias y no las de
+Remotion a propósito: importar `interpolate` del paquete metería Remotion entero
+en el bundle crítico.
+
 ## Contenido editable y panel
 
 El panel `/admin` es un CMS. Edita el contenido con el sitio real al lado, en un `<iframe>` que
@@ -318,9 +370,11 @@ src/
   data/                   contenido.json, sectores.json, servicios.json, faq.json,
                           articulos.json (fuentes de verdad)
   contenido/              Proveedor de contenido y variables de tema
+  motion/                 Escenas animadas, primitivas y puente con Remotion
   admin/                  Editor de campos, vista previa, prospectos, tema
-  pages/                  LandingPage, SectorPage, BlogPage, ArticuloPage,
-                          AdminPage, PrivacyPolicy, NotFound
+  pages/                  InicioPage, NosotrosPage, ServiciosPage, ServicioPage,
+                          SectoresPage, SectorPage, ContactoPage, BlogPage,
+                          ArticuloPage, AdminPage, PrivacyPolicy, NotFound
   components/sections/    Secciones de la landing
   components/common/      Navbar, Footer, chatbot, cursor, ErrorBoundary
   utils/leads.js          Envío a n8n + copia local, y apertura de WhatsApp

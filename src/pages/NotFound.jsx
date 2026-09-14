@@ -8,7 +8,7 @@ const NotFound = () => (
         <img src={logoHorizontalBlanco} alt="Diabolical Services" width="200" height="40" className="w-48 opacity-70" />
 
         <div className="space-y-3">
-            <p className="text-[10px] uppercase tracking-[0.5em] text-white/55 font-black">Error 404</p>
+            <p className="text-[11px] uppercase tracking-[0.5em] text-white/55 font-black">Error 404</p>
             <h1 className="text-3xl md:text-5xl font-title uppercase tracking-tighter leading-[0.9]">
                 Esta ruta no existe
             </h1>
@@ -20,7 +20,7 @@ const NotFound = () => (
 
         <Link
             to="/"
-            className="px-10 py-4 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.4em] hover:scale-[1.02] active:scale-95 transition-all"
+            className="px-10 py-4 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.4em] hover:scale-[1.02] active:scale-95 transition-all"
         >
             Volver al inicio
         </Link>

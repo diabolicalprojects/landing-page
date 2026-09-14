@@ -45,7 +45,7 @@ export const Migas = ({ ruta = [] }) => (
     <nav aria-label="Migas de pan" className="contenedor pt-28 md:pt-32">
         <ol className="flex flex-wrap items-center gap-1.5 text-[0.9375rem]">
             <li>
-                <Link to="/" className="text-white/50 transition-colors hover:text-white">
+                <Link to="/" className="inline-flex min-h-[1.75rem] items-center py-1 text-white/50 transition-colors hover:text-white">
                     Inicio
                 </Link>
             </li>
@@ -61,7 +61,7 @@ export const Migas = ({ ruta = [] }) => (
                         ) : (
                             <Link
                                 to={paso.destino}
-                                className="text-white/50 transition-colors hover:text-white"
+                                className="inline-flex min-h-[1.75rem] items-center py-1 text-white/50 transition-colors hover:text-white"
                             >
                                 {paso.texto}
                             </Link>

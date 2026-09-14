@@ -89,12 +89,7 @@ const Footer = () => {
                 contenido, y el nombre ya está en el logotipo de arriba. */}
             <p
                 aria-hidden="true"
-                className="font-title pointer-events-none select-none text-center leading-[0.75] text-white/[0.045]"
-                style={{
-                    fontSize: 'clamp(4rem, 19vw, 17rem)',
-                    marginBottom: '-0.22em',
-                    letterSpacing: '-0.02em',
-                }}
+                className="rotulo font-title pointer-events-none select-none text-center text-white/[0.045]"
             >
                 Diabolical
             </p>
