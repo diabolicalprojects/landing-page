@@ -11,7 +11,22 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# --- Etapa 2: runtime -----------------------------------------------------
+# --- Etapa 2: dependencias de producción -----------------------------------
+# Se derivan del builder podando las de desarrollo, en vez de instalarlas por
+# segunda vez.
+#
+# Antes esta etapa hacía su propio `npm ci --omit=dev`, y como no dependía del
+# builder, BuildKit ejecutaba las DOS instalaciones EN PARALELO. El 13/09/2026
+# eso tumbó un build: la instalación ligera tardó 172 s (diez veces lo normal,
+# señal de máquina sin memoria tirando de disco) y el build murió al arrancar la
+# pesada. El servidor iba al 87 % de RAM en reposo.
+#
+# Encadenarlas deja una sola instalación en toda la imagen: la mitad de trabajo
+# y un pico de memoria que no se solapa consigo mismo.
+FROM builder AS prod-deps
+RUN npm prune --omit=dev && npm cache clean --force
+
+# --- Etapa 3: runtime -----------------------------------------------------
 FROM node:22-alpine AS runtime
 
 ENV NODE_ENV=production
@@ -19,7 +34,7 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev && npm cache clean --force
+COPY --from=prod-deps /app/node_modules ./node_modules
 
 # Solo lo que el servidor necesita en runtime: nada de código fuente ni de
 # devDependencies en la imagen final.
