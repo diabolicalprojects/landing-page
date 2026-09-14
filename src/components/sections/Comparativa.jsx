@@ -72,7 +72,7 @@ const Comparativa = () => (
                             style={i > 0 ? { borderTop: '1px solid var(--linea)' } : undefined}
                         >
                             <dt
-                                className="px-5 py-5 text-[0.875rem] leading-relaxed md:px-8 md:py-6 md:text-[0.9375rem]"
+                                className="px-5 py-5 text-[0.9375rem] leading-relaxed md:px-8 md:py-6 md:text-[0.9375rem]"
                                 style={{ color: 'var(--texto-3)' }}
                             >
                                 {par.hoy}
@@ -85,7 +85,7 @@ const Comparativa = () => (
                                 <ArrowRight size={12} style={{ color: 'var(--acento-claro)' }} />
                             </span>
                             <dd
-                                className="m-0 px-5 py-5 text-[0.875rem] font-medium leading-relaxed md:px-8 md:py-6 md:text-[0.9375rem]"
+                                className="m-0 px-5 py-5 text-[0.9375rem] font-medium leading-relaxed md:px-8 md:py-6 md:text-[0.9375rem]"
                                 style={{ color: 'var(--texto-1)' }}
                             >
                                 {par.despues}

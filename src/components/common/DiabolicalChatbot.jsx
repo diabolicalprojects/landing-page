@@ -219,11 +219,11 @@ const DiabolicalChatbot = () => {
                         </div>
                         <div className="flex-1 min-w-0">
                             <p id="diabolical-chat-title" className="text-xs font-black uppercase tracking-widest text-white leading-none">Diagnóstico Diabolical</p>
-                            <p className="text-[9px] text-white/55 uppercase tracking-widest mt-0.5">Sistema Autónomo · Online</p>
+                            <p className="text-[11px] text-white/55 uppercase tracking-widest mt-0.5">Sistema Autónomo · Online</p>
                         </div>
                         <div className="flex items-center gap-1.5 flex-shrink-0">
                             <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                            <span className="text-[8px] text-white/20 font-mono uppercase">Live</span>
+                            <span className="text-[11px] text-white/20 font-mono uppercase">Live</span>
                         </div>
                     </div>
 
@@ -255,14 +255,14 @@ const DiabolicalChatbot = () => {
                                         </div>
                                     )}
                                 </div>
-                                <button onClick={handleClose} className="px-8 py-3 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-widest active:scale-95 transition-transform">Cerrar</button>
+                                <button onClick={handleClose} className="px-8 py-3 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-widest active:scale-95 transition-transform">Cerrar</button>
                             </div>
                         )}
 
                         {currentQ && (
                             <div className="space-y-4">
                                 <div className="space-y-1.5">
-                                    <span className="text-[8px] font-black uppercase tracking-[0.5em] text-white/20">{currentQ.tag}</span>
+                                    <span className="text-[11px] font-black uppercase tracking-[0.5em] text-white/20">{currentQ.tag}</span>
                                     <p className="text-sm font-bold text-white leading-snug">{currentQ.label}</p>
                                 </div>
                                 <div className="space-y-2">
@@ -279,7 +279,7 @@ const DiabolicalChatbot = () => {
                         {isContactStep && (
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 <div className="space-y-1.5">
-                                    <span className="text-[8px] font-black uppercase tracking-[0.5em] text-white/20">06 / CONTACTO</span>
+                                    <span className="text-[11px] font-black uppercase tracking-[0.5em] text-white/20">06 / CONTACTO</span>
                                     <p className="text-sm font-bold text-white leading-snug">Perfecto. ¿A dónde enviamos tu análisis?</p>
                                 </div>
                                 <div className="space-y-3">
@@ -294,10 +294,10 @@ const DiabolicalChatbot = () => {
                                     <input id="chat-website" name="chat-website" type="text" tabIndex={-1} autoComplete="off" value={botTrap} onChange={e => setBotTrap(e.target.value)} />
                                 </div>
 
-                                <button type="submit" disabled={isSending} className="w-full py-4 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.3em] hover:scale-[1.02] active:scale-95 transition-all min-h-[56px] disabled:opacity-50 disabled:hover:scale-100">
+                                <button type="submit" disabled={isSending} className="w-full py-4 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.3em] hover:scale-[1.02] active:scale-95 transition-all min-h-[56px] disabled:opacity-50 disabled:hover:scale-100">
                                     {isSending ? 'Enviando...' : 'Enviar por WhatsApp →'}
                                 </button>
-                                <p className="text-[9px] text-white/20 text-center">Solo te contactamos si tu negocio es un buen candidato.</p>
+                                <p className="text-[11px] text-white/20 text-center">Solo te contactamos si tu negocio es un buen candidato.</p>
                             </form>
                         )}
                     </div>
@@ -305,7 +305,7 @@ const DiabolicalChatbot = () => {
                     {/* Step counter footer */}
                     {!isSuccess && (
                         <div className="px-5 py-2.5 border-t border-white/5 flex-shrink-0">
-                            <p className="text-[8px] font-mono text-white/20 uppercase tracking-widest text-center">
+                            <p className="text-[11px] font-mono text-white/20 uppercase tracking-widest text-center">
                                 {isContactStep ? 'Paso 6 de 6' : `Paso ${step + 1} de ${questions.length + 1}`}
                             </p>
                         </div>

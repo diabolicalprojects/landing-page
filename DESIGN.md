@@ -1,10 +1,11 @@
 ---
 name: Diabolical Services
-description: Agencia de IA en Aguascalientes. Dos zonas, un acento, y las escenas dibujadas en markup.
+description: Inteligencia artificial para negocios en Aguascalientes. Monocromo, dos zonas, y las escenas dibujadas en markup.
 colors:
-  acento: "#FF4A1C"
-  acento-claro: "#C2320B"
+  acento: "#FFFFFF"
+  acento-claro: "#0A0A0A"
   acento-tinta: "#0A0A0A"
+  bisel: "#1c1c1c"
   superficie-0: "#000000"
   superficie-1: "#0B0B0B"
   superficie-2: "#151515"
@@ -42,12 +43,24 @@ typography:
     fontWeight: 400
     lineHeight: 1.6
     letterSpacing: "normal"
+  cuerpo-destacado:
+    fontFamily: "Plus Jakarta Sans, system-ui, sans-serif"
+    fontSize: "1.0625rem"
+    fontWeight: 400
+    lineHeight: 1.58
+    letterSpacing: "normal"
   cuerpo:
     fontFamily: "Plus Jakarta Sans, system-ui, sans-serif"
     fontSize: "0.9375rem"
     fontWeight: 400
     lineHeight: 1.62
     letterSpacing: "normal"
+  rotulo:
+    fontFamily: "CODE Bold, sans-serif"
+    fontSize: "clamp(4rem, 19vw, 17rem)"
+    fontWeight: 700
+    lineHeight: 0.75
+    letterSpacing: "-0.02em"
   etiqueta:
     fontFamily: "Plus Jakarta Sans, system-ui, sans-serif"
     fontSize: "0.6875rem"
@@ -61,9 +74,12 @@ typography:
     lineHeight: 1.2
     letterSpacing: "0.02em"
 rounded:
+  xs: "4px"
   sm: "0.5rem"
   md: "1.25rem"
   radio: "1.5rem"
+  losa: "2.4rem"
+  telefono: "2rem"
   pill: "999px"
 spacing:
   xs: "0.5rem"
@@ -74,13 +90,6 @@ spacing:
   seccion-amplia: "clamp(6rem, 12vw, 11rem)"
   seccion-compacta: "clamp(2.5rem, 4vw, 3.5rem)"
 components:
-  boton-acento:
-    backgroundColor: "{colors.acento}"
-    textColor: "{colors.acento-tinta}"
-    typography: "{typography.cuerpo}"
-    rounded: "{rounded.pill}"
-    padding: "0 1.625rem"
-    height: "3.25rem"
   boton-primario:
     backgroundColor: "#FFFFFF"
     textColor: "{colors.superficie-0}"
@@ -119,8 +128,13 @@ y los componentes que ya están en producción.
 
 ## Overview
 
-Una sola idea sostiene el sistema: **dos zonas que comparten los mismos
-nombres**. `.zona-oscura` y `.zona-clara` redefinen el mismo juego de variables
+El sistema es **monocromo**. No hay color de marca: el acento es la inversión de
+la zona —blanco sobre negro, negro sobre papel— y todo lo que destaca se lo gana
+con peso, tamaño o superficie. Es la restricción más dura del sistema y la que
+hace que un elemento importante lo parezca de verdad, porque no puede apoyarse
+en un color llamativo que no significa nada.
+
+Una segunda idea lo sostiene: **dos zonas que comparten los mismos nombres**. `.zona-oscura` y `.zona-clara` redefinen el mismo juego de variables
 —texto, líneas, tarjetas, acento, inverso— así que cada componente se escribe una
 vez y funciona en las dos sin una variante clara de cada cosa. Ahí es donde un
 sistema de este tamaño se desincroniza, y el diseño está montado para que no
@@ -138,16 +152,14 @@ un valor guardado no pasa la validación.
 
 ## Colors
 
-Estrategia: **neutros más un acento**. El negro y el papel hacen todo el trabajo
-de superficie; el ámbar `#FF4A1C` aparece como mucho una vez por sección y solo
-en dos papeles: la acción primaria, y lo que está vivo ahora mismo (el punto de
-«en operación», la franja del aviso recién llegado, el hueco que acaba de
-ocuparse en la agenda).
+Estrategia: **monocromo**. Negro, papel y la escala de grises entre ellos. No hay
+color de marca y no debe añadirse uno: el acento es un rol, no un tono, y lo
+resuelve `--acento-zona`, que vale blanco en zona oscura y tinta en zona clara.
 
-El acento tiene dos versiones porque una no llega: `#FF4A1C` da 6,25:1 sobre
-negro pero solo 3,36:1 sobre papel. `--acento-claro` (`#C2320B`) da 5,59:1 sobre
-papel y es el que usa la zona clara. Nunca se usa el claro sobre negro ni al
-revés.
+Eso hace que el botón primario sea blanco sobre negro y negro sobre papel sin
+que ningún componente tenga que saber en qué zona está. También convierte el
+contraste en el único recurso de jerarquía disponible, que es exactamente la
+disciplina que este sistema quiere.
 
 Los grises secundarios están elegidos por contraste medido, no a ojo:
 
@@ -163,6 +175,13 @@ resolviendo cada color en canvas —Tailwind 4 emite `oklab()` y un parser por
 expresión regular no puede leerlo— con una aserción de control: blanco sobre
 negro tiene que dar exactamente 21,00 o el medidor está roto.
 
+`bisel` (#1c1c1c) es el único color que no sale de la escala: es el marco físico
+del mockup de teléfono, un material, no un tono de marca.
+
+**No hay grano.** La textura de ruido que cubría la página se retiró: en un
+sistema monocromo ensucia los negros profundos y resta nitidez al texto pequeño,
+que es justo donde este diseño no puede permitirse perder.
+
 ## Typography
 
 Dos caras y tres registros, sin nada entre medias.
@@ -175,10 +194,18 @@ positivo. No se usa para leer.
 tracking cerrado (−0.045em en el grande), que es lo que da el bloque compacto de
 la categoría. El cuerpo va a 400.
 
-La escala es de tres pasos y el salto entre ellos es evidente. Antes convivían
-tamaños de 8, 9, 10 y 11 px usados para lo mismo: cuatro pasos que el ojo no
-distingue, que es exactamente lo que produce una página sin jerarquía. El suelo
-de lectura es 11 px y solo para etiquetas.
+El ramp de texto tiene **cuatro pasos y el salto entre ellos es evidente**:
+19 px de entradilla, 17 px de cuerpo destacado, 15 px de cuerpo y 11 px de
+etiqueta. El suelo de lectura es 11 px y solo para etiquetas.
+
+Llegó a tener cinco pasos, con 15, 14 y 13 px conviviendo para lo mismo. El ojo
+no distingue esos tres, que es exactamente lo que produce una página sin
+jerarquía, y contradecía esta misma regla. Se colapsaron. Lo mismo con los 8 y
+9 px que quedaban del diseño anterior en el blog, la privacidad y el chatbot:
+por debajo de 11 px no hay contraste que salve la lectura.
+
+`rotulo` vive fuera del ramp a propósito: es la marca a escala de fachada en el
+pie, superficie y no texto de lectura.
 
 `--escala-titulo` y `--escala-texto` son multiplicadores que afectan a la escala
 entera. Se puede agrandar la jerarquía sin descomponerla, y no hay forma de
@@ -224,8 +251,12 @@ la página.
 
 Radio base editable, 1,5rem de fábrica. Las acciones son píldoras completas
 (`999px`); las tarjetas usan el radio base; los marcos de ventana bajan a
-1,25rem y el de teléfono sube a 2rem con borde de 6px, que es lo que lo hace
-leer como un teléfono y no como una tarjeta alta.
+1,25rem y el de teléfono sube a `telefono` (2rem) con borde de 6px, que es lo que
+lo hace leer como un teléfono y no como una tarjeta alta.
+
+`losa` (2,4rem) es la tarjeta negra incrustada en la zona clara del cierre: más
+redonda que una tarjeta normal porque es un objeto puesto sobre la página, no
+una pieza de ella. `xs` (4px) es el anillo de foco.
 
 Bordes de 1px siempre. No hay bordes de color de más de 1px en ningún lado.
 
@@ -247,9 +278,26 @@ sin ser pulsable miente.
 **Enlace de texto.** El subrayado se dibuja de 0 a 100% del ancho en 220 ms con
 `background-size`. Aparecer de golpe es lo que hace el navegador por defecto.
 
-**Escenas.** Las ilustraciones de producto son markup y CSS con los tokens de la
-zona, no imágenes: pesan cero, se adaptan al ancho, cambian con el tema y se leen
-igual en claro que en oscuro. Una imagen exportada no hace ninguna de las cuatro.
+**Escenas animadas.** Veintidós ilustraciones —tres de marca, trece de servicio,
+seis de sector— son SVG con `viewBox` y no imágenes. Cada una recibe un número de
+fotograma y dibuja; no sabe quién la anima.
+
+En el servidor se dibuja su fotograma de póster, así que el contenido viaja en el
+HTML. En el navegador, Remotion la anima desde un trozo aparte que solo se
+descarga cuando la escena entra en pantalla (39 kB brotli, cero en el bundle
+crítico), y se pausa al salir de vista. Con `prefers-reduced-motion` o sin
+`IntersectionObserver` se queda en el póster, que es un resultado correcto y no
+una versión rota.
+
+La regla que las mantiene distintas sin convertirlas en veintidós estilos: cada
+escena enseña el **mecanismo**, no el tema. La de posicionamiento no dibuja una
+lupa, dibuja un resultado subiendo al primer puesto. Las seis de sector comparten
+esqueleto a propósito —en los seis giros pasa lo mismo— y solo cambia el
+artefacto que el sistema produce.
+
+El conector y el pulso que lo recorre salen de **una sola** función `trazado()`.
+Cuando cada uno calculaba el suyo, la luz viajaba por una línea que no estaba
+dibujada.
 
 **Superficies del navegador.** Selección, cursor de texto, anillo de foco y barra
 de desplazamiento están tematizados. Es lo más barato que distingue una página
@@ -261,8 +309,8 @@ construida de una ensamblada, y lo que más se salta.
 
 - Usa `.zona-oscura` o `.zona-clara` en la sección y deja que los componentes
   hereden. Nunca escribas una variante clara de un componente que ya existe.
-- Un acento por sección como mucho, y solo en la acción primaria o en lo que
-  está vivo ahora.
+- El acento es la inversión de la zona, nunca un tono. Si hace falta un color
+  para que algo destaque, lo que falla es la jerarquía.
 - Mide el contraste resolviendo el color en canvas, con la aserción de control.
   Tailwind 4 emite `oklab()`; un parser por expresión regular devuelve basura y
   la basura pasa por buena.
@@ -274,6 +322,8 @@ construida de una ensamblada, y lo que más se salta.
 **No**
 
 - Nada de degradados en texto. El énfasis sale del peso y del tamaño.
+- Nada de introducir un color de marca. El sistema es monocromo y esa es su
+  identidad, no una limitación pendiente de resolver.
 - Nada de esconder contenido para poder revelarlo. La primera versión del panel
   de guardia bajaba los avisos no activos a opacidad 0,18 y el texto dejaba de
   leerse; ahora los cuatro se leen siempre y lo que se mueve es un realce.
@@ -286,9 +336,16 @@ construida de una ensamblada, y lo que más se salta.
   lleva porque son las etapas del ciclo de un cliente.
 - Nada de tipografía de sistema como voz de display. CODE Bold es la marca.
 
-**No canonizado.** El build usa insignias de sección (la píldora sobre el
-titular), un recurso que el suelo de oficio de la skill prohíbe por defecto. Está
-aquí porque el usuario lo fijó con seis referencias visuales y porque estas
-llevan carga real —son el ancla a la que apunta la navegación—, no porque sea
-una regla de la casa para superficies futuras. Una insignia que solo decore es
-un defecto.
+**No canonizado.** Dos cosas que el build lleva y que NO son regla de la casa:
+
+Las insignias de sección (la píldora sobre el titular) son un recurso que el
+suelo de oficio prohíbe por defecto. Están aquí porque el usuario las fijó con
+referencias visuales y porque llevan carga real —son el ancla a la que apunta la
+navegación—. Una insignia que solo decore es un defecto.
+
+El panel `/admin` corre un ramp de texto más denso (12 y 13 px) que el sitio
+público. Es una superficie de trabajo, no de lectura, y una densidad mayor está
+justificada ahí; no se hereda hacia fuera.
+
+`ChatDemo` usa los tamaños de la interfaz de WhatsApp, no los de la casa. Retrata
+otro producto y tiene que parecerse a él.

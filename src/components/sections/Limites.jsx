@@ -42,7 +42,7 @@ const Limites = () => {
                             >
                                 <X size={14} style={{ color: 'var(--acento)' }} />
                             </span>
-                            <p className="max-w-3xl text-[1.0625rem] leading-relaxed text-white/85">
+                            <p className="max-w-3xl cuerpo-destacado leading-relaxed text-white/85">
                                 {item}
                             </p>
                         </li>

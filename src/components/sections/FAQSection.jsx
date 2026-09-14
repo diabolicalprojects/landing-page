@@ -51,7 +51,7 @@ const FAQSection = () => {
                                                 onClick={() => setAbierta(estaAbierta ? null : i)}
                                                 className="flex w-full items-center justify-between gap-5 px-5 py-5 text-left md:px-7 md:py-6"
                                             >
-                                                <span className="text-[1rem] font-bold leading-snug tracking-tight md:text-[1.0625rem]">
+                                                <span className="text-[1rem] font-bold leading-snug tracking-tight md:cuerpo-destacado">
                                                     {faq.pregunta}
                                                 </span>
                                                 <span

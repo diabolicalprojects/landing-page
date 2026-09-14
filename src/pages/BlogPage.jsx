@@ -38,7 +38,7 @@ const BlogPage = () => {
             <section className="relative z-10 pt-32 md:pt-44 pb-12 md:pb-16 px-5 md:px-6">
                 <div className="max-w-3xl mx-auto">
                     <nav aria-label="Ruta de navegación" className="mb-8">
-                        <ol className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] text-white/55 font-bold">
+                        <ol className="flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-white/55 font-bold">
                             <li><Link to="/" className="hover:text-white transition-colors">Inicio</Link></li>
                             <li aria-hidden="true">/</li>
                             <li className="text-white/60">Blog</li>
@@ -65,7 +65,7 @@ const BlogPage = () => {
                             to={`/blog/${articulo.slug}`}
                             className="block glass-card rounded-3xl border-white/5 hover:border-white/15 transition-all group p-7 md:p-9"
                         >
-                            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[9px] uppercase tracking-[0.3em] text-white/55 font-bold mb-4">
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] uppercase tracking-[0.3em] text-white/55 font-bold mb-4">
                                 <time dateTime={articulo.fecha}>{fechaLegible(articulo.fecha)}</time>
                                 {articulo.lectura ? (
                                     <>
@@ -83,7 +83,7 @@ const BlogPage = () => {
                                 {articulo.entradilla}
                             </p>
 
-                            <span className="text-[9px] uppercase tracking-[0.3em] text-white/55 group-hover:text-white transition-colors font-bold inline-flex items-center gap-2">
+                            <span className="text-[11px] uppercase tracking-[0.3em] text-white/55 group-hover:text-white transition-colors font-bold inline-flex items-center gap-2">
                                 Leer <ArrowRight size={12} />
                             </span>
                         </Link>

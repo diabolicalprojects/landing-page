@@ -1,199 +1,186 @@
-import React, { Suspense, lazy } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Check, X } from 'lucide-react';
+import React, { useId, useState } from 'react';
+import { ArrowRight, Plus } from 'lucide-react';
 
-import Navbar from '../components/common/Navbar';
-import Footer from '../components/common/Footer';
-import { getSector, SECTORES } from '../data/sectores';
-import { useHydrated } from '../utils/useHydrated';
+import Pagina, { Migas } from '../components/common/Pagina';
+import Enlace from '../components/common/Enlace';
+import MotionGrafico from '../motion/MotionGrafico';
+import { hayEscena } from '../motion/escenas';
+import { SECTORES, getSector } from '../data/sectores';
 
-const DiabolicalChatbot = lazy(() => import('../components/common/DiabolicalChatbot'));
-
-const abrirChat = () => window.dispatchEvent(new Event('open-diabolical-chat'));
-
-/**
- * Página por sector. El <head> (título, descripción, JSON-LD con Service,
- * FAQPage y BreadcrumbList) lo resuelve el servidor — ver server/render.js.
+/*
+ * Página de un sector.
+ *
+ * El h1 es la frase clave del negocio aplicada al giro: «Inteligencia
+ * artificial para inmobiliarias». Es la búsqueda que hace alguien que ya sabe
+ * lo que quiere, y la que ningún competidor local está respondiendo.
+ *
+ * Las seis páginas salen de src/data/sectores.json, la misma fuente de la que
+ * server/schema.js construye el FAQPage. Google exige que lo marcado sea
+ * exactamente lo que ve el visitante, así que dos listas separadas acabarían
+ * convirtiendo el marcado en infractor.
  */
 const SectorPage = ({ slug }) => {
     const sector = getSector(slug);
-    const mostrarChatbot = useHydrated();
+    const [abierta, setAbierta] = useState(null);
+    const idBase = useId();
 
-    // App.jsx solo monta este componente con slugs que existen, así que llegar
-    // aquí sin sector significaría que sectores.json y las rutas se
-    // desincronizaron.
     if (!sector) return null;
 
+    const otros = SECTORES.filter((s) => s.slug !== sector.slug);
+
     return (
-        <main className="relative bg-black min-h-screen selection:bg-white selection:text-black font-jakarta overflow-x-hidden">
-            <div className="fixed inset-0 pointer-events-none z-0">
-                <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-white/[0.03] blur-[180px] rounded-full" />
-                <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-white/[0.02] blur-[150px] rounded-full" />
-            </div>
+        <Pagina>
+            <Migas ruta={[{ texto: 'Sectores', destino: '/sectores' }, { texto: sector.nombreCorto }]} />
 
-            <Navbar />
+            <section className="zona-oscura seccion">
+                <div className="contenedor">
+                    <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-12">
+                        <header className="lg:col-span-6">
+                            <p className="insignia">{sector.nombreCorto}</p>
+                            <h1 className="titular-xl mt-5">{sector.titular}</h1>
+                            <p className="cuerpo-l mt-7">{sector.entradilla}</p>
 
-            {/* Encabezado */}
-            <section className="relative z-10 pt-32 md:pt-44 pb-14 md:pb-20 px-5 md:px-6">
-                <div className="max-w-4xl mx-auto">
-                    <nav aria-label="Ruta de navegación" className="mb-8">
-                        <ol className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] text-white/55 font-bold">
-                            <li><Link to="/" className="hover:text-white transition-colors">Inicio</Link></li>
-                            <li aria-hidden="true">/</li>
-                            <li className="text-white/60">{sector.nombreCorto}</li>
-                        </ol>
-                    </nav>
+                            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                                <Enlace destino="/contacto" className="boton boton-acento">
+                                    Solicitar auditoría gratuita
+                                    <ArrowRight size={16} aria-hidden="true" />
+                                </Enlace>
+                                <Enlace destino="/servicios" className="boton boton-fantasma">
+                                    Ver los servicios
+                                </Enlace>
+                            </div>
+                        </header>
 
-                    <div className="inline-block px-3 py-1 bg-white/5 rounded-full mb-5">
-                        <span className="text-[8px] uppercase tracking-[0.4em] text-white/60 font-black">
-                            {sector.nombre} · Aguascalientes
-                        </span>
-                    </div>
-
-                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-title uppercase tracking-tighter leading-[0.92] mb-6">
-                        {sector.titular}
-                    </h1>
-
-                    <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-2xl font-light">
-                        {sector.entradilla}
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row gap-3 mt-10">
-                        <button
-                            onClick={abrirChat}
-                            className="px-8 py-4 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.3em] hover:scale-[1.02] active:scale-95 transition-all min-h-[56px]"
-                        >
-                            Solicitar auditoría gratuita
-                        </button>
-                        <Link
-                            to="/#contact"
-                            className="px-8 py-4 glass rounded-full font-black text-[10px] uppercase tracking-[0.3em] text-white/70 hover:text-white hover:bg-white/5 transition-all min-h-[56px] flex items-center justify-center gap-2"
-                        >
-                            Ver el cuestionario <ArrowRight size={13} />
-                        </Link>
+                        <div className="lg:col-span-6">
+                            {hayEscena(sector.slug) && (
+                                <MotionGrafico
+                                    escena={sector.slug}
+                                    prioridad
+                                    etiqueta={`Ilustración animada del sistema trabajando para ${sector.nombreCorto.toLowerCase()}.`}
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Dolores del sector */}
-            <section className="relative z-10 py-14 md:py-20 px-5 md:px-6 border-t border-white/5">
-                <div className="max-w-4xl mx-auto">
-                    <h2 className="text-2xl md:text-3xl font-title uppercase tracking-tighter mb-3">
-                        Lo que está pasando hoy
+            <section className="zona-clara seccion">
+                <div className="contenedor">
+                    <h2 className="titular-l max-w-3xl">
+                        Un día cualquiera, <span className="titular-apagado">con el sistema puesto.</span>
                     </h2>
-                    <p className="text-[9px] uppercase tracking-[0.3em] text-white/55 font-bold mb-10">
-                        Fricción típica del sector
-                    </p>
 
-                    <ul className="space-y-4">
-                        {sector.dolores.map((dolor, i) => (
-                            <li key={i} className="flex gap-4 items-start">
-                                <X size={16} className="text-white/25 mt-1 flex-shrink-0" aria-hidden="true" />
-                                <span className="text-white/60 text-sm md:text-base leading-relaxed font-light">{dolor}</span>
+                    <ol className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2">
+                        {(sector.momentos ?? []).map((momento, i) => (
+                            <li key={momento} className="tarjeta flex items-start gap-5 p-6">
+                                <span
+                                    className="cifras etiqueta-mono mt-1 flex-none"
+                                    style={{ color: 'var(--texto-3)' }}
+                                >
+                                    {String(i + 1).padStart(2, '0')}
+                                </span>
+                                <p className="cuerpo max-w-none">{momento}</p>
+                            </li>
+                        ))}
+                    </ol>
+                </div>
+            </section>
+
+            <section className="zona-oscura seccion">
+                <div className="contenedor">
+                    <h2 className="titular-l max-w-3xl">
+                        Qué se instala <span className="titular-apagado">exactamente.</span>
+                    </h2>
+
+                    <div className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2">
+                        {(sector.soluciones ?? []).map((solucion) => (
+                            <article key={solucion.titulo} className="tarjeta p-6 md:p-8">
+                                <h3 className="titular-m">{solucion.titulo}</h3>
+                                <p className="cuerpo mt-3">{solucion.detalle}</p>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <section className="zona-clara seccion">
+                <div className="contenedor">
+                    <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+                        <h2 className="titular-l lg:col-span-4">
+                            Preguntas <span className="titular-apagado">de este giro.</span>
+                        </h2>
+
+                        <ul className="space-y-2.5 lg:col-span-8">
+                            {(sector.faq ?? []).map((item, i) => {
+                                const estaAbierta = abierta === i;
+                                const idPanel = `${idBase}-p-${i}`;
+                                const idBoton = `${idBase}-b-${i}`;
+                                return (
+                                    <li key={item.q} className="tarjeta overflow-hidden">
+                                        <h3>
+                                            <button
+                                                type="button"
+                                                id={idBoton}
+                                                aria-expanded={estaAbierta}
+                                                aria-controls={idPanel}
+                                                onClick={() => setAbierta(estaAbierta ? null : i)}
+                                                className="flex w-full items-center justify-between gap-5 px-5 py-5 text-left md:px-7"
+                                            >
+                                                <span className="text-[1rem] font-bold leading-snug tracking-tight">
+                                                    {item.q}
+                                                </span>
+                                                <span
+                                                    className="flex h-8 w-8 flex-none items-center justify-center rounded-full transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                                                    style={{
+                                                        background: estaAbierta
+                                                            ? 'var(--tinta)'
+                                                            : 'var(--papel-2)',
+                                                        color: estaAbierta ? 'var(--papel)' : 'var(--texto-1)',
+                                                        transform: estaAbierta ? 'rotate(45deg)' : 'none',
+                                                    }}
+                                                    aria-hidden="true"
+                                                >
+                                                    <Plus size={16} />
+                                                </span>
+                                            </button>
+                                        </h3>
+                                        <div id={idPanel} role="region" aria-labelledby={idBoton} hidden={!estaAbierta}>
+                                            <p
+                                                className="cuerpo max-w-none px-5 pb-6 md:px-7"
+                                                style={{ borderTop: '1px solid var(--linea)', paddingTop: '1.25rem' }}
+                                            >
+                                                {item.a}
+                                            </p>
+                                        </div>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section className="zona-oscura seccion">
+                <div className="contenedor">
+                    <h2 className="titular-m">Inteligencia artificial para otros giros</h2>
+                    <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                        {otros.map((otro) => (
+                            <li key={otro.slug}>
+                                <Enlace
+                                    destino={`/sectores/${otro.slug}`}
+                                    className="tarjeta tarjeta-enlace flex min-h-[4.5rem] items-center justify-between gap-4 px-5 py-4"
+                                >
+                                    <span className="text-[0.9375rem] font-bold tracking-tight">
+                                        {otro.nombreCorto}
+                                    </span>
+                                    <ArrowRight size={16} className="flex-none text-white/45" aria-hidden="true" />
+                                </Enlace>
                             </li>
                         ))}
                     </ul>
                 </div>
             </section>
-
-            {/* Soluciones */}
-            <section className="relative z-10 py-14 md:py-24 px-5 md:px-6 border-t border-white/5">
-                <div className="max-w-5xl mx-auto">
-                    <h2 className="text-2xl md:text-3xl font-title uppercase tracking-tighter mb-3">
-                        Lo que instalamos
-                    </h2>
-                    <p className="text-[9px] uppercase tracking-[0.3em] text-white/55 font-bold mb-12">
-                        Sistemas autónomos conectados a lo que ya usas
-                    </p>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        {sector.soluciones.map((s, i) => (
-                            <div key={i} className="glass-card p-7 md:p-8 rounded-3xl border-white/5 hover:border-white/15 transition-all">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <Check size={15} className="text-white flex-shrink-0" aria-hidden="true" />
-                                    <h3 className="text-sm font-black uppercase tracking-widest text-white leading-snug">
-                                        {s.titulo}
-                                    </h3>
-                                </div>
-                                <p className="text-white/50 text-sm leading-relaxed font-light">{s.detalle}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Preguntas frecuentes del sector */}
-            <section className="relative z-10 py-14 md:py-24 px-5 md:px-6 border-t border-white/5">
-                <div className="max-w-3xl mx-auto">
-                    <h2 className="text-2xl md:text-3xl font-title uppercase tracking-tighter mb-3">
-                        Preguntas frecuentes
-                    </h2>
-                    <p className="text-[9px] uppercase tracking-[0.3em] text-white/55 font-bold mb-10">
-                        {sector.nombreCorto}
-                    </p>
-
-                    <div className="space-y-3">
-                        {sector.faq.map((item, i) => (
-                            <details key={i} className="glass-card rounded-2xl border-white/5 group">
-                                <summary className="cursor-pointer list-none p-6 flex justify-between items-center gap-4">
-                                    <h3 className="text-sm font-bold text-white leading-snug">{item.q}</h3>
-                                    <span className="text-white/55 text-xl leading-none flex-shrink-0 group-open:rotate-45 transition-transform" aria-hidden="true">+</span>
-                                </summary>
-                                <p className="px-6 pb-6 text-white/55 text-sm leading-relaxed font-light">{item.a}</p>
-                            </details>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Cierre */}
-            <section className="relative z-10 py-16 md:py-24 px-5 md:px-6 border-t border-white/5">
-                <div className="max-w-3xl mx-auto text-center">
-                    <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-5 leading-[0.95]">
-                        ¿Tu {sector.nombreCorto.toLowerCase()} es candidato?
-                    </h2>
-                    <p className="text-white/55 text-sm md:text-base leading-relaxed mb-9 max-w-xl mx-auto font-light">
-                        La auditoría de fricción es gratuita: revisamos dónde se te están escapando
-                        clientes y te decimos qué se puede automatizar y qué no vale la pena tocar.
-                    </p>
-                    <button
-                        onClick={abrirChat}
-                        className="px-10 py-5 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.35em] hover:scale-[1.02] active:scale-95 transition-all min-h-[60px]"
-                    >
-                        Empezar el diagnóstico
-                    </button>
-                </div>
-            </section>
-
-            {/* Enlaces cruzados entre sectores: reparten autoridad entre las
-                páginas y evitan que cada una quede aislada del resto. */}
-            <section className="relative z-10 py-12 md:py-16 px-5 md:px-6 border-t border-white/5">
-                <div className="max-w-4xl mx-auto">
-                    <h2 className="text-[9px] uppercase tracking-[0.4em] text-white/55 font-black mb-6">
-                        Otros sectores
-                    </h2>
-                    <div className="flex flex-wrap gap-3">
-                        {SECTORES.filter((s) => s.slug !== sector.slug).map((otro) => (
-                            <Link
-                                key={otro.slug}
-                                to={`/automatizacion-para-${otro.slug}`}
-                                className="px-5 py-3 glass rounded-full text-xs text-white/60 hover:text-white hover:bg-white/5 transition-all"
-                            >
-                                {otro.nombre}
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            <Footer />
-
-            {mostrarChatbot && (
-                <Suspense fallback={null}>
-                    <DiabolicalChatbot />
-                </Suspense>
-            )}
-        </main>
+        </Pagina>
     );
 };
 

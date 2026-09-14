@@ -26,7 +26,7 @@ const CierreCta = () => {
             <div className="contenedor">
                 <div
                     className="zona-oscura relative overflow-hidden px-6 py-16 text-center md:px-16 md:py-24"
-                    style={{ borderRadius: 'calc(var(--radio) * 1.6)' }}
+                    style={{ borderRadius: 'var(--radio-losa)' }}
                 >
                     <div className="rejilla" aria-hidden="true" />
                     <div

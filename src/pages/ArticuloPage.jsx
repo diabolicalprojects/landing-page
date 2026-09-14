@@ -57,7 +57,7 @@ const ArticuloPage = ({ slug }) => {
                 <header className="pt-32 md:pt-44 pb-10 md:pb-14 px-5 md:px-6">
                     <div className="max-w-3xl mx-auto">
                         <nav aria-label="Ruta de navegación" className="mb-8">
-                            <ol className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] text-white/55 font-bold">
+                            <ol className="flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-white/55 font-bold">
                                 <li><Link to="/" className="hover:text-white transition-colors">Inicio</Link></li>
                                 <li aria-hidden="true">/</li>
                                 <li><Link to="/blog" className="hover:text-white transition-colors">Blog</Link></li>
@@ -72,7 +72,7 @@ const ArticuloPage = ({ slug }) => {
                             {articulo.entradilla}
                         </p>
 
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.3em] text-white/55 font-bold border-t border-white/5 pt-6">
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] uppercase tracking-[0.3em] text-white/55 font-bold border-t border-white/5 pt-6">
                             <time dateTime={articulo.fecha}>{fechaLegible(articulo.fecha)}</time>
                             {articulo.lectura ? (
                                 <>
@@ -146,7 +146,7 @@ const ArticuloPage = ({ slug }) => {
                     </p>
                     <button
                         onClick={abrirChat}
-                        className="px-10 py-5 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.35em] hover:scale-[1.02] active:scale-95 transition-all min-h-[60px]"
+                        className="px-10 py-5 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.35em] hover:scale-[1.02] active:scale-95 transition-all min-h-[60px]"
                     >
                         Empezar el diagnóstico
                     </button>
@@ -158,12 +158,12 @@ const ArticuloPage = ({ slug }) => {
             <section className="relative z-10 py-12 md:py-16 px-5 md:px-6 border-t border-white/5">
                 <div className="max-w-3xl mx-auto">
                     <div className="flex items-center justify-between gap-4 mb-6">
-                        <h2 className="text-[9px] uppercase tracking-[0.4em] text-white/55 font-black">
+                        <h2 className="text-[11px] uppercase tracking-[0.4em] text-white/55 font-black">
                             {otros.length > 0 ? 'Seguir leyendo' : 'Blog'}
                         </h2>
                         <Link
                             to="/blog"
-                            className="text-[9px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors font-bold flex items-center gap-2"
+                            className="text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors font-bold flex items-center gap-2"
                         >
                             <ArrowLeft size={12} /> Todos los artículos
                         </Link>
