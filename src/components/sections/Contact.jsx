@@ -61,16 +61,17 @@ const Contact = () => {
                                 <h3 className="text-lg font-title uppercase text-white mb-2">{delivered ? '¡Listo, lo recibimos!' : 'Falta un paso'}</h3>
                                 <p className="text-sm text-white/70 leading-relaxed">{delivered ? 'Se abrió tu WhatsApp con el resumen. Dale enviar y seguimos por ahí.' : 'Se abrió tu WhatsApp con el resumen, pero tus datos no llegaron a nuestro sistema. Dale enviar en WhatsApp, o usa el botón de abajo. Con cualquiera de las dos nos llega.'}</p>
                                 {!delivered && (
-                                    <a
-                                        role="alert"
-                                        href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Diagnóstico gratuito — ${form.company}`)}&body=${encodeURIComponent(`Empresa: ${form.company}\nNombre: ${form.name}\nWhatsApp: ${form.whatsapp}\nCorreo: ${form.email}\n\nCómo llegan sus clientes: ${form.source}\nPersonas que atienden: ${form.people}\nSi fuera automático: ${form.aspiration}`)}`}
-                                        className="accion mt-5 inline-flex items-center justify-center w-full px-8 py-4 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.25em] min-h-[56px]"
-                                    >
-                                        Enviarlo por correo
-                                    </a>
+                                    <div role="alert">
+                                        <a
+                                            href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Diagnóstico gratuito — ${form.company}`)}&body=${encodeURIComponent(`Empresa: ${form.company}\nNombre: ${form.name}\nWhatsApp: ${form.whatsapp}\nCorreo: ${form.email}\n\nCómo llegan sus clientes: ${form.source}\nPersonas que atienden: ${form.people}\nSi fuera automático: ${form.aspiration}`)}`}
+                                            className="accion mt-5 inline-flex items-center justify-center w-full py-5 bg-white text-black rounded-full font-black text-xs uppercase tracking-[0.25em] min-h-[60px] hover:bg-white/85"
+                                        >
+                                            Enviarlo por correo
+                                        </a>
+                                    </div>
                                 )}
                             </div>
-                            <button onClick={() => { setSent(false); setForm(EMPTY_FORM); setDelivered(true); }} className="accion px-9 py-4 bg-white text-black rounded-full font-black text-xs uppercase tracking-[0.2em] min-h-[56px] hover:bg-white/85">Enviar otro</button>
+                            <button onClick={() => { setSent(false); setForm(EMPTY_FORM); setDelivered(true); }} className="accion px-9 py-4 bg-transparent text-white/60 border border-white/10 rounded-full font-black text-xs uppercase tracking-[0.2em] min-h-[56px] hover:text-white hover:border-white/25">Enviar otro</button>
                         </div>
                     ) : (
                         <>
