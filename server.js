@@ -113,6 +113,22 @@ app.get('/llms-full.txt', (req, res) => {
     res.type('text/plain; charset=utf-8').send(construirLlmsFull());
 });
 
+// Huella del código fuente con el que se construyó esta imagen. La escribe el
+// prerender y la compara el workflow de despliegue: sin ella, una comprobación
+// contra producción puede dar por buena la versión anterior.
+const BUILD_ID = (() => {
+    try {
+        return fs.readFileSync(path.join(config.distPath, 'build-id.txt'));
+    } catch {
+        return null;
+    }
+})();
+
+app.get('/build-id.txt', (req, res) => {
+    if (!BUILD_ID) return res.status(503).type('text/plain').send('sin build-id\n');
+    res.type('text/plain; charset=utf-8').send(BUILD_ID);
+});
+
 app.get('/robots.txt', (req, res) => {
     // Lo editado desde /admin manda; si no, se genera con la lista de
     // rastreadores de IA (ver server/robots.js).

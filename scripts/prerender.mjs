@@ -20,6 +20,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import zlib from 'node:zlib';
+import { buildId } from './build-id.mjs';
 
 const rootDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const distDir = path.join(rootDir, 'dist');
@@ -101,6 +102,10 @@ const estaticos = {
     'sitemap.xml': sitemap,
     'llms.txt': construirLlms(),
     'llms-full.txt': construirLlmsFull(),
+    // Huella del código fuente de este commit. Es lo que el workflow de
+    // despliegue compara contra producción para saber si la versión nueva
+    // llegó de verdad (ver scripts/build-id.mjs).
+    'build-id.txt': `${buildId(rootDir)}\n`,
 };
 
 for (const [nombre, contenido] of Object.entries(estaticos)) {

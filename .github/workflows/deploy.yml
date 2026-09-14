@@ -94,16 +94,18 @@ jobs:
         env:
           SITE_URL: ${{ vars.SITE_URL || 'https://diabolicalservices.tech' }}
         run: |
-          # Se compara contra llms.txt porque se genera por completo desde
-          # sectores.json, faq.json y articulos.json: es determinista y cambia
-          # con cualquier commit que toque el contenido publicado. La portada no
-          # sirve: el servidor le inyecta el <head> desde data/settings.json, que
-          # se edita desde /admin y no depende del commit.
+          # Se compara contra build-id.txt: una huella del código fuente de este
+          # commit (ver scripts/build-id.mjs). Cambia con cualquier cambio que
+          # afecte a lo que sirve el servidor, así que producción solo puede
+          # devolver este valor si está corriendo ESTA versión.
           #
-          # El chequeo anterior buscaba "</head>" y el ID de GTM, que ya estaban
-          # en la versión vieja: pasaba en la primera vuelta siempre, incluso con
-          # el contenedor anterior en pie. Justo el fallo que debía detectar.
-          ESPERADO=dist/llms.txt
+          # Antes se comparaba llms.txt, y el 13/09/2026 eso dio un verde falso:
+          # ese fichero se genera de src/data, la release no tocó ninguno de esos
+          # ficheros, y el contenedor VIEJO ya servía bytes idénticos. La
+          # comprobación pasó en 1 segundo mientras el despliegue real moría a
+          # mitad de build. La versión anterior a esa (buscar "</head>" y el ID
+          # de GTM) tenía el mismo defecto por otra vía.
+          ESPERADO=dist/build-id.txt
           if [ ! -s "$ESPERADO" ]; then
             echo "::error title=Build incompleto::No se generó $ESPERADO; no hay con qué comparar."
             exit 1
@@ -111,7 +113,7 @@ jobs:
 
           echo "Comprobando $SITE_URL durante un máximo de 10 minutos..."
           for i in $(seq 1 40); do
-            if curl -fsS --max-time 20 "$SITE_URL/llms.txt" -o servido.txt 2>/dev/null; then
+            if curl -fsS --max-time 20 "$SITE_URL/build-id.txt" -o servido.txt 2>/dev/null; then
               if cmp -s "$ESPERADO" servido.txt; then
                 echo "Producción sirve el contenido de este commit (tras $((i * 15))s)."
                 exit 0
@@ -120,9 +122,8 @@ jobs:
             sleep 15
           done
 
-          echo "::error title=El despliegue no llegó a producción::El webhook respondió, pero $SITE_URL sigue sin servir el contenido de este commit pasados 10 minutos. El contenedor anterior puede seguir en pie: revisa los logs de la plataforma."
-          echo "--- Diferencias (esperado < / servido >) ---"
-          diff "$ESPERADO" servido.txt | head -40 || true
+          echo "::error title=El despliegue no llegó a producción::El webhook respondió, pero $SITE_URL sigue sin servir esta versión pasados 10 minutos. Lo más probable es que el build muriera en la plataforma y el contenedor anterior siga en pie: revisa el estado del despliegue y los recursos del servidor."
+          echo "--- Huella esperada: $(cat "$ESPERADO") / servida: $(cat servido.txt 2>/dev/null || echo 'ninguna') ---"
           exit 1
 
       - name: Verificar que el despliegue quedó correcto
