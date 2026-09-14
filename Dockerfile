@@ -9,7 +9,17 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
-RUN npm run build
+
+# Se limita el monton de V8 a proposito. Sin limite, node lo deja crecer hasta
+# donde le dejen y el pico del build llega a ~542 MB; con el limite baja a
+# ~480 MB sin que el build tarde mas. Medido con tres valores (512, 384 y 256):
+# los tres completan y dan el mismo pico, asi que se elige el mas holgado.
+#
+# Importa porque este build se ejecuta en el servidor de produccion, y el
+# 14/09/2026 tres despliegues seguidos murieron sin mensaje por falta de
+# memoria; uno se llevo por delante el sitio, el panel de despliegue y una app
+# de un cliente.
+RUN NODE_OPTIONS=--max-old-space-size=512 npm run build
 
 # --- Etapa 2: dependencias de producción -----------------------------------
 # Se derivan del builder podando las de desarrollo, en vez de instalarlas por
