@@ -151,6 +151,12 @@ const DiabolicalChatbot = () => {
         setIsSending(true);
         const ok = await sendLead({ type: 'chatbot', contact, answers });
         setDelivered(ok);
+        if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+            window.gtag('event', 'generate_lead', {
+                form_id: 'chatbot',
+                delivered: ok,
+            });
+        }
         setIsSending(false);
 
         openWhatsApp(
@@ -236,14 +242,16 @@ const DiabolicalChatbot = () => {
                                     <CheckCircle2 size={28} className="text-white" />
                                 </div>
                                 <div className="space-y-2">
-                                    <h3 className="text-base font-title uppercase tracking-tight text-white">¡Diagnóstico Enviado!</h3>
-                                    <p className="text-xs text-white/50 leading-relaxed">Te contactaremos vía WhatsApp en las próximas horas con tu plan de automatización personalizado.</p>
+                                    <h3 className="text-base font-title uppercase tracking-tight text-white">{delivered ? '¡Listo, lo recibimos!' : 'Falta un paso'}</h3>
+                                    <p className="text-sm text-white/70 leading-relaxed">{delivered ? 'Se abrió tu WhatsApp con el resumen. Dale enviar y seguimos por ahí.' : 'Se abrió tu WhatsApp con el resumen, pero tus datos no llegaron a nuestro sistema. Dale enviar en WhatsApp, o usa el botón de abajo. Con cualquiera de las dos nos llega.'}</p>
                                     {!delivered && (
-                                        <p role="alert" className="text-[11px] text-yellow-500/90 leading-relaxed pt-2">
-                                            No pudimos registrar tus datos automáticamente. Si WhatsApp no se
-                                            abrió, escríbenos a{' '}
-                                            <a href={`mailto:${CONTACT_EMAIL}`} className="text-white underline">{CONTACT_EMAIL}</a>.
-                                        </p>
+                                        <a
+                                            role="alert"
+                                            href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Diagnóstico — ${contact.company}`)}&body=${encodeURIComponent(`Empresa: ${contact.company}\nNombre: ${contact.name}\nWhatsApp: ${contact.whatsapp}\nCorreo: ${contact.email}\n\nFricción: ${answers.friction}\nVolumen: ${answers.volume}\nDependencia: ${answers.dependency}\nImpacto estimado: ${answers.budget}\nPotencial: ${answers.impact}`)}`}
+                                            className="accion mt-3 inline-flex items-center justify-center w-full px-8 py-4 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.25em] min-h-[56px]"
+                                        >
+                                            Enviarlo por correo
+                                        </a>
                                     )}
                                 </div>
                                 <button onClick={handleClose} className="px-8 py-3 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-widest active:scale-95 transition-transform">Cerrar</button>

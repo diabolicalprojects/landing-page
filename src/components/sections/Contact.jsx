@@ -58,15 +58,16 @@ const Contact = () => {
                                 <CheckCircle2 size={28} className="text-white" />
                             </div>
                             <div>
-                                <h3 className="text-lg font-title uppercase text-white mb-2">¡Listo, lo recibimos!</h3>
-                                <p className="text-sm text-white/50 leading-relaxed">Se abrió tu WhatsApp con el resumen. Dale enviar y seguimos por ahí.</p>
+                                <h3 className="text-lg font-title uppercase text-white mb-2">{delivered ? '¡Listo, lo recibimos!' : 'Falta un paso'}</h3>
+                                <p className="text-sm text-white/70 leading-relaxed">{delivered ? 'Se abrió tu WhatsApp con el resumen. Dale enviar y seguimos por ahí.' : 'Se abrió tu WhatsApp con el resumen, pero tus datos no llegaron a nuestro sistema. Dale enviar en WhatsApp, o usa el botón de abajo. Con cualquiera de las dos nos llega.'}</p>
                                 {!delivered && (
-                                    <p role="alert" className="mt-4 text-xs text-yellow-500/90 leading-relaxed">
-                                        No pudimos registrar tus datos automáticamente. Si WhatsApp no
-                                        se abrió, escríbenos a{' '}
-                                        <a href={`mailto:${CONTACT_EMAIL}`} className="text-white underline">{CONTACT_EMAIL}</a>{' '}
-                                        para no perder tu solicitud.
-                                    </p>
+                                    <a
+                                        role="alert"
+                                        href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Diagnóstico gratuito — ${form.company}`)}&body=${encodeURIComponent(`Empresa: ${form.company}\nNombre: ${form.name}\nWhatsApp: ${form.whatsapp}\nCorreo: ${form.email}\n\nCómo llegan sus clientes: ${form.source}\nPersonas que atienden: ${form.people}\nSi fuera automático: ${form.aspiration}`)}`}
+                                        className="accion mt-5 inline-flex items-center justify-center w-full px-8 py-4 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.25em] min-h-[56px]"
+                                    >
+                                        Enviarlo por correo
+                                    </a>
                                 )}
                             </div>
                             <button onClick={() => { setSent(false); setForm(EMPTY_FORM); setDelivered(true); }} className="accion px-9 py-4 bg-white text-black rounded-full font-black text-xs uppercase tracking-[0.2em] min-h-[56px] hover:bg-white/85">Enviar otro</button>
