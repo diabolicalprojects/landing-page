@@ -1,42 +1,50 @@
 [
   {
-    "pregunta": "¿Qué hace exactamente Diabolical?",
-    "respuesta": "Cubrimos el ciclo completo de un negocio local en Aguascalientes: posicionamiento orgánico y en motores de IA, ficha de Google, Google Ads, sitio web, embudos, identidad de marca, y los sistemas que atienden y agendan solos por WhatsApp. No hace falta contratarlo todo: la auditoría gratuita dice qué te falta hoy y qué no vale la pena todavía."
+    "pregunta": "¿Mis clientes van a notar que están hablando con un sistema?",
+    "respuesta": "Sí, y no intentamos disimularlo. El sistema se presenta como lo que es desde el primer mensaje. Lo que molesta a un cliente no es hablar con un sistema: es hablar con uno que no entiende lo que le preguntan, que responde cualquier cosa o que lo deja atrapado en un menú. El nuestro responde con la información real de su negocio, y en cuanto la conversación pide criterio humano se detiene y la entrega a una persona con todo el contexto reunido. Nadie se siente engañado, y quien escribe a las once de la noche obtiene una respuesta en lugar de un silencio."
   },
   {
-    "pregunta": "¿Cómo sé si mi negocio está listo para la automatización con IA?",
-    "respuesta": "Si ya tienes un flujo constante de clientes o prospectos (por WhatsApp, Instagram, correo o publicidad pagada) y tu equipo pasa horas respondiendo las mismas preguntas o agendando citas a mano, estás listo. La automatización multiplica un flujo que ya existe; no lo crea de la nada."
+    "pregunta": "Ya probé un chatbot y fue un desastre. ¿En qué se diferencia esto?",
+    "respuesta": "Casi ningún proyecto de este tipo fracasa por el modelo de inteligencia artificial que usa. Fracasa porque nadie escribió antes qué debe responder el sistema, con qué datos y en qué momento tiene que callarse. Esa redacción —el guion— es la mitad de nuestro trabajo y usted la aprueba antes de que se programe una sola línea. La otra diferencia es la conexión: si el sistema no consulta su agenda y su catálogo reales, solo puede improvisar, y ahí es donde los chatbots genéricos quedan en ridículo."
   },
   {
-    "pregunta": "¿La IA va a reemplazar a mi equipo humano?",
-    "respuesta": "No. La IA se encarga de las tareas repetitivas y de bajo valor —la primera respuesta, el filtrado y el agendamiento 24/7— y libera a tu equipo para el cierre de ventas complejas y la atención estratégica."
+    "pregunta": "Mi negocio es muy particular. ¿Esto sirve para mi caso?",
+    "respuesta": "Es probable que sí, y por eso no trabajamos con plantillas. La auditoría existe justo para eso: recorremos el camino que hace hoy un cliente suyo y el sistema se diseña sobre ese recorrido, no sobre uno genérico. Dicho lo cual, hay negocios a los que esto no les conviene. Si recibe dos o tres consultas por semana, automatizarlas no le va a cambiar nada, y se lo diremos en la auditoría en lugar de venderle algo que no necesita."
   },
   {
-    "pregunta": "¿Cómo es el proceso de implementación y cuánto tarda?",
-    "respuesta": "Entre 2 y 4 semanas. Nos encargamos de todo: diseño del flujo conversacional, conexión con tus sistemas actuales (CRM, agenda, bases de datos), pruebas con casos reales y puesta en marcha acompañada."
+    "pregunta": "¿Cuánto tiempo tengo que dedicarle yo?",
+    "respuesta": "Tres momentos concretos. Una conversación inicial para que entendamos cómo trabajan hoy. Una sesión para revisar y aprobar el guion, que es donde usted decide qué puede decir el sistema y qué no. Y la primera semana de arranque, en la que conviene que alguien de su equipo lea las conversaciones y nos señale lo que haya que afinar. El resto —conexiones, pruebas, ajustes— corre por nuestra cuenta."
   },
   {
-    "pregunta": "¿Cuánto cuesta automatizar mi negocio?",
-    "respuesta": "No hay tarifa fija, y publicar una sería inventarla: el precio depende de cuántos flujos se automatizan, con qué herramientas hay que conectarse y si tu cuenta de WhatsApp ya está verificada con Meta. Lo que sí es fijo es cómo se llega a la cifra: la auditoría de fricción es gratuita y termina con un diagnóstico escrito y un presupuesto cerrado. Si el número no te convence, te quedas con el diagnóstico igualmente."
+    "pregunta": "¿La inteligencia artificial va a reemplazar a mi equipo?",
+    "respuesta": "No, y no es una frase de cortesía: es cómo está diseñado. El sistema absorbe la primera respuesta, el filtrado y el agendamiento, que es el trabajo repetitivo que nadie disfruta y que siempre se acumula en el peor momento. El cierre, la negociación y la relación con el cliente siguen siendo de su equipo. Esa frontera está escrita en el guion que usted aprueba, y no se mueve sin decírselo."
   },
   {
-    "pregunta": "¿Qué es la auditoría de fricción gratuita?",
-    "respuesta": "Un diagnóstico en el que analizamos los cuellos de botella y procesos manuales donde tu negocio pierde prospectos o dinero. Te entregamos un reporte con las soluciones concretas que necesitas, y también con lo que no vale la pena automatizar."
+    "pregunta": "¿Qué hace exactamente Diabolical Services?",
+    "respuesta": "Somos una agencia de inteligencia artificial en Aguascalientes. Diseñamos e instalamos sistemas que atienden, agendan y dan seguimiento sobre las herramientas que el negocio ya utiliza, y trabajamos además el posicionamiento, la publicidad, el sitio web y la identidad de marca. Son trece servicios repartidos en cinco etapas, y cada uno publica en su página hasta dónde llega. No hace falta contratarlos todos: la auditoría dice qué le falta hoy y qué no vale la pena todavía."
   },
   {
-    "pregunta": "¿Para qué tipo de negocios trabajan?",
-    "respuesta": "Clínicas y consultorios, spas y centros de estética, gimnasios y estudios, despachos profesionales y oficinas pequeñas en Aguascalientes y el resto de México. Son negocios con volumen constante de mensajes y una agenda que llenar."
+    "pregunta": "¿Cuánto cuesta?",
+    "respuesta": "Se cotiza después de la auditoría, cuando ya sabemos qué hay que construir. No publicamos una tarifa porque cotizar antes de conocer el proceso sería adivinar, y una cifra genérica solo serviría para desorientar. Lo que sí es fijo: la auditoría no tiene costo, no hay permanencia, y cobramos por el trabajo, nunca un porcentaje de lo que usted invierta en publicidad."
   },
   {
-    "pregunta": "¿Necesito cambiar las herramientas que ya uso?",
-    "respuesta": "No. La automatización se monta encima de lo que ya funciona: tu WhatsApp, tu agenda, tu CRM. Cambiar de herramienta es un costo que casi nunca hace falta pagar."
+    "pregunta": "¿Tengo que cambiar las herramientas que ya uso?",
+    "respuesta": "No. El sistema se monta sobre su WhatsApp, su agenda, su CRM y su tienda actuales. Cambiar de herramientas significa migrar datos, volver a capacitar al equipo y perder semanas, y casi nunca hace falta. Si alguna pieza no permite conectarse, se lo decimos en la auditoría antes de que empiece nada."
+  },
+  {
+    "pregunta": "¿Cuánto tarda en estar funcionando?",
+    "respuesta": "Entre dos y cuatro semanas según cuántas herramientas haya que conectar. La primera semana se dedica a entender su operación y redactar el guion; las siguientes, a conectar y probar con conversaciones reales de su negocio. Arranca en vivo cuando no queda ningún camino sin resolver, no cuando se cumple una fecha."
+  },
+  {
+    "pregunta": "¿Por qué mi sitio web puede ser invisible para ChatGPT?",
+    "respuesta": "Porque la mayoría de los rastreadores de los motores generativos leen el código de una página sin ejecutarlo. Si el sitio se construye entero con JavaScript en el navegador, ese código llega prácticamente vacío. El 31 de agosto de 2026 medimos dos sitios de referencia del sector en Aguascalientes: entregaron ocho y nueve palabras respectivamente. Un texto excelente que el modelo no puede leer vale exactamente cero, y es lo primero que revisamos."
   },
   {
     "pregunta": "¿Trabajan fuera de Aguascalientes?",
-    "respuesta": "Sí. La sede está en Aguascalientes y ahí trabajamos presencialmente, pero la implementación y el acompañamiento funcionan igual de bien a distancia para negocios de todo México."
+    "respuesta": "Sí. El trabajo se hace a distancia y los sistemas funcionan igual en cualquier ciudad. Aguascalientes es donde estamos y donde conocemos el terreno —los giros, la competencia local, cómo compra la gente de aquí—, y esa ventaja solo aplica a quien opera en la ciudad."
   },
   {
-    "pregunta": "¿Hacen publicidad y marketing, o solo automatización?",
-    "respuesta": "Las dos cosas. Empezamos siendo solo automatización de atención, y era quedarse en la cuarta parte del problema: de nada sirve contestar en segundos si no llega nadie a quien contestar. Hoy cubrimos captación, conversión, atención, marca y medición. Lo que no hacemos es prometer posiciones en Google ni dentro de una respuesta de IA —nadie controla esos algoritmos— ni llevar comisión sobre tu gasto publicitario."
+    "pregunta": "¿Qué es la auditoría de fricción?",
+    "respuesta": "Una revisión del camino que hace hoy un cliente suyo, desde que le descubre hasta que compra, señalando dónde se detiene. Sale de ahí un documento con lo que conviene automatizar, en qué orden según lo que más rinde con menos esfuerzo, y también con lo que conviene dejar como está. No tiene costo, no compromete a nada y el documento es suyo, trabajemos juntos o no."
   }
 ]

@@ -7,6 +7,7 @@ import Pagina from '../components/common/Pagina';
 // hidratar (error #419) y volviera a montarlo todo en cliente.
 import Hero from '../components/sections/Hero';
 import Pilares from '../components/sections/Pilares';
+import Invisibles from '../components/sections/Invisibles';
 import Verticales from '../components/sections/Verticales';
 import Proceso from '../components/sections/Proceso';
 import EjemploAtencion from '../components/sections/EjemploAtencion';
@@ -29,11 +30,12 @@ import CierreCta from '../components/sections/CierreCta';
  *
  *   Hero          negro      la frase clave y la marca en el centro del sistema
  *   Pilares       negro      los tres frentes, cada uno con su escena
+ *   Invisibles    negro·2    la medición propia: el dato que sostiene la tesis
  *   Sectores      negro·1    seis giros, cada uno hacia su página
  *   Proceso       CLARO      cómo se hace y en cuánto  ← cambia el tema
  *   Ejemplo       negro      el mecanismo funcionando en un teléfono
  *   Servicios     negro·1    el catálogo, cada uno hacia su página
- *   Comparativa   CLARO      la semana, antes y después  ← cambia el tema
+ *   Alternativas  CLARO      las cuatro formas de resolverlo  ← cambia el tema
  *   Limites       negro      los compromisos de la casa
  *   FAQ           CLARO      lo que queda por preguntar  ← cambia el tema
  *   Cierre        CLARO      la tarjeta negra incrustada: el contraste máximo
@@ -45,6 +47,7 @@ const InicioPage = () => (
     <Pagina>
         <Hero />
         <Pilares />
+        <Invisibles />
         <Verticales />
         <Proceso />
         <EjemploAtencion />

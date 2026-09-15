@@ -1,98 +1,80 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
 
 /*
- * La semana del dueño, antes y después. Segunda inversión a claro.
+ * Las cuatro maneras de resolver esto.
  *
- * Cada par describe el mecanismo, nunca un resultado con cifra: lo segundo no
- * se puede probar y por tanto no se publica (ver PRODUCT.md). «El mensaje de
- * las 9 de la noche se contesta mañana» es verificable por cualquiera que lo
- * haya vivido; «+40% de citas» no lo es.
+ * Sustituye a la comparativa «antes y después», que describía un resultado que
+ * no se puede probar. Esto describe el terreno real: cuando alguien nos evalúa,
+ * nos compara con estas cuatro cosas, y tres de ellas no son agencias.
  *
- * En claro y en dos columnas de verdad, no en tarjetas: una comparación quiere
- * que el ojo salte de izquierda a derecha en la misma línea, y eso solo lo da
- * una retícula alineada.
+ * Se presentan con honestidad, incluida la de no hacer nada, que es el
+ * competidor más fuerte de cualquier servicio. Nombrar bien las alternativas
+ * convence más que descalificarlas: quien lee reconoce la suya descrita sin
+ * caricatura y concluye solo.
+ *
+ * Nada aquí afirma un resultado. Cada línea describe lo que cada opción cuesta
+ * o deja de cubrir, que es verificable, en lugar de lo que rinde, que no lo es.
  */
-const PARES = [
+const OPCIONES = [
     {
-        hoy: 'Quien te busca en Google encuentra antes a tu competencia.',
-        despues: 'Sales tú, con una página por servicio y la ficha del mapa completa.',
+        id: 'nada',
+        nombre: 'Dejarlo como está',
+        cuando: 'Tiene sentido si el volumen de consultas es bajo y el equipo llega sin esfuerzo.',
+        coste: 'Lo que cuesta es invisible: las consultas que llegan fuera de horario y no se responden hasta el día siguiente. Nadie las contabiliza porque nunca llegaron a ser clientes.',
     },
     {
-        hoy: 'Si alguien le pregunta a ChatGPT por tu giro, no apareces.',
-        despues: 'Tu sitio se puede leer y citar: casi nadie del mercado local lo trabaja.',
+        id: 'persona',
+        nombre: 'Contratar a alguien',
+        cuando: 'Tiene sentido cuando el trabajo exige criterio y trato, no solo repetición.',
+        coste: 'Cubre un horario, no las veinticuatro horas, y el trabajo repetitivo sigue existiendo: solo cambia de manos. A cambio, una persona resuelve lo que ningún sistema sabe resolver.',
     },
     {
-        hoy: 'Tu web tarda en cargar y no dice a qué te dedicas exactamente.',
-        despues: 'Carga rápido, se lee en el celular y lleva a agendar sin rodeos.',
+        id: 'freelance',
+        nombre: 'Un desarrollador independiente',
+        cuando: 'Tiene sentido para una pieza concreta y bien definida.',
+        coste: 'Suele entregarse la herramienta sin el proceso que la sostiene, y sin un guion escrito el sistema improvisa. La pregunta que conviene hacer es quién responde cuando algo deja de funcionar dentro de seis meses.',
     },
     {
-        hoy: 'El mensaje de las nueve de la noche se contesta mañana.',
-        despues: 'Se contesta en segundos, y si trae cita, sale agendada.',
-    },
-    {
-        hoy: 'Nadie sabe qué canal trae clientes y cuál solo da trabajo.',
-        despues: 'Un tablero con los números reales de cada canal, hasta la cita.',
-    },
-    {
-        hoy: 'El dueño pegado al celular hasta el domingo.',
-        despues: 'El sistema trabaja; el domingo vuelve a ser tuyo.',
+        id: 'agencia',
+        nombre: 'Una agencia',
+        cuando: 'Tiene sentido cuando hace falta cubrir varios frentes a la vez y que alguien responda por el conjunto.',
+        coste: 'Conviene preguntar tres cosas antes de firmar: hasta dónde llega cada servicio, si cobran un porcentaje de su inversión publicitaria, y de quién son los archivos y los accesos al terminar. Las nuestras están publicadas en este sitio.',
     },
 ];
 
 const Comparativa = () => (
-    <section id="comparativa" className="zona-clara seccion">
+    <section id="alternativas" className="zona-clara seccion">
         <div className="contenedor">
             <header className="max-w-3xl">
-                <p className="insignia">El cambio</p>
+                <p className="insignia">Las alternativas</p>
                 <h2 className="titular-l mt-5">
-                    Tu semana, <span className="titular-apagado">antes y después.</span>
+                    Hay cuatro maneras de resolver esto.{' '}
+                    <span className="titular-apagado">Nosotros somos una.</span>
                 </h2>
+                <p className="cuerpo-l mt-6">
+                    Cuando alguien nos evalúa, nos compara con estas opciones. Tres de ellas no son
+                    agencias, y en algunos casos son la decisión correcta. Estas son, descritas sin
+                    caricatura.
+                </p>
             </header>
 
-            <div className="tarjeta mt-12 overflow-hidden md:mt-16">
-                <div
-                    className="grid grid-cols-[1fr_auto_1fr] items-center"
-                    style={{ borderBottom: '1px solid var(--linea)' }}
-                >
-                    <p className="etiqueta px-5 py-4 md:px-8" style={{ color: 'var(--texto-3)' }}>
-                        Hoy
-                    </p>
-                    <span className="px-2" aria-hidden="true" />
-                    <p className="etiqueta px-5 py-4 md:px-8" style={{ color: 'var(--acento-claro)' }}>
-                        Con el sistema
-                    </p>
-                </div>
-
-                <dl className="m-0">
-                    {PARES.map((par, i) => (
-                        <div
-                            key={par.hoy}
-                            className="grid grid-cols-[1fr_auto_1fr] items-center"
-                            style={i > 0 ? { borderTop: '1px solid var(--linea)' } : undefined}
+            <div className="mt-12 md:mt-16">
+                {OPCIONES.map((opcion, i) => (
+                    <article
+                        key={opcion.id}
+                        className="grid gap-4 py-8 md:grid-cols-12 md:gap-8"
+                        style={i > 0 ? { borderTop: '1px solid var(--linea)' } : undefined}
+                    >
+                        <h3 className="titular-m md:col-span-4">{opcion.nombre}</h3>
+                        <p className="cuerpo m-0 max-w-none md:col-span-4">{opcion.cuando}</p>
+                        <p
+                            className="m-0 max-w-none text-[0.9375rem] leading-relaxed md:col-span-4"
+                            style={{ color: 'var(--texto-1)' }}
                         >
-                            <dt
-                                className="px-5 py-5 text-[0.9375rem] leading-relaxed md:px-8 md:py-6 md:text-[0.9375rem]"
-                                style={{ color: 'var(--texto-3)' }}
-                            >
-                                {par.hoy}
-                            </dt>
-                            <span
-                                className="flex h-6 w-6 flex-none items-center justify-center rounded-full"
-                                style={{ background: 'var(--papel-2)' }}
-                                aria-hidden="true"
-                            >
-                                <ArrowRight size={12} style={{ color: 'var(--acento-claro)' }} />
-                            </span>
-                            <dd
-                                className="m-0 px-5 py-5 text-[0.9375rem] font-medium leading-relaxed md:px-8 md:py-6 md:text-[0.9375rem]"
-                                style={{ color: 'var(--texto-1)' }}
-                            >
-                                {par.despues}
-                            </dd>
-                        </div>
-                    ))}
-                </dl>
+                            {opcion.coste}
+                        </p>
+                    </article>
+                ))}
             </div>
         </div>
     </section>

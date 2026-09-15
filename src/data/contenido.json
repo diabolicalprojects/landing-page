@@ -46,7 +46,7 @@
     "visible": true,
     "fraseA": "Inteligencia artificial",
     "fraseB": "para negocios en Aguascalientes.",
-    "apoyo": "Diseñamos e instalamos sistemas que atienden, agendan y dan seguimiento a cualquier hora, sobre las herramientas que su negocio ya utiliza. Un aliado incansable para la parte más endiablada del día.",
+    "apoyo": "Diseñamos e instalamos sistemas que atienden, agendan y dan seguimiento a cualquier hora, sobre las herramientas que su negocio ya utiliza. Con el alcance de cada pieza por escrito antes de firmar nada.",
     "ctaPrimario": {
       "texto": "Solicitar auditoría gratuita",
       "destino": "/contacto"
@@ -61,7 +61,7 @@
     "visible": true,
     "insignia": "Qué hacemos",
     "titulo": "Tres frentes, un solo sistema.",
-    "entradilla": "La inteligencia artificial rinde cuando conecta lo que hoy está suelto. Unimos la captación, el sitio y la atención para que un interesado llegue completo hasta el final.",
+    "entradilla": "Empezamos por el proceso, no por la herramienta. Automatizar un flujo que ya estaba roto solo consigue que se rompa más rápido, así que primero se mapea lo que ocurre de verdad y después se decide qué conviene automatizar.",
     "items": [
       {
         "id": "pilar-sitios",
@@ -93,7 +93,7 @@
     "visible": true,
     "insignia": "Para quién",
     "titulo": "Cada giro tiene su propio sistema.",
-    "entradilla": "Estos son los seis sectores que tenemos mapeados de memoria. Cada uno con su página, su mecánica y sus preguntas."
+    "entradilla": "Seis sectores cuyo recorrido conocemos en detalle. Cada uno con su página, su mecánica y las preguntas que surgen antes de decidir."
   },
   "proceso": {
     "visible": true,
@@ -105,41 +105,41 @@
         "id": "paso-1",
         "titulo": "Auditoría de fricción",
         "duracion": "Día 1 · sin costo",
-        "texto": "Revisamos por dónde se escapan los prospectos y cuánto tiempo se dedica a tareas repetidas. Sale de ahí un documento con lo que conviene automatizar primero, ordenado por lo que más rinde con menos esfuerzo. Es suyo, trabajen o no con nosotros."
+        "texto": "Recorremos el camino que hace hoy un cliente suyo y señalamos dónde se detiene. Sale de ahí un documento con lo que conviene automatizar, en qué orden, y también con lo que NO conviene tocar. Es suyo, trabajemos juntos o no."
       },
       {
         "id": "paso-2",
         "titulo": "Diseño del flujo",
         "duracion": "Días 2 a 5",
-        "texto": "Redactamos el guion completo: qué responde el sistema, con qué datos, cuándo entrega la conversación a una persona y qué no debe decir nunca. Usted lo aprueba antes de que se programe una sola línea."
+        "texto": "Redactamos el guion completo: qué responde el sistema, con qué datos, cuándo entrega la conversación a una persona y qué no debe decir nunca. Usted lo aprueba antes de que se programe una sola línea. Ahí se decide si esto funciona, no en la elección del modelo."
       },
       {
         "id": "paso-3",
         "titulo": "Conexión y pruebas",
         "duracion": "Semanas 2 a 3",
-        "texto": "Enlazamos WhatsApp, la agenda, el CRM y el sitio. Probamos con conversaciones reales del negocio hasta que no queda ningún camino sin resolver."
+        "texto": "Enlazamos WhatsApp, la agenda, el CRM y el sitio. Probamos con conversaciones reales de su negocio hasta que no queda un camino sin resolver."
       },
       {
         "id": "paso-4",
         "titulo": "Arranque y ajuste",
         "duracion": "Semana 4 en adelante",
-        "texto": "Arranca en vivo con revisión de conversaciones. Lo que haya que afinar se corrige sobre la marcha. Usted lo ve todo desde un tablero y puede tomar cualquier conversación cuando quiera."
+        "texto": "Arranca en vivo y revisamos las conversaciones. Lo que haya que afinar se corrige sobre la marcha. Usted lo ve todo desde un tablero y puede tomar cualquier conversación cuando quiera."
       }
     ],
-    "nota": "El precio se cotiza a medida después de la auditoría. No publicamos tarifa porque no hay dos negocios con el mismo recorrido, y una cifra genérica solo serviría para desorientar."
+    "nota": "El precio se cotiza después de la auditoría, cuando ya sabemos qué hay que construir. Cotizar antes de conocer el proceso sería adivinar, y adivinar sale caro para los dos."
   },
   "demo": {
     "visible": true,
     "insignia": "Una muestra",
     "titulo": "Así trabaja por dentro.",
-    "entradilla": "Una conversación de un jueves a las 21:47, cuando el negocio ya cerró. El sistema cotiza, consulta la agenda real y confirma.",
+    "entradilla": "Una conversación de un jueves a las 21:47, cuando el negocio ya cerró. El sistema cotiza, consulta la agenda real y confirma. Cuando la conversación pide criterio, se detiene y avisa.",
     "nota": "Conversación de ejemplo para mostrar el mecanismo. No corresponde a un cliente real."
   },
   "servicios": {
     "visible": true,
     "insignia": "Catálogo",
     "titulo": "Trece servicios, cada uno con su alcance publicado.",
-    "entradilla": "Debajo de cada servicio está escrito hasta dónde llega. Preferimos que lo sepan antes de contratar.",
+    "entradilla": "Bajo cada servicio está escrito hasta dónde llega. Es la parte que suele descubrirse después de firmar; aquí se lee antes.",
     "cta": {
       "texto": "Ver el catálogo completo",
       "destino": "/servicios"
@@ -147,26 +147,26 @@
   },
   "limites": {
     "visible": true,
-    "insignia": "Cómo trabajamos",
-    "titulo": "Compromisos que firmamos con gusto.",
-    "entradilla": "Dicen que el diablo está en los detalles. Estos son los nuestros, por escrito y desde antes de empezar.",
+    "insignia": "Las condiciones",
+    "titulo": "La letra pequeña, en letra grande.",
+    "entradilla": "Todo trato tiene condiciones. La diferencia está en cuándo se leen. Estas son las nuestras, publicadas antes de que usted decida nada.",
     "items": [
-      "Su presupuesto publicitario va íntegro a la plataforma. Nuestra tarifa es por el trabajo, nunca un porcentaje de su inversión.",
-      "Trabajamos sobre las herramientas que ya utiliza: su WhatsApp, su agenda, su CRM y su tienda. No se cambia de sistema a nadie.",
+      "Su presupuesto publicitario va íntegro a la plataforma. Cobramos por el trabajo, nunca un porcentaje de lo que usted invierte.",
+      "El sistema absorbe la primera respuesta, el filtrado y el agendamiento. El cierre sigue siendo de su equipo, y esa frontera no la movemos sin decírselo.",
+      "Cuando una conversación pide criterio humano, el sistema se detiene y la entrega con el contexto completo. Nunca improvisa sobre lo que no sabe.",
       "El guion de lo que el sistema dice lo aprueba usted antes de que se programe una sola línea.",
-      "Todo lo que producimos es suyo: los archivos de marca, los textos, los flujos y los accesos.",
-      "Cuando una conversación pide criterio humano, el sistema la entrega a su equipo con el contexto completo."
+      "Todo lo que producimos es suyo desde el primer día: archivos de marca, textos, flujos y accesos. Sin ataduras y sin permanencia."
     ]
   },
   "faq": {
     "visible": true,
-    "insignia": "Dudas frecuentes",
-    "titulo": "Lo que conviene preguntar antes de decidir."
+    "insignia": "Antes de decidir",
+    "titulo": "Las cuatro preguntas que siempre llegan."
   },
   "cta": {
     "visible": true,
     "titulo": "Empecemos por el diagnóstico.",
-    "texto": "La auditoría no tiene costo ni compromiso. Salimos de ella con un documento que dice dónde se pierden prospectos hoy y qué conviene automatizar en su caso.",
+    "texto": "La auditoría no tiene costo ni compromiso. Salimos de ella con un documento que dice dónde se detiene hoy un cliente suyo, qué conviene automatizar y qué conviene dejar como está.",
     "boton": {
       "texto": "Solicitar auditoría gratuita",
       "destino": "/contacto"
@@ -180,7 +180,7 @@
     "visible": true,
     "titulo": "Cuéntenos cómo trabajan hoy",
     "subtitulo": "y le diremos qué automatizar",
-    "entradilla": "Son siete campos y menos de dos minutos. Trabajamos con negocios que ya tienen clientes y quieren dejar de atenderlos a mano.",
+    "entradilla": "Siete campos y menos de dos minutos. Trabajamos con negocios que ya tienen clientes y quieren dejar de atenderlos a mano.",
     "boton": "Solicitar mi diagnóstico",
     "pie": "Al enviar se abre su WhatsApp con el resumen ya redactado. Solo falta pulsar enviar."
   },
@@ -262,33 +262,56 @@
     "insignia": "Quiénes somos",
     "titulo": "Una agencia de inteligencia artificial",
     "tituloApagado": "en Aguascalientes.",
-    "entradilla": "Diabolical Services diseña e instala sistemas de inteligencia artificial para negocios de Aguascalientes. No vendemos una herramienta suelta: montamos el mecanismo completo sobre lo que la empresa ya utiliza, y lo dejamos funcionando.",
+    "entradilla": "Diabolical Services diseña e instala sistemas de inteligencia artificial para negocios de Aguascalientes. No vendemos una herramienta suelta: mapeamos el proceso real, construimos el mecanismo sobre lo que la empresa ya utiliza y lo dejamos funcionando.",
     "parrafos": [
-      "El nombre no es casualidad. La parte endiablada de cualquier negocio es la que se repite: contestar lo mismo veinte veces, buscar un hueco en la agenda, recordar quién quedó de llamar. Es trabajo que nadie disfruta y que, hecho a mano, siempre se cae en el peor momento.",
-      "Nuestro oficio es convertir esa parte en un sistema que no se cansa. Atiende a cualquier hora, consulta la disponibilidad real, deja el registro donde su equipo lo consulta y entrega la conversación a una persona en cuanto hace falta criterio humano.",
-      "Trabajamos con inmobiliarias, salones de belleza, clínicas, gimnasios, despachos y comercios de la ciudad. Seis giros que conocemos a fondo, cada uno con su propio recorrido y sus propias preguntas."
+      "Sobre el nombre. En el trato clásico con el diablo, las condiciones se descubren cuando ya es tarde. Nos quedamos con la primera mitad —el interés por lo que se repite, lo ingrato y lo que ocurre de madrugada— y publicamos la segunda por adelantado: bajo cada servicio está escrito hasta dónde llega, antes de que usted firme nada.",
+      "La parte más ingrata de cualquier negocio es la que se repite: responder lo mismo veinte veces, buscar un hueco en la agenda, recordar quién quedó de llamar. Es trabajo que nadie disfruta y que, hecho a mano, siempre se cae en el peor momento.",
+      "Nuestro oficio es convertir esa parte en un sistema que no se cansa. Atiende a cualquier hora, consulta la disponibilidad real, deja el registro donde su equipo lo consulta y entrega la conversación a una persona en cuanto hace falta criterio. No sustituye a nadie: libera a su equipo de lo que no debería estar haciendo.",
+      "Trabajamos con inmobiliarias, salones de belleza, clínicas, gimnasios, despachos y comercios de la ciudad. Seis giros que conocemos en detalle, cada uno con su propio recorrido."
     ],
     "principios": [
       {
-        "id": "pr-mecanismo",
-        "titulo": "Explicamos el mecanismo",
-        "texto": "Describimos cómo funciona cada pieza y hasta dónde llega. Quien contrata sabe exactamente qué va a recibir."
+        "id": "pr-proceso",
+        "titulo": "El proceso antes que la herramienta",
+        "texto": "Automatizar un flujo roto solo consigue que se rompa más rápido. Primero se mapea lo que ocurre de verdad."
       },
       {
-        "id": "pr-herramientas",
-        "titulo": "Nos montamos sobre lo suyo",
-        "texto": "Su WhatsApp, su agenda, su CRM y su tienda. La automatización se adapta al negocio, no al revés."
+        "id": "pr-guion",
+        "titulo": "El guion decide el resultado",
+        "texto": "Nadie falla por elegir mal el modelo. Falla porque nadie escribió qué debe decir el sistema y dónde debe callarse."
       },
       {
         "id": "pr-humano",
-        "titulo": "El cierre sigue siendo humano",
-        "texto": "El sistema absorbe la primera respuesta, el filtrado y el agendamiento. La relación con el cliente sigue siendo de su equipo."
+        "titulo": "Nadie sobra",
+        "texto": "El sistema absorbe lo repetitivo. La relación con el cliente sigue siendo de su equipo, y esa frontera se respeta."
       },
       {
         "id": "pr-propiedad",
         "titulo": "Todo queda en sus manos",
-        "texto": "Archivos, textos, flujos y accesos son suyos desde el primer día, con o sin nosotros."
+        "texto": "Archivos, textos, flujos y accesos son suyos desde el primer día, con nosotros o sin nosotros."
       }
     ]
+  },
+  "invisibles": {
+    "visible": true,
+    "insignia": "Lo que casi nadie mira",
+    "titulo": "Su negocio puede ser invisible",
+    "tituloApagado": "para la inteligencia artificial.",
+    "entradilla": "Cuando alguien le pregunta a ChatGPT o a Perplexity por un proveedor en Aguascalientes, el modelo lee el código de los sitios sin ejecutarlos. La mayoría de las páginas de la ciudad se montan enteras con JavaScript, y ante esa lectura no entregan prácticamente nada.",
+    "datos": [
+      {
+        "id": "dato-medicion",
+        "cifra": "8 y 9",
+        "unidad": "palabras",
+        "texto": "Es lo que entregaron dos sitios de referencia del sector local al pedirles el código sin ejecutar JavaScript. Medido el 31 de agosto de 2026."
+      },
+      {
+        "id": "dato-nuestro",
+        "cifra": "28 393",
+        "unidad": "palabras",
+        "texto": "Es lo que entrega este sitio en la misma prueba, repartidas en veintiocho páginas. Puede comprobarlo usted mismo desactivando JavaScript."
+      }
+    ],
+    "cierre": "No es una cuestión de volumen sino de lectura: un texto excelente que el modelo no puede leer vale exactamente cero. Es la primera cosa que revisamos en la auditoría."
   }
 }

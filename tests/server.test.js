@@ -530,3 +530,71 @@ test('las páginas nuevas del sitio se sirven con su contenido', async (t) => {
         assert.match(html, new RegExp(`rel="canonical" href="[^"]*${ruta}"`));
     }
 });
+
+test('el registro de marca se mantiene formal', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    /*
+     * La voz está fijada: «diablo elegante y formal», trato de usted y sin una
+     * sola palabra coloquial. No es una preferencia de estilo — es una decisión
+     * del cliente, tomada después de que «Somos diablillos, no estafadores»
+     * sugiriera justo lo contrario de lo que pretendía.
+     *
+     * Esta prueba existe porque el contenido se edita desde /admin, y nada
+     * impide que alguien reintroduzca el registro viejo sin darse cuenta.
+     */
+    const PROHIBIDAS = [
+        'desmadre',
+        'diablillo',
+        'endiablad',
+        'el diablo está en los detalles',
+        'no estafadores',
+    ];
+
+    const rutas = ['/', '/nosotros', '/servicios', '/sectores', '/contacto'];
+
+    for (const ruta of rutas) {
+        const html = await (await fetch(`${BASE}${ruta}`)).text();
+        const visible = html.replace(/<script[\s\S]*?<\/script>/g, '').toLowerCase();
+
+        for (const palabra of PROHIBIDAS) {
+            assert.ok(
+                !visible.includes(palabra),
+                `${ruta} usa «${palabra}», que quedó fuera del registro de marca`
+            );
+        }
+    }
+});
+
+test('las preguntas frecuentes responden las objeciones reales de venta', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    /*
+     * Las cuatro objeciones que el cliente escucha de verdad en la conversación
+     * de venta. Si alguna desaparece del FAQ, la página deja de responder lo
+     * que la gente pregunta y vuelve a responder lo que es cómodo contestar.
+     *
+     * Se comprueba sobre el texto VISIBLE: Google exige que lo marcado en el
+     * FAQPage sea exactamente lo que ve el visitante.
+     */
+    const OBJECIONES = [
+        /notar que están hablando con un sistema/i,
+        /ya probé un chatbot/i,
+        /muy particular/i,
+        /cuánto tiempo tengo que dedicarle/i,
+    ];
+
+    const html = await (await fetch(`${BASE}/`)).text();
+    const visible = html.replace(/<script[\s\S]*?<\/script>/g, '');
+
+    for (const objecion of OBJECIONES) {
+        assert.match(visible, objecion, `el FAQ no responde a ${objecion}`);
+    }
+
+    // Y el marcado tiene que llevar las mismas preguntas que se ven.
+    assert.match(html, /"@type":\s*"FAQPage"/);
+});

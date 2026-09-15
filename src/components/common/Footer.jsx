@@ -79,7 +79,7 @@ const Footer = () => {
                         {legal} · © {anio}
                     </p>
                     <p className="etiqueta-mono">
-                        Hecho por diablillos en Aguascalientes
+                        Condiciones publicadas · Sin permanencia
                     </p>
                 </div>
             </div>
