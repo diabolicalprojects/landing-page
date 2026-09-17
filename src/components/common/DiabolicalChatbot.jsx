@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { CheckCircle2, AlertCircle, X } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { openWhatsApp, sendLead } from '../../utils/leads';
+import { medir } from '../../utils/medicion';
 import { CONTACT_EMAIL } from '../../config';
 import chatbotIcon from '../../assets/logo/icono-diabolical-chatbot.svg';
 
@@ -151,12 +152,10 @@ const DiabolicalChatbot = () => {
         setIsSending(true);
         const ok = await sendLead({ type: 'chatbot', contact, answers });
         setDelivered(ok);
-        if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-            window.gtag('event', 'generate_lead', {
-                form_id: 'chatbot',
-                delivered: ok,
-            });
-        }
+        medir('generate_lead', {
+            form_id: 'chatbot',
+            delivered: ok,
+        });
         setIsSending(false);
 
         openWhatsApp(
