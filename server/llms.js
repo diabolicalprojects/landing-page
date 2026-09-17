@@ -5,11 +5,27 @@ const {
     ARTICULOS_POR_FECHA,
     FAQ_PORTADA,
     rutaSector,
+    rutaServicio,
     rutaArticulo,
     RUTAS_PUBLICAS,
+    metadatosPorRuta,
 } = require('./schema');
 
 const SITE = config.siteUrl;
+
+/*
+ * Los listados van como enlaces Markdown, no como URLs en texto.
+ *
+ * No es cosmético: la especificación de llms.txt define cada sección como una
+ * lista de enlaces Markdown, y la auditoría de navegación con agentes de
+ * PageSpeed rechazaba el archivo por eso — "al parecer, el archivo no contiene
+ * ningún vínculo"— aunque las URLs estuvieran ahí en texto plano.
+ *
+ * El archivo se sigue sirviendo como text/plain: la auditoría ya interpreta su
+ * Markdown a través de ese tipo, y con text/markdown el navegador lo descarga
+ * en lugar de mostrarlo.
+ */
+const enlace = (texto, ruta) => `[${texto}](${SITE}${ruta})`;
 
 /**
  * llms.txt — resumen del negocio pensado para que lo lea un modelo de lenguaje.
@@ -27,7 +43,7 @@ function articulosResumidos() {
     if (ARTICULOS_POR_FECHA.length === 0) return '(Todavía no hay artículos publicados.)';
 
     return ARTICULOS_POR_FECHA.map(
-        (a) => `- **${a.titular}** (${a.fecha}) — ${a.entradilla} Ver: ${SITE}${rutaArticulo(a.slug)}`
+        (a) => `- ${enlace(a.titular, rutaArticulo(a.slug))} (${a.fecha}): ${a.entradilla}`
     ).join('\n');
 }
 
@@ -40,7 +56,10 @@ function servicios() {
             const items = SERVICIOS.filter((s) => s.categoria === categoria);
             if (items.length === 0) return '';
             const lineas = items
-                .map((s) => `- **${s.nombre}** — ${s.resumen} Límite: ${s.limite}`)
+                .map(
+                    (s) =>
+                        `- ${enlace(s.nombre, rutaServicio(s.slug))}: ${s.resumen} Límite: ${s.limite}`
+                )
                 .join('\n');
             return `### ${categoria}\n\n${lineas}`;
         })
@@ -48,9 +67,28 @@ function servicios() {
         .join('\n\n');
 }
 
+/**
+ * El índice de páginas, con el título real de cada una.
+ *
+ * Una lista de URLs desnudas no le dice a un modelo qué hay detrás de cada
+ * enlace; el título sí, y es lo que le permite elegir cuál abrir.
+ */
+function paginas() {
+    const meta = metadatosPorRuta();
+
+    return RUTAS_PUBLICAS.map((ruta) => {
+        // El título de la ruta lleva el sufijo de marca, que aquí sobra: el
+        // archivo entero ya habla de esta empresa. La portada no tiene entrada
+        // propia en los metadatos, de ahí el nombre explícito.
+        const titulo = (meta[ruta]?.title || '').split('|')[0].trim();
+        const nombre = titulo || (ruta === '/' ? 'Inicio' : ruta.split('/').filter(Boolean).pop());
+        return `- ${enlace(nombre, ruta)}`;
+    }).join('\n');
+}
+
 function construirLlms() {
     const sectores = SECTORES.map(
-        (s) => `- **${s.nombre}** — ${s.descripcion} Ver: ${SITE}${rutaSector(s.slug)}`
+        (s) => `- ${enlace(s.nombre, rutaSector(s.slug))}: ${s.descripcion}`
     ).join('\n');
 
     return `# Diabolical Services
@@ -64,7 +102,7 @@ function construirLlms() {
 
 Contacto: WhatsApp +52 449 513 6907 · contacto@diabolicalservices.tech · Aguascalientes, México · ${SITE}
 
-Versión extendida para agentes: ${SITE}/llms-full.txt
+Versión extendida para agentes: ${enlace('llms-full.txt', '/llms-full.txt')}
 
 ## Qué hace Diabolical Services
 
@@ -126,7 +164,7 @@ ${articulosResumidos()}
 
 ## Páginas del sitio
 
-${RUTAS_PUBLICAS.map((r) => `- ${SITE}${r}`).join('\n')}
+${paginas()}
 
 ## Nota para agentes de IA
 
@@ -157,7 +195,7 @@ function articulosCompletos() {
 
         return `## ${a.titular}
 
-Página: ${SITE}${rutaArticulo(a.slug)}
+Página: ${enlace(a.titular, rutaArticulo(a.slug))}
 Publicado: ${a.fecha}${a.actualizado && a.actualizado !== a.fecha ? ` · Actualizado: ${a.actualizado}` : ''}
 
 ${a.entradilla}
@@ -193,7 +231,7 @@ function construirLlmsFull() {
 
         return `## ${sector.nombre}
 
-Página: ${SITE}${rutaSector(sector.slug)}
+Página: ${enlace(sector.nombre, rutaSector(sector.slug))}
 
 ${sector.entradilla}
 

@@ -343,6 +343,18 @@ app.use(
             // Los assets de Vite llevan hash en el nombre: cachear a un año es seguro.
             if (filePath.includes(`${path.sep}assets${path.sep}`)) {
                 res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+                return;
+            }
+
+            // Lo de public/ no lleva hash, así que no puede ser immutable: si se
+            // reemplaza, el nombre no cambia. Pero una hora es demasiado poco
+            // para una fuente, y PageSpeed lo señala. Se reparte por tipo:
+            // las fuentes no se editan nunca —se sustituyen por otro archivo—,
+            // mientras una imagen de marca sí puede cambiar sin renombrarse.
+            if (/\.(woff2?|otf|ttf|eot)$/i.test(filePath)) {
+                res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+            } else if (/\.(png|jpe?g|webp|avif|svg|ico|gif)$/i.test(filePath)) {
+                res.setHeader('Cache-Control', 'public, max-age=2592000, stale-while-revalidate=86400');
             } else {
                 res.setHeader('Cache-Control', 'public, max-age=3600');
             }
