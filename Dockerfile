@@ -73,7 +73,26 @@ USER node
 
 EXPOSE 3000
 
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-    CMD node -e "fetch('http://127.0.0.1:'+(process.env.PORT||3000)+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+# La sonda va con el wget de busybox, no con `node -e`.
+#
+# El 17/09/2026 la versión con Node tumbó el sitio casi una hora. Cada sonda
+# arrancaba un intérprete entero —montón de V8 incluido— y con la máquina
+# cargada eso no cabía en los tres segundos de timeout que tenía entonces. Tres
+# sondas lentas seguidas marcaban la tarea como enferma, el orquestador la
+# reemplazaba, la siguiente tardaba lo mismo, y el servicio no volvía a levantar
+# aunque la imagen estuviera perfecta — que lo estaba.
+#
+# Ensanchar los márgenes tapaba el síntoma; el problema era el coste de la
+# sonda. wget ya viene en la imagen, hace la misma petición y cuesta un proceso
+# de unos pocos kilobytes. Con eso, los márgenes de abajo son holgura de sobra:
+# 60 s de gracia al arrancar y cinco fallos seguidos —dos minutos y medio— antes
+# de dar la tarea por muerta.
+#
+# Una comprobación de salud debe detectar un proceso muerto, no competir con la
+# carga de la máquina.
+#
+# Va en forma de shell y no de lista porque necesita expandir $PORT.
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=5 \
+    CMD wget -q -O /dev/null "http://127.0.0.1:${PORT:-3000}/health" || exit 1
 
 CMD ["node", "server.js"]
