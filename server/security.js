@@ -41,6 +41,12 @@ function buildHelmet() {
                 styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
                 fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
                 imgSrc: ["'self'", 'data:', 'blob:', ...GOOGLE_TAG, ...GOOGLE_ANALYTICS, ...META_PIXEL],
+                // @remotion/player inyecta un MP3 silencioso en data: para
+                // desbloquear el autoplay del navegador. Sin esta directiva cae
+                // a default-src, el reproductor lo intenta en bucle y cada
+                // intento deja un error en la consola. El reproductor va
+                // muteado, así que no se oía nada: solo costaba puntos.
+                mediaSrc: ["'self'", 'data:', 'blob:'],
                 connectSrc: [
                     "'self'",
                     config.n8nOrigin,
