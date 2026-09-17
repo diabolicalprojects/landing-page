@@ -73,7 +73,18 @@ USER node
 
 EXPOSE 3000
 
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+# Márgenes anchos a propósito.
+#
+# Con --timeout=3s y --start-period=10s, la comprobación tumbó el sitio: cada
+# sonda arranca un Node entero, y en un host cargado eso no cabe en tres
+# segundos. Tres sondas lentas seguidas marcan la tarea como enferma, el
+# orquestador la reemplaza, la nueva tarda lo mismo, y el servicio no vuelve a
+# levantar aunque la imagen esté perfecta — que lo estaba: CI arranca el
+# contenedor y comprueba /health y seis rutas antes de aprobar.
+#
+# Una comprobación de salud debe detectar un proceso muerto, no competir con la
+# carga de la máquina.
+HEALTHCHECK --interval=60s --timeout=15s --start-period=90s --retries=5 \
     CMD node -e "fetch('http://127.0.0.1:'+(process.env.PORT||3000)+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
 CMD ["node", "server.js"]
