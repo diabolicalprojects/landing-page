@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AlertCircle, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 import { openWhatsApp, sendLead } from '../../utils/leads';
+import { medir } from '../../utils/medicion';
 import { CONTACT_EMAIL } from '../../config';
 import { useBloque } from '../../contenido';
 
@@ -55,13 +56,11 @@ const Contact = () => {
         const ok = await sendLead({ type: 'contact_form', ...form });
         setEntregado(ok);
 
-        if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-            window.gtag('event', 'generate_lead', {
-                form_id: 'contact_form',
-                delivered: ok,
-                lead_source: form.source,
-            });
-        }
+        medir('generate_lead', {
+            form_id: 'contact_form',
+            delivered: ok,
+            lead_source: form.source,
+        });
 
         setEnviando(false);
         openWhatsApp(resumen);

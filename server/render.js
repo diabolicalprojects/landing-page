@@ -75,12 +75,27 @@ ${gtmId ? gtmSnippet(gtmId) : ''}${pixelId ? pixelSnippet(pixelId) : ''}${settin
     ${MARKER_END}`;
 }
 
+/*
+ * Contenedor adicional de Tag Manager, configurable desde /admin.
+ *
+ * Difiere la descarga igual que el contenedor principal de index.html: el
+ * `dataLayer` se crea al instante —así nada que se empuje antes se pierde— y el
+ * script del contenedor solo se pide a lo primero que ocurra de load, primera
+ * interacción, o 3,5 s de respaldo. Un contenedor de Tag Manager son más de
+ * 100 KiB, y ninguna etiqueta necesita ejecutarse antes de que la página se
+ * vea.
+ */
 function gtmSnippet(id) {
-    return `    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','${id}');</script>\n`;
+    return `    <script>(function(w,d,ID){w.dataLayer=w.dataLayer||[];
+    w.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var l=false,E=['pointerdown','keydown','touchstart','scroll'];
+    function c(){if(l)return;l=true;E.forEach(function(e){w.removeEventListener(e,c,true)});
+    var s=d.createElement('script');s.async=true;
+    s.src='https://www.googletagmanager.com/gtm.js?id='+ID;d.head.appendChild(s)}
+    E.forEach(function(e){w.addEventListener(e,c,{capture:true,once:true,passive:true})});
+    w.setTimeout(c,3500);
+    if(d.readyState==='complete')c();else w.addEventListener('load',c,{once:true});
+    })(window,document,'${id}');</script>\n`;
 }
 
 function pixelSnippet(id) {
