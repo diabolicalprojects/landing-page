@@ -35,6 +35,24 @@ La primera ejecución descarga un Chrome sin interfaz (unos 150 MB). Es una vez.
 | `npm run render` | `out/guardia-cuadrada.mp4` (1080×1080) | Instagram y Facebook |
 | | `out/guardia-horizontal.mp4` (1920×1080) | Anuncios y YouTube |
 | `npm run og` | `../public/og-image.png` | La imagen al compartir el enlace **(sobrescribe la actual)** |
+| `npm run render:web` | `out/pagina-web-<tipo>.mp4` (1080×1080) | Una pieza por tipo de página web |
+
+### Las piezas de páginas web
+
+Cuatro videos cuadrados, uno por tipo de sitio: landing, corporativo, tienda y
+a medida. **No redibujan nada**: importan la escena del sitio
+(`../src/motion/escenas/tipos.jsx`) y el nombre y el «para quién» del contenido
+de la landing (`../src/data/contenido.json`). Si cambia una escena o un texto en
+el sitio, el siguiente render sale igual que la web. Duran un ciclo exacto de
+la escena, así que hacen bucle limpio en el feed.
+
+Esa importación cruzada es la excepción a la regla de arriba, y por eso
+`remotion.config.mjs` fuerza el `react` de este proyecto: sin el alias, los
+ficheros del sitio cargarían el suyo y el render tendría dos Reacts.
+
+Son monocromas, como el sitio. «Guardia nocturna» todavía usa el naranja de
+`marca.js` y su frase va de tú; conviene ponerla al día antes del próximo
+render.
 
 Diez segundos cada uno, 30 fps, H.264. Es lo que aceptan los gestores de
 anuncios sin recodificar.

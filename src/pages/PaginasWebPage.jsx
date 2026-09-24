@@ -4,6 +4,7 @@ import { ArrowRight, ArrowUpRight, Check, Plus } from 'lucide-react';
 import Pagina, { Migas } from '../components/common/Pagina';
 import Enlace from '../components/common/Enlace';
 import EncabezadoSeccion from '../components/common/EncabezadoSeccion';
+import PantallaEscena from '../components/common/PantallaEscena';
 import MotionGrafico from '../motion/MotionGrafico';
 import { useBloque } from '../contenido';
 import { getServicio } from '../data/servicios';
@@ -32,7 +33,7 @@ import logoCuadrado from '../assets/logo/LOGO-DIABOLICAL-CUADRADO-BLANCO.svg';
  *
  *   Hero          negro      la frase clave y la escena del sitio armándose
  *   Definición    negro·2    el párrafo citable
- *   Tipos         CLARO      los cuatro sitios, con lo que no incluyen
+ *   Tipos         CLARO      los cuatro sitios, cada uno con su escena y lo que no incluye
  *   Diferencias   negro      por qué una página que trabaja
  *   Proceso       negro·1    cómo y en cuánto
  *   Precio        CLARO      la pregunta que todos hacen, contestada sin cifra
@@ -200,7 +201,9 @@ const PaginasWebPage = () => {
 
                     <ul className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2">
                         {(tipos.items ?? []).map((tipo) => (
-                            <li key={tipo.id ?? tipo.nombre} className="tarjeta flex flex-col p-6 md:p-8">
+                            <li key={tipo.id ?? tipo.nombre} className="tarjeta flex flex-col overflow-hidden">
+                                <PantallaEscena escena={tipo.id} />
+                                <div className="flex flex-1 flex-col p-6 md:p-8">
                                 <h3 className="titular-m">{tipo.nombre}</h3>
                                 <p className="cuerpo mt-3">{tipo.paraQuien}</p>
 
@@ -255,6 +258,7 @@ const PaginasWebPage = () => {
                                         </dd>
                                     </div>
                                 </dl>
+                                </div>
                             </li>
                         ))}
                     </ul>

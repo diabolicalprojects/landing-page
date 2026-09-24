@@ -49,16 +49,17 @@
   },
   "hero": {
     "visible": true,
-    "fraseA": "Inteligencia artificial",
+    "insignia": "Agencia de páginas web e inteligencia artificial · Aguascalientes",
+    "fraseA": "Páginas web e inteligencia artificial",
     "fraseB": "para negocios en Aguascalientes.",
-    "apoyo": "Diseñamos e instalamos sistemas que atienden, agendan y dan seguimiento a cualquier hora, sobre las herramientas que su negocio ya utiliza. Con el alcance de cada pieza por escrito antes de firmar nada.",
+    "apoyo": "Diseñamos y desarrollamos páginas web que Google y los motores de IA leen completas, y los sistemas que atienden, agendan y dan seguimiento a cualquier hora sobre las herramientas que su negocio ya utiliza. Con el alcance de cada pieza por escrito antes de firmar nada.",
     "ctaPrimario": {
       "texto": "Solicitar auditoría gratuita",
       "destino": "/contacto"
     },
     "ctaSecundario": {
-      "texto": "Ver los 13 servicios",
-      "destino": "/servicios"
+      "texto": "Ver diseño de páginas web",
+      "destino": "/paginas-web-aguascalientes"
     },
     "pie": "Auditoría sin costo · Respuesta el mismo día · Sin permanencia"
   },
@@ -93,6 +94,17 @@
         "destino": "/servicios/auditoria-de-friccion"
       }
     ]
+  },
+  "webPortada": {
+    "visible": true,
+    "insignia": "Páginas web",
+    "titulo": "Una agencia de páginas web en Aguascalientes.",
+    "apagado": "De una landing a una tienda en línea.",
+    "entradilla": "Diseñamos y desarrollamos páginas web que cargan rápido, se leen completas en Google y en los motores de inteligencia artificial, y se editan desde un panel sin llamar a nadie. Si el negocio lo necesita, con un asistente que atiende dentro del propio sitio.",
+    "cta": {
+      "texto": "Ver diseño de páginas web",
+      "destino": "/paginas-web-aguascalientes"
+    }
   },
   "verticales": {
     "visible": true,
@@ -191,7 +203,7 @@
   },
   "footer": {
     "visible": true,
-    "lema": "Inteligencia artificial para negocios en Aguascalientes.",
+    "lema": "Páginas web e inteligencia artificial para negocios en Aguascalientes.",
     "columnas": [
       {
         "id": "col-servicios",
@@ -265,11 +277,12 @@
   "nosotros": {
     "visible": true,
     "insignia": "Quiénes somos",
-    "titulo": "Una agencia de inteligencia artificial",
-    "tituloApagado": "en Aguascalientes.",
-    "entradilla": "Diabolical Services diseña e instala sistemas de inteligencia artificial para negocios de Aguascalientes. No vendemos una herramienta suelta: mapeamos el proceso real, construimos el mecanismo sobre lo que la empresa ya utiliza y lo dejamos funcionando.",
+    "titulo": "Una agencia de páginas web",
+    "tituloApagado": "e inteligencia artificial en Aguascalientes.",
+    "entradilla": "Diabolical Services diseña y desarrolla páginas web y sistemas de inteligencia artificial para negocios de Aguascalientes. No vendemos una plantilla ni una herramienta suelta: partimos del proceso real del negocio, construimos sobre lo que la empresa ya utiliza y lo dejamos funcionando.",
     "parrafos": [
       "Sobre el nombre. En el trato clásico con el diablo, las condiciones se descubren cuando ya es tarde. Nos quedamos con la primera mitad —el interés por lo que se repite, lo ingrato y lo que ocurre de madrugada— y publicamos la segunda por adelantado: bajo cada servicio está escrito hasta dónde llega, antes de que usted firme nada.",
+      "Las páginas web son la mitad visible del oficio. Las diseñamos y desarrollamos a medida —desde una landing hasta una tienda en línea— para que carguen rápido, se lean completas en Google y en los motores de inteligencia artificial, y se editen desde un panel sin depender de nadie. Es la misma base técnica con la que está hecho este sitio.",
       "La parte más ingrata de cualquier negocio es la que se repite: responder lo mismo veinte veces, buscar un hueco en la agenda, recordar quién quedó de llamar. Es trabajo que nadie disfruta y que, hecho a mano, siempre se cae en el peor momento.",
       "Nuestro oficio es convertir esa parte en un sistema que no se cansa. Atiende a cualquier hora, consulta la disponibilidad real, deja el registro donde su equipo lo consulta y entrega la conversación a una persona en cuanto hace falta criterio. No sustituye a nadie: libera a su equipo de lo que no debería estar haciendo.",
       "Trabajamos con inmobiliarias, salones de belleza, clínicas, gimnasios, despachos y comercios de la ciudad. Seis giros que conocemos en detalle, cada uno con su propio recorrido."

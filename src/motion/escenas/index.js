@@ -15,6 +15,16 @@ import {
     SitioWeb,
 } from './servicios';
 import {
+    CICLO_CORPORATIVO,
+    CICLO_LANDING,
+    CICLO_MEDIDA,
+    CICLO_TIENDA,
+    TipoCorporativo,
+    TipoLanding,
+    TipoMedida,
+    TipoTienda,
+} from './tipos';
+import {
     Clinicas,
     Comercio,
     Despachos,
@@ -35,7 +45,12 @@ import {
  * página pueda pedir su escena sin ninguna tabla intermedia que mantener.
  */
 
-const escena = (Escena, duracion, poster) => ({ Escena, duracion, poster });
+/*
+ * `descripcion` es el texto alternativo por defecto. Solo lo llevan las escenas
+ * que se pintan desde datos (los tipos de sitio), donde no hay un componente
+ * escrito a mano que pueda describir la ilustración que tiene al lado.
+ */
+const escena = (Escena, duracion, poster, descripcion) => ({ Escena, duracion, poster, descripcion });
 
 export const ESCENAS = {
     // Marca
@@ -57,6 +72,33 @@ export const ESCENAS = {
     'identidad-de-marca': escena(IdentidadDeMarca, 280, 150),
     'presencia-en-eventos': escena(PresenciaEnEventos, 280, 150),
     'auditoria-de-friccion': escena(AuditoriaDeFriccion, 300, 170),
+
+    // Tipos de página web. Las claves son los `id` de paginasWeb.tipos.items
+    // en el contenido, por la misma razón que las de servicios son su slug.
+    'tipo-landing': escena(
+        TipoLanding,
+        CICLO_LANDING,
+        200,
+        'Ilustración animada: una landing page que se recorre hasta un solo botón, y la solicitud que llega al teléfono del negocio.'
+    ),
+    'tipo-corporativo': escena(
+        TipoCorporativo,
+        CICLO_CORPORATIVO,
+        210,
+        'Ilustración animada: la portada de un sitio corporativo que se ramifica en una página por servicio, cada una indexada en Google.'
+    ),
+    'tipo-tienda': escena(
+        TipoTienda,
+        CICLO_TIENDA,
+        262,
+        'Ilustración animada: un producto que pasa al carrito, se paga y avanza por los estados del pedido hasta entregarse.'
+    ),
+    'tipo-medida': escena(
+        TipoMedida,
+        CICLO_MEDIDA,
+        220,
+        'Ilustración animada: un texto que se edita en el panel y cambia a la vez en la página, con la agenda, el CRM y el asistente conectados.'
+    ),
 
     // Sectores
     inmobiliarias: escena(Inmobiliarias, 300, 160),

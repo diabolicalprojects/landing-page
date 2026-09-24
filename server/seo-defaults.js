@@ -21,13 +21,13 @@ const config = require('./config');
  * ponerlo, primero hay que quitar GA4 de Tag Manager.
  */
 const defaults = {
-    title: 'Inteligencia artificial para negocios en Aguascalientes | Diabolical',
+    title: 'Agencia de páginas web e IA en Aguascalientes | Diabolical',
     // 150 caracteres: por encima de ~160 Google la corta, y lo primero que
     // se pierde es lo del final.
     description:
-        'Inteligencia artificial para negocios en Aguascalientes: páginas web, SEO, Google Ads, marca y atención automática. 13 servicios con su alcance publicado.',
+        'Agencia de diseño y desarrollo de páginas web e inteligencia artificial en Aguascalientes: sitios, tiendas en línea, SEO y atención automática.',
     keywords:
-        'inteligencia artificial para negocios en Aguascalientes, agencia de IA Aguascalientes, páginas web Aguascalientes, diseño de páginas web, posicionamiento web Aguascalientes, Google Ads Aguascalientes, automatización con IA, chatbot WhatsApp',
+        'agencia de páginas web Aguascalientes, empresa de diseño web Aguascalientes, páginas web Aguascalientes, inteligencia artificial para negocios en Aguascalientes, agencia de IA Aguascalientes, tiendas en línea Aguascalientes, posicionamiento web Aguascalientes, chatbot WhatsApp',
     siteUrl: config.siteUrl,
     favicon: '/favicon.svg',
     ogImage: `${config.siteUrl}/og-image.png`,

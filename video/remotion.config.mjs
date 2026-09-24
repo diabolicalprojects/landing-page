@@ -16,6 +16,23 @@ const aqui = path.dirname(fileURLToPath(import.meta.url));
  */
 Config.setPublicDir(path.join(aqui, 'public'));
 
+/*
+ * Las piezas de páginas web importan las escenas del sitio (../src/motion). Sin
+ * este alias, esos ficheros resolverían `react` contra el node_modules del
+ * sitio y el render cargaría dos Reacts distintos. Se fuerza el de aquí.
+ */
+Config.overrideWebpackConfig((actual) => ({
+    ...actual,
+    resolve: {
+        ...actual.resolve,
+        alias: {
+            ...(actual.resolve?.alias ?? {}),
+            react: path.join(aqui, 'node_modules', 'react'),
+            'react-dom': path.join(aqui, 'node_modules', 'react-dom'),
+        },
+    },
+}));
+
 Config.setVideoImageFormat('jpeg');
 Config.setOverwriteOutput(true);
 

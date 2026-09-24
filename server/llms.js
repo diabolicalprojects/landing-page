@@ -140,8 +140,9 @@ function construirLlms() {
 
     return `# Diabolical Services
 
-> Inteligencia artificial para negocios en Aguascalientes, México. Diseño y
-> desarrollo de páginas web, posicionamiento en buscadores y en motores de IA,
+> Agencia de diseño y desarrollo de páginas web e inteligencia artificial en
+> Aguascalientes, México. Landing pages, sitios corporativos, tiendas en línea y
+> sitios a medida con panel; posicionamiento en buscadores y en motores de IA,
 > ficha de Google, publicidad, identidad de marca, y sistemas que atienden,
 > agendan y dan seguimiento por WhatsApp. Para inmobiliarias, salones de belleza,
 > clínicas, gimnasios, despachos y comercio.
@@ -298,8 +299,8 @@ ${faq}`;
 
     return `# Diabolical Services — documentación extendida
 
-Marketing digital y automatización con inteligencia artificial para negocios en
-Aguascalientes, México. Este documento amplía ${SITE}/llms.txt con el detalle
+Agencia de diseño y desarrollo de páginas web e inteligencia artificial para
+negocios en Aguascalientes, México. Este documento amplía ${SITE}/llms.txt con el detalle
 por sector y el texto completo de los artículos.
 
 Contacto: WhatsApp +52 449 513 6907 · contacto@diabolicalservices.tech

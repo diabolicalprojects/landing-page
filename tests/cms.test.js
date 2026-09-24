@@ -122,7 +122,7 @@ test('lo editado desde el panel sale en el HTML servido', async (t) => {
     );
     // Se fusiona, no se reemplaza: editar un campo no borra los vecinos.
     assert.ok(
-        html.includes('Inteligencia artificial'),
+        html.includes(require('../src/data/contenido.json').hero.fraseA),
         'editar un campo borró los demás del mismo bloque'
     );
 

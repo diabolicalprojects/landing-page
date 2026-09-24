@@ -6,6 +6,7 @@ import Enlace from '../components/common/Enlace';
 import MotionGrafico from '../motion/MotionGrafico';
 import { hayEscena } from '../motion/escenas';
 import { SECTORES, getSector } from '../data/sectores';
+import { rutaServicio } from '../data/servicios';
 
 /*
  * Página de un sector.
@@ -100,6 +101,24 @@ const SectorPage = ({ slug }) => {
                             </article>
                         ))}
                     </div>
+
+                    {/* La página web del giro. Todo lo de arriba necesita un sitio
+                        donde vivir, y es la mitad del oficio de la casa. */}
+                    <Enlace
+                        destino={rutaServicio('sitio-web')}
+                        className="tarjeta tarjeta-enlace mt-4 flex items-center justify-between gap-6 p-6 md:p-8"
+                    >
+                        <span>
+                            <span className="titular-m block">
+                                Página web para {sector.nombreCorto.toLowerCase()}
+                            </span>
+                            <span className="cuerpo mt-3 block">
+                                Diseño y desarrollo de páginas web en Aguascalientes, con este sistema
+                                integrado en el propio sitio desde el primer día.
+                            </span>
+                        </span>
+                        <ArrowRight size={18} className="flex-none text-white/55" aria-hidden="true" />
+                    </Enlace>
                 </div>
             </section>
 

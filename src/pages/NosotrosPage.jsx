@@ -32,15 +32,17 @@ const NosotrosPage = () => {
             <section className="zona-oscura seccion">
                 <div className="contenedor">
                     <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-12">
-                        <header className="lg:col-span-6">
+                        <header className="lg:col-span-7">
                             <p className="insignia">{insignia}</p>
-                            <h1 className="titular-xl mt-5">
+                            {/* Frase clave larga: «Una agencia de páginas web e
+                                inteligencia artificial en Aguascalientes». */}
+                            <h1 className="titular-xl titular-largo mt-5">
                                 {titulo} <span className="titular-apagado">{tituloApagado}</span>
                             </h1>
                             <p className="cuerpo-l mt-7">{entradilla}</p>
                         </header>
 
-                        <div className="lg:col-span-6">
+                        <div className="lg:col-span-5">
                             <MotionGrafico
                                 escena="identidad"
                                 prioridad

@@ -20,7 +20,7 @@ const PrivacyPolicy = () => {
 
             {/* Header / Logo Navigation */}
             <header className="relative z-10 w-full max-w-5xl mx-auto px-6 py-8 flex items-center justify-between border-b border-white/5">
-                <Link to="/" className="flex items-center gap-2 text-white/50 hover:text-white transition-colors group">
+                <Link to="/" className="flex min-h-[1.75rem] items-center gap-2 text-white/50 hover:text-white transition-colors group">
                     <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                     <span className="text-[11px] uppercase tracking-[0.3em] font-mono font-black">Regresar</span>
                 </Link>
@@ -89,7 +89,7 @@ const PrivacyPolicy = () => {
             <footer className="relative z-10 w-full max-w-5xl mx-auto px-6 py-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] font-mono uppercase tracking-[0.3em] text-white/55">
                 <div>© 2026 Diabolical Services. Todos los derechos reservados.</div>
                 <div className="flex gap-4">
-                    <Link to="/" className="hover:text-white transition-colors">Volver al Inicio</Link>
+                    <Link to="/" className="inline-flex min-h-[1.75rem] items-center hover:text-white transition-colors">Volver al Inicio</Link>
                 </div>
             </footer>
         </main>

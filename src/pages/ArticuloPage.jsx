@@ -58,9 +58,9 @@ const ArticuloPage = ({ slug }) => {
                     <div className="max-w-3xl mx-auto">
                         <nav aria-label="Ruta de navegación" className="mb-8">
                             <ol className="flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-white/55 font-bold">
-                                <li><Link to="/" className="hover:text-white transition-colors">Inicio</Link></li>
+                                <li><Link to="/" className="inline-flex min-h-[1.75rem] items-center hover:text-white transition-colors">Inicio</Link></li>
                                 <li aria-hidden="true">/</li>
-                                <li><Link to="/blog" className="hover:text-white transition-colors">Blog</Link></li>
+                                <li><Link to="/blog" className="inline-flex min-h-[1.75rem] items-center hover:text-white transition-colors">Blog</Link></li>
                             </ol>
                         </nav>
 

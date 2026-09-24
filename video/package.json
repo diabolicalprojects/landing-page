@@ -10,6 +10,8 @@
     "studio": "remotion studio",
     "prerender": "npm run preparar",
     "render": "remotion render GuardiaCuadrada out/guardia-cuadrada.mp4 && remotion render GuardiaHorizontal out/guardia-horizontal.mp4",
+    "prerender:web": "npm run preparar",
+    "render:web": "remotion render PaginaWeb-landing out/pagina-web-landing.mp4 && remotion render PaginaWeb-corporativo out/pagina-web-corporativo.mp4 && remotion render PaginaWeb-tienda out/pagina-web-tienda.mp4 && remotion render PaginaWeb-medida out/pagina-web-medida.mp4",
     "preog": "npm run preparar",
     "og": "remotion still GuardiaHorizontal ../public/og-image.png --frame=200"
   },

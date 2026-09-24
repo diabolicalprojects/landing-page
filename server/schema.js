@@ -103,7 +103,8 @@ function negocio() {
         name: 'Diabolical Services',
         alternateName: 'Diabolical',
         description:
-            'Inteligencia artificial para negocios en Aguascalientes. Diseño y desarrollo de páginas web, posicionamiento en Google y en motores de IA, publicidad, identidad de marca y sistemas que atienden, agendan y dan seguimiento sobre las herramientas que la empresa ya utiliza. Para inmobiliarias, salones de belleza, clínicas, gimnasios, despachos y comercio.',
+            'Agencia de diseño y desarrollo de páginas web e inteligencia artificial en Aguascalientes. Landing pages, sitios corporativos, tiendas en línea y sitios a medida, posicionamiento en Google y en motores de IA, publicidad, identidad de marca y sistemas que atienden, agendan y dan seguimiento sobre las herramientas que la empresa ya utiliza. Para inmobiliarias, salones de belleza, clínicas, gimnasios, despachos y comercio.',
+        slogan: 'Páginas web e inteligencia artificial para negocios en Aguascalientes.',
         url: SITE,
         telephone: TELEFONO,
         email: EMAIL,
@@ -123,16 +124,18 @@ function negocio() {
             { '@type': 'Country', name: 'México' },
         ],
         serviceType: [...new Set(SERVICIOS.map((s) => s.nombre))],
+        // Las páginas web van primero: son la mitad del oficio y la entidad
+        // tiene que decirlo igual que lo dice la portada.
         knowsAbout: [
-            'Marketing digital para negocios locales',
-            'Posicionamiento en buscadores y en motores generativos',
-            'Publicidad en Google',
             'Diseño de páginas web',
             'Diseño y desarrollo de páginas web',
             'Landing pages',
             'Tiendas en línea',
-            'Identidad de marca',
             'Inteligencia artificial aplicada a negocios',
+            'Posicionamiento en buscadores y en motores generativos',
+            'Marketing digital para negocios locales',
+            'Publicidad en Google',
+            'Identidad de marca',
             'Automatización de procesos',
             'Chatbots de WhatsApp',
             'Agendamiento automático de citas',
@@ -142,7 +145,7 @@ function negocio() {
         // allí, aparece aquí, en /servicios y en los llms.txt sin tocar nada.
         hasOfferCatalog: {
             '@type': 'OfferCatalog',
-            name: 'Servicios de inteligencia artificial para negocios en Aguascalientes',
+            name: 'Páginas web e inteligencia artificial para negocios en Aguascalientes',
             itemListElement: [
                 ...SERVICIOS.map((s) => ({
                     '@type': 'Offer',
@@ -291,11 +294,11 @@ function metadatosPorRuta() {
     }
 
     meta[RUTA_SERVICIOS] = {
-        title: 'Servicios de inteligencia artificial en Aguascalientes | Diabolical',
+        title: 'Servicios de páginas web e IA en Aguascalientes | Diabolical',
         description:
-            'Trece servicios de inteligencia artificial para negocios en Aguascalientes: posicionamiento, Google Ads, sitio web, marca, atención automática y auditoría. Cada uno con su alcance publicado.',
+            'Trece servicios para negocios en Aguascalientes: páginas web, posicionamiento, Google Ads, marca y atención con IA. Cada uno con su alcance publicado.',
         keywords:
-            'inteligencia artificial para negocios en Aguascalientes, servicios de inteligencia artificial, agencia de IA Aguascalientes, automatización con IA, posicionamiento web Aguascalientes',
+            'servicios de páginas web Aguascalientes, agencia de páginas web Aguascalientes, inteligencia artificial para negocios en Aguascalientes, agencia de IA Aguascalientes, posicionamiento web Aguascalientes',
         robots: 'index, follow',
     };
 
@@ -335,18 +338,18 @@ function metadatosPorRuta() {
     };
 
     meta[RUTA_NOSOTROS] = {
-        title: 'Quiénes somos | Diabolical Services, agencia de IA en Aguascalientes',
+        title: 'Quiénes somos | Agencia de páginas web e IA en Aguascalientes',
         description:
-            'Somos una agencia de inteligencia artificial en Aguascalientes. Diseñamos e instalamos sistemas que atienden, agendan y dan seguimiento sobre las herramientas que el negocio ya usa.',
+            'Agencia de páginas web e inteligencia artificial en Aguascalientes: sitios a medida y sistemas que atienden, agendan y dan seguimiento a sus clientes.',
         keywords:
-            'agencia de inteligencia artificial Aguascalientes, quiénes somos Diabolical Services, empresa de IA Aguascalientes',
+            'agencia de páginas web Aguascalientes, empresa de diseño web Aguascalientes, agencia de inteligencia artificial Aguascalientes, quiénes somos Diabolical Services',
         robots: 'index, follow',
     };
 
     meta[RUTA_CONTACTO] = {
-        title: 'Contacto | Inteligencia artificial para negocios en Aguascalientes',
+        title: 'Contacto | Páginas web e inteligencia artificial en Aguascalientes',
         description:
-            'Solicita la auditoría de fricción gratuita. Salimos de ella con un diagnóstico escrito de qué conviene automatizar en tu negocio y qué no.',
+            'Solicite la auditoría gratuita o una propuesta de página web. Salimos de ella con un diagnóstico escrito de lo que conviene hacer en su negocio y lo que no.',
         keywords:
             'contacto agencia de IA Aguascalientes, auditoría de fricción gratuita, inteligencia artificial para negocios en Aguascalientes',
         robots: 'index, follow',

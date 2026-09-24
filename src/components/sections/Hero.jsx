@@ -8,11 +8,16 @@ import MotionGrafico from '../../motion/MotionGrafico';
 /*
  * Primer viewport.
  *
- * El h1 es la frase clave del negocio completa y sin adornos: «Inteligencia
- * artificial para negocios en Aguascalientes». Es lo que la gente escribe en el
- * buscador y lo que un motor generativo necesita leer para saber a quién
- * recomendar. Un titular ingenioso que no contenga esa frase la deja fuera del
- * sitio entero, porque ningún otro encabezado pesa lo que pesa el h1.
+ * El h1 lleva las dos especialidades de la casa en una sola frase: «Páginas web
+ * e inteligencia artificial para negocios en Aguascalientes». Dentro va entera
+ * la frase clave de siempre —«inteligencia artificial para negocios en
+ * Aguascalientes»—, así que sumar las páginas web no le quita nada. Es lo que
+ * un motor generativo necesita leer para saber a quién recomendar, y ningún
+ * otro encabezado pesa lo que pesa el h1.
+ *
+ * La insignia de encima dice qué es la empresa con la palabra que se busca:
+ * agencia. «Diseño de páginas web» como tal se deja a la landing, para que la
+ * portada no compita con ella por la misma búsqueda.
  *
  * Al lado, la marca en el centro de su propio sistema, con los canales del
  * negocio colgando de ella. El logotipo no está de adorno: es literalmente el
@@ -34,11 +39,14 @@ const Hero = () => {
             <div className="contenedor relative">
                 <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-10">
                     <div className="lg:col-span-7">
+                        {hero.insignia && (
+                            <p className="insignia entrada mb-6">{hero.insignia}</p>
+                        )}
                         {/* Los dos tonos van en línea y no en bloque: como
                             bloques, `text-wrap: balance` equilibra cada mitad
                             por separado y deja huérfanas como «en» sola en una
                             línea. En línea, la frase se equilibra entera. */}
-                        <h1 className="titular-xl entrada">
+                        <h1 className="titular-xl titular-largo entrada">
                             {hero.fraseA}{' '}
                             <span className="titular-apagado">{hero.fraseB}</span>
                         </h1>
@@ -70,7 +78,7 @@ const Hero = () => {
                         <MotionGrafico
                             escena="nucleo"
                             prioridad
-                            etiqueta="La marca de Diabolical en el centro de un sistema, con el sitio web, WhatsApp, la agenda y las redes conectados a ella."
+                            etiqueta="La marca de Diabolical en el centro de un sistema, con la página web, WhatsApp, la agenda y las redes conectados a ella."
                         />
                     </div>
                 </div>

@@ -32,8 +32,8 @@ const Pilares = () => {
                     entradilla={entradilla}
                 />
 
-                <div className="mt-12 grid gap-4 md:mt-16">
-                    <article className="tarjeta tarjeta-enlace grid gap-8 overflow-hidden p-6 md:grid-cols-2 md:items-center md:p-9">
+                <div className="mt-12 grid grid-cols-1 gap-4 md:mt-16">
+                    <article className="tarjeta tarjeta-enlace grid grid-cols-1 gap-8 overflow-hidden p-6 md:grid-cols-2 md:items-center md:p-9">
                         <div>
                             <h3 className="titular-m">{principal.titulo}</h3>
                             <p className="cuerpo mt-4">{principal.texto}</p>

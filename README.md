@@ -345,6 +345,14 @@ portafolio está vacío y oculto a propósito: solo se llena con sitios de clien
 publicados y funcionando, con captura subida al propio sitio (la CSP no carga
 imágenes de otros dominios).
 
+**Escenas de los tipos de sitio.** `src/motion/escenas/tipos.jsx` tiene una
+escena por tipo (landing, corporativo, tienda, a medida). Sus claves son los
+`id` de `paginasWeb.tipos.items`, así que la tarjeta pide su escena sin tabla
+intermedia; un tipo nuevo creado desde el panel sale sin escena hasta que se
+dibuje la suya. Van dentro de una franja negra en la cabecera de cada tarjeta
+(`PantallaEscena`), en la landing y en la sección de páginas web de la portada.
+Las mismas escenas se exportan a video en `video/` (`npm run render:web`).
+
 ## Escenas animadas
 
 Veintidós ilustraciones (`src/motion/`): tres de marca, trece de servicio y seis

@@ -511,13 +511,16 @@ test('las páginas nuevas del sitio se sirven con su contenido', async (t) => {
 
     // La frase clave del negocio tiene que viajar en el h1 de la portada y en
     // el de cada sector: es lo que un motor generativo lee para saber a quién
-    // recomendar, y ningún otro encabezado pesa lo que pesa el h1.
+    // recomendar, y ningún otro encabezado pesa lo que pesa el h1. Desde que la
+    // casa se presenta también como agencia de páginas web, el h1 de la portada
+    // lleva las dos cosas, y la frase de siempre tiene que seguir dentro entera.
     const portada = await (await fetch(`${BASE}/`)).text();
     assert.match(
         portada,
-        /<h1[^>]*>[\s\S]{0,300}Inteligencia artificial[\s\S]{0,120}para negocios en Aguascalientes/,
+        /<h1[^>]*>[\s\S]{0,300}inteligencia artificial[\s\S]{0,120}para negocios en Aguascalientes/i,
         'la portada no lleva la frase clave en el h1'
     );
+    assert.match(portada, /<h1[^>]*>[\s\S]{0,40}Páginas web/, 'la portada no nombra las páginas web en el h1');
 
     for (const sector of SECTORES) {
         const html = await (await fetch(`${BASE}${rutaSector(sector.slug)}`)).text();
@@ -686,4 +689,72 @@ test('los textos de servicio y de la landing hablan de usted', () => {
     for (const texto of textos) {
         assert.ok(!TUTEO.test(texto), `tuteo en: «${texto}»`);
     }
+});
+
+
+test('la casa entera se presenta como agencia de páginas web', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    /*
+     * Las páginas web no pueden vivir solo en su landing. La portada, la
+     * ficha de la empresa, quiénes somos, el pie y los llms.txt tienen que
+     * decir lo mismo: agencia de páginas web e inteligencia artificial.
+     */
+    const portada = await (await fetch(`${BASE}/`)).text();
+    const visible = portada.replace(/<script[\s\S]*?<\/script>/g, '');
+
+    // El <title> servido depende de lo que otras pruebas guarden en el panel;
+    // el valor de fábrica es el que manda en un despliegue limpio.
+    assert.match(require('../server/seo-defaults').defaults.title, /^Agencia de páginas web/);
+    assert.ok(visible.includes('Agencia de páginas web e inteligencia artificial'), 'falta la insignia del hero');
+
+    // La sección de la portada enseña los cuatro tipos y lleva a la landing.
+    assert.ok(portada.includes('id="paginas-web"'), 'la portada no tiene la sección de páginas web');
+    for (const tipo of CONTENIDO.paginasWeb.tipos.items) {
+        assert.ok(visible.includes(tipo.nombre), `la portada no enseña «${tipo.nombre}»`);
+    }
+
+    const ficha = [...portada.matchAll(/application\/ld\+json">(.*?)<\/script>/gs)]
+        .map((m) => JSON.parse(m[1]))
+        .find((b) => b['@type'] === 'ProfessionalService');
+    assert.match(ficha.description, /^Agencia de diseño y desarrollo de páginas web/);
+    assert.equal(ficha.knowsAbout[0], 'Diseño de páginas web');
+
+    const nosotros = await (await fetch(`${BASE}/nosotros`)).text();
+    assert.match(nosotros, /<h1[^>]*>[\s\S]{0,40}Una agencia de páginas web/);
+
+    const llms = await (await fetch(`${BASE}/llms.txt`)).text();
+    assert.match(llms, /> Agencia de diseño y desarrollo de páginas web/);
+
+    // Cada sector enlaza a la página web de su giro.
+    for (const sector of SECTORES) {
+        const html = await (await fetch(`${BASE}${rutaSector(sector.slug)}`)).text();
+        assert.ok(
+            html.includes(`href="${RUTA_PAGINAS_WEB}"`),
+            `${sector.slug} no enlaza a la página de páginas web`
+        );
+    }
+});
+
+test('cada tipo de sitio lleva su escena animada, dibujada ya en el HTML', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    // El póster de cada escena se dibuja en el servidor: un rastreador o
+    // alguien con la red mala ve la ilustración sin esperar a Remotion.
+    const html = await (await fetch(`${BASE}${RUTA_PAGINAS_WEB}`)).text();
+    const escenas = [...html.matchAll(/role="img" aria-label="(Ilustración animada: [^"]+)"/g)].map((m) => m[1]);
+
+    assert.equal(
+        escenas.length,
+        CONTENIDO.paginasWeb.tipos.items.length,
+        'no hay una escena por cada tipo de sitio'
+    );
+    assert.equal(new Set(escenas).size, escenas.length, 'dos tipos comparten la misma escena');
+
+    const posters = html.match(/<svg[^>]*viewBox="0 0 640 400"/g) ?? [];
+    assert.ok(posters.length >= 5, 'faltan pósters dibujados en el servidor (hero y los cuatro tipos)');
 });

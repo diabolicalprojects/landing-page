@@ -2,6 +2,8 @@ import React from 'react';
 import { Composition } from 'remotion';
 
 import { GuardiaNocturna } from './GuardiaNocturna.jsx';
+import { PiezaTipoWeb, TIPOS_WEB, idComposicion } from './TiposWeb.jsx';
+import { ESCENAS } from '../../src/motion/escenas/index.js';
 
 /*
  * Dos formatos de la misma pieza:
@@ -31,5 +33,20 @@ export const RemotionRoot = () => (
             height={1080}
             defaultProps={{ horizontal: true }}
         />
+
+        {/* Una pieza cuadrada por tipo de página web, con la escena del sitio.
+            Dura un ciclo exacto de la escena para que el bucle sea limpio. */}
+        {TIPOS_WEB.map((tipo) => (
+            <Composition
+                key={tipo.id}
+                id={idComposicion(tipo.id)}
+                component={PiezaTipoWeb}
+                durationInFrames={ESCENAS[tipo.id].duracion}
+                fps={30}
+                width={1080}
+                height={1080}
+                defaultProps={{ id: tipo.id }}
+            />
+        ))}
     </>
 );

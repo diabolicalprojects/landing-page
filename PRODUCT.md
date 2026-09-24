@@ -236,6 +236,15 @@ sitio, el panel de edición y el alcance de cada tipo de sitio publicado, inclui
 lo que no incluye. El precio sigue sin publicarse; la página contesta la
 pregunta con los factores de los que depende.
 
+Ese mismo día la casa entera pasó a presentarse como **agencia de páginas web e
+inteligencia artificial en Aguascalientes**, no solo la landing. El h1 de la
+portada es «Páginas web e inteligencia artificial para negocios en
+Aguascalientes»: lleva dentro, entera, la frase clave anterior. El `<title>`
+dice «Agencia de páginas web e IA en Aguascalientes»; la ficha de la empresa
+(JSON-LD), quiénes somos, el pie, la FAQ y los `llms.txt` dicen lo mismo, y cada
+sector enlaza a la página web de su giro. «Diseño de páginas web» como término
+exacto se deja a la landing para que la portada no compita con ella.
+
 Los dos competidores son aplicaciones de cliente con el contenedor vacío: sirven
 un cascarón y montan todo el contenido con JavaScript. Google lo ejecuta y los
 ve; la mayoría de rastreadores de motores generativos no.

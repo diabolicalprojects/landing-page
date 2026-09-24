@@ -22,7 +22,7 @@ export const BLOQUES = [
     {
         clave: 'hero',
         nombre: 'Portada',
-        ayuda: 'Lo primero que ve alguien al entrar: la frase principal y los botones.',
+        ayuda: 'Lo primero que ve alguien al entrar: la etiqueta de arriba, la frase principal y los botones. La frase lleva «inteligencia artificial para negocios en Aguascalientes»: no la quites.',
         ancla: '#top',
     },
     {
@@ -30,6 +30,12 @@ export const BLOQUES = [
         nombre: 'Qué hacemos',
         ayuda: 'Los tres frentes. El primero enlaza a la página de páginas web.',
         ancla: '#pilares',
+    },
+    {
+        clave: 'webPortada',
+        nombre: 'Páginas web (portada)',
+        ayuda: 'La sección de páginas web de la portada. Los cuatro tipos de sitio se editan en «Página: páginas web» y salen en las dos páginas.',
+        ancla: '#paginas-web',
     },
     {
         clave: 'invisibles',
@@ -110,6 +116,7 @@ export const ETIQUETAS = {
     insignia: 'Etiqueta pequeña de la sección',
     titulo: 'Título',
     subtitulo: 'Segunda parte del título (sale en gris)',
+    apagado: 'Segunda parte del título (sale en gris)',
     entradilla: 'Párrafo de entrada',
     texto: 'Texto',
     detalle: 'Nota pequeña del final',

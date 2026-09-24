@@ -7,6 +7,7 @@ import Pagina from '../components/common/Pagina';
 // hidratar (error #419) y volviera a montarlo todo en cliente.
 import Hero from '../components/sections/Hero';
 import Pilares from '../components/sections/Pilares';
+import PaginasWebPortada from '../components/sections/PaginasWebPortada';
 import Invisibles from '../components/sections/Invisibles';
 import Verticales from '../components/sections/Verticales';
 import Proceso from '../components/sections/Proceso';
@@ -24,12 +25,13 @@ import CierreCta from '../components/sections/CierreCta';
  * trabajo es decir en el primer viewport qué es esto y para quién, y repartir
  * hacia las páginas que desarrollan cada cosa.
  *
- * El orden es la narrativa y el fondo es el ritmo. Diez secciones del mismo
+ * El orden es la narrativa y el fondo es el ritmo. Once secciones del mismo
  * negro se leen como una sola masa plana, así que la página invierte a claro
- * tres veces, y siempre donde cambia el tema de conversación:
+ * cuatro veces, y siempre donde cambia el tema de conversación:
  *
  *   Hero          negro      la frase clave y la marca en el centro del sistema
  *   Pilares       negro      los tres frentes, cada uno con su escena
+ *   Páginas web   CLARO      los cuatro tipos de sitio  ← cambia el tema
  *   Invisibles    negro·2    la medición propia: el dato que sostiene la tesis
  *   Sectores      negro·1    seis giros, cada uno hacia su página
  *   Proceso       CLARO      cómo se hace y en cuánto  ← cambia el tema
@@ -47,6 +49,7 @@ const InicioPage = () => (
     <Pagina>
         <Hero />
         <Pilares />
+        <PaginasWebPortada />
         <Invisibles />
         <Verticales />
         <Proceso />

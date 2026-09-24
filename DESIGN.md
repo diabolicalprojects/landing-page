@@ -215,7 +215,10 @@ pie, superficie y no texto de lectura.
 
 `titular-xl titular-largo` es el mismo titular un escalón por debajo, solo para
 un h1 que tiene que llevar una frase clave larga («Diseño y desarrollo de
-páginas web en Aguascalientes»). A tamaño completo la palabra más larga se sale
+páginas web en Aguascalientes»; en la portada, «Páginas web e inteligencia
+artificial para negocios en Aguascalientes»; en quiénes somos, «Una agencia de
+páginas web e inteligencia artificial en Aguascalientes»). Va siempre con la
+columna del texto a 7 de 12, como en la portada. A tamaño completo la palabra más larga se sale
 de su columna y la frase ocupa cinco líneas. No es un tercer tamaño de titular
 para elegir a gusto: si el h1 cabe en `titular-xl`, va en `titular-xl`.
 
