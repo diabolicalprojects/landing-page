@@ -5,6 +5,7 @@ import { useBloque } from '../../contenido';
 import { SECTORES_PRINCIPALES, SECTORES_SECUNDARIOS } from '../../data/sectores';
 import EncabezadoSeccion from '../common/EncabezadoSeccion';
 import Enlace from '../common/Enlace';
+import CtaServicio from '../common/CtaServicio';
 
 /*
  * Los sectores en la portada.
@@ -22,19 +23,14 @@ import Enlace from '../common/Enlace';
  * atendiendo y se nombran debajo, con enlace, sin competir por la atención.
  */
 const Verticales = () => {
-    const { visible, insignia, titulo, entradilla } = useBloque('verticales');
+    const { visible, titulo, entradilla } = useBloque('verticales');
 
     if (visible === false) return null;
 
     return (
         <section id="sectores" className="zona-oscura zona-oscura-1 seccion">
             <div className="contenedor">
-                <EncabezadoSeccion
-                    id="sectores"
-                    insignia={insignia}
-                    titulo={titulo}
-                    entradilla={entradilla}
-                />
+                <EncabezadoSeccion titulo={titulo} entradilla={entradilla} />
 
                 <div className="mt-12 grid grid-cols-1 gap-4 md:mt-16 md:grid-cols-2">
                     {SECTORES_PRINCIPALES.map((sector) => (
@@ -51,7 +47,7 @@ const Verticales = () => {
                                 destino={`/sectores/${sector.slug}`}
                                 className="enlace mt-6 inline-flex min-h-[1.75rem] items-center gap-1.5 self-start py-1 text-[0.9375rem] font-bold"
                             >
-                                Ver el detalle
+                                Ver cómo funciona
                                 <ArrowUpRight size={15} aria-hidden="true" />
                             </Enlace>
                         </article>
@@ -59,22 +55,24 @@ const Verticales = () => {
                 </div>
 
                 {SECTORES_SECUNDARIOS.length > 0 && (
-                    <p className="cuerpo mt-8 max-w-none">
-                        También atendemos{' '}
-                        {SECTORES_SECUNDARIOS.map((sector, i) => (
-                            <React.Fragment key={sector.slug}>
-                                {i > 0 && (i === SECTORES_SECUNDARIOS.length - 1 ? ' y ' : ', ')}
-                                <Enlace
-                                    destino={`/sectores/${sector.slug}`}
-                                    className="enlace inline-flex min-h-[1.75rem] items-center"
-                                >
-                                    {sector.nombreCorto.toLowerCase()}
-                                </Enlace>
-                            </React.Fragment>
-                        ))}
-                        .
-                    </p>
+                    <div className="mt-8">
+                        <p className="cuerpo">También atendemos:</p>
+                        <ul className="mt-2 flex flex-col gap-x-6 sm:flex-row sm:flex-wrap">
+                            {SECTORES_SECUNDARIOS.map((sector) => (
+                                <li key={sector.slug}>
+                                    <Enlace
+                                        destino={`/sectores/${sector.slug}`}
+                                        className="enlace inline-flex min-h-[2.25rem] items-center text-[0.9375rem]"
+                                    >
+                                        {sector.titular}
+                                    </Enlace>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 )}
+
+                <CtaServicio ubicacion="portada-giros" className="mt-12" />
             </div>
         </section>
     );

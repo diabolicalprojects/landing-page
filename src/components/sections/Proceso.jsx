@@ -3,6 +3,7 @@ import React from 'react';
 import { useBloque } from '../../contenido';
 import EncabezadoSeccion from '../common/EncabezadoSeccion';
 import MotionGrafico from '../../motion/MotionGrafico';
+import CtaServicio from '../common/CtaServicio';
 
 /*
  * Cómo trabajamos. Primera inversión a claro.
@@ -20,20 +21,15 @@ import MotionGrafico from '../../motion/MotionGrafico';
  * pasar al siguiente. Va en una losa negra porque las escenas se dibujan en
  * blanco. Debajo, las tarjetas con el texto de cada paso.
  */
-const Proceso = () => {
-    const { visible, insignia, titulo, entradilla, pasos = [], nota } = useBloque('proceso');
+const Proceso = ({ conCta = true }) => {
+    const { visible, titulo, entradilla, pasos = [], nota } = useBloque('proceso');
 
     if (visible === false || pasos.length === 0) return null;
 
     return (
         <section id="proceso" className="zona-clara seccion-amplia">
             <div className="contenedor">
-                <EncabezadoSeccion
-                    id="proceso"
-                    insignia={insignia}
-                    titulo={titulo}
-                    entradilla={entradilla}
-                />
+                <EncabezadoSeccion titulo={titulo} entradilla={entradilla} />
 
                 <div
                     className="zona-oscura mt-14 overflow-hidden px-3 py-4 md:mt-20 md:px-8 md:py-8"
@@ -47,15 +43,13 @@ const Proceso = () => {
                 </div>
 
                 <ol className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    {pasos.map((paso, indice) => (
+                    {pasos.map((paso) => (
                         <li key={paso.id} className="flex flex-col">
                             <div className="tarjeta flex flex-1 flex-col p-6">
                                 <p
                                     className="etiqueta-mono"
                                     style={{ color: 'var(--texto-3)' }}
                                 >
-                                    <span className="cifras">{String(indice + 1).padStart(2, '0')}</span>
-                                    {' · '}
                                     {paso.duracion}
                                 </p>
                                 <h3 className="mt-3 text-lg font-extrabold tracking-tight">
@@ -78,6 +72,9 @@ const Proceso = () => {
                         <p className="cuerpo max-w-3xl">{nota}</p>
                     </div>
                 )}
+                {/* En /contacto el formulario ya está arriba: un botón que lleva a
+                    la misma página no lleva a ningún sitio. */}
+                {conCta && <CtaServicio ubicacion="proceso" className="mt-12" />}
             </div>
         </section>
     );

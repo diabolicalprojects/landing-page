@@ -49,10 +49,10 @@ const CierreCta = () => {
 
                         <Enlace
                             destino={boton?.destino}
-                            className="boton boton-acento mt-10 inline-flex"
+                            className="boton boton-acento boton-grande mt-10 inline-flex"
                         >
                             {boton?.texto}
-                            <ArrowRight size={16} aria-hidden="true" />
+                            <ArrowRight size={17} aria-hidden="true" />
                         </Enlace>
 
                         {alternativa?.texto && (

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useBloque } from '../../contenido';
+import CtaServicio from '../common/CtaServicio';
 
 /*
  * «Invisible para la inteligencia artificial».
@@ -19,7 +20,7 @@ import { useBloque } from '../../contenido';
  * cifras de relleno convertiría una prueba en una fila de estadísticas.
  */
 const Invisibles = () => {
-    const { visible, insignia, titulo, tituloApagado, entradilla, datos = [], cierre } =
+    const { visible, titulo, tituloApagado, entradilla, datos = [], cierre } =
         useBloque('invisibles');
 
     if (visible === false || datos.length === 0) return null;
@@ -28,8 +29,7 @@ const Invisibles = () => {
         <section id="invisibles" className="zona-oscura zona-oscura-2 seccion">
             <div className="contenedor">
                 <header className="max-w-3xl">
-                    <p className="insignia">{insignia}</p>
-                    <h2 className="titular-l mt-5">
+                    <h2 className="titular-l">
                         {titulo} <span className="titular-apagado">{tituloApagado}</span>
                     </h2>
                     <p className="cuerpo-l mt-6">{entradilla}</p>
@@ -52,6 +52,8 @@ const Invisibles = () => {
                 </dl>
 
                 {cierre && <p className="cuerpo-destacado mt-10 max-w-3xl">{cierre}</p>}
+
+                <CtaServicio servicio="sitio-web" ubicacion="invisibles" className="mt-10" />
             </div>
         </section>
     );

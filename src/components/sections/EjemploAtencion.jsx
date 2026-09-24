@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useBloque } from '../../contenido';
 import EncabezadoSeccion from '../common/EncabezadoSeccion';
+import CtaServicio from '../common/CtaServicio';
 import ChatDemo from './ChatDemo';
 
 /*
@@ -22,11 +23,11 @@ const PASOS = [
     },
     {
         titulo: 'Consulta la agenda real',
-        texto: 'Ofrece huecos que existen de verdad, no una promesa de «te confirmamos».',
+        texto: 'Ofrece huecos que existen de verdad, no una promesa de «le confirmamos más tarde».',
     },
     {
         titulo: 'Cierra y registra',
-        texto: 'Agenda, deja el recordatorio programado y anota el prospecto donde lo veas.',
+        texto: 'Agenda, deja el recordatorio programado y anota el prospecto donde lo vea su equipo.',
     },
     {
         titulo: 'Sabe cuándo parar',
@@ -35,19 +36,14 @@ const PASOS = [
 ];
 
 const EjemploAtencion = () => {
-    const { visible, insignia, titulo, entradilla, nota } = useBloque('demo');
+    const { visible, titulo, entradilla, nota } = useBloque('demo');
 
     if (visible === false) return null;
 
     return (
         <section id="demo" className="zona-oscura seccion">
             <div className="contenedor">
-                <EncabezadoSeccion
-                    id="demo"
-                    insignia={insignia}
-                    titulo={titulo}
-                    entradilla={entradilla}
-                />
+                <EncabezadoSeccion titulo={titulo} entradilla={entradilla} />
 
                 <div className="mt-12 grid items-center gap-12 md:mt-16 lg:grid-cols-12 lg:gap-16">
                     <figure className="m-0 flex flex-col items-center lg:col-span-5 lg:items-start">
@@ -84,6 +80,7 @@ const EjemploAtencion = () => {
                         ))}
                     </ol>
                 </div>
+                <CtaServicio servicio="chatbots" ubicacion="demo" className="mt-14" />
             </div>
         </section>
     );

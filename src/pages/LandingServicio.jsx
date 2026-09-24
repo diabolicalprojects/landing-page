@@ -7,6 +7,8 @@ import EncabezadoSeccion from '../components/common/EncabezadoSeccion';
 import PantallaEscena from '../components/common/PantallaEscena';
 import Preguntas from '../components/common/Preguntas';
 import Fotografia from '../components/common/Fotografia';
+import CtaServicio from '../components/common/CtaServicio';
+import { getSector } from '../data/sectores';
 import MotionGrafico from '../motion/MotionGrafico';
 import { useBloque } from '../contenido';
 import { ESCENAS } from '../motion/escenas';
@@ -84,25 +86,20 @@ const LandingServicio = ({ slug }) => {
                 <div className="contenedor">
                     <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-12">
                         <header className="lg:col-span-7">
-                            {hero.insignia && <p className="insignia">{hero.insignia}</p>}
-                            <h1 className="titular-xl titular-largo mt-5">{hero.titulo}</h1>
+                            <h1 className="titular-xl titular-largo">{hero.titulo}</h1>
                             <p className="cuerpo-l mt-7">{hero.entradilla}</p>
 
-                            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                                <Enlace destino={hero.ctaPrimario?.destino} className="boton boton-acento">
-                                    {hero.ctaPrimario?.texto}
-                                    <ArrowRight size={16} aria-hidden="true" />
-                                </Enlace>
-                                <Enlace destino={hero.ctaSecundario?.destino} className="boton boton-fantasma">
-                                    {hero.ctaSecundario?.texto}
-                                </Enlace>
-                            </div>
-
-                            {hero.pie && (
-                                <p className="etiqueta-mono mt-8" style={{ color: 'var(--texto-3)' }}>
-                                    {hero.pie}
-                                </p>
-                            )}
+                            <CtaServicio
+                                servicio={slug}
+                                texto={hero.ctaPrimario?.texto}
+                                secundario={
+                                    hero.ctaSecundario?.texto
+                                        ? { texto: hero.ctaSecundario.texto, destino: hero.ctaSecundario.destino }
+                                        : undefined
+                                }
+                                ubicacion="landing-hero"
+                                className="mt-9"
+                            />
                         </header>
 
                         <div className="lg:col-span-5">
@@ -129,14 +126,10 @@ const LandingServicio = ({ slug }) => {
                 >
                     <div className="contenedor">
                         <div className="grid gap-5 lg:grid-cols-12 lg:gap-16">
-                            <h2
-                                id="pw-definicion"
-                                className="etiqueta pt-1.5 lg:col-span-3"
-                                style={{ color: 'var(--texto-3)' }}
-                            >
+                            <h2 id="pw-definicion" className="sr-only">
                                 {definicion.titulo}
                             </h2>
-                            <p className="cuerpo-destacado m-0 max-w-[68ch] lg:col-span-9">
+                            <p className="cuerpo-l m-0 max-w-[68ch] lg:col-span-12" style={{ color: 'var(--texto-1)' }}>
                                 {definicion.texto}
                             </p>
                         </div>
@@ -147,12 +140,7 @@ const LandingServicio = ({ slug }) => {
             {/* Tipos de sitio */}
             <section id="tipos" className="zona-clara seccion">
                 <div className="contenedor">
-                    <EncabezadoSeccion
-                        id="tipos"
-                        insignia={tipos.insignia}
-                        titulo={tipos.titulo}
-                        entradilla={tipos.entradilla}
-                    />
+                    <EncabezadoSeccion titulo={tipos.titulo} entradilla={tipos.entradilla} />
 
                     <ul className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2">
                         {(tipos.items ?? []).map((tipo) => (
@@ -213,6 +201,14 @@ const LandingServicio = ({ slug }) => {
                                         </dd>
                                     </div>
                                 </dl>
+                                <CtaServicio
+                                    servicio={slug}
+                                    giro={getSector(tipo.id) ? tipo.id : undefined}
+                                    detalle={getSector(tipo.id) ? undefined : tipo.nombre}
+                                    secundario={false}
+                                    ubicacion="landing-tipo"
+                                    className="mt-7"
+                                />
                                 </div>
                             </li>
                         ))}
@@ -225,13 +221,8 @@ const LandingServicio = ({ slug }) => {
                 <div className="contenedor">
                     <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
                         <header className="lg:sticky lg:top-28 lg:col-span-5 lg:self-start">
-                            {diferencias.insignia && <p className="insignia">{diferencias.insignia}</p>}
-                            <h2 className="titular-l mt-5">
-                                {diferencias.titulo}{' '}
-                                {diferencias.tituloApagado && (
-                                    <span className="titular-apagado">{diferencias.tituloApagado}</span>
-                                )}
-                            </h2>
+                            <h2 className="titular-l">{diferencias.titulo}</h2>
+                            <CtaServicio servicio={slug} ubicacion="landing-diferencias" className="mt-8" />
                         </header>
 
                         <ul className="lg:col-span-7">
@@ -261,7 +252,7 @@ const LandingServicio = ({ slug }) => {
             {(proceso.pasos ?? []).length > 0 && (
                 <section className="zona-oscura zona-oscura-1 seccion">
                     <div className="contenedor">
-                        <EncabezadoSeccion insignia={proceso.insignia} titulo={proceso.titulo} />
+                        <EncabezadoSeccion titulo={proceso.titulo} />
 
                         <div className="mt-12 overflow-hidden rounded-3xl border border-white/10 px-3 py-4 md:mt-16 md:px-8 md:py-8">
                             <MotionGrafico
@@ -297,6 +288,7 @@ const LandingServicio = ({ slug }) => {
                                 {proceso.nota}
                             </p>
                         )}
+                        <CtaServicio servicio={slug} ubicacion="landing-proceso" className="mt-10" />
                     </div>
                 </section>
             )}
@@ -307,8 +299,7 @@ const LandingServicio = ({ slug }) => {
                     <div className="contenedor">
                         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
                             <header className="lg:col-span-5">
-                                {precio.insignia && <p className="insignia">{precio.insignia}</p>}
-                                <h2 className="titular-l mt-5">{precio.titulo}</h2>
+                                <h2 className="titular-l">{precio.titulo}</h2>
                                 <p className="cuerpo-l mt-6">{precio.respuesta}</p>
                             </header>
 
@@ -337,12 +328,12 @@ const LandingServicio = ({ slug }) => {
                                     </p>
                                 )}
 
-                                {precio.boton?.texto && (
-                                    <Enlace destino={precio.boton.destino} className="boton boton-acento mt-8 inline-flex">
-                                        {precio.boton.texto}
-                                        <ArrowRight size={16} aria-hidden="true" />
-                                    </Enlace>
-                                )}
+                                <CtaServicio
+                                    servicio={slug}
+                                    texto={precio.boton?.texto}
+                                    ubicacion="landing-precio"
+                                    className="mt-8"
+                                />
                             </div>
                         </div>
                     </div>
@@ -353,7 +344,7 @@ const LandingServicio = ({ slug }) => {
             {hayPortafolio && (
                 <section id="portafolio" className="zona-oscura seccion">
                     <div className="contenedor">
-                        <EncabezadoSeccion insignia={portafolio.insignia} titulo={portafolio.titulo} />
+                        <EncabezadoSeccion titulo={portafolio.titulo} />
 
                         <ul className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2">
                             {proyectos.map((proyecto) => (
@@ -402,10 +393,11 @@ const LandingServicio = ({ slug }) => {
                         {/* Encabezado a lo ancho: el título lleva la frase clave
                             entera y en una columna lateral «Aguascalientes» no
                             cabe a tamaño de titular. */}
-                        <EncabezadoSeccion insignia={faq.insignia} titulo={faq.titulo} />
+                        <EncabezadoSeccion titulo={faq.titulo} />
                         <div className="mt-12 max-w-4xl md:mt-14">
                             <Preguntas items={faq.items.filter((p) => p?.pregunta && p?.respuesta)} />
                         </div>
+                        <CtaServicio servicio={slug} ubicacion="landing-faq" className="mt-10" />
                     </div>
                 </section>
             )}
@@ -458,9 +450,9 @@ const LandingServicio = ({ slug }) => {
                                 <h2 className="titular-l">{cierre.titulo}</h2>
                                 <p className="cuerpo-l mx-auto mt-6 text-center">{cierre.texto}</p>
 
-                                <Enlace destino={cierre.boton?.destino} className="boton boton-acento mt-10 inline-flex">
+                                <Enlace destino={cierre.boton?.destino} className="boton boton-acento boton-grande mt-10 inline-flex">
                                     {cierre.boton?.texto}
-                                    <ArrowRight size={16} aria-hidden="true" />
+                                    <ArrowRight size={17} aria-hidden="true" />
                                 </Enlace>
 
                                 {cierre.alternativa?.texto && (

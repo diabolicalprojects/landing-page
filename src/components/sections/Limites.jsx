@@ -16,19 +16,14 @@ import EncabezadoSeccion from '../common/EncabezadoSeccion';
  * página se contradecía a sí misma. Lo que hay aquí no caduca al crecer.
  */
 const Limites = () => {
-    const { visible, insignia, titulo, entradilla, items = [] } = useBloque('limites');
+    const { visible, titulo, entradilla, items = [] } = useBloque('limites');
 
     if (visible === false || items.length === 0) return null;
 
     return (
         <section id="limites" className="zona-oscura seccion">
             <div className="contenedor">
-                <EncabezadoSeccion
-                    id="limites"
-                    insignia={insignia}
-                    titulo={titulo}
-                    entradilla={entradilla}
-                />
+                <EncabezadoSeccion titulo={titulo} entradilla={entradilla} />
 
                 <ul className="mt-12 md:mt-16">
                     {items.map((item) => (

@@ -1,11 +1,12 @@
 import React from 'react';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 import Pagina, { Migas } from '../components/common/Pagina';
 import Enlace from '../components/common/Enlace';
 import MotionGrafico from '../motion/MotionGrafico';
 import EncabezadoSeccion from '../components/common/EncabezadoSeccion';
 import ServiciosPrincipales from '../components/common/ServiciosPrincipales';
+import CtaServicio from '../components/common/CtaServicio';
 import { SERVICIOS_POR_CATEGORIA, rutaServicio } from '../data/servicios';
 
 /*
@@ -27,21 +28,17 @@ const ServiciosPage = () => (
             <div className="contenedor">
                 <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-12">
                     <header className="lg:col-span-7">
-                        <p className="insignia">Catálogo</p>
-                        <h1 className="titular-xl mt-5">
+                        <h1 className="titular-xl">
                             Servicios de inteligencia artificial{' '}
                             <span className="titular-apagado">para negocios en Aguascalientes.</span>
                         </h1>
                         <p className="cuerpo-l mt-7">
-                            Tres servicios principales —sitios web, chatbots y agendamiento
-                            automatizado— y diez complementarios con la misma calidad. Cada uno
+                            Tres servicios principales (sitios web, chatbots y agendamiento
+                            automatizado) y diez complementarios con la misma calidad. Cada uno
                             tiene su página con lo que incluye y hasta dónde llega.
                         </p>
 
-                        <Enlace destino="/contacto" className="boton boton-acento mt-9">
-                            Solicitar auditoría gratuita
-                            <ArrowRight size={16} aria-hidden="true" />
-                        </Enlace>
+                        <CtaServicio ubicacion="servicios-hero" className="mt-9" />
                     </header>
 
                     <div className="lg:col-span-5">
@@ -58,9 +55,7 @@ const ServiciosPage = () => (
         <section className="zona-clara seccion">
             <div className="contenedor">
                 <EncabezadoSeccion
-                    insignia="Principales"
                     titulo="Sitios web, chatbots y agendamiento."
-                    apagado="Los tres trabajan juntos."
                     entradilla="El sitio atrae, el chatbot responde y la agenda confirma. Se pueden contratar por separado, pero rinden más como una sola pieza."
                 />
                 <div className="mt-12 md:mt-16">
@@ -71,21 +66,11 @@ const ServiciosPage = () => (
 
         <section className="zona-oscura zona-oscura-1 seccion">
             <div className="contenedor space-y-14 md:space-y-20">
-                <EncabezadoSeccion
-                    insignia="Complementarios"
-                    titulo="Diez servicios complementarios."
-                    apagado="Misma calidad, mismo alcance publicado."
-                />
-                {SERVICIOS_POR_CATEGORIA.map((grupo, indice) => (
+                <EncabezadoSeccion titulo="Diez servicios complementarios." />
+                {SERVICIOS_POR_CATEGORIA.map((grupo) => (
                     <div key={grupo.categoria}>
-                        <h3 className="flex items-baseline gap-3 border-b border-white/[0.09] pb-3">
-                            <span className="etiqueta-mono text-white/55">
-                                {String(indice + 1).padStart(2, '0')}
-                            </span>
-                            <span className="etiqueta text-white/70">{grupo.categoria}</span>
-                            <span className="etiqueta-mono ml-auto text-white/55">
-                                {grupo.servicios.length}
-                            </span>
+                        <h3 className="etiqueta border-b border-white/[0.09] pb-3 text-white/70">
+                            {grupo.categoria}
                         </h3>
 
                         <ul className="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
@@ -109,6 +94,7 @@ const ServiciosPage = () => (
                         </ul>
                     </div>
                 ))}
+                <CtaServicio ubicacion="servicios-complementarios" />
             </div>
         </section>
     </Pagina>

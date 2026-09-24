@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import ErrorBoundary from './components/common/ErrorBoundary';
 import Tema from './contenido/Tema';
+import RestaurarScroll from './components/common/RestaurarScroll';
 
 /*
  * Todas las rutas de contenido se renderizan en el servidor, así que ninguna
@@ -44,6 +45,7 @@ function App() {
                 mismos tokens, y sin esto el acento y la escala editados solo se
                 aplicarían en la portada. */}
             <Tema />
+            <RestaurarScroll />
             <Suspense fallback={<div className="min-h-screen bg-black" />}>
                 <Routes>
                     <Route path="/" element={<InicioPage />} />

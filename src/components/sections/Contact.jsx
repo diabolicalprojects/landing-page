@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+
+import { interesDeLaDireccion } from '../../utils/cta';
+import { useHydrated } from '../../utils/useHydrated';
 import { AlertCircle, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 import { openWhatsApp, sendLead } from '../../utils/leads';
@@ -41,6 +44,18 @@ const Contact = () => {
     const [entregado, setEntregado] = useState(true);
     // Trampa para bots: rellenan todos los campos, las personas no ven este.
     const [trampa, setTrampa] = useState('');
+
+    // Quien llega desde «Cotizar mi chatbot» trae el servicio y el giro en la
+    // dirección: se deja escrito en «qué le gustaría» para que no tenga que
+    // redactarlo. Solo en el navegador (el servidor no ve la consulta), y solo
+    // si el campo sigue vacío. Se ajusta durante el render, no en un efecto.
+    const hidratado = useHydrated();
+    const [interesLeido, setInteresLeido] = useState(false);
+    if (hidratado && !interesLeido) {
+        setInteresLeido(true);
+        const interes = interesDeLaDireccion(window.location.search);
+        if (interes) setForm((previo) => (previo.aspiration ? previo : { ...previo, aspiration: interes }));
+    }
 
     const { visible, titulo, subtitulo, entradilla, boton, pie } = useBloque('contacto');
 
@@ -101,12 +116,12 @@ const Contact = () => {
 
                                     <div>
                                         <h3 className="titular-m">
-                                            {entregado ? '¡Listo, lo recibimos!' : 'Falta un paso'}
+                                            {entregado ? 'Recibido' : 'Falta un paso'}
                                         </h3>
                                         <p className="cuerpo mt-3">
                                             {entregado
-                                                ? 'Se abrió tu WhatsApp con el resumen. Dale enviar y seguimos por ahí.'
-                                                : 'Se abrió tu WhatsApp con el resumen, pero tus datos no llegaron a nuestro sistema. Dale enviar en WhatsApp, o usa el botón de abajo. Con cualquiera de las dos nos llega.'}
+                                                ? 'Se abrió su WhatsApp con el resumen. Pulse enviar y seguimos por ahí.'
+                                                : 'Se abrió su WhatsApp con el resumen, pero sus datos no llegaron a nuestro sistema. Pulse enviar en WhatsApp o use el botón de abajo: con cualquiera de los dos nos llega.'}
                                         </p>
                                     </div>
 

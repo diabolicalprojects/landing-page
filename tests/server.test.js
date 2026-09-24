@@ -869,9 +869,11 @@ test('el menú: Inicio, Nosotros, Servicios con desplegable y Contacto', async (
     // landings tienen que existir para los rastreadores en todas las páginas.
     const html = await (await fetch(`${BASE}/nosotros`)).text();
     const nav = html.slice(html.indexOf('aria-label="Principal"'), html.indexOf('</nav>', html.indexOf('aria-label="Principal"')));
-    for (const ruta of [RUTA_PAGINAS_WEB, RUTA_CHATBOTS, RUTA_AGENDAMIENTO, '/sectores/spas', '/sectores/salones-de-unas']) {
+    for (const ruta of [RUTA_PAGINAS_WEB, RUTA_CHATBOTS, RUTA_AGENDAMIENTO]) {
         assert.ok(nav.includes(`href="${ruta}"`), `el menú no lleva a ${ruta}`);
     }
+    // Los giros no van en el desplegable: se llegan desde la portada y el pie.
+    assert.ok(!nav.includes('href="/sectores/'), 'el menú no debe llevar giros');
     assert.match(nav, /aria-expanded="false"/);
 });
 
@@ -912,7 +914,11 @@ test('cada guía del blog lleva a la landing del servicio que busca quien la lee
         assert.ok(!/\]\(\//.test(html.replace(/<script[\s\S]*?<\/script>/g, '')), `${articulo.slug} deja Markdown sin convertir`);
         // Sin enlaces a otros dominios: el blog no enlaza fuera.
         const cuerpo = html.slice(html.indexOf('<article'), html.indexOf('</article>'));
-        assert.ok(!/href="https?:\/\//.test(cuerpo), `${articulo.slug} enlaza fuera del sitio`);
+        // WhatsApp sí: es nuestro propio número, no un enlace a otra empresa.
+        const externos = (cuerpo.match(/href="https?:\/\/[^"]+"/g) ?? []).filter(
+            (h) => !h.includes('api.whatsapp.com/send?phone=')
+        );
+        assert.deepEqual(externos, [], `${articulo.slug} enlaza fuera del sitio`);
     }
 
     // Las preguntas que se busca responder tienen su guía.
@@ -967,4 +973,83 @@ test('las fotos de banco se sirven del propio sitio, con texto alternativo y cr�
     const res = await fetch(`${BASE}/imagenes/${FOTOS[guia.foto].archivo}-800.webp`);
     assert.equal(res.status, 200);
     assert.match(res.headers.get('content-type') ?? '', /image\/webp/);
+});
+
+
+test('cada sección termina en un botón que cotiza el servicio concreto', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    // Las landings: todos sus botones cotizan su servicio, con una sola etiqueta.
+    const casos = [
+        { ruta: RUTA_PAGINAS_WEB, servicio: 'sitio-web', etiqueta: 'Cotizar mi página web' },
+        { ruta: RUTA_CHATBOTS, servicio: 'chatbots', etiqueta: 'Cotizar mi chatbot' },
+        { ruta: RUTA_AGENDAMIENTO, servicio: 'agendamiento-automatizado', etiqueta: 'Cotizar mi agenda' },
+    ];
+    for (const caso of casos) {
+        const html = await (await fetch(`${BASE}${caso.ruta}`)).text();
+        const botones = html.match(new RegExp(`href="/contacto\\?servicio=${caso.servicio}[^"]*"`, 'g')) ?? [];
+        assert.ok(botones.length >= 6, `${caso.ruta} tiene ${botones.length} botones de cotizar`);
+        assert.ok(html.includes(caso.etiqueta), `${caso.ruta} no dice «${caso.etiqueta}»`);
+        assert.ok(!html.includes('Solicitar auditoría gratuita'), `${caso.ruta} mezcla etiquetas de contacto`);
+        // La alternativa por WhatsApp lleva el mensaje ya redactado.
+        assert.match(html, /api\.whatsapp\.com\/send\?phone=\d+&amp;text=Hola\.%20Me%20interesa/);
+    }
+
+    // Cada giro cotiza «para mi spa», «para mi gimnasio»…
+    const spa = await (await fetch(`${BASE}/sectores/spas`)).text();
+    assert.ok(spa.includes('href="/contacto?giro=spas"'), 'el giro no cotiza con su nombre');
+    assert.ok(spa.includes('Cotizar para mi spa'));
+
+    // Portada: hay botón de cotizar en las secciones, no solo en el hero y el cierre.
+    const portada = await (await fetch(`${BASE}/`)).text();
+    const enPortada = portada.match(/class="boton boton-acento boton-grande"/g) ?? [];
+    assert.ok(enPortada.length >= 8, `la portada tiene ${enPortada.length} botones de acción`);
+});
+
+test('los giros se nombran siempre «Inteligencia artificial para…»', async (t) => {
+    const CONT = require('../src/data/contenido.json');
+    const pie = CONT.footer.columnas.find((c) => c.id === 'col-giros');
+    for (const enlace of pie.enlaces) {
+        assert.match(enlace.texto, /^Inteligencia artificial para /, `pie: «${enlace.texto}»`);
+    }
+    for (const sector of SECTORES) {
+        assert.match(sector.titular, /^Inteligencia artificial para /);
+    }
+    assert.equal(SECTORES.find((s) => s.slug === 'gimnasios').titular, 'Inteligencia artificial para gimnasios');
+
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+    const html = await (await fetch(`${BASE}/sectores/gimnasios`)).text();
+    const migas = [...html.matchAll(/application\/ld\+json">(.*?)<\/script>/gs)]
+        .map((m) => JSON.parse(m[1]))
+        .find((b) => b['@type'] === 'BreadcrumbList');
+    assert.equal(migas.itemListElement.at(-1).name, 'Inteligencia artificial para gimnasios');
+});
+
+test('sin relleno de IA: ni etiquetas en cada sección ni rayas en el texto', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    const rutas = ['/', '/nosotros', '/servicios', '/sectores', '/contacto', '/blog',
+        RUTA_PAGINAS_WEB, RUTA_CHATBOTS, RUTA_AGENDAMIENTO, '/sectores/spas',
+        '/servicios/google-ads', `/blog/${ARTICULOS[0].slug}`];
+
+    for (const ruta of rutas) {
+        const html = await (await fetch(`${BASE}${ruta}`)).text();
+        // El cuerpo visible: sin scripts ni el chatbot (su embudo no se toca).
+        const visible = html
+            .replace(/<script[\s\S]*?<\/script>/g, '')
+            .replace(/<head[\s\S]*?<\/head>/, '');
+
+        const etiquetas = (visible.match(/class="insignia/g) ?? []).length;
+        assert.ok(etiquetas <= 1, `${ruta} tiene ${etiquetas} etiquetas sobre titulares`);
+
+        const texto = visible.replace(/<[^>]+>/g, ' ');
+        assert.ok(!/[—–]/.test(texto), `${ruta} tiene rayas en el texto visible`);
+        assert.ok(!/Auditoría sin costo · Respuesta el mismo día/.test(texto), `${ruta} conserva la tira del hero`);
+    }
 });

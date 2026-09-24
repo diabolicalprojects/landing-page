@@ -1,9 +1,8 @@
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
 
 import { useBloque } from '../../contenido';
 import EncabezadoSeccion from '../common/EncabezadoSeccion';
-import Enlace from '../common/Enlace';
+import CtaServicio from '../common/CtaServicio';
 import { ESCENAS } from './Mockups';
 import MotionGrafico from '../../motion/MotionGrafico';
 import { hayEscena } from '../../motion/escenas';
@@ -21,7 +20,7 @@ import { hayEscena } from '../../motion/escenas';
  * las que cuentan el mecanismo.
  */
 const Pilares = () => {
-    const { visible, insignia, titulo, entradilla, items = [] } = useBloque('pilares');
+    const { visible, titulo, entradilla, items = [] } = useBloque('pilares');
 
     if (visible === false || items.length === 0) return null;
 
@@ -33,7 +32,6 @@ const Pilares = () => {
             <div className="contenedor">
                 <EncabezadoSeccion
                     id="pilares"
-                    insignia={insignia}
                     titulo={titulo}
                     entradilla={entradilla}
                 />
@@ -43,16 +41,12 @@ const Pilares = () => {
                         <div>
                             <h3 className="titular-m">{principal.titulo}</h3>
                             <p className="cuerpo mt-4">{principal.texto}</p>
-                            <p className="mt-4 text-sm leading-relaxed text-white/50">
-                                {principal.detalle}
-                            </p>
-                            <Enlace
-                                destino={principal.destino}
-                                className="enlace mt-6 inline-flex min-h-[1.75rem] items-center gap-1.5 py-1 text-sm font-bold"
-                            >
-                                Ver qué incluye
-                                <ArrowUpRight size={15} aria-hidden="true" />
-                            </Enlace>
+                            <CtaServicio
+                                servicio={principal.servicio}
+                                secundario={{ texto: 'Ver qué incluye', destino: principal.destino }}
+                                ubicacion="pilares"
+                                className="mt-7"
+                            />
                         </div>
                         {EscenaPrincipal && (
                             <div className="md:pl-4">
@@ -85,17 +79,13 @@ const Pilares = () => {
                                         )
                                     )}
                                     <h3 className="titular-m">{item.titulo}</h3>
-                                    <p className="cuerpo mt-4">{item.texto}</p>
-                                    <p className="mt-4 text-sm leading-relaxed text-white/50">
-                                        {item.detalle}
-                                    </p>
-                                    <Enlace
-                                        destino={item.destino}
-                                        className="enlace mt-6 inline-flex min-h-[1.75rem] items-center gap-1.5 self-start py-1 text-sm font-bold"
-                                    >
-                                        Ver qué incluye
-                                        <ArrowUpRight size={15} aria-hidden="true" />
-                                    </Enlace>
+                                    <p className="cuerpo mt-4 flex-1">{item.texto}</p>
+                                    <CtaServicio
+                                        servicio={item.servicio}
+                                        secundario={{ texto: 'Ver qué incluye', destino: item.destino }}
+                                        ubicacion="pilares"
+                                        className="mt-7"
+                                    />
                                 </article>
                             );
                         })}

@@ -1,10 +1,11 @@
 import React from 'react';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 import { useBloque } from '../../contenido';
 import { rutaServicio } from '../../data/servicios';
 import EncabezadoSeccion from '../common/EncabezadoSeccion';
 import Enlace from '../common/Enlace';
+import CtaServicio from '../common/CtaServicio';
 import PantallaEscena from '../common/PantallaEscena';
 
 /*
@@ -25,7 +26,7 @@ import PantallaEscena from '../common/PantallaEscena';
  * ella.
  */
 const PaginasWebPortada = () => {
-    const { visible, insignia, titulo, apagado, entradilla, cta } = useBloque('webPortada');
+    const { visible, titulo, entradilla } = useBloque('webPortada');
     const { tipos = {} } = useBloque('paginasWeb');
     const destino = rutaServicio('sitio-web');
     const items = (tipos.items ?? []).filter((t) => t?.nombre);
@@ -36,19 +37,13 @@ const PaginasWebPortada = () => {
         <section id="paginas-web" className="zona-clara seccion">
             <div className="contenedor">
                 <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
-                    <EncabezadoSeccion
-                        id="paginas-web"
-                        insignia={insignia}
-                        titulo={titulo}
-                        apagado={apagado}
-                        entradilla={entradilla}
+                    <EncabezadoSeccion titulo={titulo} entradilla={entradilla} />
+                    <CtaServicio
+                        servicio="sitio-web"
+                        secundario={{ texto: 'Ver los cuatro tipos de sitio', destino }}
+                        ubicacion="portada-paginas-web"
+                        className="flex-none lg:justify-end"
                     />
-                    {cta?.texto && (
-                        <Enlace destino={cta.destino} className="boton boton-acento flex-none self-start lg:self-auto">
-                            {cta.texto}
-                            <ArrowRight size={16} aria-hidden="true" />
-                        </Enlace>
-                    )}
                 </div>
 
                 <ul className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2">
@@ -64,7 +59,7 @@ const PaginasWebPortada = () => {
                                     <p className="cuerpo mt-3 flex-1">{tipo.paraQuien}</p>
                                     <p className="mt-6 flex items-center justify-between gap-4">
                                         <span className="etiqueta-mono" style={{ color: 'var(--texto-3)' }}>
-                                            Plazo típico · {tipo.plazo}
+                                            Plazo típico: {tipo.plazo}
                                         </span>
                                         <ArrowUpRight
                                             size={16}

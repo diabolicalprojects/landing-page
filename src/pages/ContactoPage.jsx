@@ -24,8 +24,7 @@ const ContactoPage = () => (
             <div className="contenedor">
                 <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-12">
                     <header className="lg:col-span-7">
-                        <p className="insignia">Auditoría de fricción</p>
-                        <h1 className="titular-xl mt-5">
+                        <h1 className="titular-xl">
                             Empecemos por{' '}
                             <span className="titular-apagado">el diagnóstico.</span>
                         </h1>
@@ -48,7 +47,7 @@ const ContactoPage = () => (
         </section>
 
         <Contact />
-        <Proceso />
+        <Proceso conCta={false} />
     </Pagina>
 );
 

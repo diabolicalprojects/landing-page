@@ -14,16 +14,16 @@ import { Check, CheckCheck } from 'lucide-react';
  * no un acento del sitio. Por eso no sale de los tokens del tema.
  */
 const MENSAJES = [
-    { de: 'cliente', hora: '9:47 p.m.', texto: 'Hola, ¿tienen cita para limpieza dental esta semana?' },
-    { de: 'sistema', hora: '9:47 p.m.', texto: 'Hola 👋 Sí. Nos queda miércoles a las 10:30 o jueves a las 4:00 pm. ¿Cuál te acomoda?' },
-    { de: 'cliente', hora: '9:48 p.m.', texto: 'El jueves' },
-    { de: 'sistema', hora: '9:48 p.m.', texto: 'Listo: jueves 4:00 pm, limpieza dental. Un día antes te llega el recordatorio. ¿A nombre de quién agendo la cita?' },
+    { de: 'cliente', hora: '9:47 p.m.', texto: 'Hola, ¿tienen lugar para un masaje en pareja este sábado?' },
+    { de: 'sistema', hora: '9:47 p.m.', texto: 'Hola. Sí: el sábado quedan dos cabinas libres a las 11:00 y a las 5:00 pm. El masaje en pareja dura 60 minutos. ¿Cuál le acomoda?' },
+    { de: 'cliente', hora: '9:48 p.m.', texto: 'A las 5' },
+    { de: 'sistema', hora: '9:48 p.m.', texto: 'Listo: sábado 5:00 pm, masaje en pareja. Un día antes le llega el recordatorio. ¿A nombre de quién la reservo?' },
 ];
 
 const ChatDemo = () => (
     <div
         className="flex h-full flex-col bg-[#0b141a]"
-        aria-label="Ejemplo de un flujo de agendamiento automático por WhatsApp"
+        aria-label="Ejemplo de una reserva automática por WhatsApp en un spa"
         role="img"
     >
         <div className="flex items-center gap-3 border-b border-black/40 bg-[#1f2c33] px-4 py-3">
@@ -38,7 +38,7 @@ const ChatDemo = () => (
             </span>
             <span className="min-w-0">
                 <span className="block truncate text-sm font-semibold leading-tight text-white">
-                    Clínica — recepción
+                    Recepción del spa
                 </span>
                 <span className="block text-[11px] leading-tight text-[#25d366]">en línea</span>
             </span>

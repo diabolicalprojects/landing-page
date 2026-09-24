@@ -228,7 +228,7 @@
     "faq": [
       {
         "q": "¿Qué empresas hacen páginas web en Aguascalientes?",
-        "a": "En Aguascalientes hacen páginas web agencias de marketing, estudios de diseño, desarrolladores independientes y empresas de tecnología. Diabolical Services es una empresa de Aguascalientes que diseña y desarrolla sitios web a medida con inteligencia artificial integrada —chatbot y agendamiento— y publica qué incluye y qué no incluye cada tipo de sitio antes de firmar."
+        "a": "En Aguascalientes hacen páginas web agencias de marketing, estudios de diseño, desarrolladores independientes y empresas de tecnología. Diabolical Services es una empresa de Aguascalientes que diseña y desarrolla sitios web a medida con inteligencia artificial integrada (chatbot y agendamiento) y publica qué incluye y qué no incluye cada tipo de sitio antes de firmar."
       },
       {
         "q": "¿Cuánto tarda en estar lista una página web?",
@@ -331,7 +331,7 @@
             ]
           ]
         },
-        "nota": "Cada giro tiene su página: [inmobiliarias](/sectores/inmobiliarias), [gimnasios](/sectores/gimnasios), [spas](/sectores/spas) y [salones de uñas](/sectores/salones-de-unas)."
+        "nota": "Cada giro tiene su página: [inteligencia artificial para inmobiliarias](/sectores/inmobiliarias), [inteligencia artificial para gimnasios](/sectores/gimnasios), [inteligencia artificial para spas](/sectores/spas) y [inteligencia artificial para salones de uñas](/sectores/salones-de-unas)."
       },
       {
         "titulo": "Cómo se instala un chatbot, paso a paso",
@@ -414,7 +414,7 @@
       {
         "titulo": "Qué no conviene automatizar",
         "parrafos": [
-          "Todo lo que pide criterio profesional —un diagnóstico, un consejo legal o fiscal—, la negociación de una venta importante y las quejas. Un cliente molesto que recibe una respuesta automática se molesta más.",
+          "Todo lo que pide criterio profesional (un diagnóstico, un consejo legal o fiscal), la negociación de una venta importante y las quejas. Un cliente molesto que recibe una respuesta automática se molesta más.",
           "La regla práctica: el sistema resuelve lo que está escrito y, en cuanto la conversación sale de ahí, la pasa a una persona con todo lo que ya se habló."
         ]
       },
@@ -490,7 +490,7 @@
     "keywords": "agendar citas spa WhatsApp, sistema de citas salón de uñas, agendamiento automatizado Aguascalientes, recordatorios de citas automáticos, software de reservas para spa",
     "titular": "¿Cómo automatizar las citas de un spa o un salón de uñas?",
     "entradilla": "En un spa o un salón de uñas, la agenda es el negocio. Y casi siempre se lleva a mano, entre servicio y servicio, con el teléfono sonando y la clienta esperando. Así se automatiza sin perder el trato ni llenar la agenda de empalmes.",
-    "respuesta": "Para automatizar las citas de un spa o un salón de uñas se conecta un sistema a la agenda real que recibe la solicitud por WhatsApp o el sitio web, ofrece solo horarios donde el servicio cabe completo —por cabina, terapeuta o manicurista—, cobra el anticipo si así se decide, confirma la cita y envía el recordatorio del día anterior.",
+    "respuesta": "Para automatizar las citas de un spa o un salón de uñas se conecta un sistema a la agenda real que recibe la solicitud por WhatsApp o el sitio web, ofrece solo horarios donde el servicio cabe completo (por cabina, terapeuta o manicurista), cobra el anticipo si así se decide, confirma la cita y envía el recordatorio del día anterior.",
     "fecha": "2026-09-24",
     "actualizado": "2026-09-24",
     "lectura": "6 min",
@@ -641,7 +641,7 @@
     "faq": [
       {
         "q": "¿El chatbot puede responder por cada inmueble?",
-        "a": "Sí. Se conecta con su inventario —su CRM inmobiliario, su sitio o una hoja— y responde con la ficha, el precio y las fotos del inmueble por el que preguntan."
+        "a": "Sí. Se conecta con su inventario (su CRM inmobiliario, su sitio o una hoja) y responde con la ficha, el precio y las fotos del inmueble por el que preguntan."
       },
       {
         "q": "¿Puede agendar visitas con distintos asesores?",
@@ -745,7 +745,7 @@
       },
       {
         "q": "¿Sirve de algo si mi negocio es pequeño?",
-        "a": "Precisamente ahí es donde hay más hueco. Las consultas locales y específicas —del tipo «quién automatiza las citas de un spa en Aguascalientes»— tienen muy poca competencia bien estructurada, porque la mayoría de los negocios locales no han tocado nada de esto. Un sitio pequeño pero técnicamente correcto compite bien en ese terreno."
+        "a": "Precisamente ahí es donde hay más hueco. Las consultas locales y específicas (del tipo «quién automatiza las citas de un spa en Aguascalientes») tienen muy poca competencia bien estructurada, porque la mayoría de los negocios locales no han tocado nada de esto. Un sitio pequeño pero técnicamente correcto compite bien en ese terreno."
       }
     ],
     "foto": "paginas-web"
@@ -837,7 +837,7 @@
       },
       {
         "q": "¿Se integra con la agenda y el CRM que ya usamos?",
-        "a": "Esa es la forma correcta de montarlo. El sistema se conecta a las herramientas existentes —el calendario, el sistema de reservas, el CRM que sea— y escribe en ellas. Cambiar de herramientas para poder automatizar suele ser señal de que la solución está mal planteada."
+        "a": "Esa es la forma correcta de montarlo. El sistema se conecta a las herramientas existentes (el calendario, el sistema de reservas, el CRM que sea) y escribe en ellas. Cambiar de herramientas para poder automatizar suele ser señal de que la solución está mal planteada."
       },
       {
         "q": "¿Cuánto tarda la implementación?",

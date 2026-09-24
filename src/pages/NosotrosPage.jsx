@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 
 import Pagina, { Migas } from '../components/common/Pagina';
 import Enlace from '../components/common/Enlace';
+import CtaServicio from '../components/common/CtaServicio';
 import MotionGrafico from '../motion/MotionGrafico';
 import { useBloque } from '../contenido';
 import { SECTORES } from '../data/sectores';
@@ -17,7 +18,6 @@ import { SECTORES } from '../data/sectores';
  */
 const NosotrosPage = () => {
     const {
-        insignia,
         titulo,
         tituloApagado,
         entradilla,
@@ -33,10 +33,9 @@ const NosotrosPage = () => {
                 <div className="contenedor">
                     <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-12">
                         <header className="lg:col-span-7">
-                            <p className="insignia">{insignia}</p>
                             {/* Frase clave larga: «Una agencia de páginas web e
                                 inteligencia artificial en Aguascalientes». */}
-                            <h1 className="titular-xl titular-largo mt-5">
+                            <h1 className="titular-xl titular-largo">
                                 {titulo} <span className="titular-apagado">{tituloApagado}</span>
                             </h1>
                             <p className="cuerpo-l mt-7">{entradilla}</p>
@@ -57,7 +56,7 @@ const NosotrosPage = () => {
                 <div className="contenedor">
                     <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
                         <h2 className="titular-l lg:col-span-4">
-                            El nombre <span className="titular-apagado">viene de ahí.</span>
+                            De dónde viene <span className="titular-apagado">el nombre.</span>
                         </h2>
                         <div className="space-y-6 lg:col-span-8">
                             {parrafos.map((parrafo) => (
@@ -73,7 +72,7 @@ const NosotrosPage = () => {
             <section className="zona-oscura seccion">
                 <div className="contenedor">
                     <h2 className="titular-l max-w-2xl">
-                        Cómo trabajamos, <span className="titular-apagado">en cuatro líneas.</span>
+                        Cómo trabajamos.
                     </h2>
 
                     <div className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2">
@@ -90,7 +89,7 @@ const NosotrosPage = () => {
             <section className="zona-oscura zona-oscura-1 seccion">
                 <div className="contenedor">
                     <h2 className="titular-l max-w-2xl">
-                        Los sectores <span className="titular-apagado">que conocemos a fondo.</span>
+                        Los giros <span className="titular-apagado">que conocemos a fondo.</span>
                     </h2>
 
                     <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -101,13 +100,14 @@ const NosotrosPage = () => {
                                     className="tarjeta tarjeta-enlace flex min-h-[4.5rem] items-center justify-between gap-4 px-5 py-4"
                                 >
                                     <span className="text-[0.9375rem] font-bold tracking-tight">
-                                        {sector.nombreCorto}
+                                        {sector.titular}
                                     </span>
                                     <ArrowRight size={16} className="flex-none text-white/45" aria-hidden="true" />
                                 </Enlace>
                             </li>
                         ))}
                     </ul>
+                    <CtaServicio ubicacion="nosotros" className="mt-12" />
                 </div>
             </section>
         </Pagina>

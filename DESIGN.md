@@ -213,6 +213,26 @@ por debajo de 11 px no hay contraste que salve la lectura.
 `rotulo` vive fuera del ramp a propósito: es la marca a escala de fachada en el
 pie, superficie y no texto de lectura.
 
+**Sin relleno de plantilla** (skill `design-taste-frontend`, 24-09-2026):
+
+- Una sola etiqueta sobre titular en todo el sitio: la del hero de la
+  portada, sin pastilla ni punto. El titular ya dice de qué trata cada sección.
+- Nada de tira pequeña bajo los botones del hero, ni frases de relleno bajo
+  un titular, ni numeración decorativa («01», «02») donde no hay secuencia.
+- Ni una raya (—, –) en el texto visible: los incisos van entre paréntesis.
+  El chatbot y el mensaje que genera el formulario son la excepción: forman
+  parte del embudo y no se tocan.
+- Como mucho un punto medio (·) por línea.
+
+**Llamadas a la acción.** Cada sección termina en `CtaServicio`: un botón
+grande (`boton-grande`) que cotiza el servicio concreto y, al lado, la misma
+pregunta por WhatsApp con el mensaje ya redactado. Una etiqueta por página:
+«Cotizar mi chatbot» en la landing de chatbots, «Cotizar para mi spa» en su
+giro, «Cotizar mi proyecto» donde no hay un servicio concreto. El destino
+lleva el servicio y el giro (`/contacto?servicio=chatbots&giro=spas`) y el
+formulario deja escrito el interés. Ningún botón se parte en dos líneas desde
+360 px.
+
 `titular-xl titular-largo` es el mismo titular un escalón por debajo, solo para
 un h1 que tiene que llevar una frase clave larga («Diseño y desarrollo de
 páginas web en Aguascalientes»; en la portada, «Páginas web e inteligencia

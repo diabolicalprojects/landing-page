@@ -1,11 +1,12 @@
 import React from 'react';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 import Pagina, { Migas } from '../components/common/Pagina';
 import Enlace from '../components/common/Enlace';
 import Preguntas from '../components/common/Preguntas';
 import TextoConEnlaces from '../components/common/TextoConEnlaces';
 import Fotografia from '../components/common/Fotografia';
+import CtaServicio from '../components/common/CtaServicio';
 import { getArticulo, ARTICULOS_POR_FECHA } from '../data/articulos';
 import { getServicio, rutaServicio } from '../data/servicios';
 import { fechaLegible } from '../utils/fechas';
@@ -37,13 +38,21 @@ const Lista = ({ lista }) => {
         <Etiqueta className="mt-5 space-y-3">
             {lista.items.map((item, i) => (
                 <li key={item} className="flex items-start gap-4">
-                    <span
-                        className="cifras etiqueta-mono mt-1.5 w-6 flex-none"
-                        style={{ color: 'var(--texto-3)' }}
-                        aria-hidden="true"
-                    >
-                        {lista.ordenada ? String(i + 1).padStart(2, '0') : '—'}
-                    </span>
+                    {lista.ordenada ? (
+                        <span
+                            className="cifras etiqueta-mono mt-1.5 w-6 flex-none"
+                            style={{ color: 'var(--texto-3)' }}
+                            aria-hidden="true"
+                        >
+                            {i + 1}
+                        </span>
+                    ) : (
+                        <span
+                            className="mt-[0.8rem] h-px w-3 flex-none"
+                            style={{ background: 'var(--texto-3)' }}
+                            aria-hidden="true"
+                        />
+                    )}
                     <span className="cuerpo-destacado" style={{ color: 'var(--texto-2)' }}>
                         <TextoConEnlaces texto={item} />
                     </span>
@@ -112,8 +121,7 @@ const ArticuloPage = ({ slug }) => {
                 <header className="zona-oscura seccion-compacta pb-12 md:pb-16">
                     <div className="contenedor">
                         <div className="max-w-3xl">
-                            <p className="insignia">Guía · Aguascalientes</p>
-                            <h1 className="titular-xl titular-largo mt-5">{articulo.titular}</h1>
+                            <h1 className="titular-xl titular-largo">{articulo.titular}</h1>
                             <p className="cuerpo-l mt-7">{articulo.entradilla}</p>
                             <p className="etiqueta-mono mt-8 flex flex-wrap gap-x-3 gap-y-1" style={{ color: 'var(--texto-3)' }}>
                                 <time dateTime={articulo.fecha}>{fechaLegible(articulo.fecha)}</time>
@@ -136,14 +144,10 @@ const ArticuloPage = ({ slug }) => {
                     <section className="zona-oscura zona-oscura-2 seccion-compacta" aria-labelledby="respuesta-corta">
                         <div className="contenedor">
                             <div className="grid gap-5 lg:grid-cols-12 lg:gap-16">
-                                <h2
-                                    id="respuesta-corta"
-                                    className="etiqueta pt-1.5 lg:col-span-3"
-                                    style={{ color: 'var(--texto-3)' }}
-                                >
-                                    En pocas palabras
+                                <h2 id="respuesta-corta" className="sr-only">
+                                    Respuesta corta
                                 </h2>
-                                <p className="cuerpo-destacado m-0 max-w-[68ch] lg:col-span-9">
+                                <p className="cuerpo-l m-0 max-w-[68ch] lg:col-span-12" style={{ color: 'var(--texto-1)' }}>
                                     <TextoConEnlaces texto={articulo.respuesta} />
                                 </p>
                             </div>
@@ -154,8 +158,9 @@ const ArticuloPage = ({ slug }) => {
                 <div className="zona-oscura seccion">
                     <div className="contenedor">
                         <div className="max-w-3xl space-y-14 md:space-y-16">
-                            {articulo.secciones.map((seccion) => (
-                                <section key={seccion.titulo}>
+                            {articulo.secciones.map((seccion, indice) => (
+                                <React.Fragment key={seccion.titulo}>
+                                <section>
                                     <h2 className="titular-m">{seccion.titulo}</h2>
                                     <div className="mt-5 space-y-4">
                                         {(seccion.parrafos ?? []).map((parrafo) => (
@@ -172,6 +177,10 @@ const ArticuloPage = ({ slug }) => {
                                         </p>
                                     )}
                                 </section>
+                                {indice === 1 && servicio && (
+                                    <CtaServicio servicio={servicio.slug} ubicacion="guia-medio" />
+                                )}
+                                </React.Fragment>
                             ))}
                         </div>
                     </div>
@@ -211,20 +220,17 @@ const ArticuloPage = ({ slug }) => {
                                 {articulo.cta?.texto ??
                                     'La auditoría no tiene costo ni compromiso: salimos de ella sabiendo qué conviene hacer en su negocio y qué no.'}
                             </p>
-                            {servicio && (
-                                <Enlace destino={rutaServicio(servicio.slug)} className="boton boton-acento mt-10 inline-flex">
-                                    {articulo.cta?.boton ?? `Ver ${servicio.nombre.toLowerCase()}`}
-                                    <ArrowRight size={16} aria-hidden="true" />
-                                </Enlace>
-                            )}
-                            <p className="mt-6">
-                                <Enlace
-                                    destino="/contacto"
-                                    className="enlace inline-flex min-h-[1.75rem] items-center py-1 text-sm text-white/60"
-                                >
-                                    O solicite la auditoría gratuita
-                                </Enlace>
-                            </p>
+                            <CtaServicio
+                                servicio={servicio?.slug}
+                                secundario={
+                                    servicio
+                                        ? { texto: articulo.cta?.boton ?? `Ver ${servicio.nombre.toLowerCase()}`, destino: rutaServicio(servicio.slug) }
+                                        : undefined
+                                }
+                                ubicacion="guia-cierre"
+                                centrado
+                                className="mt-10"
+                            />
                         </div>
                     </div>
                 </div>

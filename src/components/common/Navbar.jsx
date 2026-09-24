@@ -256,7 +256,10 @@ const Navbar = () => {
                 {destacado && (
                     <Enlace
                         destino={destacado.destino}
-                        className="boton boton-acento hidden min-h-[2.75rem] px-6 text-[0.9375rem] sm:inline-flex"
+                        className={cn(
+                            'boton hidden min-h-[2.75rem] px-6 text-[0.9375rem] sm:inline-flex',
+                            sobreClaro ? 'bg-black text-white hover:bg-black/85' : 'bg-white text-black hover:bg-white/85'
+                        )}
                     >
                         {destacado.texto}
                     </Enlace>
@@ -329,7 +332,7 @@ const Navbar = () => {
                         <Enlace
                             destino={destacado.destino}
                             onClick={() => setMenuAbierto(false)}
-                            className="boton boton-acento mb-1 mt-4 w-full"
+                            className="boton mb-1 mt-4 w-full bg-white text-black"
                         >
                             {destacado.texto}
                         </Enlace>

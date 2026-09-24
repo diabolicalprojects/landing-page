@@ -74,12 +74,9 @@ const Footer = () => {
                     ))}
                 </div>
 
-                <div className="mt-14 flex flex-col gap-3 border-t border-white/10 py-7 text-xs text-white/55 md:flex-row md:items-center md:justify-between">
+                <div className="mt-14 border-t border-white/10 py-7 text-xs text-white/55">
                     <p>
                         {legal} · © {anio}
-                    </p>
-                    <p className="etiqueta-mono">
-                        Condiciones publicadas · Sin permanencia
                     </p>
                 </div>
             </div>

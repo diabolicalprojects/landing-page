@@ -40,7 +40,7 @@ const Hero = () => {
                 <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-10">
                     <div className="lg:col-span-7">
                         {hero.insignia && (
-                            <p className="insignia entrada mb-6">{hero.insignia}</p>
+                            <p className="insignia entrada mb-5">{hero.insignia}</p>
                         )}
                         {/* Los dos tonos van en línea y no en bloque: como
                             bloques, `text-wrap: balance` equilibra cada mitad
@@ -53,25 +53,23 @@ const Hero = () => {
 
                         <p className="cuerpo-l entrada entrada-2 mt-7">{hero.apoyo}</p>
 
-                        <div className="entrada entrada-3 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+                        {/* Un botón principal y una alternativa en texto: dos
+                            botones del mismo peso reparten la atención. */}
+                        <div className="entrada entrada-3 mt-9 flex flex-col gap-x-7 gap-y-4 sm:flex-row sm:items-center">
                             <Enlace
                                 destino={hero.ctaPrimario?.destino}
-                                className="boton boton-acento"
+                                className="boton boton-acento boton-grande"
                             >
                                 {hero.ctaPrimario?.texto}
-                                <ArrowRight size={16} aria-hidden="true" />
+                                <ArrowRight size={17} aria-hidden="true" />
                             </Enlace>
                             <Enlace
                                 destino={hero.ctaSecundario?.destino}
-                                className="boton boton-fantasma"
+                                className="enlace inline-flex min-h-[2.75rem] items-center text-[0.9375rem] font-bold"
                             >
                                 {hero.ctaSecundario?.texto}
                             </Enlace>
                         </div>
-
-                        <p className="etiqueta-mono entrada entrada-3 mt-7 text-white/55">
-                            {hero.pie}
-                        </p>
                     </div>
 
                     <div className="entrada entrada-4 lg:col-span-5">

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import CtaServicio from '../common/CtaServicio';
+
 /*
  * Las cuatro maneras de resolver esto.
  *
@@ -46,8 +48,7 @@ const Comparativa = () => (
     <section id="alternativas" className="zona-clara seccion">
         <div className="contenedor">
             <header className="max-w-3xl">
-                <p className="insignia">Las alternativas</p>
-                <h2 className="titular-l mt-5">
+                <h2 className="titular-l">
                     Hay cuatro maneras de resolver esto.{' '}
                     <span className="titular-apagado">Nosotros somos una.</span>
                 </h2>
@@ -76,6 +77,7 @@ const Comparativa = () => (
                     </article>
                 ))}
             </div>
+            <CtaServicio ubicacion="alternativas" className="mt-12" />
         </div>
     </section>
 );

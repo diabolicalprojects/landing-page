@@ -47,14 +47,15 @@
       },
       {
         "q": "¿Qué pasa cuando la conversación se pone compleja?",
-        "a": "El sistema reconoce cuándo la consulta requiere criterio humano —una negociación, un caso de crédito, una situación particular— y pasa la conversación al asesor con todo el contexto ya reunido."
+        "a": "El sistema reconoce cuándo la consulta requiere criterio humano (una negociación, un caso de crédito, una situación particular) y pasa la conversación al asesor con todo el contexto ya reunido."
       },
       {
         "q": "¿Cuánto tarda en estar funcionando?",
         "a": "Entre dos y cuatro semanas, según cuántos portales y cuántas propiedades haya que conectar. La primera semana se dedica a entender su operación y a escribir el guion; ustedes lo aprueban antes de que se programe nada."
       }
     ],
-    "principal": true
+    "principal": true,
+    "singular": "inmobiliaria"
   },
   {
     "slug": "gimnasios",
@@ -63,7 +64,7 @@
     "titulo": "Inteligencia artificial para gimnasios en Aguascalientes | Diabolical",
     "descripcion": "Inteligencia artificial para gimnasios en Aguascalientes: chatbot que informa planes y horarios al instante, agenda la clase de prueba con cupo real y da seguimiento a quien no se inscribió.",
     "keywords": "inteligencia artificial para gimnasios Aguascalientes, automatización gimnasio WhatsApp, agendar clase de prueba, seguimiento de prospectos gimnasio, software para estudio de entrenamiento",
-    "titular": "Inteligencia artificial para gimnasios y estudios",
+    "titular": "Inteligencia artificial para gimnasios",
     "entradilla": "Quien pregunta por un plan está comparando en ese momento. Instalamos un sistema que responde precios y horarios al instante, aparta la clase de prueba y mantiene el seguimiento de quien todavía no decide.",
     "momentos": [
       "Alguien pregunta el precio un domingo por la noche y recibe los planes, los horarios y la opción de probar.",
@@ -111,7 +112,8 @@
         "a": "Entre dos y tres semanas. Lo que marca el ritmo es tener bien definidos los planes, los horarios y los cupos de cada clase."
       }
     ],
-    "principal": true
+    "principal": true,
+    "singular": "gimnasio"
   },
   {
     "slug": "spas",
@@ -168,7 +170,8 @@
         "a": "Entre dos y tres semanas. Lo que más tiempo lleva es cargar bien la carta de tratamientos con sus duraciones, precios y cabinas, porque de eso depende que la agenda cuadre."
       }
     ],
-    "principal": true
+    "principal": true,
+    "singular": "spa"
   },
   {
     "slug": "salones-de-unas",
@@ -181,7 +184,7 @@
     "entradilla": "Con las manos de una clienta sobre la mesa, nadie puede contestar el teléfono. Instalamos un sistema que cotiza cada diseño, ofrece los huecos reales de cada manicurista y confirma la cita mientras el equipo sigue trabajando.",
     "momentos": [
       "Una clienta manda la foto de un diseño y recibe el servicio que le corresponde, su duración y los horarios disponibles en segundos.",
-      "El sistema aparta el tiempo real del servicio —no dura lo mismo un retoque que un juego completo de acrílico— con la manicurista que lo hace.",
+      "El sistema aparta el tiempo real del servicio (no dura lo mismo un retoque que un juego completo de acrílico) con la manicurista que lo hace.",
       "En los días de más demanda, un anticipo aparta la cita y la agenda deja de llenarse de ausencias.",
       "Cuando se acerca la fecha del relleno, el sistema le escribe con el horario de su manicurista habitual."
     ],
@@ -225,7 +228,8 @@
         "a": "Entre dos y tres semanas. Lo que marca el ritmo es tener bien definido el catálogo de servicios con sus duraciones y precios, y la agenda de cada manicurista."
       }
     ],
-    "principal": true
+    "principal": true,
+    "singular": "salón de uñas"
   },
   {
     "slug": "clinicas",
@@ -282,7 +286,8 @@
         "a": "Entre dos y cuatro semanas. El guion de lo que el sistema puede y no puede decir se escribe primero y lo aprueba la clínica antes de programar nada."
       }
     ],
-    "principal": false
+    "principal": false,
+    "singular": "clínica"
   },
   {
     "slug": "despachos-y-oficinas",
@@ -336,10 +341,11 @@
       },
       {
         "q": "¿Cuánto tarda en estar funcionando?",
-        "a": "Entre dos y cuatro semanas. El guion —qué puede decir el sistema y qué no— se escribe primero y lo aprueba el despacho antes de programar nada."
+        "a": "Entre dos y cuatro semanas. El guion (qué puede decir el sistema y qué no) se escribe primero y lo aprueba el despacho antes de programar nada."
       }
     ],
-    "principal": false
+    "principal": false,
+    "singular": "despacho"
   },
   {
     "slug": "comercio",
@@ -396,6 +402,7 @@
         "a": "Entre dos y cuatro semanas, según el tamaño del catálogo y cómo esté montada la tienda. Conectar bien las existencias es lo que más tiempo lleva."
       }
     ],
-    "principal": false
+    "principal": false,
+    "singular": "tienda"
   }
 ]

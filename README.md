@@ -355,10 +355,22 @@ publicados y funcionando, con captura subida al propio sitio (la CSP no carga
 imágenes de otros dominios).
 
 **Menú.** Cuatro entradas: Inicio, Nosotros, Servicios y Contacto. Servicios
-despliega grupos (principales, por giro, complementarios) que vienen de `grupos`
+despliega grupos (principales y complementarios; los giros van en el pie) que vienen de `grupos`
 en el contenido editable; Contacto lleva `destacado`. El panel está siempre en
 el HTML (oculto con `hidden`), para que los enlaces a las landings existan para
 los rastreadores en todas las páginas.
+
+**Navegación.** `RestaurarScroll` lleva cada enlace al principio de la
+página a la que va (o a su ancla, si la trae); al volver atrás respeta la
+posición en la que estaba la persona.
+
+**Llamadas a la acción.** `CtaServicio` y `src/utils/cta.js`: cada botón cotiza
+un servicio o un giro concreto y lleva a `/contacto?servicio=…&giro=…`. El
+formulario lee esos parámetros en el navegador y deja escrito el interés en
+«qué le gustaría», sin cambiar lo que se envía al webhook ni el mensaje de
+WhatsApp. `whatsapp:mensaje` como destino abre WhatsApp con el mensaje
+redactado. Los giros se nombran siempre con su titular completo
+(«Inteligencia artificial para spas»).
 
 **Proceso animado.** La escena `proceso` (`src/motion/escenas/estrella.jsx`) se
 dibuja con los pasos del contenido que recibe en `datos`, así que editar un

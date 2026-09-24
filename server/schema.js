@@ -645,7 +645,7 @@ function bloquesDeRuta(ruta) {
             migas([
                 { nombre: 'Inicio', ruta: '/' },
                 { nombre: 'Sectores', ruta: RUTA_SECTORES },
-                { nombre: sector.nombreCorto, ruta },
+                { nombre: sector.titular, ruta },
             ]),
         ];
     }

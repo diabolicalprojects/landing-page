@@ -53,28 +53,6 @@
             ]
           },
           {
-            "id": "grupo-giros",
-            "titulo": "Por giro",
-            "enlaces": [
-              {
-                "texto": "Inmobiliarias",
-                "destino": "/sectores/inmobiliarias"
-              },
-              {
-                "texto": "Gimnasios",
-                "destino": "/sectores/gimnasios"
-              },
-              {
-                "texto": "Spas",
-                "destino": "/sectores/spas"
-              },
-              {
-                "texto": "Salones de uñas",
-                "destino": "/sectores/salones-de-unas"
-              }
-            ]
-          },
-          {
             "id": "grupo-complementarios",
             "titulo": "Complementarios",
             "enlaces": [
@@ -112,23 +90,21 @@
   },
   "hero": {
     "visible": true,
-    "insignia": "Empresa de inteligencia artificial y páginas web · Aguascalientes",
+    "insignia": "Empresa de inteligencia artificial y páginas web en Aguascalientes",
     "fraseA": "Páginas web e inteligencia artificial",
     "fraseB": "para negocios en Aguascalientes.",
     "apoyo": "Sitios web, chatbots y agendamiento automatizado para inmobiliarias, gimnasios, spas y salones de uñas. Atienden y agendan a cualquier hora sobre las herramientas que su negocio ya utiliza, con el alcance de cada pieza por escrito antes de firmar nada.",
     "ctaPrimario": {
-      "texto": "Solicitar auditoría gratuita",
+      "texto": "Cotizar mi proyecto",
       "destino": "/contacto"
     },
     "ctaSecundario": {
       "texto": "Ver los servicios",
       "destino": "/servicios"
-    },
-    "pie": "Auditoría sin costo · Respuesta el mismo día · Sin permanencia"
+    }
   },
   "pilares": {
     "visible": true,
-    "insignia": "Lo que hacemos",
     "titulo": "Tres servicios, un solo sistema.",
     "entradilla": "Sitio web, chatbot y agenda trabajan juntos: el sitio atrae, el chatbot responde y la agenda confirma. Se pueden contratar por separado, pero rinden más como una sola pieza.",
     "items": [
@@ -138,8 +114,8 @@
         "escena": "",
         "titulo": "Sitios web en Aguascalientes",
         "texto": "Páginas web a medida, desde una landing hasta una tienda en línea, con un asistente que resuelve dentro del propio sitio en lugar de enviar al visitante a buscar un teléfono.",
-        "detalle": "El contenido viaja en el HTML servido, que es como lo leen Google y los motores de inteligencia artificial.",
-        "destino": "/paginas-web-aguascalientes"
+        "destino": "/paginas-web-aguascalientes",
+        "servicio": "sitio-web"
       },
       {
         "id": "pilar-chatbots",
@@ -147,8 +123,8 @@
         "escena": "chatbots",
         "titulo": "Chatbots con inteligencia artificial",
         "texto": "Un chatbot en WhatsApp, su sitio, Instagram y Facebook que responde con la información real del negocio a cualquier hora y pasa a una persona cuando hace falta criterio.",
-        "detalle": "El guion lo aprueban ustedes antes de encenderlo.",
-        "destino": "/chatbots-aguascalientes"
+        "destino": "/chatbots-aguascalientes",
+        "servicio": "chatbots"
       },
       {
         "id": "pilar-agenda",
@@ -156,31 +132,27 @@
         "escena": "agendamiento-automatizado",
         "titulo": "Agendamiento automatizado",
         "texto": "El interesado pregunta, el sistema consulta la agenda real, ofrece horarios que existen y confirma. Después recuerda la cita y la reagenda si hace falta.",
-        "detalle": "Sobre la agenda que ya utilizan. Ninguna herramienta nueva que aprender.",
-        "destino": "/agendamiento-automatizado-aguascalientes"
+        "destino": "/agendamiento-automatizado-aguascalientes",
+        "servicio": "agendamiento-automatizado"
       }
     ]
   },
   "webPortada": {
     "visible": true,
-    "insignia": "Páginas web",
     "titulo": "Una agencia de páginas web en Aguascalientes.",
-    "apagado": "De una landing a una tienda en línea.",
     "entradilla": "Diseñamos y desarrollamos páginas web que cargan rápido, se leen completas en Google y en los motores de inteligencia artificial, y se editan desde un panel sin llamar a nadie. Si el negocio lo necesita, con un asistente que atiende dentro del propio sitio.",
     "cta": {
-      "texto": "Ver diseño de páginas web",
-      "destino": "/paginas-web-aguascalientes"
+      "texto": "Cotizar mi página web",
+      "destino": "/contacto?servicio=sitio-web"
     }
   },
   "verticales": {
     "visible": true,
-    "insignia": "Para quién",
     "titulo": "Cuatro giros que conocemos a fondo.",
     "entradilla": "Inmobiliarias, gimnasios, spas y salones de uñas: negocios que viven de responder rápido y de tener la agenda llena. Cada uno con su propio recorrido y su propio sistema."
   },
   "proceso": {
     "visible": true,
-    "insignia": "Cómo trabajamos",
     "titulo": "De la primera conversación a tenerlo funcionando.",
     "entradilla": "Entre dos y cuatro semanas según lo que haya que conectar. Sin permanencia y sin comisión sobre su inversión publicitaria.",
     "pasos": [
@@ -213,14 +185,12 @@
   },
   "demo": {
     "visible": true,
-    "insignia": "Una muestra",
     "titulo": "Así trabaja por dentro.",
     "entradilla": "Una conversación de un jueves a las 21:47, cuando el negocio ya cerró. El sistema cotiza, consulta la agenda real y confirma. Cuando la conversación pide criterio, se detiene y avisa.",
     "nota": "Conversación de ejemplo para mostrar el mecanismo. No corresponde a un cliente real."
   },
   "servicios": {
     "visible": true,
-    "insignia": "Servicios",
     "titulo": "Tres servicios principales y diez complementarios.",
     "entradilla": "Los complementarios no son de segunda: tienen la misma calidad y el mismo alcance publicado. Simplemente no son el centro de lo que hacemos.",
     "cta": {
@@ -230,7 +200,6 @@
   },
   "limites": {
     "visible": true,
-    "insignia": "Las condiciones",
     "titulo": "La letra pequeña, en letra grande.",
     "entradilla": "Todo trato tiene condiciones. La diferencia está en cuándo se leen. Estas son las nuestras, publicadas antes de que usted decida nada.",
     "items": [
@@ -243,7 +212,6 @@
   },
   "faq": {
     "visible": true,
-    "insignia": "Antes de decidir",
     "titulo": "Las cuatro preguntas que siempre llegan."
   },
   "cta": {
@@ -251,12 +219,12 @@
     "titulo": "Empecemos por el diagnóstico.",
     "texto": "La auditoría no tiene costo ni compromiso. Salimos de ella con un documento que dice dónde se detiene hoy un cliente suyo, qué conviene automatizar y qué conviene dejar como está.",
     "boton": {
-      "texto": "Solicitar auditoría gratuita",
+      "texto": "Cotizar mi proyecto",
       "destino": "/contacto"
     },
     "alternativa": {
-      "texto": "O escríbanos directamente por WhatsApp",
-      "destino": "whatsapp"
+      "texto": "O pregúntenos por WhatsApp",
+      "destino": "whatsapp:Hola. Me interesa cotizar un proyecto."
     }
   },
   "contacto": {
@@ -295,22 +263,22 @@
       },
       {
         "id": "col-giros",
-        "titulo": "Por sector",
+        "titulo": "Por giro",
         "enlaces": [
           {
-            "texto": "Inmobiliarias",
+            "texto": "Inteligencia artificial para inmobiliarias",
             "destino": "/sectores/inmobiliarias"
           },
           {
-            "texto": "Gimnasios",
+            "texto": "Inteligencia artificial para gimnasios",
             "destino": "/sectores/gimnasios"
           },
           {
-            "texto": "Spas",
+            "texto": "Inteligencia artificial para spas",
             "destino": "/sectores/spas"
           },
           {
-            "texto": "Salones de uñas",
+            "texto": "Inteligencia artificial para salones de uñas",
             "destino": "/sectores/salones-de-unas"
           }
         ]
@@ -342,16 +310,15 @@
   },
   "nosotros": {
     "visible": true,
-    "insignia": "Quiénes somos",
     "titulo": "Una agencia de páginas web",
     "tituloApagado": "e inteligencia artificial en Aguascalientes.",
     "entradilla": "Diabolical Services diseña y desarrolla páginas web y sistemas de inteligencia artificial para negocios de Aguascalientes. No vendemos una plantilla ni una herramienta suelta: partimos del proceso real del negocio, construimos sobre lo que la empresa ya utiliza y lo dejamos funcionando.",
     "parrafos": [
-      "Sobre el nombre. En el trato clásico con el diablo, las condiciones se descubren cuando ya es tarde. Nos quedamos con la primera mitad —el interés por lo que se repite, lo ingrato y lo que ocurre de madrugada— y publicamos la segunda por adelantado: bajo cada servicio está escrito hasta dónde llega, antes de que usted firme nada.",
-      "Las páginas web son la mitad visible del oficio. Las diseñamos y desarrollamos a medida —desde una landing hasta una tienda en línea— para que carguen rápido, se lean completas en Google y en los motores de inteligencia artificial, y se editen desde un panel sin depender de nadie. Es la misma base técnica con la que está hecho este sitio.",
+      "Sobre el nombre. En el trato clásico con el diablo, las condiciones se descubren cuando ya es tarde. Nos quedamos con la primera mitad (el interés por lo que se repite, lo ingrato y lo que ocurre de madrugada) y publicamos la segunda por adelantado: bajo cada servicio está escrito hasta dónde llega, antes de que usted firme nada.",
+      "Las páginas web son la mitad visible del oficio. Las diseñamos y desarrollamos a medida (desde una landing hasta una tienda en línea) para que carguen rápido, se lean completas en Google y en los motores de inteligencia artificial, y se editen desde un panel sin depender de nadie. Es la misma base técnica con la que está hecho este sitio.",
       "La parte más ingrata de cualquier negocio es la que se repite: responder lo mismo veinte veces, buscar un hueco en la agenda, recordar quién quedó de llamar. Es trabajo que nadie disfruta y que, hecho a mano, siempre se cae en el peor momento.",
       "Nuestro oficio es convertir esa parte en un sistema que no se cansa. Atiende a cualquier hora, consulta la disponibilidad real, deja el registro donde su equipo lo consulta y entrega la conversación a una persona en cuanto hace falta criterio. No sustituye a nadie: libera a su equipo de lo que no debería estar haciendo.",
-      "Nos centramos en tres servicios —sitios web, chatbots y agendamiento automatizado— y en cuatro giros: inmobiliarias, gimnasios, spas y salones de uñas. Hacemos también posicionamiento, publicidad, identidad de marca y automatizaciones a medida, con la misma calidad, como complemento de lo principal."
+      "Nos centramos en tres servicios (sitios web, chatbots y agendamiento automatizado) y en cuatro giros: inmobiliarias, gimnasios, spas y salones de uñas. Hacemos también posicionamiento, publicidad, identidad de marca y automatizaciones a medida, con la misma calidad, como complemento de lo principal."
     ],
     "principios": [
       {
@@ -378,7 +345,6 @@
   },
   "invisibles": {
     "visible": true,
-    "insignia": "Lo que casi nadie mira",
     "titulo": "Su negocio puede ser invisible",
     "tituloApagado": "para la inteligencia artificial.",
     "entradilla": "Cuando alguien le pregunta a ChatGPT o a Perplexity por un proveedor en Aguascalientes, el modelo lee el código de los sitios sin ejecutarlos. La mayoría de las páginas de la ciudad se montan enteras con JavaScript, y ante esa lectura no entregan prácticamente nada.",
@@ -400,25 +366,22 @@
   },
   "paginasWeb": {
     "hero": {
-      "insignia": "Páginas web · Aguascalientes",
       "titulo": "Diseño y desarrollo de páginas web en Aguascalientes",
       "entradilla": "Páginas web y sitios web a medida en Aguascalientes: rápidos, legibles para Google y para los motores de inteligencia artificial, con un chatbot que atiende dentro del propio sitio, la agenda conectada y un panel para que su equipo edite sin llamar a nadie.",
       "ctaPrimario": {
-        "texto": "Solicitar una propuesta",
-        "destino": "/contacto"
+        "texto": "Cotizar mi página web",
+        "destino": "/contacto?servicio=sitio-web"
       },
       "ctaSecundario": {
         "texto": "Ver los tipos de sitio",
         "destino": "#tipos"
-      },
-      "pie": "Diseño a medida · Panel para editar · Todo es suyo desde el primer día"
+      }
     },
     "definicion": {
       "titulo": "En pocas palabras",
-      "texto": "Diabolical Services diseña y desarrolla páginas web en Aguascalientes: landing pages, sitios corporativos, tiendas en línea y sitios a medida con panel de edición. Cada página se entrega con su contenido legible sin ejecutar JavaScript —que es como la leen Google y los motores de inteligencia artificial—, con datos estructurados y, si el negocio lo necesita, con un asistente de IA que atiende dentro del sitio."
+      "texto": "Diabolical Services diseña y desarrolla páginas web en Aguascalientes: landing pages, sitios corporativos, tiendas en línea y sitios a medida con panel de edición. Cada página se entrega con su contenido legible sin ejecutar JavaScript (que es como la leen Google y los motores de inteligencia artificial), con datos estructurados y, si el negocio lo necesita, con un asistente de IA que atiende dentro del sitio."
     },
     "tipos": {
-      "insignia": "Qué construimos",
       "titulo": "Sitios web en Aguascalientes para cada necesidad.",
       "entradilla": "Cuatro tipos de sitio, de menor a mayor alcance. Cada uno dice qué incluye y también qué no, porque es la parte que suele descubrirse después de firmar.",
       "items": [
@@ -477,9 +440,7 @@
       ]
     },
     "diferencias": {
-      "insignia": "La diferencia",
-      "titulo": "Una página web que trabaja,",
-      "tituloApagado": "no solo una que se ve bien.",
+      "titulo": "Una página web que trabaja.",
       "items": [
         {
           "id": "dif-legible",
@@ -509,7 +470,6 @@
       ]
     },
     "proceso": {
-      "insignia": "Cómo trabajamos",
       "titulo": "Cómo diseñamos y desarrollamos su página web.",
       "pasos": [
         {
@@ -546,7 +506,6 @@
       "nota": "Los plazos corresponden a un sitio corporativo. Una landing se entrega antes y una tienda en línea necesita más tiempo."
     },
     "precio": {
-      "insignia": "Precio",
       "titulo": "¿Cuánto cuesta una página web en Aguascalientes?",
       "respuesta": "Depende de cuatro cosas, y ninguna es el número de colores. Cotizamos después de una conversación de diagnóstico sin costo, con el alcance por escrito antes de empezar.",
       "factores": [
@@ -557,13 +516,12 @@
       ],
       "cierre": "Los cuatro tipos de sitio van de menor a mayor alcance. El a medida se define en la auditoría.",
       "boton": {
-        "texto": "Solicitar una propuesta",
-        "destino": "/contacto"
+        "texto": "Cotizar mi página web",
+        "destino": "/contacto?servicio=sitio-web"
       }
     },
     "portafolio": {
       "visible": false,
-      "insignia": "Trabajo reciente",
       "titulo": "Páginas web que ya están funcionando.",
       "proyectos": []
     },
@@ -589,12 +547,11 @@
       ]
     },
     "faq": {
-      "insignia": "Preguntas frecuentes",
       "titulo": "Preguntas frecuentes sobre páginas web en Aguascalientes.",
       "items": [
         {
           "pregunta": "¿Qué empresas hacen páginas web en Aguascalientes?",
-          "respuesta": "En Aguascalientes hacen páginas web agencias de marketing, estudios de diseño, desarrolladores independientes y empresas de tecnología. Diabolical Services es una empresa de Aguascalientes que diseña y desarrolla sitios web a medida con inteligencia artificial integrada —chatbot y agendamiento— y publica qué incluye y qué no incluye cada tipo de sitio antes de firmar."
+          "respuesta": "En Aguascalientes hacen páginas web agencias de marketing, estudios de diseño, desarrolladores independientes y empresas de tecnología. Diabolical Services es una empresa de Aguascalientes que diseña y desarrolla sitios web a medida con inteligencia artificial integrada (chatbot y agendamiento) y publica qué incluye y qué no incluye cada tipo de sitio antes de firmar."
         },
         {
           "pregunta": "¿Cuánto tarda en estar lista una página web?",
@@ -610,7 +567,7 @@
         },
         {
           "pregunta": "¿La página web incluye posicionamiento en Google?",
-          "respuesta": "Incluye la base: una página por servicio, textos escritos para las búsquedas que importan, datos estructurados, velocidad y mapa del sitio enviado a Google. El posicionamiento continuo —contenido nuevo cada mes, ficha de Google, seguimiento de posiciones— es un servicio aparte, porque es trabajo que no termina el día de la publicación."
+          "respuesta": "Incluye la base: una página por servicio, textos escritos para las búsquedas que importan, datos estructurados, velocidad y mapa del sitio enviado a Google. El posicionamiento continuo (contenido nuevo cada mes, ficha de Google, seguimiento de posiciones) es un servicio aparte, porque es trabajo que no termina el día de la publicación."
         },
         {
           "pregunta": "¿Por qué mi página web no aparece en ChatGPT?",
@@ -618,7 +575,7 @@
         },
         {
           "pregunta": "¿Ya tengo una página web. Conviene rehacerla?",
-          "respuesta": "No siempre. En la auditoría revisamos su sitio actual —velocidad, cómo lo leen Google y los motores de IA, qué páginas faltan— y le decimos por escrito si conviene mejorarlo o reconstruirlo. Si lo que tiene funciona, se lo decimos y nos ahorramos el proyecto."
+          "respuesta": "No siempre. En la auditoría revisamos su sitio actual (velocidad, cómo lo leen Google y los motores de IA, qué páginas faltan) y le decimos por escrito si conviene mejorarlo o reconstruirlo. Si lo que tiene funciona, se lo decimos y nos ahorramos el proyecto."
         },
         {
           "pregunta": "¿Qué necesito tener listo para empezar?",
@@ -638,36 +595,33 @@
       "titulo": "Empecemos por lo que tiene que lograr su página.",
       "texto": "La conversación de diagnóstico no tiene costo ni compromiso. Salimos de ella sabiendo qué tipo de sitio le conviene, qué páginas necesita y cuánto tardaría.",
       "boton": {
-        "texto": "Solicitar una propuesta",
-        "destino": "/contacto"
+        "texto": "Cotizar mi página web",
+        "destino": "/contacto?servicio=sitio-web"
       },
       "alternativa": {
-        "texto": "O escríbanos directamente por WhatsApp",
-        "destino": "whatsapp"
+        "texto": "O pregúntenos por WhatsApp",
+        "destino": "whatsapp:Hola. Me interesa una página web."
       }
     }
   },
   "chatbots": {
     "hero": {
-      "insignia": "Chatbots · Aguascalientes",
       "titulo": "Chatbots con inteligencia artificial en Aguascalientes",
       "entradilla": "Un chatbot para WhatsApp, su sitio web, Instagram y Facebook que responde en segundos a cualquier hora, agenda sobre la disponibilidad real y pasa la conversación a una persona de su equipo en cuanto hace falta criterio.",
       "ctaPrimario": {
-        "texto": "Solicitar una propuesta",
-        "destino": "/contacto"
+        "texto": "Cotizar mi chatbot",
+        "destino": "/contacto?servicio=chatbots"
       },
       "ctaSecundario": {
         "texto": "Ver dónde atiende",
         "destino": "#tipos"
-      },
-      "pie": "API oficial de Meta · Guion aprobado por ustedes · Traspaso a una persona"
+      }
     },
     "definicion": {
       "titulo": "En pocas palabras",
       "texto": "Diabolical Services diseña e instala chatbots con inteligencia artificial para negocios de Aguascalientes. El chatbot atiende por WhatsApp, el sitio web, Instagram y Facebook con la información real del negocio, agenda citas o visitas sobre la disponibilidad real y entrega la conversación a una persona cuando la consulta requiere criterio. Se especializa en inmobiliarias, gimnasios, spas y salones de uñas."
     },
     "tipos": {
-      "insignia": "Dónde atiende",
       "titulo": "Chatbots en Aguascalientes para cada canal.",
       "entradilla": "El mismo criterio de atención en todos los canales por donde le escriben, configurado una sola vez. Cada uno dice qué incluye y qué no.",
       "items": [
@@ -726,9 +680,7 @@
       ]
     },
     "diferencias": {
-      "insignia": "La diferencia",
-      "titulo": "Un chatbot que resuelve,",
-      "tituloApagado": "no uno que responde por responder.",
+      "titulo": "Un chatbot que resuelve.",
       "items": [
         {
           "id": "ch-guion",
@@ -758,7 +710,6 @@
       ]
     },
     "proceso": {
-      "insignia": "Cómo trabajamos",
       "titulo": "Cómo instalamos su chatbot.",
       "pasos": [
         {
@@ -795,7 +746,6 @@
       "nota": "Los plazos corresponden a un chatbot de WhatsApp con agenda. Cada canal adicional suma unos días."
     },
     "precio": {
-      "insignia": "Precio",
       "titulo": "¿Cuánto cuesta un chatbot en Aguascalientes?",
       "respuesta": "Depende de cuatro cosas. Cotizamos después de la auditoría gratuita, cuando ya sabemos qué tiene que resolver, con el alcance por escrito antes de empezar.",
       "factores": [
@@ -806,13 +756,12 @@
       ],
       "cierre": "Los cargos por conversación de WhatsApp los fija Meta y se detallan por separado en la propuesta.",
       "boton": {
-        "texto": "Solicitar una propuesta",
-        "destino": "/contacto"
+        "texto": "Cotizar mi chatbot",
+        "destino": "/contacto?servicio=chatbots"
       }
     },
     "portafolio": {
       "visible": false,
-      "insignia": "Trabajo reciente",
       "titulo": "Chatbots que ya están funcionando.",
       "proyectos": []
     },
@@ -828,17 +777,16 @@
           "destino": "/paginas-web-aguascalientes"
         },
         {
-          "texto": "Chatbot para inmobiliarias",
+          "texto": "Inteligencia artificial para inmobiliarias",
           "destino": "/sectores/inmobiliarias"
         },
         {
-          "texto": "Chatbot para spas",
+          "texto": "Inteligencia artificial para spas",
           "destino": "/sectores/spas"
         }
       ]
     },
     "faq": {
-      "insignia": "Preguntas frecuentes",
       "titulo": "Preguntas frecuentes sobre chatbots en Aguascalientes.",
       "items": [
         {
@@ -879,36 +827,33 @@
       "titulo": "Empecemos por las conversaciones que hoy se pierden.",
       "texto": "La auditoría no tiene costo ni compromiso. Salimos de ella sabiendo qué canales conviene atender, qué debe responder el chatbot y cuánto tardaría en estar funcionando.",
       "boton": {
-        "texto": "Solicitar una propuesta",
-        "destino": "/contacto"
+        "texto": "Cotizar mi chatbot",
+        "destino": "/contacto?servicio=chatbots"
       },
       "alternativa": {
-        "texto": "O escríbanos directamente por WhatsApp",
-        "destino": "whatsapp"
+        "texto": "O pregúntenos por WhatsApp",
+        "destino": "whatsapp:Hola. Me interesa un chatbot con inteligencia artificial."
       }
     }
   },
   "agendamiento": {
     "hero": {
-      "insignia": "Agendamiento · Aguascalientes",
       "titulo": "Agendamiento automatizado para negocios en Aguascalientes",
       "entradilla": "Citas, visitas y clases que se agendan solas sobre la disponibilidad real, por WhatsApp o desde su sitio web, con confirmación, recordatorio y reagenda automáticos. Su equipo deja de perseguir la agenda y la encuentra llena.",
       "ctaPrimario": {
-        "texto": "Solicitar una propuesta",
-        "destino": "/contacto"
+        "texto": "Cotizar mi agenda",
+        "destino": "/contacto?servicio=agendamiento-automatizado"
       },
       "ctaSecundario": {
         "texto": "Ver por giro",
         "destino": "#tipos"
-      },
-      "pie": "Sobre su agenda actual · Recordatorios automáticos · Anticipo opcional"
+      }
     },
     "definicion": {
       "titulo": "En pocas palabras",
       "texto": "El agendamiento automatizado es un sistema que recibe la solicitud de cita por WhatsApp, el sitio web o Instagram, consulta la agenda real del negocio, ofrece solo horarios disponibles y deja la cita confirmada, con recordatorio y reagenda automáticos. Diabolical Services lo instala en Aguascalientes para inmobiliarias, gimnasios, spas y salones de uñas."
     },
     "tipos": {
-      "insignia": "Por giro",
       "titulo": "Agendamiento para cada tipo de negocio.",
       "entradilla": "No se agenda igual una visita a un inmueble que un masaje o una clase. Cada giro tiene su lógica, y el sistema la respeta.",
       "items": [
@@ -967,9 +912,7 @@
       ]
     },
     "diferencias": {
-      "insignia": "La diferencia",
-      "titulo": "Una agenda que se llena sola,",
-      "tituloApagado": "no una que hay que perseguir.",
+      "titulo": "Una agenda que se llena sola.",
       "items": [
         {
           "id": "ag-reales",
@@ -999,7 +942,6 @@
       ]
     },
     "proceso": {
-      "insignia": "Cómo trabajamos",
       "titulo": "Cómo automatizamos su agenda.",
       "pasos": [
         {
@@ -1036,7 +978,6 @@
       "nota": "Si hoy la agenda vive en papel o en una hoja, la primera semana incluye montarla."
     },
     "precio": {
-      "insignia": "Precio",
       "titulo": "¿Cuánto cuesta automatizar el agendamiento de citas?",
       "respuesta": "Depende de cuatro cosas. Cotizamos después de la auditoría gratuita, con el alcance por escrito antes de empezar.",
       "factores": [
@@ -1047,13 +988,12 @@
       ],
       "cierre": "Se contrata solo o junto con el chatbot, que es lo más habitual.",
       "boton": {
-        "texto": "Solicitar una propuesta",
-        "destino": "/contacto"
+        "texto": "Cotizar mi agenda",
+        "destino": "/contacto?servicio=agendamiento-automatizado"
       }
     },
     "portafolio": {
       "visible": false,
-      "insignia": "Trabajo reciente",
       "titulo": "Agendas que ya están funcionando.",
       "proyectos": []
     },
@@ -1069,17 +1009,16 @@
           "destino": "/paginas-web-aguascalientes"
         },
         {
-          "texto": "Agenda para gimnasios",
+          "texto": "Inteligencia artificial para gimnasios",
           "destino": "/sectores/gimnasios"
         },
         {
-          "texto": "Agenda para salones de uñas",
+          "texto": "Inteligencia artificial para salones de uñas",
           "destino": "/sectores/salones-de-unas"
         }
       ]
     },
     "faq": {
-      "insignia": "Preguntas frecuentes",
       "titulo": "Preguntas frecuentes sobre el agendamiento automatizado.",
       "items": [
         {
@@ -1088,7 +1027,7 @@
         },
         {
           "pregunta": "¿Funciona con Google Calendar o con mi sistema de reservas?",
-          "respuesta": "Sí, con la agenda que ya utilicen —como Google Calendar— o con su sistema de reservas si tiene conexión disponible. Si hoy la agenda vive en papel o en una hoja, montamos una nueva y la dejamos funcionando."
+          "respuesta": "Sí, con la agenda que ya utilicen (como Google Calendar) o con su sistema de reservas si tiene conexión disponible. Si hoy la agenda vive en papel o en una hoja, montamos una nueva y la dejamos funcionando."
         },
         {
           "pregunta": "¿Qué pasa si alguien quiere cambiar su cita?",
@@ -1108,7 +1047,7 @@
         },
         {
           "pregunta": "¿Cuánto tarda en estar funcionando?",
-          "respuesta": "Entre dos y tres semanas. La primera se dedica a ordenar la agenda —servicios, duraciones y reglas—, que es de lo que depende que todo cuadre."
+          "respuesta": "Entre dos y tres semanas. La primera se dedica a ordenar la agenda (servicios, duraciones y reglas), que es de lo que depende que todo cuadre."
         }
       ]
     },
@@ -1116,12 +1055,12 @@
       "titulo": "Empecemos por las citas que hoy se escapan.",
       "texto": "La auditoría no tiene costo ni compromiso. Salimos de ella sabiendo cómo se agenda hoy, qué se puede automatizar y cuánto tardaría.",
       "boton": {
-        "texto": "Solicitar una propuesta",
-        "destino": "/contacto"
+        "texto": "Cotizar mi agenda",
+        "destino": "/contacto?servicio=agendamiento-automatizado"
       },
       "alternativa": {
-        "texto": "O escríbanos directamente por WhatsApp",
-        "destino": "whatsapp"
+        "texto": "O pregúntenos por WhatsApp",
+        "destino": "whatsapp:Hola. Me interesa automatizar el agendamiento de citas."
       }
     }
   }

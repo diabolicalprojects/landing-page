@@ -62,7 +62,7 @@
     "categoria": "Atención y venta",
     "nombre": "Agendamiento automatizado",
     "resumen": "Citas, visitas y clases que se agendan solas sobre la disponibilidad real, con confirmación, recordatorio y reagenda sin que nadie del equipo intervenga.",
-    "detalle": "El sistema consulta la agenda que ya utilizan —por persona, por cabina, por sala o por clase—, ofrece solo horarios que existen y deja la cita confirmada. Un día antes la recuerda, y si la persona no puede asistir la mueve y libera el hueco para alguien más.",
+    "detalle": "El sistema consulta la agenda que ya utilizan (por persona, por cabina, por sala o por clase), ofrece solo horarios que existen y deja la cita confirmada. Un día antes la recuerda, y si la persona no puede asistir la mueve y libera el hueco para alguien más.",
     "limite": "No inventa disponibilidad: si la agenda no está al día, el sistema tampoco lo estará. Por eso lo primero que se ordena es el calendario, no el chatbot.",
     "incluye": [
       "Conexión con la agenda que ya utilizan, o una nueva si no la tienen.",

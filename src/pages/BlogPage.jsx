@@ -22,8 +22,7 @@ const BlogPage = () => (
         <section className="zona-oscura seccion">
             <div className="contenedor">
                 <header className="max-w-3xl">
-                    <p className="insignia">Guías</p>
-                    <h1 className="titular-xl mt-5">
+                    <h1 className="titular-xl">
                         Inteligencia artificial y páginas web,{' '}
                         <span className="titular-apagado">sin humo.</span>
                     </h1>

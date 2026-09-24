@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 
 import Pagina, { Migas } from '../components/common/Pagina';
 import Enlace from '../components/common/Enlace';
+import CtaServicio from '../components/common/CtaServicio';
 import MotionGrafico from '../motion/MotionGrafico';
 import { hayEscena } from '../motion/escenas';
 import { SECTORES_PRINCIPALES, SECTORES_SECUNDARIOS } from '../data/sectores';
@@ -21,8 +22,7 @@ const SectoresPage = () => (
         <section className="zona-oscura seccion">
             <div className="contenedor">
                 <header className="max-w-3xl">
-                    <p className="insignia">Sectores</p>
-                    <h1 className="titular-xl mt-5">
+                    <h1 className="titular-xl">
                         Inteligencia artificial{' '}
                         <span className="titular-apagado">para cada giro.</span>
                     </h1>
@@ -31,6 +31,7 @@ const SectoresPage = () => (
                         de uñas. Cada uno con su página, lo que el sistema hace en ese giro y las
                         preguntas que surgen antes de decidir.
                     </p>
+                    <CtaServicio ubicacion="giros-hero" className="mt-9" />
                 </header>
 
                 <div className="mt-14 grid gap-4 md:mt-20 lg:grid-cols-2">
@@ -52,7 +53,7 @@ const SectoresPage = () => (
                                 destino={`/sectores/${sector.slug}`}
                                 className="enlace mt-6 inline-flex min-h-[1.75rem] items-center gap-1.5 self-start py-1 text-[0.9375rem] font-bold"
                             >
-                                Ver {sector.nombreCorto.toLowerCase()}
+                                Ver cómo funciona
                                 <ArrowRight size={15} aria-hidden="true" />
                             </Enlace>
                         </article>

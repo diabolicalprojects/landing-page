@@ -316,30 +316,19 @@ html {
    COMPONENTES
    ========================================================================== */
 
-/* Insignia de sección. En las referencias marca de qué va el capítulo antes de
-   que empiece; aquí además es el ancla a la que apunta la navegación. */
+/*
+  Etiqueta sobre el titular. Sin pastilla ni punto: esa combinación es la
+  firma de las páginas hechas en serie. Se usa como mucho una cada tres
+  secciones, y solo donde dice algo que el titular no dice.
+*/
 .insignia {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.375rem 0.75rem 0.375rem 0.625rem;
-  border: 1px solid var(--linea);
-  border-radius: 999px;
-  background: var(--tarjeta);
-  color: var(--texto-2);
+  display: block;
   font-size: 0.6875rem;
-  letter-spacing: 0.1em;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 700;
-}
-
-.insignia::before {
-  content: "";
-  width: 0.375rem;
-  height: 0.375rem;
-  border-radius: 999px;
-  background: var(--acento-zona);
-  flex: none;
+  color: var(--texto-2);
 }
 
 /* Tarjeta. Una sola definición para las dos zonas: en oscuro es un velo sobre
@@ -406,6 +395,37 @@ html {
 .boton-acento:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
+}
+
+/*
+  El botón de las llamadas a la acción de cada sección. Más grande que el
+  botón normal y con la flecha que se adelanta al pasar: es lo que tiene que
+  verse primero cuando se termina de leer una sección.
+*/
+.boton-grande {
+  min-height: 3.625rem;
+  padding-inline: 2rem;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.boton-grande svg {
+  transition: transform 180ms var(--salida);
+}
+
+.boton-grande:hover svg {
+  transform: translateX(3px);
+}
+
+/* En teléfonos pequeños el botón vive dentro de tarjetas con su propio
+   relleno: con el relleno de escritorio, «Cotizar mi chatbot» se partía en
+   dos líneas a 320 px. */
+@media (max-width: 400px) {
+  .boton-grande {
+    padding-inline: 1.25rem;
+    font-size: 0.9375rem;
+    gap: 0.375rem;
+  }
 }
 
 .boton-fantasma {

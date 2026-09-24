@@ -8,6 +8,7 @@ import { hayEscena } from '../motion/escenas';
 import { SECTORES, getSector } from '../data/sectores';
 import ServiciosPrincipales from '../components/common/ServiciosPrincipales';
 import Fotografia from '../components/common/Fotografia';
+import CtaServicio from '../components/common/CtaServicio';
 
 /*
  * Página de un sector.
@@ -35,25 +36,16 @@ const SectorPage = ({ slug }) => {
 
     return (
         <Pagina>
-            <Migas ruta={[{ texto: 'Sectores', destino: '/sectores' }, { texto: sector.nombreCorto }]} />
+            <Migas ruta={[{ texto: 'Sectores', destino: '/sectores' }, { texto: sector.titular }]} />
 
             <section className="zona-oscura seccion">
                 <div className="contenedor">
                     <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-12">
                         <header className="lg:col-span-6">
-                            <p className="insignia">{sector.nombreCorto}</p>
-                            <h1 className="titular-xl mt-5">{sector.titular}</h1>
+                            <h1 className="titular-xl">{sector.titular}</h1>
                             <p className="cuerpo-l mt-7">{sector.entradilla}</p>
 
-                            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                                <Enlace destino="/contacto" className="boton boton-acento">
-                                    Solicitar auditoría gratuita
-                                    <ArrowRight size={16} aria-hidden="true" />
-                                </Enlace>
-                                <Enlace destino="/servicios" className="boton boton-fantasma">
-                                    Ver los servicios
-                                </Enlace>
-                            </div>
+                            <CtaServicio giro={sector.slug} ubicacion="giro-hero" className="mt-9" />
                         </header>
 
                         <div className="lg:col-span-6">
@@ -93,6 +85,7 @@ const SectorPage = ({ slug }) => {
                             </li>
                         ))}
                     </ol>
+                    <CtaServicio giro={sector.slug} ubicacion="giro-momentos" className="mt-12" />
                 </div>
             </section>
 
@@ -120,15 +113,23 @@ const SectorPage = ({ slug }) => {
                     <div className="mt-6">
                         <ServiciosPrincipales giro={sector.nombreCorto.toLowerCase()} nivel="h4" />
                     </div>
+                    <CtaServicio giro={sector.slug} ubicacion="giro-servicios" className="mt-12" />
                 </div>
             </section>
 
             <section className="zona-clara seccion">
                 <div className="contenedor">
                     <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-                        <h2 className="titular-l lg:col-span-4">
-                            Preguntas <span className="titular-apagado">de este giro.</span>
-                        </h2>
+                        <div className="lg:col-span-4">
+                            <h2 className="titular-l">
+                                Preguntas <span className="titular-apagado">de este giro.</span>
+                            </h2>
+                            <CtaServicio
+                                giro={sector.slug}
+                                ubicacion="giro-faq"
+                                className="mt-8 sm:flex-col sm:items-start"
+                            />
+                        </div>
 
                         <ul className="space-y-2.5 lg:col-span-8">
                             {(sector.faq ?? []).map((item, i) => {
@@ -191,7 +192,7 @@ const SectorPage = ({ slug }) => {
                                     className="tarjeta tarjeta-enlace flex min-h-[4.5rem] items-center justify-between gap-4 px-5 py-4"
                                 >
                                     <span className="text-[0.9375rem] font-bold tracking-tight">
-                                        {otro.nombreCorto}
+                                        {otro.titular}
                                     </span>
                                     <ArrowRight size={16} className="flex-none text-white/45" aria-hidden="true" />
                                 </Enlace>

@@ -132,7 +132,7 @@ export const BLOQUES = [
 /** Nombre legible de cada clave. */
 export const ETIQUETAS = {
     visible: 'Mostrar esta sección',
-    insignia: 'Etiqueta pequeña de la sección',
+    insignia: 'Etiqueta sobre el titular',
     titulo: 'Título',
     subtitulo: 'Segunda parte del título (sale en gris)',
     apagado: 'Segunda parte del título (sale en gris)',
@@ -172,6 +172,7 @@ export const ETIQUETAS = {
     definicion: 'En pocas palabras',
     grupos: 'Grupos del desplegable',
     destacado: 'Mostrar como botón',
+    servicio: 'Servicio que se cotiza con el botón',
     tipos: 'Tipos de sitio',
     paraQuien: 'Para quién es',
     incluye: 'Qué incluye (una línea por punto)',
@@ -201,7 +202,7 @@ export const ETIQUETAS = {
 export const AYUDAS = {
     destino:
         'Una ruta del sitio (/servicios), un ancla de la portada (#contacto), la palabra whatsapp, o una dirección completa (https://...).',
-    insignia: 'Dos o tres palabras. Es la etiqueta con el punto de color.',
+    insignia: 'Solo existe en la portada: dice qué es la empresa, con las palabras que se buscan.',
     icono: 'Elige qué ilustración acompaña a la tarjeta.',
     id: 'No lo cambies salvo que sepas lo que haces: se usa para no duplicar tarjetas.',
     fraseB: 'Aquí va el remate. Es la parte que más se lee de toda la página.',
@@ -224,6 +225,11 @@ export const OCULTAS = new Set(['version']);
 
 /** Valores cerrados. */
 export const OPCIONES = {
+    servicio: [
+        { valor: 'sitio-web', texto: 'Sitios web' },
+        { valor: 'chatbots', texto: 'Chatbots con IA' },
+        { valor: 'agendamiento-automatizado', texto: 'Agendamiento automatizado' },
+    ],
     icono: [
         { valor: 'monitor', texto: 'Ventana de navegador' },
         { valor: 'calendar', texto: 'Agenda de la semana' },

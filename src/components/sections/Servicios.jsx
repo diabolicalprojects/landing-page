@@ -1,10 +1,10 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
 
 import { SERVICIOS_POR_CATEGORIA, rutaServicio } from '../../data/servicios';
 import { useBloque } from '../../contenido';
 import EncabezadoSeccion from '../common/EncabezadoSeccion';
 import ServiciosPrincipales from '../common/ServiciosPrincipales';
+import CtaServicio from '../common/CtaServicio';
 import Enlace from '../common/Enlace';
 
 /*
@@ -23,19 +23,14 @@ import Enlace from '../common/Enlace';
  * oferta — por eso el enlace de abajo lo dice con esas palabras.
  */
 const Servicios = () => {
-    const { visible, insignia, titulo, entradilla, cta } = useBloque('servicios');
+    const { visible, titulo, entradilla } = useBloque('servicios');
 
     if (visible === false) return null;
 
     return (
         <section id="servicios" className="zona-oscura zona-oscura-1 seccion">
             <div className="contenedor">
-                <EncabezadoSeccion
-                    id="servicios"
-                    insignia={insignia}
-                    titulo={titulo}
-                    entradilla={entradilla}
-                />
+                <EncabezadoSeccion titulo={titulo} entradilla={entradilla} />
 
                 <div className="mt-12 md:mt-16">
                     <ServiciosPrincipales />
@@ -48,19 +43,10 @@ const Servicios = () => {
                 </p>
 
                 <div className="mt-10 space-y-12 md:space-y-14">
-                    {SERVICIOS_POR_CATEGORIA.map((grupo, indice) => (
+                    {SERVICIOS_POR_CATEGORIA.map((grupo) => (
                         <div key={grupo.categoria}>
-                            <h4 className="flex items-baseline gap-3 border-b border-white/[0.09] pb-3">
-                                <span
-                                    className="etiqueta-mono"
-                                    style={{ color: 'var(--acento)' }}
-                                >
-                                    {String(indice + 1).padStart(2, '0')}
-                                </span>
-                                <span className="etiqueta text-white/70">{grupo.categoria}</span>
-                                <span className="etiqueta-mono ml-auto text-white/55">
-                                    {grupo.servicios.length}
-                                </span>
+                            <h4 className="etiqueta border-b border-white/[0.09] pb-3 text-white/70">
+                                {grupo.categoria}
                             </h4>
 
                             <div className="mt-6 grid gap-x-8 gap-y-7 md:grid-cols-2 lg:grid-cols-3">
@@ -82,13 +68,11 @@ const Servicios = () => {
                     ))}
                 </div>
 
-                <Enlace
-                    destino={cta?.destino}
-                    className="boton boton-fantasma mt-12 inline-flex"
-                >
-                    {cta?.texto}
-                    <ArrowRight size={16} aria-hidden="true" />
-                </Enlace>
+                <CtaServicio
+                    secundario={{ texto: 'Ver todos los servicios', destino: '/servicios' }}
+                    ubicacion="portada-servicios"
+                    className="mt-14"
+                />
             </div>
         </section>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Check } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 import Pagina, { Migas } from '../components/common/Pagina';
 import Enlace from '../components/common/Enlace';
@@ -7,6 +7,7 @@ import MotionGrafico from '../motion/MotionGrafico';
 import { hayEscena } from '../motion/escenas';
 import { SERVICIOS, getServicio, rutaServicio } from '../data/servicios';
 import ServiciosPrincipales from '../components/common/ServiciosPrincipales';
+import CtaServicio from '../components/common/CtaServicio';
 
 /*
  * Página de un servicio.
@@ -41,19 +42,15 @@ const ServicioPage = ({ slug }) => {
                 <div className="contenedor">
                     <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-12">
                         <header className="lg:col-span-6">
-                            <p className="insignia">{servicio.categoria}</p>
-                            <h1 className="titular-xl mt-5">{servicio.nombre}</h1>
+                            <h1 className="titular-xl">{servicio.nombre}</h1>
                             <p className="cuerpo-l mt-6">{servicio.resumen}</p>
 
-                            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                                <Enlace destino="/contacto" className="boton boton-acento">
-                                    Solicitar auditoría gratuita
-                                    <ArrowRight size={16} aria-hidden="true" />
-                                </Enlace>
-                                <Enlace destino="/servicios" className="boton boton-fantasma">
-                                    Ver todos los servicios
-                                </Enlace>
-                            </div>
+                            <CtaServicio
+                                servicio={servicio.slug}
+                                secundario={{ texto: 'Ver todos los servicios', destino: '/servicios' }}
+                                ubicacion="servicio-hero"
+                                className="mt-9"
+                            />
                         </header>
 
                         <div className="lg:col-span-6">
@@ -112,11 +109,11 @@ const ServicioPage = ({ slug }) => {
                         <h2 className="etiqueta text-white/55">Hasta dónde llega</h2>
                         <p className="cuerpo-destacado mt-4 max-w-none">{servicio.limite}</p>
                     </div>
+                    <CtaServicio servicio={servicio.slug} ubicacion="servicio-alcance" className="mt-10" />
 
                     {!servicio.principal && (
                         <div className="mt-16">
-                            <p className="insignia">Servicio complementario</p>
-                            <h2 className="titular-m mt-5">
+                            <h2 className="titular-m">
                                 Rinde más junto a lo principal.
                             </h2>
                             <p className="cuerpo mt-3">

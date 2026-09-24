@@ -4,6 +4,7 @@ import { Plus } from 'lucide-react';
 import faqs from '../../data/faq.json';
 import { useBloque } from '../../contenido';
 import EncabezadoSeccion from '../common/EncabezadoSeccion';
+import CtaServicio from '../common/CtaServicio';
 
 /*
  * Preguntas frecuentes. Segunda inversión a claro.
@@ -21,7 +22,7 @@ const FAQSection = () => {
     const [abierta, setAbierta] = useState(null);
     const idBase = useId();
 
-    const { visible, insignia, titulo } = useBloque('faq');
+    const { visible, titulo } = useBloque('faq');
 
     if (visible === false) return null;
 
@@ -30,7 +31,15 @@ const FAQSection = () => {
             <div className="contenedor">
                 <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
                     <div className="lg:col-span-4">
-                        <EncabezadoSeccion id="faq" insignia={insignia} titulo={titulo} />
+                        <EncabezadoSeccion titulo={titulo} />
+                        <CtaServicio
+                            secundario={{
+                                texto: '¿Otra pregunta? Pregúntenos por WhatsApp',
+                                destino: 'whatsapp:Hola. Tengo una pregunta sobre sus servicios.',
+                            }}
+                            ubicacion="faq"
+                            className="mt-8 sm:flex-col sm:items-start"
+                        />
                     </div>
 
                     <div className="lg:col-span-8">
