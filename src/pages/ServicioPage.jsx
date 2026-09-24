@@ -1,9 +1,9 @@
 import React from 'react';
 import { Check } from 'lucide-react';
 
-import Pagina, { Migas } from '../components/common/Pagina';
+import Pagina from '../components/common/Pagina';
+import HeroPagina from '../components/common/HeroPagina';
 import Enlace from '../components/common/Enlace';
-import MotionGrafico from '../motion/MotionGrafico';
 import { hayEscena } from '../motion/escenas';
 import { SERVICIOS, getServicio, rutaServicio } from '../data/servicios';
 import ServiciosPrincipales from '../components/common/ServiciosPrincipales';
@@ -31,40 +31,30 @@ const ServicioPage = ({ slug }) => {
 
     return (
         <Pagina>
-            <Migas
-                ruta={[
+            <HeroPagina
+                migas={[
                     { texto: 'Servicios', destino: '/servicios' },
                     { texto: servicio.nombre },
                 ]}
+                columnas={6}
+                titulo={servicio.nombre}
+                entradilla={servicio.resumen}
+                cta={
+                    <CtaServicio
+                        servicio={servicio.slug}
+                        secundario={{ texto: 'Ver todos los servicios', destino: '/servicios' }}
+                        ubicacion="servicio-hero"
+                    />
+                }
+                escena={
+                    hayEscena(servicio.slug)
+                        ? {
+                              clave: servicio.slug,
+                              etiqueta: `Ilustración animada del mecanismo de ${servicio.nombre.toLowerCase()}.`,
+                          }
+                        : undefined
+                }
             />
-
-            <section className="zona-oscura seccion">
-                <div className="contenedor">
-                    <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-12">
-                        <header className="lg:col-span-6">
-                            <h1 className="titular-xl">{servicio.nombre}</h1>
-                            <p className="cuerpo-l mt-6">{servicio.resumen}</p>
-
-                            <CtaServicio
-                                servicio={servicio.slug}
-                                secundario={{ texto: 'Ver todos los servicios', destino: '/servicios' }}
-                                ubicacion="servicio-hero"
-                                className="mt-9"
-                            />
-                        </header>
-
-                        <div className="lg:col-span-6">
-                            {hayEscena(servicio.slug) && (
-                                <MotionGrafico
-                                    escena={servicio.slug}
-                                    prioridad
-                                    etiqueta={`Ilustración animada del mecanismo de ${servicio.nombre.toLowerCase()}.`}
-                                />
-                            )}
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             <section className="zona-clara seccion">
                 <div className="contenedor">

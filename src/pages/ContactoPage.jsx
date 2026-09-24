@@ -1,9 +1,10 @@
 import React from 'react';
 
-import Pagina, { Migas } from '../components/common/Pagina';
+import Pagina from '../components/common/Pagina';
+import HeroPagina from '../components/common/HeroPagina';
+import CtaServicio from '../components/common/CtaServicio';
 import Contact from '../components/sections/Contact';
 import Proceso from '../components/sections/Proceso';
-import MotionGrafico from '../motion/MotionGrafico';
 
 /*
  * Contacto.
@@ -18,33 +19,33 @@ import MotionGrafico from '../motion/MotionGrafico';
  */
 const ContactoPage = () => (
     <Pagina>
-        <Migas ruta={[{ texto: 'Contacto' }]} />
-
-        <section className="zona-oscura pb-12 pt-8 md:pb-16">
-            <div className="contenedor">
-                <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-12">
-                    <header className="lg:col-span-7">
-                        <h1 className="titular-xl">
-                            Empecemos por{' '}
-                            <span className="titular-apagado">el diagnóstico.</span>
-                        </h1>
-                        <p className="cuerpo-l mt-7">
-                            La auditoría no tiene costo ni compromiso. Salimos de ella con un
-                            documento que dice dónde se pierden prospectos hoy, qué conviene
-                            automatizar en su caso y en qué orden. Es suyo, trabajemos juntos o no.
-                        </p>
-                    </header>
-
-                    <div className="lg:col-span-5">
-                        <MotionGrafico
-                            escena="sello"
-                            prioridad
-                            etiqueta="La marca de Diabolical con los anillos girando alrededor."
-                        />
-                    </div>
-                </div>
-            </div>
-        </section>
+        <HeroPagina
+            migas={[{ texto: 'Contacto' }]}
+            titulo={
+                <>
+                    Empecemos por <span className="titular-apagado">el diagnóstico.</span>
+                </>
+            }
+            entradilla="La auditoría no tiene costo ni compromiso. Salimos de ella con un documento que dice dónde se pierden prospectos hoy, qué conviene automatizar en su caso y en qué orden. Es suyo, trabajemos juntos o no."
+            bajada="La auditoría no tiene costo ni compromiso, y el documento que resulta es suyo."
+            /* En el teléfono el formulario queda un pantallazo más abajo: el
+               botón lleva a él. En escritorio ya se ve y sobra. */
+            cta={
+                <CtaServicio
+                    texto="Ir al formulario"
+                    destino="#contacto"
+                    secundario={{
+                        texto: 'O escríbanos por WhatsApp',
+                        destino: 'whatsapp:Hola. Me interesa la auditoría sin costo.',
+                    }}
+                    ubicacion="contacto-hero"
+                />
+            }
+            ctaSoloMovil
+            escena={{ clave: 'sello', etiqueta: 'La marca de Diabolical con los anillos girando alrededor.' }}
+            separacion="lg:mb-8"
+            abajo="lg:pb-16"
+        />
 
         <Contact />
         <Proceso conCta={false} />

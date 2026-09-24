@@ -1,7 +1,8 @@
 import React from 'react';
 import { ArrowRight, ArrowUpRight, Check } from 'lucide-react';
 
-import Pagina, { Migas } from '../components/common/Pagina';
+import Pagina from '../components/common/Pagina';
+import HeroPagina from '../components/common/HeroPagina';
 import Enlace from '../components/common/Enlace';
 import EncabezadoSeccion from '../components/common/EncabezadoSeccion';
 import PantallaEscena from '../components/common/PantallaEscena';
@@ -74,49 +75,35 @@ const LandingServicio = ({ slug }) => {
 
     return (
         <Pagina>
-            <Migas
-                ruta={[
+            <HeroPagina
+                migas={[
                     { texto: 'Servicios', destino: '/servicios' },
                     { texto: servicio?.nombre ?? hero.titulo },
                 ]}
+                largo
+                titulo={hero.titulo}
+                entradilla={hero.entradilla}
+                bajada={hero.bajada}
+                cta={
+                    <CtaServicio
+                        servicio={slug}
+                        texto={hero.ctaPrimario?.texto}
+                        secundario={
+                            hero.ctaSecundario?.texto
+                                ? { texto: hero.ctaSecundario.texto, destino: hero.ctaSecundario.destino }
+                                : undefined
+                        }
+                        ubicacion="landing-hero"
+                    />
+                }
+                escena={{
+                    clave: slug,
+                    etiqueta:
+                        ESCENAS[slug]?.descripcion ??
+                        `Ilustración animada del mecanismo de ${servicio?.nombre?.toLowerCase()}.`,
+                }}
+                pie={servicio?.foto && <Fotografia clave={servicio.foto} className="mt-14 md:mt-20" />}
             />
-
-            {/* Hero */}
-            <section className="zona-oscura seccion">
-                <div className="contenedor">
-                    <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-12">
-                        <header className="lg:col-span-7">
-                            <h1 className="titular-xl titular-largo">{hero.titulo}</h1>
-                            <p className="cuerpo-l mt-7">{hero.entradilla}</p>
-
-                            <CtaServicio
-                                servicio={slug}
-                                texto={hero.ctaPrimario?.texto}
-                                secundario={
-                                    hero.ctaSecundario?.texto
-                                        ? { texto: hero.ctaSecundario.texto, destino: hero.ctaSecundario.destino }
-                                        : undefined
-                                }
-                                ubicacion="landing-hero"
-                                className="mt-9"
-                            />
-                        </header>
-
-                        <div className="lg:col-span-5">
-                            <MotionGrafico
-                                escena={slug}
-                                prioridad
-                                etiqueta={
-                                    ESCENAS[slug]?.descripcion ??
-                                    `Ilustración animada del mecanismo de ${servicio?.nombre?.toLowerCase()}.`
-                                }
-                            />
-                        </div>
-                    </div>
-
-                    {servicio?.foto && <Fotografia clave={servicio.foto} className="mt-14 md:mt-20" />}
-                </div>
-            </section>
 
             {/* Definición */}
             {definicion.texto && (

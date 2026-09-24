@@ -372,6 +372,14 @@ WhatsApp. `whatsapp:mensaje` como destino abre WhatsApp con el mensaje
 redactado. Los giros se nombran siempre con su titular completo
 («Inteligencia artificial para spas»).
 
+**Hero de página.** `src/components/common/HeroPagina.jsx` abre todas las
+páginas (también la 404 y la privacidad). En escritorio es texto y escena lado
+a lado; en teléfono la escena sube a banner y debajo van título, `bajada` y
+botón. La `bajada` es un campo del contenido («Frase corta para el teléfono»
+en el panel) y de `sectores.json`. Qué parte de cada escena se ve en el
+teléfono lo dice `ENCUADRES` en `src/motion/escenas/index.js`; una escena sin
+encuadre se ve entera. Las reglas están en DESIGN.md, «Hero de página».
+
 **Proceso animado.** La escena `proceso` (`src/motion/escenas/estrella.jsx`) se
 dibuja con los pasos del contenido que recibe en `datos`, así que editar un
 paso en el panel cambia también el diagrama. Tiene lienzo panorámico propio

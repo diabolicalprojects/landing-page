@@ -1,8 +1,10 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 
-import Pagina, { Migas } from '../components/common/Pagina';
+import Pagina from '../components/common/Pagina';
+import HeroPagina from '../components/common/HeroPagina';
 import Enlace from '../components/common/Enlace';
+import CtaServicio from '../components/common/CtaServicio';
 import { ARTICULOS_POR_FECHA } from '../data/articulos';
 import { fechaLegible } from '../utils/fechas';
 
@@ -17,22 +19,19 @@ import { fechaLegible } from '../utils/fechas';
  */
 const BlogPage = () => (
     <Pagina>
-        <Migas ruta={[{ texto: 'Blog' }]} />
-
-        <section className="zona-oscura seccion">
-            <div className="contenedor">
-                <header className="max-w-3xl">
-                    <h1 className="titular-xl">
-                        Inteligencia artificial y páginas web,{' '}
-                        <span className="titular-apagado">sin humo.</span>
-                    </h1>
-                    <p className="cuerpo-l mt-7">
-                        Respuestas directas a lo que preguntan los negocios de Aguascalientes antes de
-                        contratar: qué empresa elegir, qué resuelve un chatbot, cuánto tarda una página
-                        web y cómo se automatiza una agenda.
-                    </p>
-                </header>
-
+        <HeroPagina
+            migas={[{ texto: 'Blog' }]}
+            largo
+            titulo={
+                <>
+                    Inteligencia artificial y páginas web, <span className="titular-apagado">sin humo.</span>
+                </>
+            }
+            entradilla="Respuestas directas a lo que preguntan los negocios de Aguascalientes antes de contratar: qué empresa elegir, qué resuelve un chatbot, cuánto tarda una página web y cómo se automatiza una agenda."
+            bajada="Respuestas directas a lo que preguntan los negocios de Aguascalientes antes de contratar."
+            cta={<CtaServicio ubicacion="blog-hero" />}
+            escena={{ clave: 'guias' }}
+            pie={
                 <ul className="mt-14 grid grid-cols-1 gap-4 md:mt-16 md:grid-cols-2">
                     {ARTICULOS_POR_FECHA.map((articulo) => (
                         <li key={articulo.slug}>
@@ -57,8 +56,8 @@ const BlogPage = () => (
                         </li>
                     ))}
                 </ul>
-            </div>
-        </section>
+            }
+        />
     </Pagina>
 );
 

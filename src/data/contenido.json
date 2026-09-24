@@ -94,6 +94,7 @@
     "fraseA": "Páginas web e inteligencia artificial",
     "fraseB": "para negocios en Aguascalientes.",
     "apoyo": "Sitios web, chatbots y agendamiento automatizado para inmobiliarias, gimnasios, spas y salones de uñas. Atienden y agendan a cualquier hora sobre las herramientas que su negocio ya utiliza, con el alcance de cada pieza por escrito antes de firmar nada.",
+    "bajada": "Sitios web, chatbots y agenda automática para inmobiliarias, gimnasios, spas y salones de uñas.",
     "ctaPrimario": {
       "texto": "Cotizar mi proyecto",
       "destino": "/contacto"
@@ -313,6 +314,7 @@
     "titulo": "Una agencia de páginas web",
     "tituloApagado": "e inteligencia artificial en Aguascalientes.",
     "entradilla": "Diabolical Services diseña y desarrolla páginas web y sistemas de inteligencia artificial para negocios de Aguascalientes. No vendemos una plantilla ni una herramienta suelta: partimos del proceso real del negocio, construimos sobre lo que la empresa ya utiliza y lo dejamos funcionando.",
+    "bajada": "Partimos del proceso real de su negocio y lo dejamos funcionando.",
     "parrafos": [
       "Sobre el nombre. En el trato clásico con el diablo, las condiciones se descubren cuando ya es tarde. Nos quedamos con la primera mitad (el interés por lo que se repite, lo ingrato y lo que ocurre de madrugada) y publicamos la segunda por adelantado: bajo cada servicio está escrito hasta dónde llega, antes de que usted firme nada.",
       "Las páginas web son la mitad visible del oficio. Las diseñamos y desarrollamos a medida (desde una landing hasta una tienda en línea) para que carguen rápido, se lean completas en Google y en los motores de inteligencia artificial, y se editen desde un panel sin depender de nadie. Es la misma base técnica con la que está hecho este sitio.",
@@ -368,6 +370,7 @@
     "hero": {
       "titulo": "Diseño y desarrollo de páginas web en Aguascalientes",
       "entradilla": "Páginas web y sitios web a medida en Aguascalientes: rápidos, legibles para Google y para los motores de inteligencia artificial, con un chatbot que atiende dentro del propio sitio, la agenda conectada y un panel para que su equipo edite sin llamar a nadie.",
+      "bajada": "Rápidas, legibles para Google y para la IA, con chatbot y agenda conectados.",
       "ctaPrimario": {
         "texto": "Cotizar mi página web",
         "destino": "/contacto?servicio=sitio-web"
@@ -608,6 +611,7 @@
     "hero": {
       "titulo": "Chatbots con inteligencia artificial en Aguascalientes",
       "entradilla": "Un chatbot para WhatsApp, su sitio web, Instagram y Facebook que responde en segundos a cualquier hora, agenda sobre la disponibilidad real y pasa la conversación a una persona de su equipo en cuanto hace falta criterio.",
+      "bajada": "Responde en segundos por WhatsApp, su sitio, Instagram y Facebook, y agenda a cualquier hora.",
       "ctaPrimario": {
         "texto": "Cotizar mi chatbot",
         "destino": "/contacto?servicio=chatbots"
@@ -840,6 +844,7 @@
     "hero": {
       "titulo": "Agendamiento automatizado para negocios en Aguascalientes",
       "entradilla": "Citas, visitas y clases que se agendan solas sobre la disponibilidad real, por WhatsApp o desde su sitio web, con confirmación, recordatorio y reagenda automáticos. Su equipo deja de perseguir la agenda y la encuentra llena.",
+      "bajada": "Citas, visitas y clases que se agendan solas, con confirmación y recordatorio automáticos.",
       "ctaPrimario": {
         "texto": "Cotizar mi agenda",
         "destino": "/contacto?servicio=agendamiento-automatizado"

@@ -268,6 +268,29 @@ Medida de lectura: 46ch en `cuerpo-l`, 62ch en `cuerpo`.
 Móvil primero de verdad: 375 px sin scroll horizontal y sin un solo objetivo
 táctil por debajo de 24×24, que es el mínimo de WCAG 2.2.
 
+**Hero de página** (`HeroPagina`, 24-09-2026). Todas las páginas abren con el
+mismo componente, que pinta dos composiciones sobre el mismo HTML:
+
+- Desde 1024 px, la de siempre: migas, texto a la izquierda (7 u 6 columnas) y
+  escena a la derecha.
+- En teléfono y tableta, la escena es el banner: arriba del todo, a sangre y
+  por detrás del menú flotante, con un foco de luz encima. Debajo, las migas en
+  una sola línea, el título, la `bajada` y el botón. Los tres entran en el
+  primer pantallazo de 360 × 740, 375 × 667 y 375 × 812.
+- La `bajada` es la frase corta del teléfono (20 palabras como mucho). La
+  entradilla larga sigue en el HTML y se ve en escritorio; sin bajada, el
+  teléfono enseña la entradilla.
+- Del lienzo de la escena solo se ve su **encuadre** (`ENCUADRES` en
+  `escenas/index.js`): la zona donde pasa algo, sin el aire que traía para la
+  columna de escritorio. El alto tiene tope (30 % de la pantalla, 24 % en
+  pantallas bajas) para que el botón no baje.
+- En el teléfono el botón del hero mide lo que su texto: a todo el ancho, su
+  extremo caía debajo de la burbuja del chatbot.
+- En horizontal (teléfono girado), texto y escena lado a lado.
+- Los artículos usan su fotografía como banner en lugar de una escena.
+- En el HTML el texto va antes que la escena, que es el orden en que se lee.
+  El teléfono la pinta primero solo con CSS; nada se duplica.
+
 ## Elevation & Depth
 
 En zona oscura no hay sombra: la elevación se dibuja con un velo blanco sobre el
@@ -313,8 +336,9 @@ sin ser pulsable miente.
 **Enlace de texto.** El subrayado se dibuja de 0 a 100% del ancho en 220 ms con
 `background-size`. Aparecer de golpe es lo que hace el navegador por defecto.
 
-**Escenas animadas.** Veintidós ilustraciones —tres de marca, trece de servicio,
-seis de sector— son SVG con `viewBox` y no imágenes. Cada una recibe un número de
+**Escenas animadas.** Las ilustraciones (de marca, de servicio, de tipo de
+sitio y de sector, más la red de giros del índice de sectores y la de guías
+del blog) son SVG con `viewBox` y no imágenes. Cada una recibe un número de
 fotograma y dibuja; no sabe quién la anima.
 
 En el servidor se dibuja su fotograma de póster, así que el contenido viaja en el

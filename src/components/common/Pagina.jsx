@@ -41,9 +41,9 @@ const Pagina = ({ children }) => {
  * debajo del resultado. El JSON-LD equivalente lo emite server/schema.js, y las
  * dos listas tienen que contar lo mismo.
  */
-export const Migas = ({ ruta = [] }) => (
-    <nav aria-label="Migas de pan" className="contenedor pt-28 md:pt-32">
-        <ol className="flex flex-wrap items-center gap-1.5 text-[0.9375rem]">
+export const Migas = ({ ruta = [], className = 'contenedor pt-28 md:pt-32' }) => (
+    <nav aria-label="Migas de pan" className={className}>
+        <ol className="migas flex flex-wrap items-center gap-1.5 text-[0.9375rem]">
             <li>
                 <Link to="/" className="inline-flex min-h-[1.75rem] items-center py-1 text-white/50 transition-colors hover:text-white">
                     Inicio

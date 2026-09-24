@@ -8,6 +8,7 @@
     "keywords": "inteligencia artificial para inmobiliarias Aguascalientes, automatización inmobiliaria, agendar visitas propiedades WhatsApp, IA para agentes inmobiliarios, CRM inmobiliario automatizado",
     "titular": "Inteligencia artificial para inmobiliarias",
     "entradilla": "En bienes raíces gana quien responde primero. Instalamos un sistema que atiende cada consulta en el momento en que llega, la califica por presupuesto y zona, y deja la visita agendada con el asesor que corresponde. Funciona a las once de la noche con la misma precisión que a media mañana.",
+    "bajada": "Cada consulta atendida al momento, calificada por presupuesto y zona, con la visita ya agendada.",
     "momentos": [
       "Una consulta entra desde un portal a las once de la noche y recibe la ficha completa de la propiedad en segundos.",
       "El interesado pregunta por presupuesto y zona, y el sistema le muestra solo lo que encaja con lo que busca.",
@@ -66,6 +67,7 @@
     "keywords": "inteligencia artificial para gimnasios Aguascalientes, automatización gimnasio WhatsApp, agendar clase de prueba, seguimiento de prospectos gimnasio, software para estudio de entrenamiento",
     "titular": "Inteligencia artificial para gimnasios",
     "entradilla": "Quien pregunta por un plan está comparando en ese momento. Instalamos un sistema que responde precios y horarios al instante, aparta la clase de prueba y mantiene el seguimiento de quien todavía no decide.",
+    "bajada": "Precios y horarios al instante, la clase de prueba apartada y seguimiento a quien aún no decide.",
     "momentos": [
       "Alguien pregunta el precio un domingo por la noche y recibe los planes, los horarios y la opción de probar.",
       "La clase de prueba queda apartada con cupo real, no en una lista que alguien revisará después.",
@@ -124,6 +126,7 @@
     "keywords": "inteligencia artificial para spas Aguascalientes, chatbot para spa, agendar citas spa WhatsApp, software de reservas para spa, página web para spa Aguascalientes",
     "titular": "Inteligencia artificial para spas",
     "entradilla": "En un spa, la calma es parte del servicio, y un teléfono sonando en cabina la rompe. Instalamos un sistema que responde tratamientos y precios, reserva por cabina y por terapeuta, y confirma la cita sin interrumpir a nadie.",
+    "bajada": "Responde tratamientos y precios, reserva por cabina y terapeuta y confirma sin interrumpir a nadie.",
     "momentos": [
       "Alguien pregunta por un masaje en pareja un sábado por la noche y recibe duración, precio y los horarios con dos cabinas libres.",
       "La reserva ocupa la cabina y a la terapeuta al mismo tiempo, así que nunca se ofrece un hueco que no existe.",
@@ -182,6 +185,7 @@
     "keywords": "inteligencia artificial para salones de uñas Aguascalientes, chatbot para salón de uñas, agendar citas de uñas por WhatsApp, software para nail bar, página web para salón de uñas",
     "titular": "Inteligencia artificial para salones de uñas",
     "entradilla": "Con las manos de una clienta sobre la mesa, nadie puede contestar el teléfono. Instalamos un sistema que cotiza cada diseño, ofrece los huecos reales de cada manicurista y confirma la cita mientras el equipo sigue trabajando.",
+    "bajada": "Cotiza cada diseño y confirma la cita mientras su equipo sigue trabajando.",
     "momentos": [
       "Una clienta manda la foto de un diseño y recibe el servicio que le corresponde, su duración y los horarios disponibles en segundos.",
       "El sistema aparta el tiempo real del servicio (no dura lo mismo un retoque que un juego completo de acrílico) con la manicurista que lo hace.",
@@ -240,6 +244,7 @@
     "keywords": "inteligencia artificial para clínicas Aguascalientes, agendar citas médicas WhatsApp, automatización consultorio médico, recordatorios de cita pacientes, IA para clínica dental",
     "titular": "Inteligencia artificial para clínicas y consultorios",
     "entradilla": "La recepción no puede estar en el mostrador y en el chat al mismo tiempo. Instalamos un sistema que atiende la primera consulta, agenda sobre el calendario real y confirma la cita, de modo que el equipo se dedique a quien tiene enfrente.",
+    "bajada": "Atiende la primera consulta, agenda sobre el calendario real y confirma la cita.",
     "momentos": [
       "Un paciente escribe fuera de horario y obtiene respuesta, precio orientativo y opciones de cita al momento.",
       "La cita se agenda sobre el calendario que ya usa la clínica, sin dobles reservas.",
@@ -298,6 +303,7 @@
     "keywords": "inteligencia artificial para despachos Aguascalientes, automatización despacho contable, agendar consulta legal WhatsApp, IA para oficina profesional, gestión de prospectos despacho",
     "titular": "Inteligencia artificial para despachos y oficinas",
     "entradilla": "Buena parte del día se dedica a explicar lo mismo por teléfono. Instalamos un sistema que clasifica el tipo de asunto, reúne los datos del caso y deja la primera cita agendada, de modo que la conversación empiece donde de verdad aporta valor.",
+    "bajada": "Clasifica cada asunto, reúne los datos del caso y deja la primera cita agendada.",
     "momentos": [
       "Una consulta entra por WhatsApp y queda clasificada por tipo de asunto desde el primer mensaje.",
       "El sistema reúne los datos y documentos que hacen falta antes de la cita.",
@@ -356,6 +362,7 @@
     "keywords": "inteligencia artificial para tiendas en línea Aguascalientes, automatización ecommerce, recuperar carritos abandonados, atención automática tienda WhatsApp, IA para comercio",
     "titular": "Inteligencia artificial para comercio y tienda en línea",
     "entradilla": "Las dudas que frenan una compra llegan a cualquier hora. Instalamos un sistema que resuelve tallas, materiales y existencias en el momento, recupera los carritos que quedaron a medias y avisa del estado de cada pedido.",
+    "bajada": "Resuelve tallas y existencias al momento, recupera carritos y avisa del estado de cada pedido.",
     "momentos": [
       "Una duda de talla entra de madrugada y se resuelve al momento, con la compra todavía abierta.",
       "El sistema consulta las existencias reales y confirma si hay disponibilidad antes de que el cliente pregunte dos veces.",

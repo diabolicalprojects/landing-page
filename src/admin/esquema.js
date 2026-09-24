@@ -168,6 +168,7 @@ export const ETIQUETAS = {
     fraseA: 'Primera frase (sale en gris)',
     fraseB: 'Segunda frase (sale en blanco)',
     apoyo: 'Párrafo de apoyo',
+    bajada: 'Frase corta para el teléfono',
     id: 'Identificador interno',
     definicion: 'En pocas palabras',
     grupos: 'Grupos del desplegable',
@@ -218,6 +219,8 @@ export const AYUDAS = {
     url: 'La dirección completa del sitio del cliente, empezando por https://',
     escena: 'Identificador de una escena animada (por ejemplo chatbots o agendamiento-automatizado). Vacío: se usa la ilustración.',
     destacado: 'Solo uno: el enlace que se pinta como botón a la derecha del menú.',
+    bajada:
+        'Lo que se lee bajo el título en el teléfono, en lugar del párrafo largo. Una frase de 20 palabras como mucho: así el botón cabe en la primera pantalla. Vacía, el teléfono enseña el párrafo largo.',
 };
 
 /** Claves que no se enseñan: son estructura, no contenido. */

@@ -86,7 +86,7 @@ const Contact = () => {
         'min-h-[3.25rem] w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-base text-white transition-colors duration-150 placeholder:text-white/25 focus:border-white/30 focus:outline-none';
 
     return (
-        <section id="contacto" className="zona-oscura seccion">
+        <section id="contacto" className="zona-oscura seccion scroll-mt-4">
             <div className="contenedor">
                 <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
                     <div className="lg:col-span-5">
@@ -97,7 +97,7 @@ const Contact = () => {
                     </div>
 
                     <div className="lg:col-span-7">
-                        <div className="tarjeta p-6 md:p-9">
+                        <div className="tarjeta p-5 sm:p-6 md:p-9">
                             {enviado ? (
                                 <div className="flex flex-col items-start gap-5 py-6">
                                     <span

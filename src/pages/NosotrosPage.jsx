@@ -1,10 +1,10 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 
-import Pagina, { Migas } from '../components/common/Pagina';
+import Pagina from '../components/common/Pagina';
+import HeroPagina from '../components/common/HeroPagina';
 import Enlace from '../components/common/Enlace';
 import CtaServicio from '../components/common/CtaServicio';
-import MotionGrafico from '../motion/MotionGrafico';
 import { useBloque } from '../contenido';
 import { SECTORES } from '../data/sectores';
 
@@ -21,36 +21,32 @@ const NosotrosPage = () => {
         titulo,
         tituloApagado,
         entradilla,
+        bajada,
         parrafos = [],
         principios = [],
     } = useBloque('nosotros');
 
     return (
         <Pagina>
-            <Migas ruta={[{ texto: 'Quiénes somos' }]} />
-
-            <section className="zona-oscura seccion">
-                <div className="contenedor">
-                    <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-12">
-                        <header className="lg:col-span-7">
-                            {/* Frase clave larga: «Una agencia de páginas web e
-                                inteligencia artificial en Aguascalientes». */}
-                            <h1 className="titular-xl titular-largo">
-                                {titulo} <span className="titular-apagado">{tituloApagado}</span>
-                            </h1>
-                            <p className="cuerpo-l mt-7">{entradilla}</p>
-                        </header>
-
-                        <div className="lg:col-span-5">
-                            <MotionGrafico
-                                escena="identidad"
-                                prioridad
-                                etiqueta="La marca de Diabolical construyéndose sobre su retícula, con los anillos girando alrededor."
-                            />
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <HeroPagina
+                migas={[{ texto: 'Quiénes somos' }]}
+                largo
+                /* Frase clave larga: «Una agencia de páginas web e
+                   inteligencia artificial en Aguascalientes». */
+                titulo={
+                    <>
+                        {titulo} <span className="titular-apagado">{tituloApagado}</span>
+                    </>
+                }
+                entradilla={entradilla}
+                bajada={bajada}
+                cta={<CtaServicio ubicacion="nosotros-hero" />}
+                escena={{
+                    clave: 'identidad',
+                    etiqueta:
+                        'La marca de Diabolical construyéndose sobre su retícula, con los anillos girando alrededor.',
+                }}
+            />
 
             <section className="zona-clara seccion">
                 <div className="contenedor">

@@ -11,10 +11,21 @@ import Enlace from './Enlace';
  * y, al lado, la misma pregunta por WhatsApp con el mensaje ya redactado.
  *
  * `secundario` cambia la alternativa (por ejemplo, «Ver chatbots con IA» en un
- * artículo del blog) y `false` la quita. `ubicacion` identifica el botón en la
+ * artículo del blog) y `false` la quita. `destino` cambia el del botón: en
+ * contacto lleva al formulario de la misma página. `ubicacion` identifica el botón en la
  * analítica: así se sabe qué sección trae las solicitudes.
  */
-const CtaServicio = ({ servicio, giro, detalle, texto, secundario, ubicacion, centrado = false, className = '' }) => {
+const CtaServicio = ({
+    servicio,
+    giro,
+    detalle,
+    texto,
+    destino,
+    secundario,
+    ubicacion,
+    centrado = false,
+    className = '',
+}) => {
     const datos = { servicio, giro, detalle };
 
     return (
@@ -26,7 +37,7 @@ const CtaServicio = ({ servicio, giro, detalle, texto, secundario, ubicacion, ce
             )}
         >
             <Enlace
-                destino={destinoCta(datos)}
+                destino={destino ?? destinoCta(datos)}
                 className="boton boton-acento boton-grande"
                 onClick={() => medir('cta_click', { ubicacion, servicio, giro })}
             >

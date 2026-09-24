@@ -1,9 +1,9 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 
-import Pagina, { Migas } from '../components/common/Pagina';
+import Pagina from '../components/common/Pagina';
+import HeroPagina from '../components/common/HeroPagina';
 import Enlace from '../components/common/Enlace';
-import MotionGrafico from '../motion/MotionGrafico';
 import EncabezadoSeccion from '../components/common/EncabezadoSeccion';
 import ServiciosPrincipales from '../components/common/ServiciosPrincipales';
 import CtaServicio from '../components/common/CtaServicio';
@@ -22,35 +22,23 @@ import { SERVICIOS_POR_CATEGORIA, rutaServicio } from '../data/servicios';
  */
 const ServiciosPage = () => (
     <Pagina>
-        <Migas ruta={[{ texto: 'Servicios' }]} />
-
-        <section className="zona-oscura seccion">
-            <div className="contenedor">
-                <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-12">
-                    <header className="lg:col-span-7">
-                        <h1 className="titular-xl">
-                            Servicios de inteligencia artificial{' '}
-                            <span className="titular-apagado">para negocios en Aguascalientes.</span>
-                        </h1>
-                        <p className="cuerpo-l mt-7">
-                            Tres servicios principales (sitios web, chatbots y agendamiento
-                            automatizado) y diez complementarios con la misma calidad. Cada uno
-                            tiene su página con lo que incluye y hasta dónde llega.
-                        </p>
-
-                        <CtaServicio ubicacion="servicios-hero" className="mt-9" />
-                    </header>
-
-                    <div className="lg:col-span-5">
-                        <MotionGrafico
-                            escena="nucleo"
-                            prioridad
-                            etiqueta="La marca de Diabolical en el centro, con los canales del negocio conectados alrededor."
-                        />
-                    </div>
-                </div>
-            </div>
-        </section>
+        <HeroPagina
+            migas={[{ texto: 'Servicios' }]}
+            largo
+            titulo={
+                <>
+                    Servicios de inteligencia artificial{' '}
+                    <span className="titular-apagado">para negocios en Aguascalientes.</span>
+                </>
+            }
+            entradilla="Tres servicios principales (sitios web, chatbots y agendamiento automatizado) y diez complementarios con la misma calidad. Cada uno tiene su página con lo que incluye y hasta dónde llega."
+            bajada="Sitios web, chatbots y agendamiento automatizado, más diez servicios complementarios con la misma calidad."
+            cta={<CtaServicio ubicacion="servicios-hero" />}
+            escena={{
+                clave: 'nucleo',
+                etiqueta: 'La marca de Diabolical en el centro, con los canales del negocio conectados alrededor.',
+            }}
+        />
 
         <section className="zona-clara seccion">
             <div className="contenedor">

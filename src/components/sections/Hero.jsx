@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 
 import { useBloque } from '../../contenido';
 import Enlace from '../common/Enlace';
-import MotionGrafico from '../../motion/MotionGrafico';
+import HeroPagina from '../common/HeroPagina';
 
 /*
  * Primer viewport.
@@ -21,7 +21,8 @@ import MotionGrafico from '../../motion/MotionGrafico';
  *
  * Al lado, la marca en el centro de su propio sistema, con los canales del
  * negocio colgando de ella. El logotipo no está de adorno: es literalmente el
- * dibujo de lo que se vende.
+ * dibujo de lo que se vende. En el teléfono esa escena es el banner de arriba
+ * (ver HeroPagina).
  */
 const Hero = () => {
     const hero = useBloque('hero');
@@ -29,59 +30,54 @@ const Hero = () => {
     if (hero.visible === false) return null;
 
     return (
-        <section className="zona-oscura relative overflow-hidden pb-20 pt-32 md:pb-28 md:pt-40">
-            <div className="rejilla" aria-hidden="true" />
-            <div
-                className="resplandor left-1/2 top-[-16rem] h-[32rem] w-[48rem] -translate-x-1/2"
-                aria-hidden="true"
-            />
-
-            <div className="contenedor relative">
-                <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-10">
-                    <div className="lg:col-span-7">
-                        {hero.insignia && (
-                            <p className="insignia entrada mb-5">{hero.insignia}</p>
-                        )}
-                        {/* Los dos tonos van en línea y no en bloque: como
-                            bloques, `text-wrap: balance` equilibra cada mitad
-                            por separado y deja huérfanas como «en» sola en una
-                            línea. En línea, la frase se equilibra entera. */}
-                        <h1 className="titular-xl titular-largo entrada">
-                            {hero.fraseA}{' '}
-                            <span className="titular-apagado">{hero.fraseB}</span>
-                        </h1>
-
-                        <p className="cuerpo-l entrada entrada-2 mt-7">{hero.apoyo}</p>
-
-                        {/* Un botón principal y una alternativa en texto: dos
-                            botones del mismo peso reparten la atención. */}
-                        <div className="entrada entrada-3 mt-9 flex flex-col gap-x-7 gap-y-4 sm:flex-row sm:items-center">
-                            <Enlace
-                                destino={hero.ctaPrimario?.destino}
-                                className="boton boton-acento boton-grande"
-                            >
-                                {hero.ctaPrimario?.texto}
-                                <ArrowRight size={17} aria-hidden="true" />
-                            </Enlace>
-                            <Enlace
-                                destino={hero.ctaSecundario?.destino}
-                                className="enlace inline-flex min-h-[2.75rem] items-center text-[0.9375rem] font-bold"
-                            >
-                                {hero.ctaSecundario?.texto}
-                            </Enlace>
-                        </div>
-                    </div>
-
-                    <div className="entrada entrada-4 lg:col-span-5">
-                        <MotionGrafico
-                            escena="nucleo"
-                            prioridad
-                            etiqueta="La marca de Diabolical en el centro de un sistema, con la página web, WhatsApp, la agenda y las redes conectados a ella."
-                        />
-                    </div>
+        <HeroPagina
+            insignia={hero.insignia}
+            largo
+            /* Los dos tonos van en línea y no en bloque: como bloques,
+               `text-wrap: balance` equilibra cada mitad por separado y deja
+               huérfanas como «en» sola en una línea. En línea, la frase se
+               equilibra entera. */
+            titulo={
+                <>
+                    {hero.fraseA} <span className="titular-apagado">{hero.fraseB}</span>
+                </>
+            }
+            entradilla={hero.apoyo}
+            bajada={hero.bajada}
+            cta={
+                /* Un botón principal y una alternativa en texto: dos botones
+                   del mismo peso reparten la atención. */
+                <div className="flex flex-col gap-x-7 gap-y-4 sm:flex-row sm:items-center">
+                    <Enlace destino={hero.ctaPrimario?.destino} className="boton boton-acento boton-grande">
+                        {hero.ctaPrimario?.texto}
+                        <ArrowRight size={17} aria-hidden="true" />
+                    </Enlace>
+                    <Enlace
+                        destino={hero.ctaSecundario?.destino}
+                        className="enlace inline-flex min-h-[2.75rem] items-center text-[0.9375rem] font-bold"
+                    >
+                        {hero.ctaSecundario?.texto}
+                    </Enlace>
                 </div>
-            </div>
-        </section>
+            }
+            escena={{
+                clave: 'nucleo',
+                etiqueta:
+                    'La marca de Diabolical en el centro de un sistema, con la página web, WhatsApp, la agenda y las redes conectados a ella.',
+            }}
+            arriba="lg:pt-40"
+            abajo="lg:pb-28"
+            hueco="lg:gap-x-10"
+            fondo={
+                <>
+                    <div className="rejilla hidden lg:block" aria-hidden="true" />
+                    <div
+                        className="resplandor left-1/2 top-[-16rem] hidden h-[32rem] w-[48rem] -translate-x-1/2 lg:block"
+                        aria-hidden="true"
+                    />
+                </>
+            }
+        />
     );
 };
 

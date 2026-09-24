@@ -1,4 +1,5 @@
-import { Identidad, Nucleo, Sello } from './marca';
+import { Giros, Identidad, Nucleo, Sello } from './marca';
+import { CICLO_GUIAS, Guias } from './guias';
 import {
     AgentesYChatbots,
     AuditoriaDeFriccion,
@@ -74,6 +75,18 @@ export const ESCENAS = {
     nucleo: escena(Nucleo, 340, 150),
     identidad: escena(Identidad, 360, 200),
     sello: escena(Sello, 420, 180),
+    giros: escena(
+        Giros,
+        340,
+        150,
+        'Ilustración animada: la marca de Diabolical en el centro, conectada con una inmobiliaria, un gimnasio, un spa y un salón de uñas.'
+    ),
+    guias: escena(
+        Guias,
+        CICLO_GUIAS,
+        118,
+        'Ilustración animada: una pregunta se escribe en el buscador y aparece la respuesta con el botón a la guía.'
+    ),
 
     // Servicios principales con escena propia en su landing. La de sitio web
     // es 'sitio-web', más abajo, porque ya existía con el resto del catálogo.
@@ -150,6 +163,37 @@ export const ESCENAS = {
     gimnasios: escena(Gimnasios, 300, 160),
     'despachos-y-oficinas': escena(Despachos, 300, 160),
     comercio: escena(Comercio, 300, 160),
+};
+
+/*
+ * Encuadre en el teléfono: la parte del lienzo que se ve en el hero móvil,
+ * como [x, y, ancho, alto] en unidades del lienzo (640 × 400).
+ *
+ * Las escenas se dibujaron para una columna de escritorio y dejan aire
+ * alrededor. En un teléfono ese aire se come la mitad del ancho; recortarlo
+ * hace la escena hasta un tercio más grande sin redibujar nada. El recorte
+ * deja siempre margen alrededor de lo que se mueve, no solo del póster.
+ *
+ * Sin encuadre, la escena se ve entera.
+ */
+const ENCUADRE_SECTOR = [66, 44, 546, 322];
+
+export const ENCUADRES = {
+    nucleo: [40, 44, 560, 330],
+    giros: [30, 44, 580, 330],
+    identidad: [120, 10, 400, 380],
+    sello: [150, 40, 340, 320],
+    guias: [80, 44, 480, 300],
+    'sitio-web': [76, 34, 488, 330],
+    chatbots: [40, 44, 590, 352],
+    'agendamiento-automatizado': [24, 34, 596, 352],
+    inmobiliarias: ENCUADRE_SECTOR,
+    gimnasios: ENCUADRE_SECTOR,
+    spas: ENCUADRE_SECTOR,
+    'salones-de-unas': ENCUADRE_SECTOR,
+    clinicas: ENCUADRE_SECTOR,
+    'despachos-y-oficinas': ENCUADRE_SECTOR,
+    comercio: ENCUADRE_SECTOR,
 };
 
 /** ¿Hay escena para esta clave? Lo usan las páginas generadas por datos. */

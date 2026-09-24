@@ -94,7 +94,13 @@ const rutaCanal = (c) => {
     );
 };
 
-export const Nucleo = ({ frame }) => {
+/*
+ * La red: la marca en el centro y cuatro piezas colgando de ella. La portada
+ * cuelga los canales del negocio; el índice de sectores, los cuatro giros.
+ * El mecanismo es el mismo —todo pasa por el mismo sitio— y por eso se dibuja
+ * con el mismo código.
+ */
+const Red = ({ frame, canales, Icono }) => {
     const pMarca = entrada(frame, 0, 26);
     const respiro = interpolar(vaivén(frame, 150), [0, 1], [1, 1.035]);
 
@@ -102,7 +108,7 @@ export const Nucleo = ({ frame }) => {
         <Lienzo>
             <circle cx={centroX} cy={centroY} r="150" fill="url(#d-halo)" opacity={pMarca * 0.9} />
 
-            {CANALES.map((c, i) => {
+            {canales.map((c, i) => {
                 const p = entrada(frame, 16 + i * 7, 30);
                 const d = rutaCanal(c);
                 return (
@@ -113,12 +119,12 @@ export const Nucleo = ({ frame }) => {
                 );
             })}
 
-            {CANALES.map((c, i) => {
+            {canales.map((c, i) => {
                 const p = entrada(frame, 10 + i * 7, 26);
                 return (
                     <g key={c.etiqueta}>
                         <Baldosa x={c.x} y={c.y} tam={68} p={p}>
-                            <Glifo tipo={i} />
+                            <Icono tipo={i} />
                         </Baldosa>
                         <text
                             x={c.x}
@@ -148,6 +154,63 @@ export const Nucleo = ({ frame }) => {
         </Lienzo>
     );
 };
+
+export const Nucleo = ({ frame }) => <Red frame={frame} canales={CANALES} Icono={Glifo} />;
+
+/* ==========================================================================
+   GIROS · índice de sectores
+   --------------------------------------------------------------------------
+   La misma red, con los cuatro giros del enfoque en lugar de los canales. Un
+   solo sistema detrás de la inmobiliaria, el gimnasio, el spa y el salón.
+   ========================================================================== */
+
+const GIROS = [
+    { x: 92, y: 96, etiqueta: 'Inmobiliarias' },
+    { x: 548, y: 96, etiqueta: 'Gimnasios' },
+    { x: 92, y: 304, etiqueta: 'Spas' },
+    { x: 548, y: 304, etiqueta: 'Salones de uñas' },
+];
+
+/** Casa, mancuerna, hoja y frasco de esmalte: lo mínimo para leer cada giro. */
+const GlifoGiro = ({ tipo }) => {
+    const trazo = { stroke: '#ffffff', strokeOpacity: 0.62, strokeWidth: 1.6, fill: 'none', strokeLinejoin: 'round' };
+    if (tipo === 0) {
+        return (
+            <g {...trazo} transform="translate(22 22)">
+                <path d="M1 11 L12 2 L23 11" />
+                <path d="M4 9 V22 H20 V9" />
+                <path d="M10 22 V15 H14 V22" />
+            </g>
+        );
+    }
+    if (tipo === 1) {
+        return (
+            <g {...trazo} transform="translate(22 22)">
+                <rect x="2" y="6" width="4" height="12" rx="1.2" />
+                <rect x="18" y="6" width="4" height="12" rx="1.2" />
+                <line x1="6" y1="12" x2="18" y2="12" />
+                <line x1="0" y1="10" x2="0" y2="14" />
+                <line x1="24" y1="10" x2="24" y2="14" />
+            </g>
+        );
+    }
+    if (tipo === 2) {
+        return (
+            <g {...trazo} transform="translate(22 22)">
+                <path d="M12 23 C3 18 3 7 12 1 C21 7 21 18 12 23 Z" />
+                <path d="M12 23 V9" />
+            </g>
+        );
+    }
+    return (
+        <g {...trazo} transform="translate(22 22)">
+            <rect x="8" y="0" width="8" height="8" rx="1.5" />
+            <rect x="4" y="8" width="16" height="15" rx="4" />
+        </g>
+    );
+};
+
+export const Giros = ({ frame }) => <Red frame={frame} canales={GIROS} Icono={GlifoGiro} />;
 
 /* ==========================================================================
    IDENTIDAD · quiénes somos

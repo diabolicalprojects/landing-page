@@ -1,9 +1,9 @@
 import React, { useId, useState } from 'react';
 import { ArrowRight, Plus } from 'lucide-react';
 
-import Pagina, { Migas } from '../components/common/Pagina';
+import Pagina from '../components/common/Pagina';
+import HeroPagina from '../components/common/HeroPagina';
 import Enlace from '../components/common/Enlace';
-import MotionGrafico from '../motion/MotionGrafico';
 import { hayEscena } from '../motion/escenas';
 import { SECTORES, getSector } from '../data/sectores';
 import ServiciosPrincipales from '../components/common/ServiciosPrincipales';
@@ -36,35 +36,26 @@ const SectorPage = ({ slug }) => {
 
     return (
         <Pagina>
-            <Migas ruta={[{ texto: 'Sectores', destino: '/sectores' }, { texto: sector.titular }]} />
-
-            <section className="zona-oscura seccion">
-                <div className="contenedor">
-                    <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-12">
-                        <header className="lg:col-span-6">
-                            <h1 className="titular-xl">{sector.titular}</h1>
-                            <p className="cuerpo-l mt-7">{sector.entradilla}</p>
-
-                            <CtaServicio giro={sector.slug} ubicacion="giro-hero" className="mt-9" />
-                        </header>
-
-                        <div className="lg:col-span-6">
-                            {hayEscena(sector.slug) && (
-                                <MotionGrafico
-                                    escena={sector.slug}
-                                    prioridad
-                                    etiqueta={`Ilustración animada del sistema trabajando para ${sector.nombreCorto.toLowerCase()}.`}
-                                />
-                            )}
-                        </div>
-                    </div>
-
-                    {/* La escena cuenta el mecanismo; la foto, el lugar. Va
-                        debajo para que la animación siga mandando. Solo los
-                        giros principales tienen foto. */}
-                    <Fotografia clave={sector.slug} className="mt-14 md:mt-20" />
-                </div>
-            </section>
+            <HeroPagina
+                migas={[{ texto: 'Sectores', destino: '/sectores' }, { texto: sector.titular }]}
+                columnas={6}
+                titulo={sector.titular}
+                entradilla={sector.entradilla}
+                bajada={sector.bajada}
+                cta={<CtaServicio giro={sector.slug} ubicacion="giro-hero" />}
+                escena={
+                    hayEscena(sector.slug)
+                        ? {
+                              clave: sector.slug,
+                              etiqueta: `Ilustración animada del sistema trabajando para ${sector.nombreCorto.toLowerCase()}.`,
+                          }
+                        : undefined
+                }
+                /* La escena cuenta el mecanismo; la foto, el lugar. Va debajo
+                   para que la animación siga mandando. Solo los giros
+                   principales tienen foto. */
+                pie={<Fotografia clave={sector.slug} className="mt-14 md:mt-20" />}
+            />
 
             <section className="zona-clara seccion">
                 <div className="contenedor">

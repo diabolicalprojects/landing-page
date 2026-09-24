@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrowRight } from 'lucide-react';
 
 import { SERVICIOS_POR_CATEGORIA, rutaServicio } from '../../data/servicios';
 import { useBloque } from '../../contenido';
@@ -42,25 +43,30 @@ const Servicios = () => {
                     lo principal.
                 </p>
 
-                <div className="mt-10 space-y-12 md:space-y-14">
+                <div className="mt-10 space-y-10 md:space-y-14">
                     {SERVICIOS_POR_CATEGORIA.map((grupo) => (
                         <div key={grupo.categoria}>
                             <h4 className="etiqueta border-b border-white/[0.09] pb-3 text-white/70">
                                 {grupo.categoria}
                             </h4>
 
-                            <div className="mt-6 grid gap-x-8 gap-y-7 md:grid-cols-2 lg:grid-cols-3">
+                            {/* En el teléfono, una lista de nombres: con el resumen
+                                debajo, diez servicios complementarios ocupaban
+                                cuatro pantallas detrás de los tres principales.
+                                El resumen está en la página de cada uno. */}
+                            <div className="grid gap-x-8 md:mt-6 md:grid-cols-2 md:gap-y-7 lg:grid-cols-3">
                                 {grupo.servicios.map((servicio) => (
-                                    <article key={servicio.slug}>
+                                    <article key={servicio.slug} className="border-b border-white/[0.07] md:border-0">
                                         <p className="cuerpo-destacado m-0 font-extrabold leading-tight tracking-tight text-white">
                                             <Enlace
                                                 destino={rutaServicio(servicio.slug)}
-                                                className="enlace inline-flex min-h-[1.75rem] items-center"
+                                                className="enlace flex min-h-[3rem] items-center justify-between gap-4 md:inline-flex md:min-h-[1.75rem]"
                                             >
                                                 {servicio.nombre}
+                                                <ArrowRight size={16} className="flex-none text-white/45 md:hidden" aria-hidden="true" />
                                             </Enlace>
                                         </p>
-                                        <p className="cuerpo mt-2">{servicio.resumen}</p>
+                                        <p className="cuerpo mt-2 hidden md:block">{servicio.resumen}</p>
                                     </article>
                                 ))}
                             </div>

@@ -1053,3 +1053,61 @@ test('sin relleno de IA: ni etiquetas en cada sección ni rayas en el texto', as
         assert.ok(!/Auditoría sin costo · Respuesta el mismo día/.test(texto), `${ruta} conserva la tira del hero`);
     }
 });
+
+test('cada página abre con el hero móvil: escena encuadrada, título y botón', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    const conEscena = [
+        '/', '/nosotros', '/servicios', '/sectores', '/contacto', '/blog',
+        RUTA_PAGINAS_WEB, RUTA_CHATBOTS, RUTA_AGENDAMIENTO,
+        ...SECTORES.map((s) => rutaSector(s.slug)),
+    ];
+
+    for (const ruta of conEscena) {
+        const html = await (await fetch(`${BASE}${ruta}`)).text();
+        const inicio = html.indexOf('class="hero-pagina ');
+        assert.ok(inicio > -1, `${ruta} no usa el hero de página`);
+        const hero = html.slice(inicio, html.indexOf('</section>', inicio));
+
+        assert.equal((hero.match(/<h1[\s>]/g) ?? []).length, 1, `${ruta}: el h1 va dentro del hero`);
+        // En el HTML el texto va antes que la escena, que es el orden de lectura;
+        // el teléfono la pinta arriba solo con CSS.
+        assert.ok(hero.indexOf('<h1') < hero.indexOf('hero-pagina__escenario'), `${ruta}: la escena va después del texto`);
+        assert.match(hero, /--encuadre-proporcion:/, `${ruta}: la escena no lleva encuadre`);
+        assert.match(hero, /role="img" aria-label="[^"]{20,}"/, `${ruta}: la escena no se describe`);
+    }
+
+    // Los giros y las landings traen la frase corta del teléfono, y la
+    // entradilla larga sigue en el HTML.
+    for (const sector of SECTORES) {
+        const palabras = sector.bajada.split(/\s+/).length;
+        assert.ok(palabras <= 20, `${sector.slug}: la bajada tiene ${palabras} palabras`);
+    }
+    const spa = await (await fetch(`${BASE}/sectores/spas`)).text();
+    const sectorSpa = SECTORES.find((s) => s.slug === 'spas');
+    assert.ok(spa.includes(`hero-pagina__bajada`) && spa.includes(sectorSpa.bajada));
+    assert.ok(spa.includes(sectorSpa.entradilla), 'la entradilla larga no puede desaparecer del HTML');
+
+    for (const bloque of ['hero', 'nosotros']) {
+        assert.ok((CONTENIDO[bloque].bajada ?? '').split(/\s+/).length <= 20, `${bloque}: bajada demasiado larga`);
+    }
+});
+
+test('los artículos abren con su fotografía y la privacidad se lee como el resto', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    const articulo = ARTICULOS.find((a) => a.foto);
+    const html = await (await fetch(`${BASE}/blog/${articulo.slug}`)).text();
+    assert.match(html, /hero-pagina__foto/);
+    assert.match(html, /fetchpriority="high"/i, 'la foto del banner es el LCP en el teléfono');
+
+    const privacidad = await (await fetch(`${BASE}/politica-privacidad`)).text();
+    assert.match(privacidad, /aria-label="Principal"/, 'la privacidad lleva el menú del sitio');
+    assert.match(privacidad, /aria-label="Migas de pan"/);
+    const legal = privacidad.slice(privacidad.indexOf('<main'), privacidad.indexOf('</main>'));
+    assert.ok(!/text-xs/.test(legal), 'nada de letra de 12 px en el texto legal');
+});

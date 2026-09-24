@@ -1,11 +1,11 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 
-import Pagina, { Migas } from '../components/common/Pagina';
+import Pagina from '../components/common/Pagina';
+import HeroPagina from '../components/common/HeroPagina';
 import Enlace from '../components/common/Enlace';
 import Preguntas from '../components/common/Preguntas';
 import TextoConEnlaces from '../components/common/TextoConEnlaces';
-import Fotografia from '../components/common/Fotografia';
 import CtaServicio from '../components/common/CtaServicio';
 import { getArticulo, ARTICULOS_POR_FECHA } from '../data/articulos';
 import { getServicio, rutaServicio } from '../data/servicios';
@@ -115,28 +115,29 @@ const ArticuloPage = ({ slug }) => {
 
     return (
         <Pagina>
-            <Migas ruta={[{ texto: 'Blog', destino: '/blog' }, { texto: articulo.titular }]} />
-
             <article>
-                <header className="zona-oscura seccion-compacta pb-12 md:pb-16">
-                    <div className="contenedor">
-                        <div className="max-w-3xl">
-                            <h1 className="titular-xl titular-largo">{articulo.titular}</h1>
-                            <p className="cuerpo-l mt-7">{articulo.entradilla}</p>
-                            <p className="etiqueta-mono mt-8 flex flex-wrap gap-x-3 gap-y-1" style={{ color: 'var(--texto-3)' }}>
-                                <time dateTime={articulo.fecha}>{fechaLegible(articulo.fecha)}</time>
-                                {articulo.lectura && <span>· {articulo.lectura} de lectura</span>}
-                                {actualizado && (
-                                    <span>
-                                        · Actualizado el{' '}
-                                        <time dateTime={articulo.actualizado}>{fechaLegible(articulo.actualizado)}</time>
-                                    </span>
-                                )}
-                            </p>
-                        </div>
-                        {articulo.foto && <Fotografia clave={articulo.foto} prioridad className="mt-12" />}
-                    </div>
-                </header>
+                <HeroPagina
+                    como="header"
+                    migas={[{ texto: 'Blog', destino: '/blog' }, { texto: articulo.titular }]}
+                    largo
+                    titulo={articulo.titular}
+                    entradilla={articulo.entradilla}
+                    meta={
+                        <p className="etiqueta-mono mt-8 flex flex-wrap gap-x-3 gap-y-1" style={{ color: 'var(--texto-3)' }}>
+                            <time dateTime={articulo.fecha}>{fechaLegible(articulo.fecha)}</time>
+                            {articulo.lectura && <span>· {articulo.lectura} de lectura</span>}
+                            {actualizado && (
+                                <span>
+                                    · Actualizado el{' '}
+                                    <time dateTime={articulo.actualizado}>{fechaLegible(articulo.actualizado)}</time>
+                                </span>
+                            )}
+                        </p>
+                    }
+                    foto={articulo.foto}
+                    separacion="lg:mb-[clamp(2.5rem,4vw,3.5rem)]"
+                    abajo="lg:pb-16"
+                />
 
                 {/* La respuesta directa. Es el párrafo que un motor generativo
                     puede citar tal cual, así que se entiende sin nada alrededor. */}
