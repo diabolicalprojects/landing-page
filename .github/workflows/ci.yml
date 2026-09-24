@@ -119,3 +119,41 @@ jobs:
           if [ "$FALLOS" = "1" ]; then docker logs ci-check; fi
           docker rm -f ci-check > /dev/null
           exit $FALLOS
+
+      # Que el servidor conteste no significa que la SONDA de salud pase: son
+      # dos cosas distintas y hasta ahora solo se comprobaba la primera.
+      #
+      # El 17/09/2026 eso costó casi una hora de caída. La imagen era correcta
+      # —este mismo workflow la aprobó comprobando /health y nueve rutas— pero su
+      # HEALTHCHECK no llegaba a completarse en el servidor, el orquestador daba
+      # la tarea por enferma y la reemplazaba en bucle. CI no podía verlo porque
+      # nunca ejecutaba la sonda.
+      #
+      # Aquí se ejecuta: se espera a que Docker reporte "healthy". Si el comando
+      # de la sonda no existe en la imagen, apunta al puerto equivocado o no
+      # termina a tiempo, esto lo caza antes de que llegue a producción.
+      - name: Verificar que la sonda de salud pasa
+        run: |
+          docker run -d --name ci-salud -e NODE_ENV=production diabolical-landing:ci
+
+          # El margen cubre el --start-period del HEALTHCHECK más varios
+          # intervalos; con la sonda funcionando, "healthy" llega mucho antes.
+          ESTADO=""
+          for i in $(seq 1 60); do
+            ESTADO=$(docker inspect -f '{{.State.Health.Status}}' ci-salud 2>/dev/null || echo desconocido)
+            case "$ESTADO" in
+              healthy) echo "El contenedor reporta healthy tras $((i * 5))s."; break ;;
+              unhealthy) echo "::error title=La sonda de salud falla::El contenedor quedó unhealthy."; break ;;
+            esac
+            sleep 5
+          done
+
+          if [ "$ESTADO" != "healthy" ]; then
+            echo "::error title=La sonda de salud no pasa::Estado final: $ESTADO. Una imagen así arranca bien pero el orquestador la reemplaza en bucle."
+            docker inspect -f '{{json .State.Health}}' ci-salud || true
+            docker logs ci-salud
+            docker rm -f ci-salud > /dev/null 2>&1 || true
+            exit 1
+          fi
+
+          docker rm -f ci-salud > /dev/null

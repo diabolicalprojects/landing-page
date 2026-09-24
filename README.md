@@ -145,7 +145,12 @@ Comprobaciones rápidas tras desplegar:
 
 ```bash
 curl -sI https://diabolicalservices.tech/ | grep -i content-security-policy   # CSP activa
-curl -s https://diabolicalservices.tech/ | grep -c "GTM-P3P29XB5"            # analítica: 1
+
+# Un solo contenedor de Tag Manager, y ningún gtag.js suelto: dos contenedores
+# midiendo la misma propiedad cuentan cada visita dos veces.
+curl -s https://diabolicalservices.tech/ | grep -o 'googletagmanager.com/gtm.js' | wc -l   # 1
+curl -s https://diabolicalservices.tech/ | grep -c 'gtag/js'                               # 0
+
 curl -s -o /dev/null -w '%{http_code}\n' https://diabolicalservices.tech/no-existe   # 404
 curl -s -X POST https://diabolicalservices.tech/api/settings \
   -H 'Content-Type: application/json' -d '{"title":"x"}'                     # 401
@@ -230,10 +235,32 @@ Hay una única fuente de verdad por despliegue:
 - **`server/seo-defaults.js`** son los valores por defecto y **deben coincidir** con los estáticos
   de `index.html`. `ROUTE_META` da título y descripción propios a cada ruta.
 
-Google Tag Manager (`GTM-P3P29XB5`) y Google Analytics (`G-7C6BCDND8S`) viven **estáticos en
-`index.html`, fuera de los marcadores**, para que carguen en ambos despliegues. Por eso los campos
-`googleTagManager` y `customHeaderScripts` del panel van vacíos por defecto: rellenarlos duplicaría
-las etiquetas.
+### Medición
+
+Google Tag Manager (`GTM-P3P29XB5`) vive **estático en `index.html`, fuera de los marcadores**, para
+que cargue en ambos despliegues. Por eso los campos `googleTagManager` y `customHeaderScripts` del
+panel van vacíos por defecto: rellenarlos añadiría un **segundo** contenedor, no sustituiría al
+primero.
+
+**Google Analytics no aparece en el HTML.** GA4 está configurado dentro del contenedor de Tag
+Manager, así que el `gtag.js` suelto que había aquí medía la misma propiedad por segunda vez: 167 KiB
+de carga para contar cada visita dos veces. Si alguna vez hace falta volver a ponerlo, primero hay
+que quitar GA4 de Tag Manager.
+
+El contenedor **no se descarga durante el primer pintado**. Son más de 100 KiB compitiendo por red y
+por hilo principal justo en la ventana que decide el LCP. Se pide a lo primero que ocurra de: el
+evento `load`, la primera interacción real, o 3,5 s de respaldo. El `dataLayer` sí se crea en la
+primera línea del `<head>`, así que lo que se empuje antes queda encolado y Tag Manager lo procesa
+entero al arrancar: diferir no pierde eventos.
+
+Los eventos de conversión se envían con `medir()` (`src/utils/medicion.js`), que empuja al
+`dataLayer`. **No** se llama a `gtag()`: esa función solo existía por el `gtag.js` suelto, y al
+quitarlo la guarda `typeof window.gtag === 'function'` habría dejado de cumplirse y las conversiones
+se habrían perdido sin error ninguno.
+
+> **Requiere configuración en Tag Manager.** Para que `generate_lead` llegue a GA4 hace falta una
+> etiqueta de evento de GA4 con un activador de **evento personalizado** llamado `generate_lead`. Sin
+> esa etiqueta el evento llega al `dataLayer` y se queda ahí.
 
 ## Render: build y caliente
 

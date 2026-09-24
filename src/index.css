@@ -4,9 +4,20 @@
    TIPOGRAFÍA
    ========================================================================== */
 
+/*
+  WOFF2 primero: los mismos 192 glifos en 10,8 KB en lugar de 24,1 KB, un 56 %
+  menos. WOFF2 lleva compresión propia; OpenType no, y se servía tal cual.
+  Se comprobó que el cmap y el orden de glifos son idénticos: no cambia ni un
+  trazo, solo el envoltorio.
+
+  La OTF queda detrás como respaldo para navegadores sin WOFF2, que a día de hoy
+  son residuales. El navegador elige la primera fuente que sabe leer y ni
+  siquiera pide la otra.
+*/
 @font-face {
   font-family: 'CODE Bold';
-  src: url('/fonts/CODE-Bold.otf') format('opentype');
+  src: url('/fonts/CODE-Bold.woff2') format('woff2'),
+       url('/fonts/CODE-Bold.otf') format('opentype');
   font-weight: bold;
   font-style: normal;
   font-display: swap;

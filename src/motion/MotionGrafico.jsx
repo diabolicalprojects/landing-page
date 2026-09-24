@@ -11,9 +11,10 @@ import { FPS } from './tiempo';
  *   1. Servidor y primer pintado: la escena dibujada en su fotograma de póster.
  *      HTML puro, sin JavaScript. Es lo que ve un rastreador, quien llega con la
  *      red mala y quien pide menos movimiento.
- *   2. Al entrar en pantalla: se carga Remotion en un trozo aparte y la misma
- *      escena empieza a animarse. Ni un kilobyte de Remotion viaja en el bundle
- *      principal ni se descarga por una animación que nadie va a ver.
+ *   2. Cuando está en pantalla Y la página ya se asentó: se carga Remotion en un
+ *      trozo aparte y la misma escena empieza a animarse. Ni un kilobyte de
+ *      Remotion viaja en el bundle principal ni se descarga por una animación
+ *      que nadie va a ver.
  *   3. Al salir de pantalla: se pausa. Un bucle que sigue corriendo fuera de
  *      vista gasta batería a cambio de nada.
  *
@@ -22,11 +23,60 @@ import { FPS } from './tiempo';
 
 const Reproductor = lazy(() => import('./Reproductor'));
 
+/**
+ * Espera a que la página termine de cargar y el navegador tenga un hueco libre.
+ *
+ * Existe por la escena del primer viewport. Está en pantalla desde el segundo
+ * cero, así que su observador disparaba de inmediato y el trozo de Remotion
+ * salía encadenado detrás del bundle principal: la medición de PageSpeed lo
+ * situaba cerrando la ruta crítica en 1.893 ms con 41,56 KiB. Compite por red y
+ * por hilo principal justo en la ventana que decide el LCP, y todo para animar
+ * un gráfico que ya se está viendo —dibujado y correcto— en su fotograma de
+ * póster.
+ *
+ * Con esto la animación sigue llegando, pero después del pintado en vez de
+ * delante de él. No se toca el HTML que se sirve ni lo que ve un rastreador.
+ */
+function usePaginaAsentada() {
+    const [asentada, setAsentada] = useState(false);
+
+    useEffect(() => {
+        let cancelado = false;
+
+        const marcar = () => {
+            if (cancelado) return;
+            // requestIdleCallback no existe en Safari antiguo; el respaldo es un
+            // temporizador corto, que para esto vale igual.
+            const enHueco =
+                window.requestIdleCallback || ((fn) => window.setTimeout(fn, 200));
+            enHueco(() => {
+                if (!cancelado) setAsentada(true);
+            });
+        };
+
+        if (document.readyState === 'complete') {
+            marcar();
+            return () => {
+                cancelado = true;
+            };
+        }
+
+        window.addEventListener('load', marcar, { once: true });
+        return () => {
+            cancelado = true;
+            window.removeEventListener('load', marcar);
+        };
+    }, []);
+
+    return asentada;
+}
+
 const MotionGrafico = ({ escena, etiqueta, className = '', prioridad = false }) => {
     const definicion = ESCENAS[escena];
     const contenedor = useRef(null);
-    const [animar, setAnimar] = useState(false);
+    const [haEntrado, setHaEntrado] = useState(false);
     const [visible, setVisible] = useState(false);
+    const asentada = usePaginaAsentada();
 
     useEffect(() => {
         const nodo = contenedor.current;
@@ -42,7 +92,7 @@ const MotionGrafico = ({ escena, etiqueta, className = '', prioridad = false }) 
         const observador = new IntersectionObserver(
             ([entrada]) => {
                 setVisible(entrada.isIntersecting);
-                if (entrada.isIntersecting) setAnimar(true);
+                if (entrada.isIntersecting) setHaEntrado(true);
             },
             // Un margen generoso: la carga del trozo tarda, y así llega animada
             // en lugar de saltar de estática a animada delante del visitante.
@@ -52,6 +102,12 @@ const MotionGrafico = ({ escena, etiqueta, className = '', prioridad = false }) 
         observador.observe(nodo);
         return () => observador.disconnect();
     }, [prioridad]);
+
+    // Las dos condiciones, no una: haber entrado en pantalla decide SI se anima;
+    // que la página se haya asentado decide CUÁNDO. Para las escenas de más
+    // abajo la segunda ya se cumple cuando se llega a ellas, así que no cambia
+    // nada; la que gana es la del primer viewport.
+    const animar = haEntrado && asentada;
 
     if (!definicion) {
         console.warn(`[motion] No existe la escena "${escena}".`);

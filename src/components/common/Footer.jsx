@@ -84,15 +84,33 @@ const Footer = () => {
                 </div>
             </div>
 
-            {/* La marca a escala de rótulo, recortada abajo. No lleva texto
-                alternativo ni sale del flujo de lectura: es superficie, no
-                contenido, y el nombre ya está en el logotipo de arriba. */}
-            <p
+            {/* La marca a escala de rótulo, sangrada por los lados y recortada
+                abajo por el overflow del pie. No lleva texto alternativo ni sale
+                del flujo de lectura: es superficie, no contenido, y el nombre ya
+                está en el logotipo de arriba.
+
+                Va en SVG y no en un <p> justamente por eso. Al 4,5 % de opacidad
+                no hay contraste que aprobar —ni hace falta: nadie lo lee—, y
+                mientras fuera un nodo de texto la auditoría de accesibilidad lo
+                trataba como texto ilegible. En SVG queda declarado como lo que
+                es, un dibujo, sin tocar ni un píxel del diseño.
+
+                La clase .rotulo sigue aportando tamaño, interlineado, letra
+                espaciada y el margen negativo que fuerza el recorte; el alto de
+                0.75em reproduce la caja de línea que tenía el párrafo. */}
+            <svg
                 aria-hidden="true"
-                className="rotulo font-title pointer-events-none select-none text-center text-white/[0.045]"
+                focusable="false"
+                className="rotulo font-title pointer-events-none block w-full select-none text-white/[0.045]"
+                style={{ height: '0.75em', overflow: 'visible' }}
             >
-                Diabolical
-            </p>
+                {/* Alineado al inicio, no centrado: el texto es más ancho que
+                    su caja, y una línea que no cabe desborda solo por la
+                    derecha. Centrarlo lo movía 61 px a la izquierda. */}
+                <text x="0" y="0.658em" textAnchor="start" fill="currentColor">
+                    Diabolical
+                </text>
+            </svg>
         </footer>
     );
 };

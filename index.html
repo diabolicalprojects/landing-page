@@ -13,22 +13,57 @@
   -->
   <script>document.documentElement.classList.add('js');</script>
 
-  <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) {
-      w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-      var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-      j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-P3P29XB5');</script>
-  <!-- End Google Tag Manager -->
+  <!--
+    Google Tag Manager, con la descarga diferida.
 
-  <!-- Google Analytics (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7C6BCDND8S"></script>
+    El gtag.js suelto que había aquí se retiró: GA4 ya está configurado DENTRO
+    de este contenedor, así que eran dos cargas de la misma propiedad. Costaba
+    167 KiB y, peor que el peso, contaba cada visita dos veces.
+
+    El contenedor tampoco se descarga ya durante el primer pintado. Son 112 KiB
+    que competían por la red y el hilo principal justo en la ventana que decide
+    el LCP, y ninguna etiqueta necesita haberse ejecutado antes de que la
+    página se vea.
+
+    Lo que sí se crea de inmediato es el `dataLayer`, en la línea de abajo. Es
+    un array normal: lo que se empuje antes de que llegue el contenedor se
+    queda encolado y Tag Manager lo procesa entero al arrancar. Por eso diferir
+    no pierde eventos, ni siquiera el de la propia visita.
+
+    El disparo es lo primero que ocurra de: el evento load, la primera
+    interacción real, o 3,5 s de respaldo por si load no llega nunca (una
+    imagen de terceros colgada basta para eso). Con la interacción dentro,
+    quien se va sin tocar nada y sin que la página termine de cargar es el
+    único caso que se pierde, y ese ya se contaba mal en cualquier medición.
+  -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-7C6BCDND8S');
+    (function (w, d, ID) {
+      w.dataLayer = w.dataLayer || [];
+      w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+
+      var lanzado = false;
+      var EVENTOS = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+
+      function cargar() {
+        if (lanzado) return;
+        lanzado = true;
+
+        EVENTOS.forEach(function (e) { w.removeEventListener(e, cargar, true); });
+
+        var s = d.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtm.js?id=' + ID;
+        d.head.appendChild(s);
+      }
+
+      EVENTOS.forEach(function (e) {
+        w.addEventListener(e, cargar, { capture: true, once: true, passive: true });
+      });
+      w.setTimeout(cargar, 3500);
+
+      if (d.readyState === 'complete') cargar();
+      else w.addEventListener('load', cargar, { once: true });
+    })(window, document, 'GTM-P3P29XB5');
   </script>
 
   <!-- SEO_INJECT_START -->
@@ -57,7 +92,19 @@
 
 
   <link rel="preload" href="/logo-cuadrado-blanco.svg" as="image" type="image/svg+xml" />
-  <link rel="preload" href="/fonts/CODE-Bold.otf" as="font" type="font/otf" crossorigin />
+
+  <!--
+    Aquí había un preload de CODE-Bold. Se retiró porque el primer viewport no
+    usa esa fuente: el h1 lleva .titular-xl, que no declara font-family y hereda
+    Plus Jakarta Sans del body. CODE Bold solo aparece en .font-title —cifras de
+    secciones de más abajo, encabezados de páginas interiores y el rótulo del
+    pie—, nada de lo cual está pintado cuando se decide el LCP.
+
+    Un preload es una orden de máxima prioridad: estaba adelantando la fuente
+    por delante de la hoja de estilos y del bundle, que sí bloquean el pintado,
+    para algo que no se ve hasta después. Con font-display: swap, dejar que se
+    pida cuando toca no deja ningún texto invisible.
+  -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
