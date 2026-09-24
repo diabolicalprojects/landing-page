@@ -11,25 +11,31 @@
  * significa algo distinto en su bloque.
  */
 
-/** Orden y presentación de los bloques en la barra lateral. */
+/**
+ * Orden y presentación de los bloques en la barra lateral.
+ *
+ * `ruta` es la página que abre la vista previa al elegir el bloque. Sin ella se
+ * abre la portada; con ella, un bloque que vive en otra página se edita viendo
+ * esa página y no una que no lo contiene.
+ */
 export const BLOQUES = [
     {
         clave: 'hero',
         nombre: 'Portada',
-        ayuda: 'Lo primero que ve alguien al entrar. La frase, el botón y el panel de la noche.',
-        ancla: '#top',
-    },
-    {
-        clave: 'stack',
-        nombre: 'Herramientas',
-        ayuda: 'La tira que pasa con las herramientas a las que nos conectamos.',
+        ayuda: 'Lo primero que ve alguien al entrar: la frase principal y los botones.',
         ancla: '#top',
     },
     {
         clave: 'pilares',
         nombre: 'Qué hacemos',
-        ayuda: 'Los tres frentes: sitios web, agendamiento y automatizaciones.',
+        ayuda: 'Los tres frentes. El primero enlaza a la página de páginas web.',
         ancla: '#pilares',
+    },
+    {
+        clave: 'invisibles',
+        nombre: 'Invisibles para la IA',
+        ayuda: 'La medición propia. Cambia las cifras solo si repites la medición.',
+        ancla: '#invisibles',
     },
     {
         clave: 'verticales',
@@ -52,7 +58,7 @@ export const BLOQUES = [
     {
         clave: 'servicios',
         nombre: 'Catálogo',
-        ayuda: 'Encabezado del catálogo. Los 17 servicios se editan en su propio fichero.',
+        ayuda: 'Encabezado del catálogo. Los 13 servicios se editan en su propio fichero.',
         ancla: '#servicios',
     },
     {
@@ -81,6 +87,21 @@ export const BLOQUES = [
     },
     { clave: 'nav', nombre: 'Menú', ayuda: 'Los enlaces de la barra de arriba.', ancla: '#top' },
     { clave: 'footer', nombre: 'Pie', ayuda: 'Columnas de enlaces y aviso legal.', ancla: '#contacto' },
+    {
+        clave: 'paginasWeb',
+        nombre: 'Página: páginas web',
+        ayuda:
+            'La página /paginas-web-aguascalientes. El título principal lleva la frase «diseño y desarrollo de páginas web en Aguascalientes»: cámbialo solo si sabes por qué. Las preguntas que edites aquí se publican también para Google.',
+        ancla: '#top',
+        ruta: '/paginas-web-aguascalientes',
+    },
+    {
+        clave: 'nosotros',
+        nombre: 'Página: nosotros',
+        ayuda: 'La página /nosotros: de dónde sale el nombre y los principios.',
+        ancla: '#top',
+        ruta: '/nosotros',
+    },
 ];
 
 /** Nombre legible de cada clave. */
@@ -122,6 +143,30 @@ export const ETIQUETAS = {
     fraseB: 'Segunda frase (sale en blanco)',
     apoyo: 'Párrafo de apoyo',
     id: 'Identificador interno',
+    definicion: 'En pocas palabras',
+    tipos: 'Tipos de sitio',
+    paraQuien: 'Para quién es',
+    incluye: 'Qué incluye (una línea por punto)',
+    noIncluye: 'Qué no incluye',
+    alcance: 'Alcance',
+    plazo: 'Plazo típico',
+    diferencias: 'La diferencia',
+    tituloApagado: 'Segunda parte del título (sale en gris)',
+    precio: 'Precio',
+    respuesta: 'Respuesta',
+    factores: 'De qué depende (una línea por factor)',
+    cierre: 'Cierre',
+    portafolio: 'Portafolio',
+    proyectos: 'Proyectos',
+    relacionados: 'Servicios relacionados',
+    pregunta: 'Pregunta',
+    faq: 'Preguntas frecuentes',
+    url: 'Dirección del sitio publicado',
+    imagen: 'Captura',
+    alt: 'Descripción de la captura',
+    giro: 'Giro del cliente',
+    tipo: 'Tipo de sitio',
+    descripcion: 'Descripción',
 };
 
 /** Pistas donde el nombre no basta. */
@@ -134,6 +179,14 @@ export const AYUDAS = {
     fraseB: 'Aquí va el remate. Es la parte que más se lee de toda la página.',
     puntos: 'Tres como mucho. Di lo que el sistema HACE, nunca cuánto mejora.',
     reloj: 'De madrugada a propósito: es la prueba de que el sistema no duerme.',
+    definicion:
+        'Un párrafo que se entienda solo, sin nada alrededor. Es el que citan ChatGPT y Google cuando preguntan quién hace páginas web en Aguascalientes.',
+    noIncluye: 'Decir qué no incluye es lo que evita malentendidos después de firmar.',
+    proyectos:
+        'Solo sitios publicados y funcionando, con permiso del cliente. Una tarjeta que lleva a un error es peor que no tener portafolio.',
+    imagen:
+        'Ruta de una imagen subida al propio sitio, por ejemplo /portafolio/cliente.webp. Las imágenes de otros dominios no se muestran.',
+    url: 'La dirección completa del sitio del cliente, empezando por https://',
 };
 
 /** Claves que no se enseñan: son estructura, no contenido. */
@@ -148,6 +201,24 @@ export const OPCIONES = {
     ],
 };
 
+/**
+ * Forma de un elemento nuevo en las listas que pueden empezar vacías. Con la
+ * lista vacía no hay un elemento del que copiar la forma, y sin esto el botón
+ * «añadir» metería un texto suelto donde van tarjetas.
+ */
+export const MODELOS = {
+    proyectos: {
+        id: '',
+        nombre: '',
+        tipo: '',
+        giro: '',
+        descripcion: '',
+        url: '',
+        imagen: '',
+        alt: '',
+    },
+};
+
 /** Cuántas tarjetas tiene sentido tener en cada lista. */
 export const LIMITES_LISTA = {
     items: 12,
@@ -157,6 +228,9 @@ export const LIMITES_LISTA = {
     columnas: 4,
     eventos: 6,
     puntos: 5,
+    incluye: 5,
+    factores: 6,
+    proyectos: 8,
 };
 
 export const etiquetaDe = (clave) =>
@@ -171,6 +245,7 @@ export const etiquetaDe = (clave) =>
  */
 export function tipoDe(clave, valor) {
     if (OPCIONES[clave]) return 'opciones';
+    if (MODELOS[clave]) return 'lista-objetos';
     if (typeof valor === 'boolean') return 'interruptor';
     if (typeof valor === 'number') return 'numero';
     if (Array.isArray(valor)) {

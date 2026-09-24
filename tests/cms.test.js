@@ -228,6 +228,33 @@ test('ocultar una sección la quita del HTML servido', async (t) => {
     await restablecer();
 });
 
+test('una pregunta editada en el panel cambia también el FAQPage de la landing', async (t) => {
+    if (!HAY_BUILD) return t.skip('requiere npm run build');
+
+    // Google exige que lo marcado sea lo que se ve. Si el schema saliera de una
+    // lista fija, editar una respuesta en el panel dejaría el marcado mintiendo.
+    const pregunta = `¿Pregunta editada ${Date.now()}?`;
+    const respuesta = 'Respuesta escrita desde el panel.';
+    const res = await guardar({
+        paginasWeb: { faq: { items: [{ pregunta, respuesta }] } },
+    });
+    assert.equal(res.status, 200);
+
+    const html = await (await fetch(`${BASE}/paginas-web-aguascalientes`)).text();
+    const faq = [...html.matchAll(/application\/ld\+json">(.*?)<\/script>/gs)]
+        .map((m) => JSON.parse(m[1]))
+        .find((b) => b['@type'] === 'FAQPage');
+
+    assert.ok(faq, 'la landing dejó de publicar FAQPage');
+    assert.ok(
+        faq.mainEntity.some((q) => q.name === pregunta && q.acceptedAnswer.text === respuesta),
+        'la pregunta editada no llegó al marcado'
+    );
+    assert.ok(html.replace(/<script[\s\S]*?<\/script>/g, '').includes(pregunta));
+
+    await restablecer();
+});
+
 // --- Prospectos ------------------------------------------------------------
 
 test('un prospecto entra sin sesión y solo se lee con ella', async () => {

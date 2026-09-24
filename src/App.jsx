@@ -19,6 +19,7 @@ import InicioPage from './pages/InicioPage';
 import NosotrosPage from './pages/NosotrosPage';
 import ServiciosPage from './pages/ServiciosPage';
 import ServicioPage from './pages/ServicioPage';
+import PaginasWebPage from './pages/PaginasWebPage';
 import SectoresPage from './pages/SectoresPage';
 import SectorPage from './pages/SectorPage';
 import ContactoPage from './pages/ContactoPage';
@@ -27,7 +28,7 @@ import ArticuloPage from './pages/ArticuloPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 
 import { SECTORES } from './data/sectores';
-import { SERVICIOS } from './data/servicios';
+import { SERVICIOS, rutaServicio } from './data/servicios';
 import { ARTICULOS } from './data/articulos';
 
 // Rutas secundarias que no se prerenderizan: estas sí se parten.
@@ -49,7 +50,11 @@ function App() {
                     <Route path="/nosotros" element={<NosotrosPage />} />
 
                     <Route path="/servicios" element={<ServiciosPage />} />
-                    {SERVICIOS.map((servicio) => (
+                    {/* Los servicios con dirección propia tienen su página
+                        aparte; su /servicios/<slug> antiguo redirige desde el
+                        servidor. */}
+                    <Route path={rutaServicio('sitio-web')} element={<PaginasWebPage />} />
+                    {SERVICIOS.filter((servicio) => !servicio.ruta).map((servicio) => (
                         <Route
                             key={servicio.slug}
                             path={`/servicios/${servicio.slug}`}

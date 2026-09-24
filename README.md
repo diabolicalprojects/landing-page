@@ -241,7 +241,7 @@ las etiquetas.
 
 1. `vite build` — bundle de cliente en `dist/`.
 2. `vite build --config vite.config.ssr.js` — build de servidor en `.ssr/`.
-3. `node scripts/prerender.mjs` — renderiza las 10 rutas a HTML dentro de `dist/`.
+3. `node scripts/prerender.mjs` — renderiza las 28 rutas a HTML dentro de `dist/`.
 
 En producción el servidor **no sirve ese HTML directamente**. Usa el bundle de `.ssr/` para
 renderizar cada página en el momento, con el contenido que hay guardado ahora, y cachea el
@@ -278,7 +278,8 @@ que React descartara todo el HTML del servidor (error #419).
 /                          inicio
 /nosotros                  quiénes somos
 /servicios                 índice del catálogo
-/servicios/<slug>          una por cada uno de los 13 servicios
+/servicios/<slug>          una por cada servicio (12 de los 13)
+/paginas-web-aguascalientes  el servicio de diseño web, con landing propia
 /sectores                  índice de sectores
 /sectores/<slug>           una por cada uno de los 6 sectores
 /contacto                  auditoría y formulario
@@ -298,6 +299,24 @@ La lista (`REDIRECCIONES` en `server/schema.js`) se escribe a mano y no se deriv
 de los slugs actuales, porque tiene que reflejar lo que Google ya tiene
 indexado: `/automatizacion-para-spas` ya no existe como slug —el sector pasó a
 llamarse `salones-de-belleza`— y aun así tiene que llevar a algún sitio útil.
+
+`/servicios/sitio-web` también devuelve **301**, a `/paginas-web-aguascalientes`.
+
+**Landing de páginas web.** Es la única página que persigue una búsqueda distinta
+de la frase de la casa: «diseño de páginas web», «diseño y desarrollo de páginas
+web en Aguascalientes» y «páginas web Aguascalientes». Las tres se reparten entre
+la URL, el `<title>` y el h1 en lugar de repetirse. El servicio `sitio-web` lleva
+`"ruta"` en `servicios.json`, y `rutaServicio()` (servidor y cliente) la usa en
+todos los enlaces, el catálogo de ofertas y el sitemap: dos URL persiguiendo la
+misma búsqueda se quitan la posición la una a la otra.
+
+Todo su texto está en el bloque `paginasWeb` del contenido editable (panel →
+«Página: páginas web», con la vista previa abierta en esa página). El FAQPage y el
+catálogo del `Service` se construyen en cada petición a partir de ese mismo
+bloque, así que editar una respuesta en el panel cambia también el marcado. El
+portafolio está vacío y oculto a propósito: solo se llena con sitios de cliente
+publicados y funcionando, con captura subida al propio sitio (la CSP no carga
+imágenes de otros dominios).
 
 ## Escenas animadas
 

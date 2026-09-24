@@ -200,6 +200,17 @@ html {
   text-wrap: balance;
 }
 
+/*
+  El mismo titular para una frase clave larga («Diseño y desarrollo de páginas
+  web en Aguascalientes»). A tamaño completo «Aguascalientes» no cabe en su
+  columna y la frase ocupa cinco líneas; un escalón menos la deja en tres sin
+  cambiar de registro.
+*/
+.titular-xl.titular-largo {
+  font-size: calc(clamp(2.25rem, 5.6vw, 4.25rem) * var(--escala-titulo));
+  line-height: 1;
+}
+
 .titular-l {
   font-size: calc(clamp(2rem, 4.6vw, 3.5rem) * var(--escala-titulo));
   line-height: 1.03;

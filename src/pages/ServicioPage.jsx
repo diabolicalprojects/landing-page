@@ -5,7 +5,7 @@ import Pagina, { Migas } from '../components/common/Pagina';
 import Enlace from '../components/common/Enlace';
 import MotionGrafico from '../motion/MotionGrafico';
 import { hayEscena } from '../motion/escenas';
-import { SERVICIOS, getServicio } from '../data/servicios';
+import { SERVICIOS, getServicio, rutaServicio } from '../data/servicios';
 
 /*
  * Página de un servicio.
@@ -121,7 +121,7 @@ const ServicioPage = ({ slug }) => {
                                 {hermanos.map((otro) => (
                                     <li key={otro.slug}>
                                         <Enlace
-                                            destino={`/servicios/${otro.slug}`}
+                                            destino={rutaServicio(otro.slug)}
                                             className="tarjeta tarjeta-enlace flex h-full flex-col p-5"
                                         >
                                             <span className="text-[0.9375rem] font-extrabold tracking-tight text-white">

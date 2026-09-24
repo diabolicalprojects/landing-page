@@ -2,6 +2,7 @@ const SECTORES = require('../src/data/sectores.json');
 const ARTICULOS = require('../src/data/articulos.json');
 const SERVICIOS = require('../src/data/servicios.json');
 const config = require('./config');
+const { leerContenido } = require('./contenido');
 
 const SITE = config.siteUrl;
 
@@ -26,7 +27,15 @@ const EMAIL = 'contacto@diabolicalservices.tech';
  * que esa pagina hubiera ganado.
  */
 const rutaSector = (slug) => `/sectores/${slug}`;
-const rutaServicio = (slug) => `/servicios/${slug}`;
+/*
+ * Un servicio puede tener su página fuera de /servicios cuando compite por una
+ * búsqueda con nombre propio. Es el caso del diseño web: su página es
+ * /paginas-web-aguascalientes (campo `ruta` en servicios.json), y la antigua
+ * /servicios/sitio-web redirige ahí. Dos URL persiguiendo la misma búsqueda se
+ * quitan la posición la una a la otra.
+ */
+const rutaServicio = (slug) =>
+    SERVICIOS.find((s) => s.slug === slug)?.ruta ?? `/servicios/${slug}`;
 const rutaArticulo = (slug) => `/blog/${slug}`;
 
 /** Índice del blog. Existe como constante porque la referencian las migas,
@@ -37,6 +46,7 @@ const RUTA_SERVICIOS = '/servicios';
 const RUTA_SECTORES = '/sectores';
 const RUTA_NOSOTROS = '/nosotros';
 const RUTA_CONTACTO = '/contacto';
+const RUTA_PAGINAS_WEB = rutaServicio('sitio-web');
 
 /*
  * Direcciones antiguas que ya estaban indexadas, con su destino actual.
@@ -52,6 +62,7 @@ const REDIRECCIONES = {
     '/automatizacion-para-spas': rutaSector('salones-de-belleza'),
     '/automatizacion-para-gimnasios': rutaSector('gimnasios'),
     '/automatizacion-para-despachos-y-oficinas': rutaSector('despachos-y-oficinas'),
+    '/servicios/sitio-web': RUTA_PAGINAS_WEB,
 };
 
 /** Los más recientes primero, igual que en el cliente. */
@@ -92,7 +103,7 @@ function negocio() {
         name: 'Diabolical Services',
         alternateName: 'Diabolical',
         description:
-            'Inteligencia artificial para negocios en Aguascalientes. Diseñamos e instalamos sistemas que atienden, agendan y dan seguimiento sobre las herramientas que la empresa ya utiliza, además de posicionamiento, publicidad, sitio web e identidad de marca. Para inmobiliarias, salones de belleza, clínicas, gimnasios, despachos y comercio.',
+            'Inteligencia artificial para negocios en Aguascalientes. Diseño y desarrollo de páginas web, posicionamiento en Google y en motores de IA, publicidad, identidad de marca y sistemas que atienden, agendan y dan seguimiento sobre las herramientas que la empresa ya utiliza. Para inmobiliarias, salones de belleza, clínicas, gimnasios, despachos y comercio.',
         url: SITE,
         telephone: TELEFONO,
         email: EMAIL,
@@ -116,7 +127,10 @@ function negocio() {
             'Marketing digital para negocios locales',
             'Posicionamiento en buscadores y en motores generativos',
             'Publicidad en Google',
-            'Diseño y desarrollo web',
+            'Diseño de páginas web',
+            'Diseño y desarrollo de páginas web',
+            'Landing pages',
+            'Tiendas en línea',
             'Identidad de marca',
             'Inteligencia artificial aplicada a negocios',
             'Automatización de procesos',
@@ -294,6 +308,23 @@ function metadatosPorRuta() {
         };
     }
 
+    /*
+     * La landing de páginas web no hereda el título genérico de servicio: tiene
+     * su propia búsqueda. Las tres frases clave se reparten en vez de repetirse:
+     *
+     *   URL     páginas web Aguascalientes
+     *   title   diseño de páginas web en Aguascalientes
+     *   h1      diseño y desarrollo de páginas web en Aguascalientes
+     */
+    meta[RUTA_PAGINAS_WEB] = {
+        title: 'Diseño de páginas web en Aguascalientes | Diabolical',
+        description:
+            'Diseño y desarrollo de páginas web en Aguascalientes: landing pages, sitios corporativos, tiendas en línea y sitios a medida, legibles para Google y la IA.',
+        keywords:
+            'diseño de páginas web, diseño y desarrollo de páginas web en Aguascalientes, páginas web Aguascalientes, diseño web Aguascalientes, desarrollo web Aguascalientes, tiendas en línea Aguascalientes, landing page Aguascalientes',
+        robots: 'index, follow',
+    };
+
     meta[RUTA_SECTORES] = {
         title: 'Inteligencia artificial por sector en Aguascalientes | Diabolical',
         description:
@@ -361,8 +392,96 @@ function negocioCompacto() {
     return ficha;
 }
 
+/**
+ * Preguntas que la landing de páginas web publica como FAQPage.
+ *
+ * Salen del contenido editable (bloque paginasWeb) y no de un fichero aparte:
+ * Google exige que lo marcado sea lo que ve el visitante, y si el equipo edita
+ * una respuesta en el panel, el marcado tiene que cambiar con ella. La pregunta
+ * del precio tiene sección propia en la página y entra aquí con su respuesta
+ * completa, factores incluidos.
+ */
+function preguntasPaginasWeb(bloque) {
+    const preguntas = [];
+    const precio = bloque.precio;
+    if (precio?.titulo && precio?.respuesta) {
+        const factores = (precio.factores ?? []).filter(Boolean);
+        preguntas.push({
+            q: precio.titulo,
+            a: [precio.respuesta, ...factores].join(' '),
+        });
+    }
+    for (const item of bloque.faq?.items ?? []) {
+        if (item?.pregunta && item?.respuesta) preguntas.push({ q: item.pregunta, a: item.respuesta });
+    }
+    return preguntas;
+}
+
+/**
+ * JSON-LD de /paginas-web-aguascalientes.
+ *
+ * Un Service con los cuatro tipos de sitio como catálogo, sin precio: el precio
+ * no se publica, y un Offer con un precio inventado sería peor que ninguno.
+ */
+function bloquesPaginasWeb() {
+    const servicio = SERVICIOS.find((x) => rutaServicio(x.slug) === RUTA_PAGINAS_WEB);
+    const bloque = leerContenido().valor.paginasWeb ?? {};
+    const url = `${SITE}${RUTA_PAGINAS_WEB}`;
+    const tipos = (bloque.tipos?.items ?? []).filter((t) => t?.nombre);
+    const preguntas = preguntasPaginasWeb(bloque);
+
+    const bloques = [
+        {
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            '@id': `${url}#servicio`,
+            name: 'Diseño y desarrollo de páginas web en Aguascalientes',
+            alternateName: ['Diseño de páginas web', 'Páginas web Aguascalientes'],
+            description: bloque.definicion?.texto || servicio.resumen,
+            url,
+            serviceType: 'Diseño y desarrollo de páginas web',
+            category: servicio.categoria,
+            provider: { '@id': ID_NEGOCIO },
+            areaServed: [
+                { '@type': 'City', name: 'Aguascalientes' },
+                { '@type': 'State', name: 'Aguascalientes' },
+                { '@type': 'Country', name: 'México' },
+            ],
+            termsOfService: servicio.limite,
+            ...(tipos.length > 0 && {
+                hasOfferCatalog: {
+                    '@type': 'OfferCatalog',
+                    name: 'Tipos de página web',
+                    itemListElement: tipos.map((t) => ({
+                        '@type': 'Offer',
+                        itemOffered: {
+                            '@type': 'Service',
+                            name: t.nombre,
+                            description: t.noIncluye ? `${t.paraQuien} No incluye: ${t.noIncluye}` : t.paraQuien,
+                        },
+                    })),
+                },
+            }),
+        },
+    ];
+
+    if (preguntas.length > 0) bloques.push(faqPage(preguntas));
+
+    bloques.push(
+        migas([
+            { nombre: 'Inicio', ruta: '/' },
+            { nombre: 'Servicios', ruta: RUTA_SERVICIOS },
+            { nombre: servicio.nombre, ruta: RUTA_PAGINAS_WEB },
+        ])
+    );
+
+    return bloques;
+}
+
 /** Los bloques JSON-LD que corresponden a una ruta. */
 function bloquesDeRuta(ruta) {
+    if (ruta === RUTA_PAGINAS_WEB) return bloquesPaginasWeb();
+
     /*
      * Página de un servicio.
      *
@@ -682,9 +801,11 @@ module.exports = {
     RUTA_SECTORES,
     RUTA_NOSOTROS,
     RUTA_CONTACTO,
+    RUTA_PAGINAS_WEB,
     REDIRECCIONES,
     SERVICIOS,
     FAQ_PORTADA,
+    preguntasPaginasWeb,
     rutaSector,
     rutaServicio,
     rutaArticulo,

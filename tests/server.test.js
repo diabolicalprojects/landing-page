@@ -18,9 +18,11 @@ const {
     ARTICULOS,
     SERVICIOS,
     REDIRECCIONES,
+    RUTA_PAGINAS_WEB,
     rutaSector,
     rutaServicio,
 } = require('../server/schema');
+const CONTENIDO = require('../src/data/contenido.json');
 
 const PORT = 4173;
 const BASE = `http://127.0.0.1:${PORT}`;
@@ -479,7 +481,11 @@ test('cada servicio tiene su página, con su alcance publicado', async (t) => {
         const visible = html.replace(/<script[\s\S]*?<\/script>/g, '');
 
         assert.ok(visible.includes(servicio.limite), `${ruta} no publica su alcance`);
-        assert.ok(visible.includes(servicio.resumen), `${ruta} no trae su resumen`);
+        // Un servicio con landing propia se presenta con el texto de su página,
+        // no con el resumen de catálogo; el resumen sigue en /servicios.
+        if (!servicio.ruta) {
+            assert.ok(visible.includes(servicio.resumen), `${ruta} no trae su resumen`);
+        }
         assert.match(html, new RegExp(`rel="canonical" href="[^"]*${ruta}"`));
         assert.match(html, /"@type":\s*"BreadcrumbList"/);
     }
@@ -553,7 +559,7 @@ test('el registro de marca se mantiene formal', async (t) => {
         'no estafadores',
     ];
 
-    const rutas = ['/', '/nosotros', '/servicios', '/sectores', '/contacto'];
+    const rutas = ['/', '/nosotros', '/servicios', '/sectores', '/contacto', RUTA_PAGINAS_WEB];
 
     for (const ruta of rutas) {
         const html = await (await fetch(`${BASE}${ruta}`)).text();
@@ -597,4 +603,87 @@ test('las preguntas frecuentes responden las objeciones reales de venta', async 
 
     // Y el marcado tiene que llevar las mismas preguntas que se ven.
     assert.match(html, /"@type":\s*"FAQPage"/);
+});
+
+
+test('la landing de páginas web persigue sus tres búsquedas', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    /*
+     * Tres frases clave repartidas en tres señales distintas, en lugar de la
+     * misma repetida: la URL lleva «páginas web Aguascalientes», el título
+     * «diseño de páginas web en Aguascalientes» y el h1 «diseño y desarrollo
+     * de páginas web en Aguascalientes».
+     */
+    assert.equal(RUTA_PAGINAS_WEB, '/paginas-web-aguascalientes');
+
+    const res = await fetch(`${BASE}${RUTA_PAGINAS_WEB}`);
+    assert.equal(res.status, 200);
+    const html = await res.text();
+
+    assert.match(html, /<title>Diseño de páginas web en Aguascalientes/);
+    assert.match(html, /<h1[^>]*>Diseño y desarrollo de páginas web en Aguascalientes<\/h1>/);
+    assert.match(html, new RegExp(`rel="canonical" href="[^"]*${RUTA_PAGINAS_WEB}"`));
+
+    const bloques = [...html.matchAll(/application\/ld\+json">(.*?)<\/script>/gs)].map((m) =>
+        JSON.parse(m[1])
+    );
+    const servicio = bloques.find((b) => b['@type'] === 'Service');
+    assert.ok(servicio, 'la landing no publica su Service');
+    assert.equal(
+        servicio.hasOfferCatalog.itemListElement.length,
+        CONTENIDO.paginasWeb.tipos.items.length,
+        'el catálogo del Service no coincide con los tipos de sitio visibles'
+    );
+    assert.ok(bloques.some((b) => b['@type'] === 'BreadcrumbList'));
+
+    // Lo marcado como FAQPage tiene que estar a la vista, precio incluido.
+    const faq = bloques.find((b) => b['@type'] === 'FAQPage');
+    assert.ok(faq, 'la landing no publica FAQPage');
+    const visible = html.replace(/<script[\s\S]*?<\/script>/g, '');
+    assert.ok(faq.mainEntity.length >= CONTENIDO.paginasWeb.faq.items.length);
+    for (const entrada of faq.mainEntity) {
+        assert.ok(visible.includes(entrada.name), `"${entrada.name}" está marcada pero no se ve`);
+    }
+    assert.ok(visible.includes('¿Cuánto cuesta una página web en Aguascalientes?'));
+
+    // Sin proyectos publicados no hay portafolio: ni sección vacía ni enlaces rotos.
+    assert.equal(CONTENIDO.paginasWeb.portafolio.proyectos.length, 0);
+    assert.ok(!html.includes('id="portafolio"'), 'el portafolio vacío no debería pintarse');
+
+    // Enlazada desde la portada y el catálogo; en el sitemap y en los llms.
+    const portada = await (await fetch(`${BASE}/`)).text();
+    assert.ok(portada.includes(`href="${RUTA_PAGINAS_WEB}"`), 'la portada no enlaza a la landing');
+    const catalogo = await (await fetch(`${BASE}/servicios`)).text();
+    assert.ok(catalogo.includes(`href="${RUTA_PAGINAS_WEB}"`), '/servicios no enlaza a la landing');
+    assert.ok(!catalogo.includes('href="/servicios/sitio-web"'), 'queda un enlace a la dirección vieja');
+
+    const sitemap = await (await fetch(`${BASE}/sitemap.xml`)).text();
+    assert.ok(sitemap.includes(RUTA_PAGINAS_WEB));
+    assert.ok(!sitemap.includes('/servicios/sitio-web'), 'una dirección que redirige no va en el sitemap');
+
+    const llms = await (await fetch(`${BASE}/llms.txt`)).text();
+    assert.ok(llms.includes('## Diseño y desarrollo de páginas web en Aguascalientes'));
+    assert.ok(llms.includes(RUTA_PAGINAS_WEB));
+});
+
+test('los textos de servicio y de la landing hablan de usted', () => {
+    // El trato es de usted en todo el sitio. El catálogo y la landing se
+    // escribieron en momentos distintos y el tuteo se cuela sin que nadie lo vea.
+    const TUTEO = /\b(tu|tus|ti|contigo|tuyo|tuya|tienes|quieres|puedes|necesitas|haces|usas)\b/i;
+
+    const textos = [];
+    const recoger = (valor) => {
+        if (typeof valor === 'string') textos.push(valor);
+        else if (Array.isArray(valor)) valor.forEach(recoger);
+        else if (valor && typeof valor === 'object') Object.values(valor).forEach(recoger);
+    };
+    recoger(SERVICIOS);
+    recoger(CONTENIDO.paginasWeb);
+
+    for (const texto of textos) {
+        assert.ok(!TUTEO.test(texto), `tuteo en: «${texto}»`);
+    }
 });

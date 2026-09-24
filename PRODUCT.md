@@ -221,6 +221,21 @@ Las rutas de sector cambiaron de `/automatizacion-para-X` a `/sectores/X`. Las
 antiguas devuelven 301 y **no deben borrarse**: estaban indexadas, y un 404
 tiraría a la basura lo que esas páginas hubieran ganado.
 
+El 24-09-2026 el servicio de sitio web pasó a su propia landing,
+`/paginas-web-aguascalientes`, para competir por «diseño de páginas web»,
+«diseño y desarrollo de páginas web en Aguascalientes» y «páginas web
+Aguascalientes». La portada sigue en la frase de la casa y enlaza a la landing
+desde el menú, el primer pilar, el catálogo y el pie.
+
+El término no está libre: una revisión del SERP encontró alrededor de una docena
+de agencias locales posicionadas en él, con páginas de 450 a 2 000 palabras y
+el término en el h1; cuatro publican precio. Por eso la página no afirma ser «la
+única agencia especializada». El ángulo es lo que las demás no ofrecen juntas:
+la página legible sin JavaScript para los motores de IA, el asistente dentro del
+sitio, el panel de edición y el alcance de cada tipo de sitio publicado, incluido
+lo que no incluye. El precio sigue sin publicarse; la página contesta la
+pregunta con los factores de los que depende.
+
 Los dos competidores son aplicaciones de cliente con el contenedor vacío: sirven
 un cascarón y montan todo el contenido con JavaScript. Google lo ejecuta y los
 ve; la mayoría de rastreadores de motores generativos no.

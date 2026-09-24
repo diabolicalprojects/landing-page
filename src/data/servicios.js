@@ -28,10 +28,16 @@ import SERVICIOS from './servicios.json';
  *   resumen    una frase que se sostiene sola fuera de la página
  *   detalle    qué incluye de verdad, en concreto
  *   limite     dónde se detiene. Obligatorio, sin excepción.
+ *   ruta       opcional. Dirección propia cuando el servicio compite por una
+ *              búsqueda con nombre propio (el diseño web vive en
+ *              /paginas-web-aguascalientes). Sin ella: /servicios/<slug>.
  */
 export { SERVICIOS };
 
 export const getServicio = (slug) => SERVICIOS.find((s) => s.slug === slug);
+
+/** Dirección de la página de un servicio. La misma regla que server/schema.js. */
+export const rutaServicio = (slug) => getServicio(slug)?.ruta ?? `/servicios/${slug}`;
 
 /** Orden de las categorías: el recorrido real de un cliente, no el alfabético. */
 export const CATEGORIAS = [

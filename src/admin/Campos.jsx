@@ -4,6 +4,7 @@ import { ChevronDown, GripVertical, Plus, Trash2 } from 'lucide-react';
 import {
     AYUDAS,
     LIMITES_LISTA,
+    MODELOS,
     OCULTAS,
     OPCIONES,
     elementoNuevo,
@@ -302,7 +303,7 @@ const ListaObjetos = ({ clave, valor, ruta, onCambio }) => {
                 <button
                     type="button"
                     onClick={() => {
-                        onCambio(ruta, [...valor, elementoNuevo(valor[0])]);
+                        onCambio(ruta, [...valor, elementoNuevo(valor[0] ?? MODELOS[clave])]);
                         setAbierto(valor.length);
                     }}
                     className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-white/12 px-3 py-2 text-[0.75rem] font-bold text-white/70 transition-colors hover:border-white/30 hover:text-white"

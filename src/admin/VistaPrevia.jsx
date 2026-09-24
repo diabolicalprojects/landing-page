@@ -54,6 +54,12 @@ const VistaPrevia = ({ contenido, ruta = '/' }) => {
         enviar(contenido);
     }, [contenido, enviar]);
 
+    // Al cambiar de página el iframe carga otra dirección, y hasta que esa página
+    // monte su escucha no hay a quién mandarle el borrador.
+    useEffect(() => {
+        listaRef.current = false;
+    }, [ruta]);
+
     const anchoActual = TAMANOS.find((t) => t.id === tamano)?.ancho;
 
     return (

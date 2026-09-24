@@ -25,6 +25,12 @@ typography:
     fontWeight: 800
     lineHeight: 0.98
     letterSpacing: "-0.045em"
+  titular-xl-largo:
+    fontFamily: "Plus Jakarta Sans, system-ui, sans-serif"
+    fontSize: "clamp(2.25rem, 5.6vw, 4.25rem)"
+    fontWeight: 800
+    lineHeight: 1
+    letterSpacing: "-0.045em"
   titular-l:
     fontFamily: "Plus Jakarta Sans, system-ui, sans-serif"
     fontSize: "clamp(2rem, 4.6vw, 3.5rem)"
@@ -206,6 +212,12 @@ por debajo de 11 px no hay contraste que salve la lectura.
 
 `rotulo` vive fuera del ramp a propósito: es la marca a escala de fachada en el
 pie, superficie y no texto de lectura.
+
+`titular-xl titular-largo` es el mismo titular un escalón por debajo, solo para
+un h1 que tiene que llevar una frase clave larga («Diseño y desarrollo de
+páginas web en Aguascalientes»). A tamaño completo la palabra más larga se sale
+de su columna y la frase ocupa cinco líneas. No es un tercer tamaño de titular
+para elegir a gusto: si el h1 cabe en `titular-xl`, va en `titular-xl`.
 
 `--escala-titulo` y `--escala-texto` son multiplicadores que afectan a la escala
 entera. Se puede agrandar la jerarquía sin descomponerla, y no hay forma de

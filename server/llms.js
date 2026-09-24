@@ -4,10 +4,14 @@ const {
     SERVICIOS,
     ARTICULOS_POR_FECHA,
     FAQ_PORTADA,
+    RUTA_PAGINAS_WEB,
+    preguntasPaginasWeb,
     rutaSector,
+    rutaServicio,
     rutaArticulo,
     RUTAS_PUBLICAS,
 } = require('./schema');
+const { leerContenido } = require('./contenido');
 
 const SITE = config.siteUrl;
 
@@ -40,12 +44,59 @@ function servicios() {
             const items = SERVICIOS.filter((s) => s.categoria === categoria);
             if (items.length === 0) return '';
             const lineas = items
-                .map((s) => `- **${s.nombre}** — ${s.resumen} Límite: ${s.limite}`)
+                .map(
+                    (s) =>
+                        `- **${s.nombre}** — ${s.resumen} Límite: ${s.limite} Ver: ${SITE}${rutaServicio(s.slug)}`
+                )
                 .join('\n');
             return `### ${categoria}\n\n${lineas}`;
         })
         .filter(Boolean)
         .join('\n\n');
+}
+
+/**
+ * La landing de páginas web, en texto: qué tipos de sitio hay, qué incluye y qué
+ * no cada uno, y de qué depende el precio. Sale del mismo bloque editable que
+ * pinta la página, así que un cambio en el panel llega también aquí.
+ */
+function paginasWeb({ conPreguntas = false } = {}) {
+    const bloque = leerContenido().valor.paginasWeb ?? {};
+    const tipos = (bloque.tipos?.items ?? [])
+        .filter((t) => t?.nombre)
+        .map((t) => {
+            const incluye = (t.incluye ?? []).map((i) => `- ${i}`).join('\n');
+            return `### ${t.nombre}
+
+${t.paraQuien}
+
+${incluye}
+
+No incluye: ${t.noIncluye}
+Alcance: ${t.alcance} · Plazo típico: ${t.plazo}`;
+        })
+        .join('\n\n');
+
+    const factores = (bloque.precio?.factores ?? []).map((f) => `- ${f}`).join('\n');
+    const preguntas = conPreguntas
+        ? `\n\n### Preguntas frecuentes sobre páginas web\n\n${preguntasPaginasWeb(bloque)
+              .map((f) => `**${f.q}**\n\n${f.a}`)
+              .join('\n\n')}`
+        : '';
+
+    return `## Diseño y desarrollo de páginas web en Aguascalientes
+
+Página: ${SITE}${RUTA_PAGINAS_WEB}
+
+${bloque.definicion?.texto ?? ''}
+
+${tipos}
+
+### ${bloque.precio?.titulo ?? 'Precio'}
+
+${bloque.precio?.respuesta ?? ''}
+
+${factores}${preguntas}`;
 }
 
 function construirLlms() {
@@ -55,12 +106,11 @@ function construirLlms() {
 
     return `# Diabolical Services
 
-> Agencia de marketing digital y automatización con inteligencia artificial en
-> Aguascalientes, México. Cubrimos el ciclo completo para negocios locales:
-> posicionamiento en buscadores y en motores de IA, ficha de Google, publicidad,
-> sitio web, identidad de marca, y sistemas autónomos que atienden, agendan y dan
-> seguimiento por WhatsApp. Para clínicas, spas, gimnasios, despachos y oficinas
-> pequeñas.
+> Inteligencia artificial para negocios en Aguascalientes, México. Diseño y
+> desarrollo de páginas web, posicionamiento en buscadores y en motores de IA,
+> ficha de Google, publicidad, identidad de marca, y sistemas que atienden,
+> agendan y dan seguimiento por WhatsApp. Para inmobiliarias, salones de belleza,
+> clínicas, gimnasios, despachos y comercio.
 
 Contacto: WhatsApp +52 449 513 6907 · contacto@diabolicalservices.tech · Aguascalientes, México · ${SITE}
 
@@ -87,6 +137,8 @@ tampoco da consejo médico, legal ni fiscal: deriva a una persona.
 ## Servicios
 
 ${servicios()}
+
+${paginasWeb()}
 
 ## A quién servimos
 
@@ -217,6 +269,10 @@ Aguascalientes, México. Este documento amplía ${SITE}/llms.txt con el detalle
 por sector y el texto completo de los artículos.
 
 Contacto: WhatsApp +52 449 513 6907 · contacto@diabolicalservices.tech
+
+---
+
+${paginasWeb({ conPreguntas: true })}
 
 ---
 

@@ -22,6 +22,11 @@
         "destino": "/servicios"
       },
       {
+        "id": "nav-paginas-web",
+        "texto": "Páginas web",
+        "destino": "/paginas-web-aguascalientes"
+      },
+      {
         "id": "nav-sectores",
         "texto": "Sectores",
         "destino": "/sectores"
@@ -66,10 +71,10 @@
       {
         "id": "pilar-sitios",
         "icono": "monitor",
-        "titulo": "Sitios web con inteligencia artificial",
-        "texto": "Desde una página única hasta una tienda en línea, con un asistente que resuelve dentro del propio sitio en lugar de enviar al visitante a buscar un teléfono.",
+        "titulo": "Páginas web con inteligencia artificial",
+        "texto": "Diseño y desarrollo de páginas web en Aguascalientes, desde una landing hasta una tienda en línea, con un asistente que resuelve dentro del propio sitio en lugar de enviar al visitante a buscar un teléfono.",
         "detalle": "El contenido viaja en el HTML servido, que es como lo leen los motores de inteligencia artificial.",
-        "destino": "/servicios/sitio-web"
+        "destino": "/paginas-web-aguascalientes"
       },
       {
         "id": "pilar-agenda",
@@ -197,8 +202,8 @@
             "destino": "/servicios"
           },
           {
-            "texto": "Sitios web con IA",
-            "destino": "/servicios/sitio-web"
+            "texto": "Diseño de páginas web",
+            "destino": "/paginas-web-aguascalientes"
           },
           {
             "texto": "IA para WhatsApp",
@@ -313,5 +318,250 @@
       }
     ],
     "cierre": "No es una cuestión de volumen sino de lectura: un texto excelente que el modelo no puede leer vale exactamente cero. Es la primera cosa que revisamos en la auditoría."
+  },
+  "paginasWeb": {
+    "hero": {
+      "insignia": "Páginas web · Aguascalientes",
+      "titulo": "Diseño y desarrollo de páginas web en Aguascalientes",
+      "entradilla": "Páginas web a medida, rápidas y legibles para Google y para los motores de inteligencia artificial. Con un asistente que atiende dentro del propio sitio, la agenda conectada y un panel para que su equipo edite sin llamar a nadie.",
+      "ctaPrimario": {
+        "texto": "Solicitar una propuesta",
+        "destino": "/contacto"
+      },
+      "ctaSecundario": {
+        "texto": "Ver los tipos de sitio",
+        "destino": "#tipos"
+      },
+      "pie": "Diseño a medida · Panel para editar · Todo es suyo desde el primer día"
+    },
+    "definicion": {
+      "titulo": "En pocas palabras",
+      "texto": "Diabolical Services diseña y desarrolla páginas web en Aguascalientes: landing pages, sitios corporativos, tiendas en línea y sitios a medida con panel de edición. Cada página se entrega con su contenido legible sin ejecutar JavaScript —que es como la leen Google y los motores de inteligencia artificial—, con datos estructurados y, si el negocio lo necesita, con un asistente de IA que atiende dentro del sitio."
+    },
+    "tipos": {
+      "insignia": "Qué construimos",
+      "titulo": "Páginas web en Aguascalientes para cada necesidad.",
+      "entradilla": "Cuatro tipos de sitio, de menor a mayor alcance. Cada uno dice qué incluye y también qué no, porque es la parte que suele descubrirse después de firmar.",
+      "items": [
+        {
+          "id": "tipo-landing",
+          "nombre": "Landing page",
+          "paraQuien": "Para una campaña, un servicio concreto o un negocio que necesita una sola página que convierta.",
+          "incluye": [
+            "Una página con una sola acción clara.",
+            "Formulario conectado a su WhatsApp o a su CRM.",
+            "Textos escritos para la búsqueda que quiere ganar."
+          ],
+          "noIncluye": "Presentar varios servicios: para eso conviene un sitio corporativo.",
+          "alcance": "Una página",
+          "plazo": "1 a 2 semanas"
+        },
+        {
+          "id": "tipo-corporativo",
+          "nombre": "Sitio corporativo",
+          "paraQuien": "Para presentar la empresa, sus servicios y su forma de trabajar, con una página propia por cada servicio.",
+          "incluye": [
+            "Una página por servicio, que es lo que posiciona en Google.",
+            "Panel para editar textos, imágenes y botones.",
+            "Datos estructurados y mapa del sitio para los buscadores."
+          ],
+          "noIncluye": "Venta en línea con carrito y pagos: para vender dentro del sitio corresponde una tienda en línea.",
+          "alcance": "De 5 a 15 páginas",
+          "plazo": "3 a 5 semanas"
+        },
+        {
+          "id": "tipo-tienda",
+          "nombre": "Tienda en línea",
+          "paraQuien": "Para vender en línea con catálogo, carrito, pago y avisos del estado de cada pedido.",
+          "incluye": [
+            "Catálogo conectado a sus existencias reales.",
+            "Pago con la pasarela que usted elija.",
+            "Recuperación de carritos y avisos automáticos de pedido."
+          ],
+          "noIncluye": "La operación del envío y la fotografía de producto, que corren por su cuenta. El sitio se conecta con las herramientas que ya utilice.",
+          "alcance": "Según el tamaño del catálogo",
+          "plazo": "5 a 8 semanas"
+        },
+        {
+          "id": "tipo-medida",
+          "nombre": "Sitio a medida con panel",
+          "paraQuien": "Para negocios que necesitan funciones propias: reservas, portal de clientes, asistente de IA o conexión con su sistema interno.",
+          "incluye": [
+            "Panel para editar todo el contenido, con vista previa en vivo.",
+            "Asistente de inteligencia artificial dentro del sitio.",
+            "Conexión con su agenda, su CRM o sus sistemas propios."
+          ],
+          "noIncluye": "Un precio de catálogo: se define en la auditoría y se cotiza con el alcance por escrito antes de empezar.",
+          "alcance": "Se define en la auditoría",
+          "plazo": "Según el alcance"
+        }
+      ]
+    },
+    "diferencias": {
+      "insignia": "La diferencia",
+      "titulo": "Una página web que trabaja,",
+      "tituloApagado": "no solo una que se ve bien.",
+      "items": [
+        {
+          "id": "dif-legible",
+          "titulo": "Legible para Google y para la IA",
+          "texto": "El contenido viaja en el código que entrega el servidor, no se monta después con JavaScript. Es como lo leen Google, ChatGPT y Perplexity. Puede comprobarlo en este mismo sitio: desactive JavaScript y todo el texto sigue ahí."
+        },
+        {
+          "id": "dif-ia",
+          "titulo": "Inteligencia artificial dentro",
+          "texto": "Un asistente que resuelve dudas y agenda sin sacar al visitante del sitio, conectado a su agenda y a su WhatsApp. Opcional en cualquiera de los cuatro tipos de sitio."
+        },
+        {
+          "id": "dif-panel",
+          "titulo": "Un panel que de verdad se usa",
+          "texto": "Textos, botones, imágenes y colores se editan desde un panel con vista previa en vivo. Cambiar un horario no debería requerir llamar a nadie."
+        },
+        {
+          "id": "dif-velocidad",
+          "titulo": "Rápida desde el primer byte",
+          "texto": "Cada página llega ya armada desde el servidor, en lugar de esperar a que el navegador la construya, y las animaciones se cargan solo cuando entran en pantalla. Así está hecho este sitio."
+        },
+        {
+          "id": "dif-propiedad",
+          "titulo": "Todo es suyo",
+          "texto": "Código, textos, archivos y accesos le pertenecen desde el primer día, trabaje con nosotros después o no."
+        }
+      ]
+    },
+    "proceso": {
+      "insignia": "Cómo trabajamos",
+      "titulo": "Cómo diseñamos y desarrollamos su página web.",
+      "pasos": [
+        {
+          "id": "pw-1",
+          "titulo": "Diagnóstico y arquitectura",
+          "duracion": "Semana 1",
+          "texto": "Qué tiene que lograr la página, para quién y con qué búsquedas se la va a encontrar. De ahí sale la arquitectura: qué páginas existen y qué dice cada una."
+        },
+        {
+          "id": "pw-2",
+          "titulo": "Contenido",
+          "duracion": "Semanas 1 y 2",
+          "texto": "Redactamos los textos pensando en la búsqueda que cada página tiene que ganar. Usted los aprueba antes de pasar al diseño."
+        },
+        {
+          "id": "pw-3",
+          "titulo": "Diseño",
+          "duracion": "Semanas 2 y 3",
+          "texto": "Diseño a medida sobre la identidad de su marca, pensado primero para el celular, que es donde deciden sus clientes."
+        },
+        {
+          "id": "pw-4",
+          "titulo": "Desarrollo y conexiones",
+          "duracion": "Semanas 3 y 4",
+          "texto": "Construcción, formularios, agenda, WhatsApp y, si se contrata, el asistente de IA. Pruebas en celular y en escritorio."
+        },
+        {
+          "id": "pw-5",
+          "titulo": "Publicación",
+          "duracion": "Al terminar",
+          "texto": "Publicación, envío del mapa del sitio a Google y entrega del panel y de todos los accesos."
+        }
+      ],
+      "nota": "Los plazos corresponden a un sitio corporativo. Una landing se entrega antes y una tienda en línea necesita más tiempo."
+    },
+    "precio": {
+      "insignia": "Precio",
+      "titulo": "¿Cuánto cuesta una página web en Aguascalientes?",
+      "respuesta": "Depende de cuatro cosas, y ninguna es el número de colores. Cotizamos después de una conversación de diagnóstico sin costo, con el alcance por escrito antes de empezar.",
+      "factores": [
+        "Cuántas páginas necesita y cuánto contenido hay que redactar.",
+        "Qué tiene que hacer el sitio además de informar: agendar, vender, reservar o atender.",
+        "Con qué herramientas se conecta: WhatsApp, agenda, CRM o pasarela de pago.",
+        "Si incluye tienda en línea y de qué tamaño es el catálogo."
+      ],
+      "cierre": "Los cuatro tipos de sitio van de menor a mayor alcance. El a medida se define en la auditoría.",
+      "boton": {
+        "texto": "Solicitar una propuesta",
+        "destino": "/contacto"
+      }
+    },
+    "portafolio": {
+      "visible": false,
+      "insignia": "Trabajo reciente",
+      "titulo": "Páginas web que ya están funcionando.",
+      "proyectos": []
+    },
+    "relacionados": {
+      "titulo": "Servicios que suelen acompañar a una página web",
+      "enlaces": [
+        {
+          "texto": "Posicionamiento orgánico",
+          "destino": "/servicios/posicionamiento-organico"
+        },
+        {
+          "texto": "Ficha de Google y mapa",
+          "destino": "/servicios/ficha-de-google"
+        },
+        {
+          "texto": "IA para tienda en línea",
+          "destino": "/servicios/ia-para-tienda"
+        },
+        {
+          "texto": "Identidad de marca y logo",
+          "destino": "/servicios/identidad-de-marca"
+        }
+      ]
+    },
+    "faq": {
+      "insignia": "Preguntas frecuentes",
+      "titulo": "Preguntas frecuentes sobre páginas web en Aguascalientes.",
+      "items": [
+        {
+          "pregunta": "¿Cuánto tarda en estar lista una página web?",
+          "respuesta": "Una landing page, de una a dos semanas. Un sitio corporativo, de tres a cinco semanas. Una tienda en línea, de cinco a ocho semanas. Los plazos dependen sobre todo de que los textos y las fotografías se aprueben a tiempo, así que los fijamos por escrito al empezar."
+        },
+        {
+          "pregunta": "¿Qué es una página web con inteligencia artificial?",
+          "respuesta": "Es una página web que, además de informar, atiende. Incluye un asistente que responde las dudas del visitante con la información real del negocio, consulta la agenda y deja la cita reservada sin que el visitante salga del sitio. Cuando la conversación pide criterio humano, la entrega a una persona del equipo."
+        },
+        {
+          "pregunta": "¿Puedo editar mi página web sin saber programar?",
+          "respuesta": "Sí. Cada sitio se entrega con un panel en el que su equipo edita textos, botones, imágenes y colores, con una vista previa del sitio real que se actualiza mientras escribe. Cambiar un horario o un precio no requiere llamar a nadie."
+        },
+        {
+          "pregunta": "¿La página web incluye posicionamiento en Google?",
+          "respuesta": "Incluye la base: una página por servicio, textos escritos para las búsquedas que importan, datos estructurados, velocidad y mapa del sitio enviado a Google. El posicionamiento continuo —contenido nuevo cada mes, ficha de Google, seguimiento de posiciones— es un servicio aparte, porque es trabajo que no termina el día de la publicación."
+        },
+        {
+          "pregunta": "¿Por qué mi página web no aparece en ChatGPT?",
+          "respuesta": "Con frecuencia porque el sitio se monta entero con JavaScript en el navegador. La mayoría de los rastreadores de los motores generativos leen el código sin ejecutarlo, y en ese caso reciben una página prácticamente vacía. Construimos cada sitio para que el texto completo viaje en el código que entrega el servidor."
+        },
+        {
+          "pregunta": "¿Ya tengo una página web. Conviene rehacerla?",
+          "respuesta": "No siempre. En la auditoría revisamos su sitio actual —velocidad, cómo lo leen Google y los motores de IA, qué páginas faltan— y le decimos por escrito si conviene mejorarlo o reconstruirlo. Si lo que tiene funciona, se lo decimos y nos ahorramos el proyecto."
+        },
+        {
+          "pregunta": "¿Qué necesito tener listo para empezar?",
+          "respuesta": "Claridad sobre qué vende y a quién. Los textos los redactamos nosotros a partir del diagnóstico; si tiene fotografías propias las usamos, y si no, le decimos exactamente cuáles hacen falta."
+        },
+        {
+          "pregunta": "¿De quién es la página web cuando se termina?",
+          "respuesta": "Suya. El código, los textos, los archivos y los accesos le pertenecen desde el primer día, trabaje con nosotros después o no. No retenemos nada para obligarle a seguir."
+        },
+        {
+          "pregunta": "¿Hacen páginas web para negocios fuera de Aguascalientes?",
+          "respuesta": "Sí. El trabajo se hace a distancia y funciona igual en cualquier ciudad. Aguascalientes es donde estamos y donde conocemos el terreno: los giros, la competencia local y cómo busca aquí la gente."
+        }
+      ]
+    },
+    "cierre": {
+      "titulo": "Empecemos por lo que tiene que lograr su página.",
+      "texto": "La conversación de diagnóstico no tiene costo ni compromiso. Salimos de ella sabiendo qué tipo de sitio le conviene, qué páginas necesita y cuánto tardaría.",
+      "boton": {
+        "texto": "Solicitar una propuesta",
+        "destino": "/contacto"
+      },
+      "alternativa": {
+        "texto": "O escríbanos directamente por WhatsApp",
+        "destino": "whatsapp"
+      }
+    }
   }
 }

@@ -527,7 +527,7 @@ const AdminPage = () => {
 
                         {mostrarPrevia && (
                             <section className="hidden w-[46%] flex-none border-l border-white/10 lg:block">
-                                <VistaPrevia contenido={borrador} ruta="/" />
+                                <VistaPrevia contenido={borrador} ruta={bloque.ruta ?? '/'} />
                             </section>
                         )}
                     </>

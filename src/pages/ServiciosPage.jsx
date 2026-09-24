@@ -4,7 +4,7 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import Pagina, { Migas } from '../components/common/Pagina';
 import Enlace from '../components/common/Enlace';
 import MotionGrafico from '../motion/MotionGrafico';
-import { SERVICIOS_POR_CATEGORIA } from '../data/servicios';
+import { SERVICIOS_POR_CATEGORIA, rutaServicio } from '../data/servicios';
 
 /*
  * Índice de servicios.
@@ -71,7 +71,7 @@ const ServiciosPage = () => (
                             {grupo.servicios.map((servicio) => (
                                 <li key={servicio.slug}>
                                     <Enlace
-                                        destino={`/servicios/${servicio.slug}`}
+                                        destino={rutaServicio(servicio.slug)}
                                         className="tarjeta tarjeta-enlace flex h-full flex-col p-6"
                                     >
                                         <h3 className="text-[1rem] font-extrabold leading-tight tracking-tight text-white">

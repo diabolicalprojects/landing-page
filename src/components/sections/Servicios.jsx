@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 
-import { SERVICIOS_POR_CATEGORIA } from '../../data/servicios';
+import { SERVICIOS_POR_CATEGORIA, rutaServicio } from '../../data/servicios';
 import { useBloque } from '../../contenido';
 import EncabezadoSeccion from '../common/EncabezadoSeccion';
 import Enlace from '../common/Enlace';
@@ -15,8 +15,9 @@ import Enlace from '../common/Enlace';
  * construye el OfferCatalog y server/llms.js la guía para motores de IA. Una
  * sola fuente: lo que se ve y lo que se marca no pueden divergir.
  *
- * Aquí va el resumen; el límite de cada servicio vive en /servicios para que la
- * portada se barra de un vistazo. El límite no es opcional, es parte de la
+ * Aquí va el resumen; el límite de cada servicio vive en su página para que la
+ * portada se barra de un vistazo. Cada nombre enlaza a esa página: el texto del
+ * enlace es lo que le dice a un buscador de qué trata el destino. El límite no es opcional, es parte de la
  * oferta — por eso el enlace de abajo lo dice con esas palabras.
  */
 const Servicios = () => {
@@ -54,7 +55,12 @@ const Servicios = () => {
                                 {grupo.servicios.map((servicio) => (
                                     <article key={servicio.slug}>
                                         <h4 className="cuerpo-destacado font-extrabold leading-tight tracking-tight text-white">
-                                            {servicio.nombre}
+                                            <Enlace
+                                                destino={rutaServicio(servicio.slug)}
+                                                className="enlace inline-flex min-h-[1.75rem] items-center"
+                                            >
+                                                {servicio.nombre}
+                                            </Enlace>
                                         </h4>
                                         <p className="cuerpo mt-2">{servicio.resumen}</p>
                                     </article>
