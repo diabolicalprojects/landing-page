@@ -5,6 +5,7 @@ import Pagina, { Migas } from '../components/common/Pagina';
 import Enlace from '../components/common/Enlace';
 import Preguntas from '../components/common/Preguntas';
 import TextoConEnlaces from '../components/common/TextoConEnlaces';
+import Fotografia from '../components/common/Fotografia';
 import { getArticulo, ARTICULOS_POR_FECHA } from '../data/articulos';
 import { getServicio, rutaServicio } from '../data/servicios';
 import { fechaLegible } from '../utils/fechas';
@@ -125,6 +126,7 @@ const ArticuloPage = ({ slug }) => {
                                 )}
                             </p>
                         </div>
+                        {articulo.foto && <Fotografia clave={articulo.foto} prioridad className="mt-12" />}
                     </div>
                 </header>
 

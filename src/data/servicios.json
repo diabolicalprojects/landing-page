@@ -24,7 +24,8 @@
         "Páginas web Aguascalientes",
         "Sitios web en Aguascalientes"
       ]
-    }
+    },
+    "foto": "paginas-web"
   },
   {
     "slug": "chatbots",
@@ -51,7 +52,8 @@
         "Chatbot para WhatsApp",
         "Chatbot con inteligencia artificial"
       ]
-    }
+    },
+    "foto": "chatbots"
   },
   {
     "slug": "agendamiento-automatizado",
@@ -77,7 +79,8 @@
         "Agendamiento automático de citas",
         "Sistema de citas por WhatsApp"
       ]
-    }
+    },
+    "foto": "agendamiento"
   },
   {
     "slug": "posicionamiento-organico",

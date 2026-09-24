@@ -374,6 +374,15 @@ párrafos admiten enlaces internos en Markdown (`[texto](/ruta)`), listas,
 tablas y una `nota` final. Sin enlaces a otros dominios, por decisión del
 cliente.
 
+**Fotografías.** Ocho fotos de Unsplash (licencia gratuita, uso comercial sin
+atribución obligatoria) en `public/imagenes/`, en dos anchos (800 y 1600 px),
+WebP y en blanco y negro. Autor, página de origen, licencia y texto
+alternativo viven en `src/data/fotos.json`; `Fotografia` las pinta con su
+crédito visible y el schema las publica como `ImageObject` con autor y
+licencia. Van debajo del hero de los giros principales, de las landings y en
+el encabezado de cada guía: las escenas animadas siguen siendo lo principal.
+Se sirven desde el propio sitio porque la CSP no carga imágenes de fuera.
+
 **Escenas de los tipos de sitio.** `src/motion/escenas/tipos.jsx` tiene una
 escena por tipo (landing, corporativo, tienda, a medida). Sus claves son los
 `id` de `paginasWeb.tipos.items`, así que la tarjeta pide su escena sin tabla

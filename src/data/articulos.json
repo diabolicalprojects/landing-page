@@ -119,7 +119,8 @@
         "q": "¿Una empresa de IA de Aguascalientes puede trabajar a distancia?",
         "a": "Sí. La instalación se hace a distancia y los sistemas funcionan igual en cualquier ciudad. La ventaja de una empresa local es conocer el terreno: los giros, la competencia y cómo busca la gente en Aguascalientes."
       }
-    ]
+    ],
+    "foto": "ia-negocios"
   },
   {
     "slug": "donde-hacer-una-pagina-web-en-aguascalientes",
@@ -241,7 +242,8 @@
         "q": "¿Puedo editar mi página web sin saber programar?",
         "a": "Sí, si se entrega con un panel de edición. Conviene preguntarlo antes de contratar: un sitio que depende del proveedor para cambiar un horario acaba desactualizado."
       }
-    ]
+    ],
+    "foto": "paginas-web"
   },
   {
     "slug": "chatbots-en-aguascalientes",
@@ -366,7 +368,8 @@
         "q": "¿Mis clientes se van a molestar por hablar con un chatbot?",
         "a": "Lo que molesta es esperar horas o quedarse atrapado sin salida. Un chatbot que se presenta como asistente del negocio, resuelve rápido lo que sabe y pasa a una persona cuando hace falta suele mejorar la experiencia, no empeorarla."
       }
-    ]
+    ],
+    "foto": "chatbots"
   },
   {
     "slug": "ia-para-negocios-en-aguascalientes",
@@ -477,7 +480,8 @@
         "q": "¿Cuánto tiempo tengo que dedicarle yo?",
         "a": "Tres momentos: una conversación inicial para entender cómo trabajan, una sesión para aprobar el guion y una revisión de las primeras semanas. El resto lo hace el proveedor."
       }
-    ]
+    ],
+    "foto": "ia-negocios"
   },
   {
     "slug": "automatizar-citas-spa-y-salon-de-unas",
@@ -569,7 +573,8 @@
         "q": "¿Tengo que cambiar el sistema de reservas que ya uso?",
         "a": "No necesariamente. Se conecta con la agenda o el sistema de reservas que ya utilicen si tiene conexión disponible; si la agenda vive en papel o en una hoja, se monta una nueva."
       }
-    ]
+    ],
+    "foto": "spas"
   },
   {
     "slug": "chatbot-para-inmobiliarias",
@@ -650,7 +655,8 @@
         "q": "¿El chatbot negocia el precio?",
         "a": "No. Informa, filtra y agenda. La negociación, la valoración y el cierre son del asesor, que recibe al prospecto con toda la conversación."
       }
-    ]
+    ],
+    "foto": "inmobiliarias"
   },
   {
     "slug": "como-aparecer-en-chatgpt",
@@ -741,7 +747,8 @@
         "q": "¿Sirve de algo si mi negocio es pequeño?",
         "a": "Precisamente ahí es donde hay más hueco. Las consultas locales y específicas —del tipo «quién automatiza las citas de un spa en Aguascalientes»— tienen muy poca competencia bien estructurada, porque la mayoría de los negocios locales no han tocado nada de esto. Un sitio pequeño pero técnicamente correcto compite bien en ese terreno."
       }
-    ]
+    ],
+    "foto": "paginas-web"
   },
   {
     "slug": "automatizar-whatsapp-negocio",
@@ -840,6 +847,7 @@
         "q": "¿Qué pasa con los datos de los clientes?",
         "a": "El sistema debe manejar únicamente los datos necesarios para atender y agendar. La información sensible permanece en el sistema del negocio, no en el asistente. Qué campos se tocan y cuáles no se define antes de instalar nada, no después."
       }
-    ]
+    ],
+    "foto": "chatbots"
   }
 ]

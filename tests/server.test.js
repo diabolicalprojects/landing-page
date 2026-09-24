@@ -922,3 +922,49 @@ test('cada guía del blog lleva a la landing del servicio que busca quien la lee
     assert.match(titulares, /Chatbots en Aguascalientes/);
     assert.match(titulares, /IA para negocios en Aguascalientes/);
 });
+
+test('las fotos de banco se sirven del propio sitio, con texto alternativo y crédito', async (t) => {
+    const FOTOS = require('../src/data/fotos.json');
+
+    // Cada foto existe en los dos anchos que pide el srcset.
+    for (const foto of Object.values(FOTOS)) {
+        for (const ancho of [800, 1600]) {
+            const archivo = path.join(__dirname, '..', 'public', 'imagenes', `${foto.archivo}-${ancho}.webp`);
+            assert.ok(fs.existsSync(archivo), `falta ${foto.archivo}-${ancho}.webp`);
+        }
+        assert.ok(foto.alt && foto.autor && foto.pagina, `${foto.archivo} sin alt, autor o página`);
+    }
+
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    // Los giros principales, las tres landings y cada guía llevan su foto.
+    const paginas = [
+        ...SECTORES.filter((s) => s.principal).map((s) => ({ ruta: rutaSector(s.slug), clave: s.slug })),
+        ...LANDINGS.map((s) => ({ ruta: s.ruta, clave: s.foto })),
+        ...ARTICULOS.map((a) => ({ ruta: `/blog/${a.slug}`, clave: a.foto })),
+    ];
+    for (const { ruta, clave } of paginas) {
+        const foto = FOTOS[clave];
+        assert.ok(foto, `${ruta} pide una foto que no existe: ${clave}`);
+        const html = await (await fetch(`${BASE}${ruta}`)).text();
+        assert.ok(html.includes(`/imagenes/${foto.archivo}-1600.webp`), `${ruta} no muestra su foto`);
+        assert.ok(html.includes(`alt="${foto.alt}"`), `${ruta} sin texto alternativo en la foto`);
+        assert.ok(html.includes(foto.autor), `${ruta} sin crédito de la foto`);
+    }
+
+    // La imagen de la guía viaja en el BlogPosting con autor y licencia.
+    const guia = ARTICULOS[0];
+    const html = await (await fetch(`${BASE}/blog/${guia.slug}`)).text();
+    const post = [...html.matchAll(/application\/ld\+json">(.*?)<\/script>/gs)]
+        .map((m) => JSON.parse(m[1]))
+        .find((b) => b['@type'] === 'BlogPosting');
+    assert.equal(post.image['@type'], 'ImageObject');
+    assert.match(post.image.license, /unsplash\.com/);
+    assert.ok(post.image.creditText);
+
+    const res = await fetch(`${BASE}/imagenes/${FOTOS[guia.foto].archivo}-800.webp`);
+    assert.equal(res.status, 200);
+    assert.match(res.headers.get('content-type') ?? '', /image\/webp/);
+});

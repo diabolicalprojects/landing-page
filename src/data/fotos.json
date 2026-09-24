@@ -1,0 +1,66 @@
+{
+  "salones-de-unas": {
+    "archivo": "salon-de-unas",
+    "id": "photo-1632345031435-8727f6897d53",
+    "autor": "Giorgio Trovato",
+    "pagina": "https://unsplash.com/es/fotos/gb6gtiTZKB8",
+    "alt": "Una manicurista trabaja las uñas de una clienta en un salón de uñas.",
+    "licencia": "Licencia de Unsplash (uso comercial gratuito, sin atribución obligatoria)"
+  },
+  "spas": {
+    "archivo": "spa",
+    "id": "photo-1600334089648-b0d9d3028eb2",
+    "autor": "engin akyurt",
+    "pagina": "https://unsplash.com/es/fotos/ZbzYDboN7fg",
+    "alt": "Una persona recibe un masaje con piedras calientes en un spa.",
+    "licencia": "Licencia de Unsplash (uso comercial gratuito, sin atribución obligatoria)"
+  },
+  "gimnasios": {
+    "archivo": "gimnasio",
+    "id": "photo-1671970922029-0430d2ae122c",
+    "autor": "Jinish Shah",
+    "pagina": "https://unsplash.com/es/fotos/GNWUPn44-eg",
+    "alt": "Interior de un gimnasio con máquinas y equipo de ejercicio.",
+    "licencia": "Licencia de Unsplash (uso comercial gratuito, sin atribución obligatoria)"
+  },
+  "inmobiliarias": {
+    "archivo": "inmobiliaria",
+    "id": "photo-1724482606633-fa74fe4f5de1",
+    "autor": "Jakub Żerdzicki",
+    "pagina": "https://unsplash.com/es/fotos/GQn9GnMkVQg",
+    "alt": "Una mano sostiene unas llaves sobre maquetas de casas.",
+    "licencia": "Licencia de Unsplash (uso comercial gratuito, sin atribución obligatoria)"
+  },
+  "paginas-web": {
+    "archivo": "paginas-web",
+    "id": "photo-1498050108023-c5249f4df085",
+    "autor": "Christopher Gower",
+    "pagina": "https://unsplash.com/es/fotos/m_HRfLhgABo",
+    "alt": "Una computadora portátil muestra código en un escritorio de trabajo.",
+    "licencia": "Licencia de Unsplash (uso comercial gratuito, sin atribución obligatoria)"
+  },
+  "chatbots": {
+    "archivo": "chatbots",
+    "id": "photo-1512428559087-560fa5ceab42",
+    "autor": "NordWood Themes",
+    "pagina": "https://unsplash.com/es/fotos/q8U1YgBaRQk",
+    "alt": "Una persona escribe un mensaje en su teléfono.",
+    "licencia": "Licencia de Unsplash (uso comercial gratuito, sin atribución obligatoria)"
+  },
+  "agendamiento": {
+    "archivo": "agendamiento",
+    "id": "photo-1435527173128-983b87201f4d",
+    "autor": "Eric Rothermel",
+    "pagina": "https://unsplash.com/es/fotos/FoKO4DpXamQ",
+    "alt": "Una agenda mensual abierta sobre un escritorio.",
+    "licencia": "Licencia de Unsplash (uso comercial gratuito, sin atribución obligatoria)"
+  },
+  "ia-negocios": {
+    "archivo": "ia-negocios",
+    "id": "photo-1542744095-291d1f67b221",
+    "autor": "Campaign Creators",
+    "pagina": "https://unsplash.com/es/fotos/OGOWDVLbMSc",
+    "alt": "Una persona trabaja en una computadora portátil en una oficina.",
+    "licencia": "Licencia de Unsplash (uso comercial gratuito, sin atribución obligatoria)"
+  }
+}

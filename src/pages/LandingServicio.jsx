@@ -6,6 +6,7 @@ import Enlace from '../components/common/Enlace';
 import EncabezadoSeccion from '../components/common/EncabezadoSeccion';
 import PantallaEscena from '../components/common/PantallaEscena';
 import Preguntas from '../components/common/Preguntas';
+import Fotografia from '../components/common/Fotografia';
 import MotionGrafico from '../motion/MotionGrafico';
 import { useBloque } from '../contenido';
 import { ESCENAS } from '../motion/escenas';
@@ -115,6 +116,8 @@ const LandingServicio = ({ slug }) => {
                             />
                         </div>
                     </div>
+
+                    {servicio?.foto && <Fotografia clave={servicio.foto} className="mt-14 md:mt-20" />}
                 </div>
             </section>
 

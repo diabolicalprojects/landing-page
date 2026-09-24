@@ -7,6 +7,7 @@ import MotionGrafico from '../motion/MotionGrafico';
 import { hayEscena } from '../motion/escenas';
 import { SECTORES, getSector } from '../data/sectores';
 import ServiciosPrincipales from '../components/common/ServiciosPrincipales';
+import Fotografia from '../components/common/Fotografia';
 
 /*
  * Página de un sector.
@@ -65,6 +66,11 @@ const SectorPage = ({ slug }) => {
                             )}
                         </div>
                     </div>
+
+                    {/* La escena cuenta el mecanismo; la foto, el lugar. Va
+                        debajo para que la animación siga mandando. Solo los
+                        giros principales tienen foto. */}
+                    <Fotografia clave={sector.slug} className="mt-14 md:mt-20" />
                 </div>
             </section>
 

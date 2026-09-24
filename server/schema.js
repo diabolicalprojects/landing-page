@@ -1,6 +1,7 @@
 const SECTORES = require('../src/data/sectores.json');
 const ARTICULOS = require('../src/data/articulos.json');
 const SERVICIOS = require('../src/data/servicios.json');
+const FOTOS = require('../src/data/fotos.json');
 const config = require('./config');
 const { leerContenido } = require('./contenido');
 
@@ -79,6 +80,26 @@ const REDIRECCIONES = {
     // (estética, anticipos, agenda por profesional) es el de spas.
     '/sectores/salones-de-belleza': rutaSector('spas'),
 };
+
+/**
+ * Una foto de src/data/fotos.json como ImageObject: con autor y licencia, que
+ * es lo que Google usa para mostrar el crédito y la licencia en Imágenes.
+ */
+function imagenDe(clave) {
+    const foto = FOTOS[clave];
+    if (!foto) return null;
+    return {
+        '@type': 'ImageObject',
+        url: `${SITE}/imagenes/${foto.archivo}-1600.webp`,
+        width: 1600,
+        height: 900,
+        caption: foto.alt,
+        creditText: `${foto.autor} / Unsplash`,
+        creator: { '@type': 'Person', name: foto.autor },
+        license: 'https://unsplash.com/es/licencia',
+        acquireLicensePage: foto.pagina,
+    };
+}
 
 /** Los más recientes primero, igual que en el cliente. */
 const ARTICULOS_POR_FECHA = [...ARTICULOS].sort((a, b) => b.fecha.localeCompare(a.fecha));
@@ -467,6 +488,7 @@ function bloquesLanding(servicio) {
                 { '@type': 'Country', name: 'México' },
             ],
             termsOfService: servicio.limite,
+            ...(imagenDe(servicio.foto) && { image: imagenDe(servicio.foto) }),
             ...(tipos.length > 0 && {
                 hasOfferCatalog: {
                     '@type': 'OfferCatalog',
@@ -617,6 +639,7 @@ function bloquesDeRuta(ruta) {
                     { '@type': 'Country', name: 'México' },
                 ],
                 audience: { '@type': 'BusinessAudience', name: sector.nombre },
+                ...(imagenDe(sector.slug) && { image: imagenDe(sector.slug) }),
             },
             faqPage(sector.faq),
             migas([
@@ -700,7 +723,7 @@ function bloquesDeRuta(ruta) {
                 // los motores generativos la usan en la tarjeta de la cita.
                 // Mientras no haya una por artículo se usa la del sitio, que es
                 // real y está publicada; dejarlo vacío descarta la página.
-                image: articulo.imagen ? `${SITE}${articulo.imagen}` : `${SITE}/og-image.png`,
+                image: imagenDe(articulo.foto) ?? `${SITE}/og-image.png`,
                 mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE}${ruta}` },
                 datePublished: articulo.fecha,
                 dateModified: articulo.actualizado || articulo.fecha,
