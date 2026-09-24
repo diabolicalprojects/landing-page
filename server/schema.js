@@ -47,22 +47,37 @@ const RUTA_SECTORES = '/sectores';
 const RUTA_NOSOTROS = '/nosotros';
 const RUTA_CONTACTO = '/contacto';
 const RUTA_PAGINAS_WEB = rutaServicio('sitio-web');
+const RUTA_CHATBOTS = rutaServicio('chatbots');
+const RUTA_AGENDAMIENTO = rutaServicio('agendamiento-automatizado');
+
+/** Los servicios principales, cada uno con su landing y su bloque de contenido. */
+const LANDINGS = SERVICIOS.filter((s) => s.ruta && s.bloque);
 
 /*
  * Direcciones antiguas que ya estaban indexadas, con su destino actual.
  *
  * Escritas a mano y no derivadas de SECTORES a proposito: la lista tiene que
  * reflejar lo que Google ya tiene indexado, no lo que existe hoy. El caso que
- * lo demuestra es /automatizacion-para-spas, cuyo slug ya no existe —el sector
- * pasó a llamarse salones-de-belleza— y que aun asi debe llevar a algun sitio
- * util en lugar de a un 404.
+ * lo demuestra es /automatizacion-para-spas, cuyo slug ya no existe y que aun
+ * asi debe llevar a algun sitio util en lugar de a un 404.
+ *
+ * Cada destino apunta a la dirección FINAL, nunca a otra que también redirige:
+ * una cadena de 301 pierde fuerza en cada salto. Por eso, cuando salones de
+ * belleza se dividió en spas y salones de uñas, se actualizó también la entrada
+ * vieja de spas en lugar de dejar que pasara por salones de belleza.
  */
 const REDIRECCIONES = {
     '/automatizacion-para-clinicas': rutaSector('clinicas'),
-    '/automatizacion-para-spas': rutaSector('salones-de-belleza'),
+    '/automatizacion-para-spas': rutaSector('spas'),
     '/automatizacion-para-gimnasios': rutaSector('gimnasios'),
     '/automatizacion-para-despachos-y-oficinas': rutaSector('despachos-y-oficinas'),
     '/servicios/sitio-web': RUTA_PAGINAS_WEB,
+    // Los dos servicios de conversación se fundieron en el chatbot.
+    '/servicios/ia-whatsapp': RUTA_CHATBOTS,
+    '/servicios/agentes-y-chatbots': RUTA_CHATBOTS,
+    // Salones de belleza se dividió en spas y salones de uñas; su contenido
+    // (estética, anticipos, agenda por profesional) es el de spas.
+    '/sectores/salones-de-belleza': rutaSector('spas'),
 };
 
 /** Los más recientes primero, igual que en el cliente. */
@@ -103,7 +118,7 @@ function negocio() {
         name: 'Diabolical Services',
         alternateName: 'Diabolical',
         description:
-            'Agencia de diseño y desarrollo de páginas web e inteligencia artificial en Aguascalientes. Landing pages, sitios corporativos, tiendas en línea y sitios a medida, posicionamiento en Google y en motores de IA, publicidad, identidad de marca y sistemas que atienden, agendan y dan seguimiento sobre las herramientas que la empresa ya utiliza. Para inmobiliarias, salones de belleza, clínicas, gimnasios, despachos y comercio.',
+            'Empresa de inteligencia artificial y páginas web en Aguascalientes. Tres servicios principales —sitios web, chatbots con IA y agendamiento automatizado— para inmobiliarias, gimnasios, spas y salones de uñas, sobre las herramientas que el negocio ya utiliza. Como complemento: posicionamiento en Google y en motores de IA, publicidad, identidad de marca y automatizaciones a medida.',
         slogan: 'Páginas web e inteligencia artificial para negocios en Aguascalientes.',
         url: SITE,
         telephone: TELEFONO,
@@ -129,9 +144,12 @@ function negocio() {
         knowsAbout: [
             'Diseño de páginas web',
             'Diseño y desarrollo de páginas web',
+            'Chatbots con inteligencia artificial',
+            'Chatbots para WhatsApp',
+            'Agendamiento automatizado de citas',
+            'Inteligencia artificial aplicada a negocios',
             'Landing pages',
             'Tiendas en línea',
-            'Inteligencia artificial aplicada a negocios',
             'Posicionamiento en buscadores y en motores generativos',
             'Marketing digital para negocios locales',
             'Publicidad en Google',
@@ -294,11 +312,11 @@ function metadatosPorRuta() {
     }
 
     meta[RUTA_SERVICIOS] = {
-        title: 'Servicios de páginas web e IA en Aguascalientes | Diabolical',
+        title: 'Servicios: sitios web, chatbots y agenda con IA | Diabolical',
         description:
-            'Trece servicios para negocios en Aguascalientes: páginas web, posicionamiento, Google Ads, marca y atención con IA. Cada uno con su alcance publicado.',
+            'Sitios web, chatbots y agendamiento automatizado para negocios en Aguascalientes, más diez servicios complementarios. Cada uno con su alcance publicado.',
         keywords:
-            'servicios de páginas web Aguascalientes, agencia de páginas web Aguascalientes, inteligencia artificial para negocios en Aguascalientes, agencia de IA Aguascalientes, posicionamiento web Aguascalientes',
+            'sitios web en Aguascalientes, chatbots Aguascalientes, agendamiento automatizado, IA para negocios Aguascalientes, empresa de IA en Aguascalientes',
         robots: 'index, follow',
     };
 
@@ -312,37 +330,35 @@ function metadatosPorRuta() {
     }
 
     /*
-     * La landing de páginas web no hereda el título genérico de servicio: tiene
-     * su propia búsqueda. Las tres frases clave se reparten en vez de repetirse:
-     *
-     *   URL     páginas web Aguascalientes
-     *   title   diseño de páginas web en Aguascalientes
-     *   h1      diseño y desarrollo de páginas web en Aguascalientes
+     * Las landings de los servicios principales no heredan el título genérico
+     * de servicio: cada una persigue su búsqueda, y el title, la descripción y
+     * las keywords vienen de servicios.json (`seo`). Las frases clave se
+     * reparten entre URL, title y h1 en lugar de repetirse.
      */
-    meta[RUTA_PAGINAS_WEB] = {
-        title: 'Diseño de páginas web en Aguascalientes | Diabolical',
-        description:
-            'Diseño y desarrollo de páginas web en Aguascalientes: landing pages, sitios corporativos, tiendas en línea y sitios a medida, legibles para Google y la IA.',
-        keywords:
-            'diseño de páginas web, diseño y desarrollo de páginas web en Aguascalientes, páginas web Aguascalientes, diseño web Aguascalientes, desarrollo web Aguascalientes, tiendas en línea Aguascalientes, landing page Aguascalientes',
-        robots: 'index, follow',
-    };
+    for (const landing of LANDINGS) {
+        meta[landing.ruta] = {
+            title: landing.seo.title,
+            description: landing.seo.description,
+            keywords: landing.seo.keywords,
+            robots: 'index, follow',
+        };
+    }
 
     meta[RUTA_SECTORES] = {
-        title: 'Inteligencia artificial por sector en Aguascalientes | Diabolical',
+        title: 'Inteligencia artificial por giro en Aguascalientes | Diabolical',
         description:
-            'Inteligencia artificial para inmobiliarias, salones de belleza, clínicas, gimnasios, despachos y comercio en Aguascalientes. Cada giro con su propio sistema.',
+            'Chatbots, agendamiento y sitios web para inmobiliarias, gimnasios, spas y salones de uñas en Aguascalientes. Cada giro con su propio sistema.',
         keywords:
             'inteligencia artificial para negocios en Aguascalientes, IA por sector, automatización por giro, agencia de IA Aguascalientes',
         robots: 'index, follow',
     };
 
     meta[RUTA_NOSOTROS] = {
-        title: 'Quiénes somos | Agencia de páginas web e IA en Aguascalientes',
+        title: 'Quiénes somos | Empresa de IA y páginas web en Aguascalientes',
         description:
-            'Agencia de páginas web e inteligencia artificial en Aguascalientes: sitios a medida y sistemas que atienden, agendan y dan seguimiento a sus clientes.',
+            'Empresa de inteligencia artificial y páginas web en Aguascalientes: sitios web, chatbots y agendamiento para inmobiliarias, gimnasios, spas y salones de uñas.',
         keywords:
-            'agencia de páginas web Aguascalientes, empresa de diseño web Aguascalientes, agencia de inteligencia artificial Aguascalientes, quiénes somos Diabolical Services',
+            'empresa de IA en Aguascalientes, empresas de inteligencia artificial Aguascalientes, agencia de páginas web Aguascalientes, quiénes somos Diabolical Services',
         robots: 'index, follow',
     };
 
@@ -356,11 +372,11 @@ function metadatosPorRuta() {
     };
 
     meta[RUTA_BLOG] = {
-        title: 'Blog sobre automatización con IA para negocios | Diabolical Services',
+        title: 'Guías de IA, chatbots y páginas web para negocios | Diabolical',
         description:
-            'Artículos sobre automatización con inteligencia artificial, posicionamiento en motores generativos y atención por WhatsApp para negocios en Aguascalientes.',
+            'Guías para negocios de Aguascalientes: cómo elegir empresa de IA o de páginas web, qué resuelve un chatbot y cómo automatizar la agenda de citas.',
         keywords:
-            'blog automatización IA, GEO, aparecer en ChatGPT, automatizar WhatsApp negocio, Aguascalientes',
+            'inteligencia artificial Aguascalientes, empresas de IA en Aguascalientes, páginas web Aguascalientes, chatbots Aguascalientes, IA para negocios Aguascalientes',
         robots: 'index, follow',
     };
 
@@ -398,13 +414,13 @@ function negocioCompacto() {
 /**
  * Preguntas que la landing de páginas web publica como FAQPage.
  *
- * Salen del contenido editable (bloque paginasWeb) y no de un fichero aparte:
+ * Salen del contenido editable (el bloque de cada landing) y no de un fichero aparte:
  * Google exige que lo marcado sea lo que ve el visitante, y si el equipo edita
  * una respuesta en el panel, el marcado tiene que cambiar con ella. La pregunta
  * del precio tiene sección propia en la página y entra aquí con su respuesta
  * completa, factores incluidos.
  */
-function preguntasPaginasWeb(bloque) {
+function preguntasLanding(bloque) {
     const preguntas = [];
     const precio = bloque.precio;
     if (precio?.titulo && precio?.respuesta) {
@@ -421,28 +437,28 @@ function preguntasPaginasWeb(bloque) {
 }
 
 /**
- * JSON-LD de /paginas-web-aguascalientes.
+ * JSON-LD de la landing de un servicio principal.
  *
- * Un Service con los cuatro tipos de sitio como catálogo, sin precio: el precio
- * no se publica, y un Offer con un precio inventado sería peor que ninguno.
+ * Un Service con sus tipos (de sitio, de canal o de giro) como catálogo, sin
+ * precio: el precio no se publica, y un Offer con un precio inventado sería
+ * peor que ninguno.
  */
-function bloquesPaginasWeb() {
-    const servicio = SERVICIOS.find((x) => rutaServicio(x.slug) === RUTA_PAGINAS_WEB);
-    const bloque = leerContenido().valor.paginasWeb ?? {};
-    const url = `${SITE}${RUTA_PAGINAS_WEB}`;
+function bloquesLanding(servicio) {
+    const bloque = leerContenido().valor[servicio.bloque] ?? {};
+    const url = `${SITE}${servicio.ruta}`;
     const tipos = (bloque.tipos?.items ?? []).filter((t) => t?.nombre);
-    const preguntas = preguntasPaginasWeb(bloque);
+    const preguntas = preguntasLanding(bloque);
 
     const bloques = [
         {
             '@context': 'https://schema.org',
             '@type': 'Service',
             '@id': `${url}#servicio`,
-            name: 'Diseño y desarrollo de páginas web en Aguascalientes',
-            alternateName: ['Diseño de páginas web', 'Páginas web Aguascalientes'],
+            name: bloque.hero?.titulo || servicio.nombre,
+            alternateName: servicio.seo?.alias ?? [],
             description: bloque.definicion?.texto || servicio.resumen,
             url,
-            serviceType: 'Diseño y desarrollo de páginas web',
+            serviceType: servicio.nombre,
             category: servicio.categoria,
             provider: { '@id': ID_NEGOCIO },
             areaServed: [
@@ -454,7 +470,7 @@ function bloquesPaginasWeb() {
             ...(tipos.length > 0 && {
                 hasOfferCatalog: {
                     '@type': 'OfferCatalog',
-                    name: 'Tipos de página web',
+                    name: bloque.tipos?.titulo || servicio.nombre,
                     itemListElement: tipos.map((t) => ({
                         '@type': 'Offer',
                         itemOffered: {
@@ -474,7 +490,7 @@ function bloquesPaginasWeb() {
         migas([
             { nombre: 'Inicio', ruta: '/' },
             { nombre: 'Servicios', ruta: RUTA_SERVICIOS },
-            { nombre: servicio.nombre, ruta: RUTA_PAGINAS_WEB },
+            { nombre: servicio.nombre, ruta: servicio.ruta },
         ])
     );
 
@@ -483,7 +499,8 @@ function bloquesPaginasWeb() {
 
 /** Los bloques JSON-LD que corresponden a una ruta. */
 function bloquesDeRuta(ruta) {
-    if (ruta === RUTA_PAGINAS_WEB) return bloquesPaginasWeb();
+    const landing = LANDINGS.find((s) => s.ruta === ruta);
+    if (landing) return bloquesLanding(landing);
 
     /*
      * Página de un servicio.
@@ -590,10 +607,10 @@ function bloquesDeRuta(ruta) {
             {
                 '@context': 'https://schema.org',
                 '@type': 'Service',
-                name: `Automatización con IA para ${sector.nombre}`,
+                name: `${sector.titular} en Aguascalientes`,
                 description: sector.descripcion,
                 url: `${SITE}${ruta}`,
-                serviceType: 'Automatización de procesos con inteligencia artificial',
+                serviceType: 'Chatbots, agendamiento automatizado y sitios web con inteligencia artificial',
                 provider: { '@id': ID_NEGOCIO },
                 areaServed: [
                     { '@type': 'City', name: 'Aguascalientes' },
@@ -805,10 +822,13 @@ module.exports = {
     RUTA_NOSOTROS,
     RUTA_CONTACTO,
     RUTA_PAGINAS_WEB,
+    RUTA_CHATBOTS,
+    RUTA_AGENDAMIENTO,
+    LANDINGS,
     REDIRECCIONES,
     SERVICIOS,
     FAQ_PORTADA,
-    preguntasPaginasWeb,
+    preguntasLanding,
     rutaSector,
     rutaServicio,
     rutaArticulo,

@@ -1,195 +1,254 @@
-import React, { Suspense, lazy } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowLeft } from 'lucide-react';
+import React from 'react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 
-import Navbar from '../components/common/Navbar';
-import Footer from '../components/common/Footer';
+import Pagina, { Migas } from '../components/common/Pagina';
+import Enlace from '../components/common/Enlace';
+import Preguntas from '../components/common/Preguntas';
+import TextoConEnlaces from '../components/common/TextoConEnlaces';
 import { getArticulo, ARTICULOS_POR_FECHA } from '../data/articulos';
-import { useHydrated } from '../utils/useHydrated';
+import { getServicio, rutaServicio } from '../data/servicios';
+import { fechaLegible } from '../utils/fechas';
+import logoCuadrado from '../assets/logo/LOGO-DIABOLICAL-CUADRADO-BLANCO.svg';
 
-const DiabolicalChatbot = lazy(() => import('../components/common/DiabolicalChatbot'));
+/*
+ * Página de artículo.
+ *
+ * Los artículos existen para dos cosas: que Google y los motores de IA los
+ * citen cuando alguien pregunta «¿qué empresa de IA hay en Aguascalientes?» o
+ * «¿dónde hago mi página web?», y que quien los lee acabe en la landing del
+ * servicio que busca. Por eso la estructura es la que esos motores extraen
+ * mejor y el cierre lleva a un solo sitio:
+ *
+ *   Encabezado        la pregunta como h1, fecha y actualización visibles
+ *   En pocas palabras la respuesta directa, que se entiende sin lo demás
+ *   Cuerpo            secciones con h2 que repiten cómo pregunta la gente,
+ *                     listas y tablas donde el contenido lo pide
+ *   Preguntas         el FAQPage del artículo, visible
+ *   Cierre            un botón a la landing del servicio del artículo
+ *
+ * El <head> (título, descripción, BlogPosting, FAQPage y BreadcrumbList) lo
+ * resuelve el servidor — ver server/schema.js.
+ */
 
-const abrirChat = () => window.dispatchEvent(new Event('open-diabolical-chat'));
-
-/** Fecha legible sin depender de la zona horaria del navegador: partir la
- *  cadena ISO evita que un artículo publicado hoy se muestre como de ayer al
- *  otro lado del meridiano. */
-const MESES = [
-    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre',
-];
-
-const fechaLegible = (iso) => {
-    const [anio, mes, dia] = iso.split('-');
-    return `${Number(dia)} de ${MESES[Number(mes) - 1]} de ${anio}`;
+const Lista = ({ lista }) => {
+    const Etiqueta = lista.ordenada ? 'ol' : 'ul';
+    return (
+        <Etiqueta className="mt-5 space-y-3">
+            {lista.items.map((item, i) => (
+                <li key={item} className="flex items-start gap-4">
+                    <span
+                        className="cifras etiqueta-mono mt-1.5 w-6 flex-none"
+                        style={{ color: 'var(--texto-3)' }}
+                        aria-hidden="true"
+                    >
+                        {lista.ordenada ? String(i + 1).padStart(2, '0') : '—'}
+                    </span>
+                    <span className="cuerpo-destacado" style={{ color: 'var(--texto-2)' }}>
+                        <TextoConEnlaces texto={item} />
+                    </span>
+                </li>
+            ))}
+        </Etiqueta>
+    );
 };
 
-/**
- * Página de artículo. El <head> (título, descripción, JSON-LD con BlogPosting,
- * FAQPage y BreadcrumbList) lo resuelve el servidor — ver server/render.js.
- *
- * El cuerpo se pinta desde articulos.json y no desde HTML suelto para que el
- * texto que lee el visitante sea exactamente el mismo que se publica en el
- * sitemap y en los llms.txt.
- */
+const Tabla = ({ tabla }) => (
+    <div className="mt-6 overflow-x-auto rounded-2xl border" style={{ borderColor: 'var(--linea)' }}>
+        <table className="w-full min-w-[34rem] border-collapse text-left text-[0.9375rem]">
+            {tabla.titulo && <caption className="sr-only">{tabla.titulo}</caption>}
+            <thead>
+                <tr>
+                    {tabla.columnas.map((columna) => (
+                        <th
+                            key={columna}
+                            scope="col"
+                            className="etiqueta px-4 py-3.5"
+                            style={{ color: 'var(--texto-3)', borderBottom: '1px solid var(--linea)' }}
+                        >
+                            {columna}
+                        </th>
+                    ))}
+                </tr>
+            </thead>
+            <tbody>
+                {tabla.filas.map((fila, i) => (
+                    <tr key={fila[0]} style={i > 0 ? { borderTop: '1px solid var(--linea)' } : undefined}>
+                        {fila.map((celda, j) =>
+                            j === 0 ? (
+                                <th key={j} scope="row" className="px-4 py-3.5 font-bold" style={{ color: 'var(--texto-1)' }}>
+                                    {celda}
+                                </th>
+                            ) : (
+                                <td key={j} className="px-4 py-3.5 leading-relaxed" style={{ color: 'var(--texto-2)' }}>
+                                    {celda}
+                                </td>
+                            )
+                        )}
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </div>
+);
+
 const ArticuloPage = ({ slug }) => {
     const articulo = getArticulo(slug);
-    const mostrarChatbot = useHydrated();
 
     // App.jsx solo monta este componente con slugs que existen, así que llegar
     // aquí sin artículo significaría que articulos.json y las rutas se
     // desincronizaron.
     if (!articulo) return null;
 
-    const otros = ARTICULOS_POR_FECHA.filter((a) => a.slug !== articulo.slug);
+    const servicio = getServicio(articulo.servicio);
+    const otros = ARTICULOS_POR_FECHA.filter((a) => a.slug !== articulo.slug).slice(0, 4);
+    const actualizado = articulo.actualizado && articulo.actualizado !== articulo.fecha;
 
     return (
-        <main className="relative bg-black min-h-screen selection:bg-white selection:text-black font-jakarta overflow-x-hidden">
-            <div className="fixed inset-0 pointer-events-none z-0">
-                <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-white/[0.03] blur-[180px] rounded-full" />
-                <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-white/[0.02] blur-[150px] rounded-full" />
-            </div>
+        <Pagina>
+            <Migas ruta={[{ texto: 'Blog', destino: '/blog' }, { texto: articulo.titular }]} />
 
-            <Navbar />
-
-            {/* Encabezado */}
-            <article className="relative z-10">
-                <header className="pt-32 md:pt-44 pb-10 md:pb-14 px-5 md:px-6">
-                    <div className="max-w-3xl mx-auto">
-                        <nav aria-label="Ruta de navegación" className="mb-8">
-                            <ol className="flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-white/55 font-bold">
-                                <li><Link to="/" className="inline-flex min-h-[1.75rem] items-center hover:text-white transition-colors">Inicio</Link></li>
-                                <li aria-hidden="true">/</li>
-                                <li><Link to="/blog" className="inline-flex min-h-[1.75rem] items-center hover:text-white transition-colors">Blog</Link></li>
-                            </ol>
-                        </nav>
-
-                        <h1 className="text-3xl md:text-5xl font-title uppercase tracking-tighter leading-[0.92] mb-6">
-                            {articulo.titular}
-                        </h1>
-
-                        <p className="text-white/60 text-base md:text-lg leading-relaxed font-light mb-8">
-                            {articulo.entradilla}
-                        </p>
-
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] uppercase tracking-[0.3em] text-white/55 font-bold border-t border-white/5 pt-6">
-                            <time dateTime={articulo.fecha}>{fechaLegible(articulo.fecha)}</time>
-                            {articulo.lectura ? (
-                                <>
-                                    <span aria-hidden="true">·</span>
-                                    <span>{articulo.lectura} de lectura</span>
-                                </>
-                            ) : null}
-                            {articulo.actualizado && articulo.actualizado !== articulo.fecha ? (
-                                <>
-                                    <span aria-hidden="true">·</span>
-                                    <span>Actualizado el {fechaLegible(articulo.actualizado)}</span>
-                                </>
-                            ) : null}
+            <article>
+                <header className="zona-oscura seccion-compacta pb-12 md:pb-16">
+                    <div className="contenedor">
+                        <div className="max-w-3xl">
+                            <p className="insignia">Guía · Aguascalientes</p>
+                            <h1 className="titular-xl titular-largo mt-5">{articulo.titular}</h1>
+                            <p className="cuerpo-l mt-7">{articulo.entradilla}</p>
+                            <p className="etiqueta-mono mt-8 flex flex-wrap gap-x-3 gap-y-1" style={{ color: 'var(--texto-3)' }}>
+                                <time dateTime={articulo.fecha}>{fechaLegible(articulo.fecha)}</time>
+                                {articulo.lectura && <span>· {articulo.lectura} de lectura</span>}
+                                {actualizado && (
+                                    <span>
+                                        · Actualizado el{' '}
+                                        <time dateTime={articulo.actualizado}>{fechaLegible(articulo.actualizado)}</time>
+                                    </span>
+                                )}
+                            </p>
                         </div>
                     </div>
                 </header>
 
-                {/* Cuerpo */}
-                <div className="px-5 md:px-6 pb-16 md:pb-24">
-                    <div className="max-w-3xl mx-auto space-y-12 md:space-y-14">
-                        {articulo.secciones.map((seccion, i) => (
-                            <section key={i}>
-                                <h2 className="text-xl md:text-2xl font-title uppercase tracking-tighter leading-tight mb-5">
-                                    {seccion.titulo}
+                {/* La respuesta directa. Es el párrafo que un motor generativo
+                    puede citar tal cual, así que se entiende sin nada alrededor. */}
+                {articulo.respuesta && (
+                    <section className="zona-oscura zona-oscura-2 seccion-compacta" aria-labelledby="respuesta-corta">
+                        <div className="contenedor">
+                            <div className="grid gap-5 lg:grid-cols-12 lg:gap-16">
+                                <h2
+                                    id="respuesta-corta"
+                                    className="etiqueta pt-1.5 lg:col-span-3"
+                                    style={{ color: 'var(--texto-3)' }}
+                                >
+                                    En pocas palabras
                                 </h2>
-                                <div className="space-y-4">
-                                    {seccion.parrafos.map((parrafo, j) => (
-                                        <p key={j} className="text-white/60 text-sm md:text-base leading-relaxed font-light">
-                                            {parrafo}
+                                <p className="cuerpo-destacado m-0 max-w-[68ch] lg:col-span-9">
+                                    <TextoConEnlaces texto={articulo.respuesta} />
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                )}
+
+                <div className="zona-oscura seccion">
+                    <div className="contenedor">
+                        <div className="max-w-3xl space-y-14 md:space-y-16">
+                            {articulo.secciones.map((seccion) => (
+                                <section key={seccion.titulo}>
+                                    <h2 className="titular-m">{seccion.titulo}</h2>
+                                    <div className="mt-5 space-y-4">
+                                        {(seccion.parrafos ?? []).map((parrafo) => (
+                                            <p key={parrafo.slice(0, 40)} className="cuerpo-destacado" style={{ color: 'var(--texto-2)' }}>
+                                                <TextoConEnlaces texto={parrafo} />
+                                            </p>
+                                        ))}
+                                    </div>
+                                    {seccion.lista && <Lista lista={seccion.lista} />}
+                                    {seccion.tabla && <Tabla tabla={seccion.tabla} />}
+                                    {seccion.nota && (
+                                        <p className="cuerpo-destacado mt-5" style={{ color: 'var(--texto-2)' }}>
+                                            <TextoConEnlaces texto={seccion.nota} />
                                         </p>
-                                    ))}
-                                </div>
-                            </section>
-                        ))}
+                                    )}
+                                </section>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </article>
 
-            {/* Preguntas frecuentes del artículo. Las preguntas van en el HTML,
-                no detrás de un estado de React: el FAQPage del JSON-LD solo es
-                válido si Google encuentra el mismo texto en la página. */}
-            <section className="relative z-10 py-16 md:py-24 px-5 md:px-6 border-t border-white/5">
-                <div className="max-w-3xl mx-auto">
-                    <h2 className="text-2xl md:text-3xl font-title uppercase tracking-tighter mb-10">
-                        Preguntas frecuentes
-                    </h2>
-
-                    <div className="space-y-3">
-                        {articulo.faq.map((item, i) => (
-                            <details key={i} className="glass-card rounded-2xl border-white/5 group">
-                                <summary className="cursor-pointer list-none p-6 flex justify-between items-center gap-4">
-                                    <h3 className="text-sm font-bold text-white leading-snug">{item.q}</h3>
-                                    <span className="text-white/55 text-xl leading-none flex-shrink-0 group-open:rotate-45 transition-transform" aria-hidden="true">+</span>
-                                </summary>
-                                <p className="px-6 pb-6 text-white/55 text-sm leading-relaxed font-light">{item.a}</p>
-                            </details>
-                        ))}
+            {/* Las preguntas van en el HTML aunque estén plegadas: el FAQPage
+                del JSON-LD solo es válido si Google encuentra el mismo texto. */}
+            {(articulo.faq ?? []).length > 0 && (
+                <section className="zona-clara seccion" aria-labelledby="preguntas-articulo">
+                    <div className="contenedor">
+                        <div className="max-w-3xl">
+                            <h2 id="preguntas-articulo" className="titular-l">
+                                Preguntas frecuentes
+                            </h2>
+                            <div className="mt-10">
+                                <Preguntas items={articulo.faq.map(({ q, a }) => ({ pregunta: q, respuesta: a }))} />
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
 
-            {/* Cierre */}
-            <section className="relative z-10 py-16 md:py-24 px-5 md:px-6 border-t border-white/5">
-                <div className="max-w-3xl mx-auto text-center">
-                    <h2 className="text-2xl md:text-4xl font-title uppercase tracking-tighter mb-5 leading-[0.95]">
-                        ¿Quieres saber qué automatizar en tu negocio?
-                    </h2>
-                    <p className="text-white/55 text-sm md:text-base leading-relaxed mb-9 max-w-xl mx-auto font-light">
-                        La auditoría de fricción es gratuita: revisamos dónde se te están escapando
-                        clientes y te decimos qué se puede automatizar y qué no vale la pena tocar.
-                    </p>
-                    <button
-                        onClick={abrirChat}
-                        className="px-10 py-5 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-[0.35em] hover:scale-[1.02] active:scale-95 transition-all min-h-[60px]"
+            {/* Cierre: un solo destino, la landing del servicio que busca quien
+                llegó a este artículo. */}
+            <section className={`${(articulo.faq ?? []).length > 0 ? 'zona-clara pt-4' : 'zona-clara pt-20'} pb-20 md:pb-28`}>
+                <div className="contenedor">
+                    <div
+                        className="zona-oscura relative overflow-hidden px-6 py-16 text-center md:px-16 md:py-20"
+                        style={{ borderRadius: 'var(--radio-losa)' }}
                     >
-                        Empezar el diagnóstico
-                    </button>
-                </div>
-            </section>
-
-            {/* Enlaces cruzados: reparten autoridad entre los artículos y evitan
-                que cada uno quede aislado del resto. */}
-            <section className="relative z-10 py-12 md:py-16 px-5 md:px-6 border-t border-white/5">
-                <div className="max-w-3xl mx-auto">
-                    <div className="flex items-center justify-between gap-4 mb-6">
-                        <h2 className="text-[11px] uppercase tracking-[0.4em] text-white/55 font-black">
-                            {otros.length > 0 ? 'Seguir leyendo' : 'Blog'}
-                        </h2>
-                        <Link
-                            to="/blog"
-                            className="text-[11px] uppercase tracking-[0.3em] text-white/55 hover:text-white transition-colors font-bold flex items-center gap-2"
-                        >
-                            <ArrowLeft size={12} /> Todos los artículos
-                        </Link>
-                    </div>
-                    <div className="flex flex-wrap gap-3">
-                        {otros.map((otro) => (
-                            <Link
-                                key={otro.slug}
-                                to={`/blog/${otro.slug}`}
-                                className="px-5 py-3 glass rounded-full text-xs text-white/60 hover:text-white hover:bg-white/5 transition-all inline-flex items-center gap-2"
-                            >
-                                {otro.titular} <ArrowRight size={12} />
-                            </Link>
-                        ))}
+                        <div className="rejilla" aria-hidden="true" />
+                        <div className="relative mx-auto max-w-2xl">
+                            <img src={logoCuadrado} alt="" width="48" height="48" className="mx-auto mb-8 w-12 opacity-90" />
+                            <h2 className="titular-l">{articulo.cta?.titulo ?? '¿Lo vemos para su negocio?'}</h2>
+                            <p className="cuerpo-l mx-auto mt-6 text-center">
+                                {articulo.cta?.texto ??
+                                    'La auditoría no tiene costo ni compromiso: salimos de ella sabiendo qué conviene hacer en su negocio y qué no.'}
+                            </p>
+                            {servicio && (
+                                <Enlace destino={rutaServicio(servicio.slug)} className="boton boton-acento mt-10 inline-flex">
+                                    {articulo.cta?.boton ?? `Ver ${servicio.nombre.toLowerCase()}`}
+                                    <ArrowRight size={16} aria-hidden="true" />
+                                </Enlace>
+                            )}
+                            <p className="mt-6">
+                                <Enlace
+                                    destino="/contacto"
+                                    className="enlace inline-flex min-h-[1.75rem] items-center py-1 text-sm text-white/60"
+                                >
+                                    O solicite la auditoría gratuita
+                                </Enlace>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <Footer />
-
-            {mostrarChatbot ? (
-                <Suspense fallback={null}>
-                    <DiabolicalChatbot />
-                </Suspense>
-            ) : null}
-        </main>
+            {otros.length > 0 && (
+                <section className="zona-oscura seccion-compacta">
+                    <div className="contenedor">
+                        <h2 className="titular-m">Seguir leyendo</h2>
+                        <ul className="mt-6 grid gap-3 md:grid-cols-2">
+                            {otros.map((otro) => (
+                                <li key={otro.slug}>
+                                    <Enlace
+                                        destino={`/blog/${otro.slug}`}
+                                        className="tarjeta tarjeta-enlace flex h-full items-center justify-between gap-4 px-5 py-4"
+                                    >
+                                        <span className="text-[0.9375rem] font-bold tracking-tight">{otro.titular}</span>
+                                        <ArrowUpRight size={16} className="flex-none text-white/45" aria-hidden="true" />
+                                    </Enlace>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </section>
+            )}
+        </Pagina>
     );
 };
 

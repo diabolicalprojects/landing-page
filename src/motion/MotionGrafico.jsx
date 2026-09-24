@@ -1,6 +1,7 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 
 import { ESCENAS } from './escenas';
+import { LIENZO } from './primitivas';
 import { FPS } from './tiempo';
 
 /*
@@ -19,6 +20,10 @@ import { FPS } from './tiempo';
  *      vista gasta batería a cambio de nada.
  *
  * La escena no sabe nada de esto: recibe un número de fotograma y dibuja.
+ *
+ * `datos` llega tal cual a la escena. Lo usan las que se dibujan a partir del
+ * contenido editable —el proceso pinta los pasos que haya en el panel—, y por
+ * eso su duración y su póster pueden ser funciones de esos datos.
  */
 
 const Reproductor = lazy(() => import('./Reproductor'));
@@ -71,7 +76,7 @@ function usePaginaAsentada() {
     return asentada;
 }
 
-const MotionGrafico = ({ escena, etiqueta, className = '', prioridad = false }) => {
+const MotionGrafico = ({ escena, etiqueta, className = '', prioridad = false, datos }) => {
     const definicion = ESCENAS[escena];
     const contenedor = useRef(null);
     const [haEntrado, setHaEntrado] = useState(false);
@@ -114,7 +119,10 @@ const MotionGrafico = ({ escena, etiqueta, className = '', prioridad = false }) 
         return null;
     }
 
-    const { Escena, duracion, poster } = definicion;
+    const { Escena, lienzo = LIENZO } = definicion;
+    const duracion =
+        typeof definicion.duracion === 'function' ? definicion.duracion(datos) : definicion.duracion;
+    const poster = typeof definicion.poster === 'function' ? definicion.poster(datos) : definicion.poster;
 
     return (
         <div
@@ -122,20 +130,22 @@ const MotionGrafico = ({ escena, etiqueta, className = '', prioridad = false }) 
             className={className}
             role="img"
             aria-label={etiqueta}
-            style={{ position: 'relative', width: '100%', aspectRatio: '16 / 10' }}
+            style={{ position: 'relative', width: '100%', aspectRatio: `${lienzo.ancho} / ${lienzo.alto}` }}
         >
             {animar ? (
                 // El estático queda de respaldo mientras carga el trozo: sin él
                 // habría un hueco en blanco del tamaño de la escena.
-                <Suspense fallback={<Escena frame={poster} fps={FPS} />}>
+                <Suspense fallback={<Escena frame={poster} fps={FPS} datos={datos} />}>
                     <Reproductor
                         Escena={Escena}
                         duracion={duracion}
                         enPausa={!visible}
+                        datos={datos}
+                        lienzo={lienzo}
                     />
                 </Suspense>
             ) : (
-                <Escena frame={poster} fps={FPS} />
+                <Escena frame={poster} fps={FPS} datos={datos} />
             )}
         </div>
     );

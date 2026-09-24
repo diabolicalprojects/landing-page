@@ -24,13 +24,13 @@ import { FPS } from './tiempo';
  * Remotion. Ese es el motivo de que la misma escena pueda dibujarse en el
  * servidor sin que Remotion exista.
  */
-const Puente = ({ Escena }) => {
+const Puente = ({ Escena, datos }) => {
     const frame = useCurrentFrame();
     const { fps } = useVideoConfig();
-    return <Escena frame={frame} fps={fps} />;
+    return <Escena frame={frame} fps={fps} datos={datos} />;
 };
 
-const Reproductor = ({ Escena, duracion, enPausa }) => {
+const Reproductor = ({ Escena, duracion, enPausa, datos, lienzo = LIENZO }) => {
     const reproductor = useRef(null);
 
     useEffect(() => {
@@ -46,11 +46,11 @@ const Reproductor = ({ Escena, duracion, enPausa }) => {
         <Player
             ref={reproductor}
             component={Puente}
-            inputProps={{ Escena }}
+            inputProps={{ Escena, datos }}
             durationInFrames={duracion}
             fps={FPS}
-            compositionWidth={LIENZO.ancho}
-            compositionHeight={LIENZO.alto}
+            compositionWidth={lienzo.ancho}
+            compositionHeight={lienzo.alto}
             loop
             autoPlay
             controls={false}

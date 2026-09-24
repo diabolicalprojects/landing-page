@@ -1,28 +1,35 @@
-import React, { useId, useState } from 'react';
-import { ArrowRight, ArrowUpRight, Check, Plus } from 'lucide-react';
+import React from 'react';
+import { ArrowRight, ArrowUpRight, Check } from 'lucide-react';
 
 import Pagina, { Migas } from '../components/common/Pagina';
 import Enlace from '../components/common/Enlace';
 import EncabezadoSeccion from '../components/common/EncabezadoSeccion';
 import PantallaEscena from '../components/common/PantallaEscena';
+import Preguntas from '../components/common/Preguntas';
 import MotionGrafico from '../motion/MotionGrafico';
 import { useBloque } from '../contenido';
+import { ESCENAS } from '../motion/escenas';
 import { getServicio } from '../data/servicios';
 import logoCuadrado from '../assets/logo/LOGO-DIABOLICAL-CUADRADO-BLANCO.svg';
 
 /*
- * Diseño y desarrollo de páginas web en Aguascalientes.
+ * Landing de un servicio principal.
  *
- * La única página del sitio que persigue una búsqueda que no es la frase de la
- * casa. Las tres frases clave se reparten en lugar de repetirse:
+ * Los tres servicios estrella —sitios web, chatbots y agendamiento
+ * automatizado— tienen su página fuera de /servicios, con dirección propia
+ * porque cada uno persigue su búsqueda:
  *
- *   URL     /paginas-web-aguascalientes     páginas web Aguascalientes
- *   title   (server/schema.js)              diseño de páginas web en Aguascalientes
- *   h1      aquí                            diseño y desarrollo de páginas web en Aguascalientes
+ *   /paginas-web-aguascalientes               páginas web · sitios web en Aguascalientes
+ *   /chatbots-aguascalientes                  chatbots Aguascalientes
+ *   /agendamiento-automatizado-aguascalientes agendamiento automatizado
  *
- * Todo el texto sale del bloque `paginasWeb` del contenido editable, y
- * server/schema.js publica el FAQPage a partir del mismo bloque: si el equipo
- * edita una respuesta en el panel, el marcado cambia con ella.
+ * Qué bloque de contenido pinta cada una lo dice servicios.json (`bloque`), y
+ * el title y la descripción también (`seo`). La escena del hero es la del
+ * propio servicio, con la misma clave que su slug.
+ *
+ * Todo el texto sale del contenido editable, y server/schema.js publica el
+ * FAQPage a partir del mismo bloque: si el equipo edita una respuesta en el
+ * panel, el marcado cambia con ella.
  *
  * El párrafo de definición va solo, justo debajo del hero, y se entiende sin
  * nada alrededor. Es el que un motor generativo puede citar tal cual cuando le
@@ -44,65 +51,8 @@ import logoCuadrado from '../assets/logo/LOGO-DIABOLICAL-CUADRADO-BLANCO.svg';
 
 const lineaSuperior = { borderTop: '1px solid var(--linea)' };
 
-/**
- * Acordeón de preguntas que funciona en cualquier zona: los colores salen de
- * los tokens de inversión de la zona, no de papel y tinta fijos. Las respuestas
- * cerradas siguen en el HTML (atributo hidden), que es lo que leen los
- * rastreadores y lo que exige el FAQPage.
- */
-const Preguntas = ({ items }) => {
-    const [abierta, setAbierta] = useState(null);
-    const idBase = useId();
-
-    return (
-        <ul className="space-y-2.5">
-            {items.map((item, i) => {
-                const estaAbierta = abierta === i;
-                const idPanel = `${idBase}-p-${i}`;
-                const idBoton = `${idBase}-b-${i}`;
-                return (
-                    <li key={item.pregunta} className="tarjeta overflow-hidden">
-                        <h3>
-                            <button
-                                type="button"
-                                id={idBoton}
-                                aria-expanded={estaAbierta}
-                                aria-controls={idPanel}
-                                onClick={() => setAbierta(estaAbierta ? null : i)}
-                                className="flex w-full items-center justify-between gap-5 px-5 py-5 text-left md:px-7"
-                            >
-                                <span className="text-[1rem] font-bold leading-snug tracking-tight">
-                                    {item.pregunta}
-                                </span>
-                                <span
-                                    className="flex h-8 w-8 flex-none items-center justify-center rounded-full transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                                    style={{
-                                        background: estaAbierta ? 'var(--inverso-fondo)' : 'var(--tarjeta-alta)',
-                                        color: estaAbierta ? 'var(--inverso-texto)' : 'var(--texto-1)',
-                                        transform: estaAbierta ? 'rotate(45deg)' : 'none',
-                                    }}
-                                    aria-hidden="true"
-                                >
-                                    <Plus size={16} />
-                                </span>
-                            </button>
-                        </h3>
-                        <div id={idPanel} role="region" aria-labelledby={idBoton} hidden={!estaAbierta}>
-                            <p
-                                className="cuerpo max-w-none px-5 pb-6 md:px-7"
-                                style={{ ...lineaSuperior, paddingTop: '1.25rem' }}
-                            >
-                                {item.respuesta}
-                            </p>
-                        </div>
-                    </li>
-                );
-            })}
-        </ul>
-    );
-};
-
-const PaginasWebPage = () => {
+const LandingServicio = ({ slug }) => {
+    const servicio = getServicio(slug);
     const {
         hero = {},
         definicion = {},
@@ -114,9 +64,8 @@ const PaginasWebPage = () => {
         relacionados = {},
         faq = {},
         cierre = {},
-    } = useBloque('paginasWeb');
+    } = useBloque(servicio?.bloque);
 
-    const servicio = getServicio('sitio-web');
     const proyectos = (portafolio.proyectos ?? []).filter((p) => p?.nombre);
     const hayPortafolio = portafolio.visible !== false && proyectos.length > 0;
 
@@ -157,9 +106,12 @@ const PaginasWebPage = () => {
 
                         <div className="lg:col-span-5">
                             <MotionGrafico
-                                escena="sitio-web"
+                                escena={slug}
                                 prioridad
-                                etiqueta="Ilustración animada de una página web que se arma y atiende a quien la visita."
+                                etiqueta={
+                                    ESCENAS[slug]?.descripcion ??
+                                    `Ilustración animada del mecanismo de ${servicio?.nombre?.toLowerCase()}.`
+                                }
                             />
                         </div>
                     </div>
@@ -308,7 +260,15 @@ const PaginasWebPage = () => {
                     <div className="contenedor">
                         <EncabezadoSeccion insignia={proceso.insignia} titulo={proceso.titulo} />
 
-                        <ol className="mt-12 md:mt-16">
+                        <div className="mt-12 overflow-hidden rounded-3xl border border-white/10 px-3 py-4 md:mt-16 md:px-8 md:py-8">
+                            <MotionGrafico
+                                escena="proceso"
+                                datos={{ pasos: proceso.pasos }}
+                                etiqueta={`Diagrama animado del proceso: ${proceso.pasos.map((p) => p.titulo).join(', ')}.`}
+                            />
+                        </div>
+
+                        <ol className="mt-10 md:mt-12">
                             {proceso.pasos.map((paso, i) => (
                                 <li
                                     key={paso.id ?? paso.titulo}
@@ -519,4 +479,4 @@ const PaginasWebPage = () => {
     );
 };
 
-export default PaginasWebPage;
+export default LandingServicio;

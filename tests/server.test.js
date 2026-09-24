@@ -19,6 +19,9 @@ const {
     SERVICIOS,
     REDIRECCIONES,
     RUTA_PAGINAS_WEB,
+    RUTA_CHATBOTS,
+    RUTA_AGENDAMIENTO,
+    LANDINGS,
     rutaSector,
     rutaServicio,
 } = require('../server/schema');
@@ -562,7 +565,17 @@ test('el registro de marca se mantiene formal', async (t) => {
         'no estafadores',
     ];
 
-    const rutas = ['/', '/nosotros', '/servicios', '/sectores', '/contacto', RUTA_PAGINAS_WEB];
+    const rutas = [
+        '/',
+        '/nosotros',
+        '/servicios',
+        '/sectores',
+        '/contacto',
+        '/blog',
+        RUTA_PAGINAS_WEB,
+        RUTA_CHATBOTS,
+        RUTA_AGENDAMIENTO,
+    ];
 
     for (const ruta of rutas) {
         const html = await (await fetch(`${BASE}${ruta}`)).text();
@@ -626,7 +639,7 @@ test('la landing de páginas web persigue sus tres búsquedas', async (t) => {
     assert.equal(res.status, 200);
     const html = await res.text();
 
-    assert.match(html, /<title>Diseño de páginas web en Aguascalientes/);
+    assert.match(html, /<title>Páginas web y sitios web en Aguascalientes/);
     assert.match(html, /<h1[^>]*>Diseño y desarrollo de páginas web en Aguascalientes<\/h1>/);
     assert.match(html, new RegExp(`rel="canonical" href="[^"]*${RUTA_PAGINAS_WEB}"`));
 
@@ -668,7 +681,7 @@ test('la landing de páginas web persigue sus tres búsquedas', async (t) => {
     assert.ok(!sitemap.includes('/servicios/sitio-web'), 'una dirección que redirige no va en el sitemap');
 
     const llms = await (await fetch(`${BASE}/llms.txt`)).text();
-    assert.ok(llms.includes('## Diseño y desarrollo de páginas web en Aguascalientes'));
+    assert.ok(llms.includes('### Diseño y desarrollo de páginas web en Aguascalientes'));
     assert.ok(llms.includes(RUTA_PAGINAS_WEB));
 });
 
@@ -685,6 +698,9 @@ test('los textos de servicio y de la landing hablan de usted', () => {
     };
     recoger(SERVICIOS);
     recoger(CONTENIDO.paginasWeb);
+    recoger(CONTENIDO.chatbots);
+    recoger(CONTENIDO.agendamiento);
+    recoger(ARTICULOS);
 
     for (const texto of textos) {
         assert.ok(!TUTEO.test(texto), `tuteo en: «${texto}»`);
@@ -707,8 +723,8 @@ test('la casa entera se presenta como agencia de páginas web', async (t) => {
 
     // El <title> servido depende de lo que otras pruebas guarden en el panel;
     // el valor de fábrica es el que manda en un despliegue limpio.
-    assert.match(require('../server/seo-defaults').defaults.title, /^Agencia de páginas web/);
-    assert.ok(visible.includes('Agencia de páginas web e inteligencia artificial'), 'falta la insignia del hero');
+    assert.match(require('../server/seo-defaults').defaults.title, /^Empresa de IA y páginas web/);
+    assert.ok(visible.includes('Empresa de inteligencia artificial y páginas web'), 'falta la insignia del hero');
 
     // La sección de la portada enseña los cuatro tipos y lleva a la landing.
     assert.ok(portada.includes('id="paginas-web"'), 'la portada no tiene la sección de páginas web');
@@ -719,14 +735,14 @@ test('la casa entera se presenta como agencia de páginas web', async (t) => {
     const ficha = [...portada.matchAll(/application\/ld\+json">(.*?)<\/script>/gs)]
         .map((m) => JSON.parse(m[1]))
         .find((b) => b['@type'] === 'ProfessionalService');
-    assert.match(ficha.description, /^Agencia de diseño y desarrollo de páginas web/);
+    assert.match(ficha.description, /^Empresa de inteligencia artificial y páginas web/);
     assert.equal(ficha.knowsAbout[0], 'Diseño de páginas web');
 
     const nosotros = await (await fetch(`${BASE}/nosotros`)).text();
     assert.match(nosotros, /<h1[^>]*>[\s\S]{0,40}Una agencia de páginas web/);
 
     const llms = await (await fetch(`${BASE}/llms.txt`)).text();
-    assert.match(llms, /> Agencia de diseño y desarrollo de páginas web/);
+    assert.match(llms, /> Empresa de inteligencia artificial y páginas web/);
 
     // Cada sector enlaza a la página web de su giro.
     for (const sector of SECTORES) {
@@ -757,4 +773,152 @@ test('cada tipo de sitio lleva su escena animada, dibujada ya en el HTML', async
 
     const posters = html.match(/<svg[^>]*viewBox="0 0 640 400"/g) ?? [];
     assert.ok(posters.length >= 5, 'faltan pósters dibujados en el servidor (hero y los cuatro tipos)');
+});
+
+
+test('el enfoque: tres servicios principales para cuatro giros', async (t) => {
+    /*
+     * Sitios web, chatbots y agendamiento automatizado para inmobiliarias,
+     * gimnasios, spas y salones de uñas. El resto se sigue ofreciendo como
+     * complemento, sin encabezar nada.
+     */
+    const principales = SERVICIOS.filter((s) => s.principal).map((s) => s.slug);
+    assert.deepEqual(principales, ['sitio-web', 'chatbots', 'agendamiento-automatizado']);
+    assert.equal(SERVICIOS.length, 13);
+    assert.deepEqual(
+        SECTORES.filter((s) => s.principal).map((s) => s.slug),
+        ['inmobiliarias', 'gimnasios', 'spas', 'salones-de-unas']
+    );
+    // Cada principal tiene landing con dirección propia, bloque y metadatos.
+    for (const s of LANDINGS) {
+        assert.ok(s.principal && s.ruta && s.bloque && s.seo?.title, `${s.slug} sin landing completa`);
+        assert.ok(CONTENIDO[s.bloque], `falta el bloque ${s.bloque}`);
+    }
+
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    // La portada enseña los tres principales y los cuatro giros, con enlace.
+    const portada = await (await fetch(`${BASE}/`)).text();
+    for (const ruta of [RUTA_PAGINAS_WEB, RUTA_CHATBOTS, RUTA_AGENDAMIENTO]) {
+        assert.ok(portada.includes(`href="${ruta}"`), `la portada no enlaza a ${ruta}`);
+    }
+    for (const slug of ['inmobiliarias', 'gimnasios', 'spas', 'salones-de-unas']) {
+        assert.ok(portada.includes(`href="/sectores/${slug}"`), `la portada no enlaza al giro ${slug}`);
+    }
+
+    // Cada giro nombra los tres servicios con su nombre: «Chatbot para spas».
+    const spas = await (await fetch(`${BASE}/sectores/spas`)).text();
+    assert.ok(spas.includes('Chatbot para <!-- -->spas') || spas.includes('Chatbot para spas'));
+    assert.ok(spas.includes(`href="${RUTA_AGENDAMIENTO}"`));
+});
+
+test('las landings de chatbots y agendamiento persiguen sus búsquedas', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    const casos = [
+        { ruta: RUTA_CHATBOTS, h1: 'Chatbots con inteligencia artificial en Aguascalientes', title: /<title>Chatbots con IA en Aguascalientes/ },
+        {
+            ruta: RUTA_AGENDAMIENTO,
+            h1: 'Agendamiento automatizado para negocios en Aguascalientes',
+            title: /<title>Agendamiento automatizado en Aguascalientes/,
+        },
+    ];
+
+    for (const caso of casos) {
+        const res = await fetch(`${BASE}${caso.ruta}`);
+        assert.equal(res.status, 200, `${caso.ruta} no devolvió 200`);
+        const html = await res.text();
+        assert.match(html, caso.title);
+        assert.match(html, new RegExp(`<h1[^>]*>${caso.h1}</h1>`));
+        assert.match(html, new RegExp(`rel="canonical" href="[^"]*${caso.ruta}"`));
+
+        const bloques = [...html.matchAll(/application\/ld\+json">(.*?)<\/script>/gs)].map((m) => JSON.parse(m[1]));
+        assert.ok(bloques.some((b) => b['@type'] === 'Service'), `${caso.ruta} sin Service`);
+        const faq = bloques.find((b) => b['@type'] === 'FAQPage');
+        assert.ok(faq, `${caso.ruta} sin FAQPage`);
+        const visible = html.replace(/<script[\s\S]*?<\/script>/g, '');
+        for (const entrada of faq.mainEntity) {
+            assert.ok(visible.includes(entrada.name), `"${entrada.name}" marcada pero no visible en ${caso.ruta}`);
+        }
+        // Cada tipo lleva su escena, dibujada ya en el HTML.
+        assert.ok((html.match(/<svg[^>]*viewBox="0 0 640 400"/g) ?? []).length >= 5, `${caso.ruta} sin escenas`);
+    }
+
+    // Las direcciones de los servicios que se fundieron llevan al chatbot.
+    for (const vieja of ['/servicios/ia-whatsapp', '/servicios/agentes-y-chatbots']) {
+        const res = await fetch(`${BASE}${vieja}`, { redirect: 'manual' });
+        assert.equal(res.status, 301);
+        assert.equal(res.headers.get('location'), RUTA_CHATBOTS);
+    }
+});
+
+test('el menú: Inicio, Nosotros, Servicios con desplegable y Contacto', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    const enlaces = CONTENIDO.nav.enlaces;
+    assert.deepEqual(enlaces.map((e) => e.texto), ['Inicio', 'Nosotros', 'Servicios', 'Contacto']);
+    assert.ok(enlaces.find((e) => e.texto === 'Contacto').destacado);
+
+    // El desplegable está en el HTML aunque esté cerrado: sus enlaces a las
+    // landings tienen que existir para los rastreadores en todas las páginas.
+    const html = await (await fetch(`${BASE}/nosotros`)).text();
+    const nav = html.slice(html.indexOf('aria-label="Principal"'), html.indexOf('</nav>', html.indexOf('aria-label="Principal"')));
+    for (const ruta of [RUTA_PAGINAS_WEB, RUTA_CHATBOTS, RUTA_AGENDAMIENTO, '/sectores/spas', '/sectores/salones-de-unas']) {
+        assert.ok(nav.includes(`href="${ruta}"`), `el menú no lleva a ${ruta}`);
+    }
+    assert.match(nav, /aria-expanded="false"/);
+});
+
+test('el proceso se dibuja animado con los pasos del contenido', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    const portada = await (await fetch(`${BASE}/`)).text();
+    assert.match(portada, /aria-label="Diagrama animado del proceso: /);
+    assert.match(portada, /viewBox="0 0 960 250"/);
+    // Los títulos de los pasos viajan dentro del diagrama, no solo en las tarjetas.
+    for (const paso of CONTENIDO.proceso.pasos) {
+        const primera = paso.titulo.split(' ')[0];
+        assert.ok(portada.includes(`>${primera}`), `el diagrama no lleva «${paso.titulo}»`);
+    }
+    for (const ruta of [RUTA_PAGINAS_WEB, RUTA_CHATBOTS, RUTA_AGENDAMIENTO]) {
+        const html = await (await fetch(`${BASE}${ruta}`)).text();
+        assert.match(html, /aria-label="Diagrama animado del proceso: /, `${ruta} sin diagrama del proceso`);
+    }
+});
+
+test('cada guía del blog lleva a la landing del servicio que busca quien la lee', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    for (const articulo of ARTICULOS) {
+        const servicio = SERVICIOS.find((s) => s.slug === articulo.servicio);
+        assert.ok(servicio, `${articulo.slug} no dice a qué servicio lleva`);
+        assert.ok(articulo.respuesta, `${articulo.slug} sin respuesta corta`);
+        const palabras = articulo.respuesta.split(/\s+/).length;
+        assert.ok(palabras >= 40 && palabras <= 70, `la respuesta corta de ${articulo.slug} tiene ${palabras} palabras`);
+
+        const html = await (await fetch(`${BASE}/blog/${articulo.slug}`)).text();
+        assert.ok(html.includes(`href="${rutaServicio(servicio.slug)}"`), `${articulo.slug} no enlaza a su servicio`);
+        // Los enlaces en Markdown se convierten en enlaces de verdad.
+        assert.ok(!/\]\(\//.test(html.replace(/<script[\s\S]*?<\/script>/g, '')), `${articulo.slug} deja Markdown sin convertir`);
+        // Sin enlaces a otros dominios: el blog no enlaza fuera.
+        const cuerpo = html.slice(html.indexOf('<article'), html.indexOf('</article>'));
+        assert.ok(!/href="https?:\/\//.test(cuerpo), `${articulo.slug} enlaza fuera del sitio`);
+    }
+
+    // Las preguntas que se busca responder tienen su guía.
+    const titulares = ARTICULOS.map((a) => a.titular).join(' | ');
+    assert.match(titulares, /mejor empresa de inteligencia artificial en Aguascalientes/);
+    assert.match(titulares, /página web en Aguascalientes/);
+    assert.match(titulares, /Chatbots en Aguascalientes/);
+    assert.match(titulares, /IA para negocios en Aguascalientes/);
 });

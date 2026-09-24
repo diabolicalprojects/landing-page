@@ -31,6 +31,12 @@ import SERVICIOS from './servicios.json';
  *   ruta       opcional. Dirección propia cuando el servicio compite por una
  *              búsqueda con nombre propio (el diseño web vive en
  *              /paginas-web-aguascalientes). Sin ella: /servicios/<slug>.
+ *   principal  los tres servicios estrella: sitios web, chatbots y
+ *              agendamiento. El resto son complementarios: misma calidad,
+ *              pero no encabezan nada.
+ *   bloque     solo los principales: el bloque del contenido editable que
+ *              pinta su landing.
+ *   seo        solo los principales: title, description y keywords.
  */
 export { SERVICIOS };
 
@@ -48,8 +54,12 @@ export const CATEGORIAS = [
     'Estrategia y medición',
 ];
 
-/** Servicios agrupados por categoría, respetando el orden de CATEGORIAS. */
+export const SERVICIOS_PRINCIPALES = SERVICIOS.filter((s) => s.principal);
+export const SERVICIOS_COMPLEMENTARIOS = SERVICIOS.filter((s) => !s.principal);
+
+/** Los complementarios agrupados por categoría, en el orden de CATEGORIAS. Los
+ *  principales no se agrupan: van siempre delante y aparte. */
 export const SERVICIOS_POR_CATEGORIA = CATEGORIAS.map((categoria) => ({
     categoria,
-    servicios: SERVICIOS.filter((s) => s.categoria === categoria),
+    servicios: SERVICIOS_COMPLEMENTARIOS.filter((s) => s.categoria === categoria),
 })).filter((grupo) => grupo.servicios.length > 0);

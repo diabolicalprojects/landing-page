@@ -25,25 +25,25 @@ export const LIENZO = { ancho: 640, alto: 400 };
 const BLANCO = '#ffffff';
 
 /** Rejilla de fondo, desvanecida hacia los bordes. Es el suelo de la escena. */
-export const Rejilla = ({ paso = 40, opacidad = 0.06 }) => (
+export const Rejilla = ({ paso = 40, opacidad = 0.06, ancho = LIENZO.ancho, alto = LIENZO.alto }) => (
     <g opacity={opacidad}>
-        {Array.from({ length: Math.ceil(LIENZO.ancho / paso) + 1 }, (_, i) => (
+        {Array.from({ length: Math.ceil(ancho / paso) + 1 }, (_, i) => (
             <line
                 key={`v${i}`}
                 x1={i * paso}
                 y1="0"
                 x2={i * paso}
-                y2={LIENZO.alto}
+                y2={alto}
                 stroke={BLANCO}
                 strokeWidth="1"
             />
         ))}
-        {Array.from({ length: Math.ceil(LIENZO.alto / paso) + 1 }, (_, i) => (
+        {Array.from({ length: Math.ceil(alto / paso) + 1 }, (_, i) => (
             <line
                 key={`h${i}`}
                 x1="0"
                 y1={i * paso}
-                x2={LIENZO.ancho}
+                x2={ancho}
                 y2={i * paso}
                 stroke={BLANCO}
                 strokeWidth="1"
@@ -315,10 +315,17 @@ export const Defs = ({ id = 'd' }) => (
     </defs>
 );
 
-/** Envoltorio común: viewBox, definiciones y fondo. */
-export const Lienzo = ({ children, rejilla = true }) => (
+/**
+ * Envoltorio común: viewBox, definiciones y fondo.
+ *
+ * `ancho` y `alto` solo cambian en escenas que no caben en 16:10, como la del
+ * proceso, que es una línea de pasos y necesita un lienzo panorámico. El
+ * registro (escenas/index.js) declara ese lienzo para que el contenedor y el
+ * reproductor usen la misma proporción.
+ */
+export const Lienzo = ({ children, rejilla = true, ancho = LIENZO.ancho, alto = LIENZO.alto }) => (
     <svg
-        viewBox={`0 0 ${LIENZO.ancho} ${LIENZO.alto}`}
+        viewBox={`0 0 ${ancho} ${alto}`}
         width="100%"
         height="100%"
         preserveAspectRatio="xMidYMid meet"
@@ -327,7 +334,7 @@ export const Lienzo = ({ children, rejilla = true }) => (
         focusable="false"
     >
         <Defs />
-        {rejilla && <Rejilla />}
+        {rejilla && <Rejilla ancho={ancho} alto={alto} />}
         {children}
     </svg>
 );

@@ -6,6 +6,7 @@ import Enlace from '../components/common/Enlace';
 import MotionGrafico from '../motion/MotionGrafico';
 import { hayEscena } from '../motion/escenas';
 import { SERVICIOS, getServicio, rutaServicio } from '../data/servicios';
+import ServiciosPrincipales from '../components/common/ServiciosPrincipales';
 
 /*
  * Página de un servicio.
@@ -111,6 +112,22 @@ const ServicioPage = ({ slug }) => {
                         <h2 className="etiqueta text-white/55">Hasta dónde llega</h2>
                         <p className="cuerpo-destacado mt-4 max-w-none">{servicio.limite}</p>
                     </div>
+
+                    {!servicio.principal && (
+                        <div className="mt-16">
+                            <p className="insignia">Servicio complementario</p>
+                            <h2 className="titular-m mt-5">
+                                Rinde más junto a lo principal.
+                            </h2>
+                            <p className="cuerpo mt-3">
+                                Lo hacemos con la misma calidad que nuestros tres servicios
+                                principales, y se contrata solo o para completarlos.
+                            </p>
+                            <div className="mt-8">
+                                <ServiciosPrincipales />
+                            </div>
+                        </div>
+                    )}
 
                     {hermanos.length > 0 && (
                         <div className="mt-16">

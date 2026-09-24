@@ -33,3 +33,8 @@ export const getSector = (slug) => SECTORES.find((s) => s.slug === slug);
 
 /** Rutas que genera este módulo, para el router, el sitemap y el prerender. */
 export const RUTAS_SECTORES = SECTORES.map((s) => `/sectores/${s.slug}`);
+
+/** Los cuatro giros del enfoque —inmobiliarias, gimnasios, spas y salones de
+ *  uñas— y los que se siguen atendiendo sin encabezar nada. */
+export const SECTORES_PRINCIPALES = SECTORES.filter((s) => s.principal);
+export const SECTORES_SECUNDARIOS = SECTORES.filter((s) => !s.principal);

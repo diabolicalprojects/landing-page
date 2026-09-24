@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useBloque } from '../../contenido';
 import EncabezadoSeccion from '../common/EncabezadoSeccion';
+import MotionGrafico from '../../motion/MotionGrafico';
 
 /*
  * Cómo trabajamos. Primera inversión a claro.
@@ -13,6 +14,11 @@ import EncabezadoSeccion from '../common/EncabezadoSeccion';
  * Los pasos van numerados porque aquí el orden SÍ es información: cada uno
  * depende del anterior y lleva su plazo. Numerar tarjetas que no son una
  * secuencia es lo que hay que evitar; esto es una secuencia.
+ *
+ * El diagrama es una escena animada (escena «proceso») dibujada con los mismos
+ * pasos del contenido: la luz avanza de uno a otro y cada paso queda marcado al
+ * pasar al siguiente. Va en una losa negra porque las escenas se dibujan en
+ * blanco. Debajo, las tarjetas con el texto de cada paso.
  */
 const Proceso = () => {
     const { visible, insignia, titulo, entradilla, pasos = [], nota } = useBloque('proceso');
@@ -29,35 +35,27 @@ const Proceso = () => {
                     entradilla={entradilla}
                 />
 
-                <ol className="relative mt-14 grid gap-4 md:mt-20 md:grid-cols-2 lg:grid-cols-4">
-                    {/* La línea que une los pasos. Solo en escritorio, donde la
-                        secuencia se lee en horizontal; apilados en móvil, el
-                        propio orden vertical ya la cuenta. */}
-                    <span
-                        className="absolute left-0 right-0 top-7 hidden h-px lg:block"
-                        style={{ background: 'var(--linea)' }}
-                        aria-hidden="true"
+                <div
+                    className="zona-oscura mt-14 overflow-hidden px-3 py-4 md:mt-20 md:px-8 md:py-8"
+                    style={{ borderRadius: 'var(--radio-losa)' }}
+                >
+                    <MotionGrafico
+                        escena="proceso"
+                        datos={{ pasos }}
+                        etiqueta={`Diagrama animado del proceso: ${pasos.map((p) => p.titulo).join(', ')}.`}
                     />
+                </div>
 
+                <ol className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
                     {pasos.map((paso, indice) => (
-                        <li key={paso.id} className="relative flex flex-col">
-                            <span
-                                className="cifras relative z-10 flex h-14 w-14 flex-none items-center justify-center rounded-full text-lg font-extrabold"
-                                style={{
-                                    background: indice === 0 ? 'var(--acento)' : 'var(--tarjeta)',
-                                    color: indice === 0 ? 'var(--acento-tinta)' : 'var(--texto-1)',
-                                    border: `1px solid ${indice === 0 ? 'transparent' : 'var(--linea)'}`,
-                                    boxShadow: 'var(--sombra-tarjeta)',
-                                }}
-                            >
-                                {indice + 1}
-                            </span>
-
-                            <div className="tarjeta mt-5 flex flex-1 flex-col p-6">
+                        <li key={paso.id} className="flex flex-col">
+                            <div className="tarjeta flex flex-1 flex-col p-6">
                                 <p
                                     className="etiqueta-mono"
-                                    style={{ color: 'var(--acento-claro)' }}
+                                    style={{ color: 'var(--texto-3)' }}
                                 >
+                                    <span className="cifras">{String(indice + 1).padStart(2, '0')}</span>
+                                    {' · '}
                                     {paso.duracion}
                                 </p>
                                 <h3 className="mt-3 text-lg font-extrabold tracking-tight">

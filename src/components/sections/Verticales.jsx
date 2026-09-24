@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 
 import { useBloque } from '../../contenido';
-import { SECTORES } from '../../data/sectores';
+import { SECTORES_PRINCIPALES, SECTORES_SECUNDARIOS } from '../../data/sectores';
 import EncabezadoSeccion from '../common/EncabezadoSeccion';
 import Enlace from '../common/Enlace';
 
@@ -17,6 +17,9 @@ import Enlace from '../common/Enlace';
  * Cada tarjeta lleva el titular completo —«Inteligencia artificial para X»—
  * porque ese es el enlace interno que le dice a un buscador de qué trata la
  * página de destino.
+ *
+ * Solo los cuatro giros del enfoque llevan tarjeta. Los demás se siguen
+ * atendiendo y se nombran debajo, con enlace, sin competir por la atención.
  */
 const Verticales = () => {
     const { visible, insignia, titulo, entradilla } = useBloque('verticales');
@@ -33,8 +36,8 @@ const Verticales = () => {
                     entradilla={entradilla}
                 />
 
-                <div className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2 lg:grid-cols-3">
-                    {SECTORES.map((sector) => (
+                <div className="mt-12 grid grid-cols-1 gap-4 md:mt-16 md:grid-cols-2">
+                    {SECTORES_PRINCIPALES.map((sector) => (
                         <article
                             key={sector.slug}
                             className="tarjeta tarjeta-enlace flex flex-col p-6 md:p-7"
@@ -54,6 +57,24 @@ const Verticales = () => {
                         </article>
                     ))}
                 </div>
+
+                {SECTORES_SECUNDARIOS.length > 0 && (
+                    <p className="cuerpo mt-8 max-w-none">
+                        También atendemos{' '}
+                        {SECTORES_SECUNDARIOS.map((sector, i) => (
+                            <React.Fragment key={sector.slug}>
+                                {i > 0 && (i === SECTORES_SECUNDARIOS.length - 1 ? ' y ' : ', ')}
+                                <Enlace
+                                    destino={`/sectores/${sector.slug}`}
+                                    className="enlace inline-flex min-h-[1.75rem] items-center"
+                                >
+                                    {sector.nombreCorto.toLowerCase()}
+                                </Enlace>
+                            </React.Fragment>
+                        ))}
+                        .
+                    </p>
+                )}
             </div>
         </section>
     );

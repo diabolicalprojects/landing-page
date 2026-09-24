@@ -81,7 +81,7 @@ jobs:
           # cuatro ficheros generados, que son los que faltan cuando la etapa de
           # runtime se queda a medias.
           FALLOS=0
-          for ruta in / /nosotros /sectores/clinicas /servicios/ia-whatsapp /paginas-web-aguascalientes /contacto /llms.txt /llms-full.txt /robots.txt /sitemap.xml; do
+          for ruta in / /nosotros /sectores/spas /servicios/google-ads /paginas-web-aguascalientes /chatbots-aguascalientes /agendamiento-automatizado-aguascalientes /contacto /blog /llms.txt /llms-full.txt /robots.txt /sitemap.xml; do
             CODIGO=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://127.0.0.1:3000$ruta")
             if [ "$CODIGO" = "200" ]; then
               echo "  OK $ruta"
@@ -95,7 +95,7 @@ jobs:
           # su landing) siguen indexadas en Google. Un 404 tiraría a la basura
           # lo que esas páginas hubieran ganado, así que el 301 se comprueba
           # aquí y no se descubre meses después en Search Console.
-          for ruta in /automatizacion-para-clinicas /automatizacion-para-spas /servicios/sitio-web; do
+          for ruta in /automatizacion-para-clinicas /automatizacion-para-spas /servicios/sitio-web /servicios/ia-whatsapp /sectores/salones-de-belleza; do
             CODIGO=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://127.0.0.1:3000$ruta")
             DESTINO=$(curl -s -o /dev/null -w '%{redirect_url}' --max-time 10 "http://127.0.0.1:3000$ruta")
             if [ "$CODIGO" = "301" ]; then

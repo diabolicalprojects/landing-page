@@ -5,6 +5,8 @@ import { useBloque } from '../../contenido';
 import EncabezadoSeccion from '../common/EncabezadoSeccion';
 import Enlace from '../common/Enlace';
 import { ESCENAS } from './Mockups';
+import MotionGrafico from '../../motion/MotionGrafico';
+import { hayEscena } from '../../motion/escenas';
 
 /*
  * Los tres frentes.
@@ -13,6 +15,10 @@ import { ESCENAS } from './Mockups';
  * entero con la escena a un lado, y las otras dos van debajo a mitad de ancho.
  * Tres cajas idénticas en fila dicen «estos tres pesan lo mismo», y no es
  * verdad — el sitio web es la puerta de entrada de todo lo demás.
+ *
+ * Una tarjeta con `escena` (una clave de src/motion/escenas) lleva esa escena
+ * animada; sin ella, la maqueta estática de `icono`. Las escenas mandan: son
+ * las que cuentan el mecanismo.
  */
 const Pilares = () => {
     const { visible, insignia, titulo, entradilla, items = [] } = useBloque('pilares');
@@ -58,15 +64,25 @@ const Pilares = () => {
                     <div className="grid gap-4 md:grid-cols-2">
                         {resto.map((item) => {
                             const Escena = ESCENAS[item.icono];
+                            const conEscena = item.escena && hayEscena(item.escena);
                             return (
                                 <article
                                     key={item.id}
                                     className="tarjeta tarjeta-enlace flex flex-col p-6 md:p-8"
                                 >
-                                    {Escena && (
-                                        <div className="mb-7">
-                                            <Escena />
+                                    {conEscena ? (
+                                        <div className="mb-7 overflow-hidden rounded-xl border border-white/[0.07]">
+                                            <MotionGrafico
+                                                escena={item.escena}
+                                                etiqueta={`Ilustración animada: ${item.titulo.toLowerCase()}.`}
+                                            />
                                         </div>
+                                    ) : (
+                                        Escena && (
+                                            <div className="mb-7">
+                                                <Escena />
+                                            </div>
+                                        )
                                     )}
                                     <h3 className="titular-m">{item.titulo}</h3>
                                     <p className="cuerpo mt-4">{item.texto}</p>

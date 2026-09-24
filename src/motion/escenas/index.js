@@ -30,8 +30,19 @@ import {
     Despachos,
     Gimnasios,
     Inmobiliarias,
-    SalonesDeBelleza,
+    SalonesDeUnas,
+    Spas,
 } from './sectores';
+import {
+    Agendamiento,
+    Chatbots,
+    CICLO_AGENDAMIENTO,
+    CICLO_CHATBOTS,
+    LIENZO_PROCESO,
+    Proceso,
+    cicloProceso,
+    posterProceso,
+} from './estrella';
 
 /*
  * Registro de escenas.
@@ -50,13 +61,44 @@ import {
  * que se pintan desde datos (los tipos de sitio), donde no hay un componente
  * escrito a mano que pueda describir la ilustración que tiene al lado.
  */
-const escena = (Escena, duracion, poster, descripcion) => ({ Escena, duracion, poster, descripcion });
+const escena = (Escena, duracion, poster, descripcion, lienzo) => ({
+    Escena,
+    duracion,
+    poster,
+    descripcion,
+    lienzo,
+});
 
 export const ESCENAS = {
     // Marca
     nucleo: escena(Nucleo, 340, 150),
     identidad: escena(Identidad, 360, 200),
     sello: escena(Sello, 420, 180),
+
+    // Servicios principales con escena propia en su landing. La de sitio web
+    // es 'sitio-web', más abajo, porque ya existía con el resto del catálogo.
+    chatbots: escena(
+        Chatbots,
+        CICLO_CHATBOTS,
+        230,
+        'Ilustración animada: WhatsApp, el sitio web e Instagram llegan al mismo chatbot, que responde, confirma la cita y pasa a una persona cuando hace falta.'
+    ),
+    'agendamiento-automatizado': escena(
+        Agendamiento,
+        CICLO_AGENDAMIENTO,
+        250,
+        'Ilustración animada: una cita pedida por WhatsApp ocupa su hueco en la agenda, sale el recordatorio y otra cita se mueve de día sin perder el hueco.'
+    ),
+
+    // Proceso: se dibuja con los pasos del contenido, así que su duración y su
+    // póster dependen de cuántos pasos haya.
+    proceso: escena(
+        Proceso,
+        cicloProceso,
+        posterProceso,
+        'Diagrama animado del proceso de trabajo, paso por paso.',
+        LIENZO_PROCESO
+    ),
 
     // Servicios
     'posicionamiento-organico': escena(PosicionamientoOrganico, 240, 120),
@@ -102,7 +144,8 @@ export const ESCENAS = {
 
     // Sectores
     inmobiliarias: escena(Inmobiliarias, 300, 160),
-    'salones-de-belleza': escena(SalonesDeBelleza, 300, 160),
+    spas: escena(Spas, 300, 160),
+    'salones-de-unas': escena(SalonesDeUnas, 300, 160),
     clinicas: escena(Clinicas, 300, 160),
     gimnasios: escena(Gimnasios, 300, 160),
     'despachos-y-oficinas': escena(Despachos, 300, 160),

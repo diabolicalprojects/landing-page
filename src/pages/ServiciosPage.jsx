@@ -4,6 +4,8 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import Pagina, { Migas } from '../components/common/Pagina';
 import Enlace from '../components/common/Enlace';
 import MotionGrafico from '../motion/MotionGrafico';
+import EncabezadoSeccion from '../components/common/EncabezadoSeccion';
+import ServiciosPrincipales from '../components/common/ServiciosPrincipales';
 import { SERVICIOS_POR_CATEGORIA, rutaServicio } from '../data/servicios';
 
 /*
@@ -31,9 +33,9 @@ const ServiciosPage = () => (
                             <span className="titular-apagado">para negocios en Aguascalientes.</span>
                         </h1>
                         <p className="cuerpo-l mt-7">
-                            Trece servicios repartidos en las cinco etapas del recorrido de un
-                            cliente. Cada uno tiene su página con lo que incluye y hasta dónde
-                            llega, porque conviene saberlo antes de contratar.
+                            Tres servicios principales —sitios web, chatbots y agendamiento
+                            automatizado— y diez complementarios con la misma calidad. Cada uno
+                            tiene su página con lo que incluye y hasta dónde llega.
                         </p>
 
                         <Enlace destino="/contacto" className="boton boton-acento mt-9">
@@ -53,11 +55,30 @@ const ServiciosPage = () => (
             </div>
         </section>
 
+        <section className="zona-clara seccion">
+            <div className="contenedor">
+                <EncabezadoSeccion
+                    insignia="Principales"
+                    titulo="Sitios web, chatbots y agendamiento."
+                    apagado="Los tres trabajan juntos."
+                    entradilla="El sitio atrae, el chatbot responde y la agenda confirma. Se pueden contratar por separado, pero rinden más como una sola pieza."
+                />
+                <div className="mt-12 md:mt-16">
+                    <ServiciosPrincipales nivel="h2" />
+                </div>
+            </div>
+        </section>
+
         <section className="zona-oscura zona-oscura-1 seccion">
             <div className="contenedor space-y-14 md:space-y-20">
+                <EncabezadoSeccion
+                    insignia="Complementarios"
+                    titulo="Diez servicios complementarios."
+                    apagado="Misma calidad, mismo alcance publicado."
+                />
                 {SERVICIOS_POR_CATEGORIA.map((grupo, indice) => (
                     <div key={grupo.categoria}>
-                        <h2 className="flex items-baseline gap-3 border-b border-white/[0.09] pb-3">
+                        <h3 className="flex items-baseline gap-3 border-b border-white/[0.09] pb-3">
                             <span className="etiqueta-mono text-white/55">
                                 {String(indice + 1).padStart(2, '0')}
                             </span>
@@ -65,7 +86,7 @@ const ServiciosPage = () => (
                             <span className="etiqueta-mono ml-auto text-white/55">
                                 {grupo.servicios.length}
                             </span>
-                        </h2>
+                        </h3>
 
                         <ul className="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                             {grupo.servicios.map((servicio) => (
@@ -74,9 +95,9 @@ const ServiciosPage = () => (
                                         destino={rutaServicio(servicio.slug)}
                                         className="tarjeta tarjeta-enlace flex h-full flex-col p-6"
                                     >
-                                        <h3 className="text-[1rem] font-extrabold leading-tight tracking-tight text-white">
+                                        <h4 className="text-[1rem] font-extrabold leading-tight tracking-tight text-white">
                                             {servicio.nombre}
-                                        </h3>
+                                        </h4>
                                         <p className="cuerpo mt-2.5 flex-1">{servicio.resumen}</p>
                                         <span className="etiqueta mt-5 inline-flex items-center gap-1.5 text-white/55">
                                             Ver el detalle

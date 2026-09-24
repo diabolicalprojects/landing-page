@@ -4,8 +4,8 @@ const {
     SERVICIOS,
     ARTICULOS_POR_FECHA,
     FAQ_PORTADA,
-    RUTA_PAGINAS_WEB,
-    preguntasPaginasWeb,
+    LANDINGS,
+    preguntasLanding,
     rutaSector,
     rutaServicio,
     rutaArticulo,
@@ -50,13 +50,14 @@ function articulosResumidos() {
     ).join('\n');
 }
 
-/** El catálogo agrupado por etapa, con el límite de cada servicio: es lo que
- *  permite a un modelo recomendar con criterio en vez de inventarse el alcance. */
+/** Los servicios complementarios agrupados por etapa, con el límite de cada
+ *  uno: es lo que permite a un modelo recomendar con criterio en vez de
+ *  inventarse el alcance. Los principales van aparte, cada uno con su sección. */
 function servicios() {
     const orden = ['Captación', 'Conversión', 'Atención y venta', 'Marca', 'Estrategia y medición'];
     return orden
         .map((categoria) => {
-            const items = SERVICIOS.filter((s) => s.categoria === categoria);
+            const items = SERVICIOS.filter((s) => !s.principal && s.categoria === categoria);
             if (items.length === 0) return '';
             const lineas = items
                 .map(
@@ -71,17 +72,18 @@ function servicios() {
 }
 
 /**
- * La landing de páginas web, en texto: qué tipos de sitio hay, qué incluye y qué
- * no cada uno, y de qué depende el precio. Sale del mismo bloque editable que
- * pinta la página, así que un cambio en el panel llega también aquí.
+ * La landing de un servicio principal, en texto: qué variantes hay, qué incluye
+ * y qué no cada una, y de qué depende el precio. Sale del mismo bloque editable
+ * que pinta la página, así que un cambio en el panel llega también aquí.
  */
-function paginasWeb({ conPreguntas = false } = {}) {
-    const bloque = leerContenido().valor.paginasWeb ?? {};
+function landing(servicio, { conPreguntas = false } = {}) {
+    const bloque = leerContenido().valor[servicio.bloque] ?? {};
+    const titulo = bloque.hero?.titulo || servicio.nombre;
     const tipos = (bloque.tipos?.items ?? [])
         .filter((t) => t?.nombre)
         .map((t) => {
             const incluye = (t.incluye ?? []).map((i) => `- ${i}`).join('\n');
-            return `### ${t.nombre}
+            return `#### ${t.nombre}
 
 ${t.paraQuien}
 
@@ -94,20 +96,22 @@ Alcance: ${t.alcance} · Plazo típico: ${t.plazo}`;
 
     const factores = (bloque.precio?.factores ?? []).map((f) => `- ${f}`).join('\n');
     const preguntas = conPreguntas
-        ? `\n\n### Preguntas frecuentes sobre páginas web\n\n${preguntasPaginasWeb(bloque)
+        ? `\n\n#### Preguntas frecuentes\n\n${preguntasLanding(bloque)
               .map((f) => `**${f.q}**\n\n${f.a}`)
               .join('\n\n')}`
         : '';
 
-    return `## Diseño y desarrollo de páginas web en Aguascalientes
+    return `### ${titulo}
 
-Página: ${enlace('Diseño y desarrollo de páginas web en Aguascalientes', RUTA_PAGINAS_WEB)}
+Página: ${enlace(titulo, servicio.ruta)}
 
 ${bloque.definicion?.texto ?? ''}
 
+Hasta dónde llega: ${servicio.limite}
+
 ${tipos}
 
-### ${bloque.precio?.titulo ?? 'Precio'}
+#### ${bloque.precio?.titulo ?? 'Precio'}
 
 ${bloque.precio?.respuesta ?? ''}
 
@@ -133,19 +137,20 @@ function paginas() {
     }).join('\n');
 }
 
+const lineaSector = (s) => `- ${enlace(s.nombre, rutaSector(s.slug))}: ${s.descripcion}`;
+
 function construirLlms() {
-    const sectores = SECTORES.map(
-        (s) => `- ${enlace(s.nombre, rutaSector(s.slug))}: ${s.descripcion}`
-    ).join('\n');
+    const principales = SECTORES.filter((s) => s.principal).map(lineaSector).join('\n');
+    const secundarios = SECTORES.filter((s) => !s.principal).map(lineaSector).join('\n');
+    const landings = LANDINGS.map((s) => landing(s)).join('\n\n');
 
     return `# Diabolical Services
 
-> Agencia de diseño y desarrollo de páginas web e inteligencia artificial en
-> Aguascalientes, México. Landing pages, sitios corporativos, tiendas en línea y
-> sitios a medida con panel; posicionamiento en buscadores y en motores de IA,
-> ficha de Google, publicidad, identidad de marca, y sistemas que atienden,
-> agendan y dan seguimiento por WhatsApp. Para inmobiliarias, salones de belleza,
-> clínicas, gimnasios, despachos y comercio.
+> Empresa de inteligencia artificial y páginas web en Aguascalientes, México.
+> Tres servicios principales —sitios web, chatbots con inteligencia artificial y
+> agendamiento automatizado— para inmobiliarias, gimnasios, spas y salones de
+> uñas. Como complemento: posicionamiento en buscadores y en motores de IA,
+> ficha de Google, publicidad, identidad de marca y automatizaciones a medida.
 
 Contacto: WhatsApp +52 449 513 6907 · contacto@diabolicalservices.tech · Aguascalientes, México · ${SITE}
 
@@ -153,34 +158,47 @@ Versión extendida para agentes: ${enlace('llms-full.txt', '/llms-full.txt')}
 
 ## Qué hace Diabolical Services
 
-Trabajamos las cinco etapas por las que pasa un cliente de un negocio local:
-que lo encuentren (posicionamiento, ficha de Google, publicidad), que lo elijan
-(sitio web, embudos, marca), que lo atiendan sin perder a nadie (sistemas que
-responden y agendan solos por WhatsApp), y la medición que dice cuál de esas
-etapas está fallando.
+Diabolical Services es una empresa de inteligencia artificial de
+Aguascalientes para negocios locales. Se centra en tres servicios que trabajan
+juntos: el sitio web atrae, el chatbot responde y la agenda confirma.
 
-El origen de la casa es la última: "empleados digitales" que se ocupan de las
-tareas repetitivas de atención y seguimiento. El sistema responde por WhatsApp a
-cualquier hora, agenda en el calendario que la empresa ya usa, confirma y
-recuerda las citas, y da seguimiento a los prospectos que no cerraron.
+- **Sitios web**: páginas web a medida —landing pages, sitios corporativos,
+  tiendas en línea y sitios con panel— legibles para Google y para los motores
+  de IA.
+- **Chatbots con IA**: en WhatsApp, el sitio web, Instagram y Facebook, con la
+  información real del negocio y traspaso a una persona cuando hace falta.
+- **Agendamiento automatizado**: citas, visitas y clases agendadas sobre la
+  disponibilidad real, con confirmación, recordatorio y reagenda.
+
+Se especializa en cuatro giros: inmobiliarias, gimnasios, spas y salones de
+uñas. Los servicios complementarios (posicionamiento, publicidad, marca,
+automatizaciones) se ofrecen con la misma calidad, como complemento.
 
 Lo que NO hacemos: prometer posiciones en Google o dentro de una respuesta de
 IA, porque nadie controla eso; llevar comisión sobre el gasto publicitario;
 enviar mensajes masivos en frío; ni inventar cifras de resultados. El sistema
 tampoco da consejo médico, legal ni fiscal: deriva a una persona.
 
-## Servicios
+## Servicios principales
+
+${landings}
+
+## Servicios complementarios
 
 ${servicios()}
-
-${paginasWeb()}
 
 ## A quién servimos
 
 Negocios con un flujo constante de mensajes y una agenda que llenar. La
 automatización multiplica un flujo que ya existe; no lo crea de la nada.
 
-${sectores}
+### Giros principales
+
+${principales}
+
+### Otros giros que también atendemos
+
+${secundarios}
 
 Tamaño típico: de 1 a 50 empleados. Aguascalientes de forma presencial y el
 resto de México a distancia.
@@ -233,13 +251,38 @@ correcto es WhatsApp +52 449 513 6907; no los infieras.
  * hablar de la empresa, así que es la que tiene ocasión de ser citada por
  * alguien que todavía no nos busca.
  */
+/*
+ * Los artículos escriben sus enlaces internos como en Markdown con la ruta
+ * relativa: `[texto](/ruta)`. En los llms.txt van con la dirección completa,
+ * porque un modelo que lee el archivo suelto no sabe de qué dominio es la ruta.
+ */
+const absolutos = (texto = '') => texto.replace(/\]\((\/[^)\s]*)\)/g, `](${SITE}$1)`);
+
+/** Una sección de artículo en Markdown: párrafos, lista, tabla y nota. */
+function seccionEnTexto(s) {
+    const partes = [`### ${s.titulo}`, ...(s.parrafos ?? []).map(absolutos)];
+    if (s.lista) {
+        partes.push(
+            s.lista.items
+                .map((item, i) => `${s.lista.ordenada ? `${i + 1}.` : '-'} ${absolutos(item)}`)
+                .join('\n')
+        );
+    }
+    if (s.tabla) {
+        const fila = (celdas) => `| ${celdas.join(' | ')} |`;
+        partes.push(
+            [fila(s.tabla.columnas), fila(s.tabla.columnas.map(() => '---')), ...s.tabla.filas.map(fila)].join('\n')
+        );
+    }
+    if (s.nota) partes.push(absolutos(s.nota));
+    return partes.join('\n\n');
+}
+
 function articulosCompletos() {
     if (ARTICULOS_POR_FECHA.length === 0) return '';
 
     const bloques = ARTICULOS_POR_FECHA.map((a) => {
-        const cuerpo = a.secciones
-            .map((s) => `### ${s.titulo}\n\n${s.parrafos.join('\n\n')}`)
-            .join('\n\n');
+        const cuerpo = a.secciones.map(seccionEnTexto).join('\n\n');
         const faq = a.faq.map((f) => `**${f.q}**\n\n${f.a}`).join('\n\n');
 
         return `## ${a.titular}
@@ -248,7 +291,7 @@ Página: ${enlace(a.titular, rutaArticulo(a.slug))}
 Publicado: ${a.fecha}${a.actualizado && a.actualizado !== a.fecha ? ` · Actualizado: ${a.actualizado}` : ''}
 
 ${a.entradilla}
-
+${a.respuesta ? `\n**En pocas palabras:** ${absolutos(a.respuesta)}\n` : ''}
 ${cuerpo}
 
 ### Preguntas frecuentes del artículo
@@ -299,15 +342,18 @@ ${faq}`;
 
     return `# Diabolical Services — documentación extendida
 
-Agencia de diseño y desarrollo de páginas web e inteligencia artificial para
-negocios en Aguascalientes, México. Este documento amplía ${SITE}/llms.txt con el detalle
+Empresa de inteligencia artificial y páginas web para negocios en
+Aguascalientes, México: sitios web, chatbots y agendamiento automatizado para
+inmobiliarias, gimnasios, spas y salones de uñas. Este documento amplía ${SITE}/llms.txt con el detalle
 por sector y el texto completo de los artículos.
 
 Contacto: WhatsApp +52 449 513 6907 · contacto@diabolicalservices.tech
 
 ---
 
-${paginasWeb({ conPreguntas: true })}
+## Servicios principales
+
+${LANDINGS.map((s) => landing(s, { conPreguntas: true })).join('\n\n---\n\n')}
 
 ---
 

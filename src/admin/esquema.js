@@ -28,7 +28,7 @@ export const BLOQUES = [
     {
         clave: 'pilares',
         nombre: 'Qué hacemos',
-        ayuda: 'Los tres frentes. El primero enlaza a la página de páginas web.',
+        ayuda: 'Los tres servicios principales: sitios web, chatbots y agendamiento, cada uno enlazado a su página.',
         ancla: '#pilares',
     },
     {
@@ -91,7 +91,12 @@ export const BLOQUES = [
         ayuda: 'Los textos del formulario. Los campos y el envío no se tocan desde aquí.',
         ancla: '#contacto',
     },
-    { clave: 'nav', nombre: 'Menú', ayuda: 'Los enlaces de la barra de arriba.', ancla: '#top' },
+    {
+        clave: 'nav',
+        nombre: 'Menú',
+        ayuda: 'Inicio, Nosotros, Servicios y Contacto. Servicios despliega sus grupos; Contacto va marcado como botón.',
+        ancla: '#top',
+    },
     { clave: 'footer', nombre: 'Pie', ayuda: 'Columnas de enlaces y aviso legal.', ancla: '#contacto' },
     {
         clave: 'paginasWeb',
@@ -100,6 +105,20 @@ export const BLOQUES = [
             'La página /paginas-web-aguascalientes. El título principal lleva la frase «diseño y desarrollo de páginas web en Aguascalientes»: cámbialo solo si sabes por qué. Las preguntas que edites aquí se publican también para Google.',
         ancla: '#top',
         ruta: '/paginas-web-aguascalientes',
+    },
+    {
+        clave: 'chatbots',
+        nombre: 'Página: chatbots',
+        ayuda: 'La página /chatbots-aguascalientes. El título principal lleva «chatbots con inteligencia artificial en Aguascalientes». Las preguntas se publican también para Google.',
+        ancla: '#top',
+        ruta: '/chatbots-aguascalientes',
+    },
+    {
+        clave: 'agendamiento',
+        nombre: 'Página: agendamiento',
+        ayuda: 'La página /agendamiento-automatizado-aguascalientes. Cada tipo lleva la escena del giro con el mismo identificador.',
+        ancla: '#top',
+        ruta: '/agendamiento-automatizado-aguascalientes',
     },
     {
         clave: 'nosotros',
@@ -139,7 +158,7 @@ export const ETIQUETAS = {
     ctaPrimario: 'Botón principal',
     ctaSecundario: 'Botón secundario',
     alternativa: 'Enlace alternativo',
-    escena: 'Panel de la guardia nocturna',
+    escena: 'Escena animada',
     eventos: 'Avisos que aparecen',
     reloj: 'Hora que marca el reloj',
     etiqueta: 'Estado (arriba a la derecha)',
@@ -151,6 +170,8 @@ export const ETIQUETAS = {
     apoyo: 'Párrafo de apoyo',
     id: 'Identificador interno',
     definicion: 'En pocas palabras',
+    grupos: 'Grupos del desplegable',
+    destacado: 'Mostrar como botón',
     tipos: 'Tipos de sitio',
     paraQuien: 'Para quién es',
     incluye: 'Qué incluye (una línea por punto)',
@@ -194,6 +215,8 @@ export const AYUDAS = {
     imagen:
         'Ruta de una imagen subida al propio sitio, por ejemplo /portafolio/cliente.webp. Las imágenes de otros dominios no se muestran.',
     url: 'La dirección completa del sitio del cliente, empezando por https://',
+    escena: 'Identificador de una escena animada (por ejemplo chatbots o agendamiento-automatizado). Vacío: se usa la ilustración.',
+    destacado: 'Solo uno: el enlace que se pinta como botón a la derecha del menú.',
 };
 
 /** Claves que no se enseñan: son estructura, no contenido. */

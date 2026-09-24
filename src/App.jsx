@@ -19,7 +19,7 @@ import InicioPage from './pages/InicioPage';
 import NosotrosPage from './pages/NosotrosPage';
 import ServiciosPage from './pages/ServiciosPage';
 import ServicioPage from './pages/ServicioPage';
-import PaginasWebPage from './pages/PaginasWebPage';
+import LandingServicio from './pages/LandingServicio';
 import SectoresPage from './pages/SectoresPage';
 import SectorPage from './pages/SectorPage';
 import ContactoPage from './pages/ContactoPage';
@@ -50,10 +50,15 @@ function App() {
                     <Route path="/nosotros" element={<NosotrosPage />} />
 
                     <Route path="/servicios" element={<ServiciosPage />} />
-                    {/* Los servicios con dirección propia tienen su página
-                        aparte; su /servicios/<slug> antiguo redirige desde el
-                        servidor. */}
-                    <Route path={rutaServicio('sitio-web')} element={<PaginasWebPage />} />
+                    {/* Los servicios principales tienen su landing con
+                        dirección propia; el resto vive en /servicios/<slug>. */}
+                    {SERVICIOS.filter((servicio) => servicio.ruta).map((servicio) => (
+                        <Route
+                            key={servicio.slug}
+                            path={rutaServicio(servicio.slug)}
+                            element={<LandingServicio slug={servicio.slug} />}
+                        />
+                    ))}
                     {SERVICIOS.filter((servicio) => !servicio.ruta).map((servicio) => (
                         <Route
                             key={servicio.slug}

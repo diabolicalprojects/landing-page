@@ -88,7 +88,9 @@ const EsqueletoSector = ({ frame, etiqueta, mensajes, Artefacto }) => {
                     </g>
                 </Baldosa>
             </g>
-            <Anillo x={cx - 8} y={200} radio={62} frame={frame} velocidad={0.26} opacidad={0.2} hueco={0.64} />
+            <g opacity={pMarca}>
+                <Anillo x={cx - 8} y={200} radio={62} frame={frame} velocidad={0.26} opacidad={0.2} hueco={0.64} />
+            </g>
 
             <Conector d={trazado(358, 200, 410, 200, { modo: 'ele' })} p={pArtefacto} />
 
@@ -125,41 +127,102 @@ const FichaPropiedad = ({ frame }) => (
     </g>
 );
 
-/** Salones: la agenda de las estilistas y el hueco que se acaba de ocupar. */
-const AgendaEstilistas = ({ frame }) => {
-    const columnas = [0, 1, 2];
-    const franjas = [0, 1, 2, 3, 4];
-    // La celda que se ocupa sola durante la escena.
-    const nueva = { c: 1, f: 2 };
+/** Spas: dos cabinas y un tratamiento en pareja que ocupa las dos a la vez. */
+const CabinasSpa = ({ frame }) => {
+    const filas = [0, 1, 2, 3, 4];
+    const nueva = entrada(frame, 72, 26);
 
     return (
-        <g transform="translate(414 106)">
-            <rect width="180" height="188" rx="12" fill="url(#baldosaBase)" stroke={BLANCO} strokeOpacity="0.18" />
-            {columnas.map((c) => (
-                <Renglon key={`t${c}`} x={16 + c * 54} y={16} ancho={40} alto={5} opacidad={0.3} />
-            ))}
-            {columnas.map((c) =>
-                franjas.map((f) => {
-                    const esNueva = c === nueva.c && f === nueva.f;
-                    const ocupada = (c + f) % 3 === 0;
+        <g transform="translate(414 96)">
+            <rect width="180" height="208" rx="12" fill="url(#baldosaBase)" stroke={BLANCO} strokeOpacity="0.18" />
+            <Renglon x={18} y={16} ancho={48} alto={5} opacidad={0.3} />
+            <Renglon x={98} y={16} ancho={48} alto={5} opacidad={0.3} />
+
+            {/* Un tratamiento largo que ya ocupaba dos franjas. */}
+            <rect x="98" y="32" width="66" height="50" rx="6" fill={BLANCO} fillOpacity="0.12" />
+            {filas.map((f) =>
+                [0, 1].map((c) => {
+                    if (c === 1 && f < 2) return null;
+                    const ocupada = (c === 0 && f === 1) || (c === 1 && f === 4);
+                    const enPareja = f === 3;
                     return (
                         <rect
                             key={`${c}-${f}`}
-                            x={16 + c * 54}
+                            x={16 + c * 82}
                             y={32 + f * 28}
-                            width="42"
+                            width="66"
                             height="22"
-                            rx="5"
+                            rx="6"
                             fill={BLANCO}
-                            fillOpacity={
-                                esNueva ? 0.9 * entrada(frame, 70, 26) : ocupada ? 0.12 : 0.03
-                            }
+                            fillOpacity={enPareja ? 0.03 + 0.87 * nueva : ocupada ? 0.12 : 0.03}
                             stroke={BLANCO}
-                            strokeOpacity={esNueva ? 0 : 0.1}
+                            strokeOpacity={enPareja ? 0 : 0.1}
                         />
                     );
                 })
             )}
+
+            {/* El anticipo que aparta la reserva. */}
+            <g opacity={entrada(frame, 92, 22)}>
+                <rect x="16" y="176" width="148" height="18" rx="9" fill={BLANCO} fillOpacity="0.1" />
+                <Renglon x={30} y={183} ancho={70} alto={4} opacidad={0.45} />
+                <circle cx="150" cy="185" r="6" fill={BLANCO} fillOpacity="0.85" />
+            </g>
+        </g>
+    );
+};
+
+/** Salones de uñas: el diseño elegido y el hueco de la manicurista, con su duración. */
+const DisenosUnas = ({ frame }) => {
+    const disenos = [0, 1, 2, 3, 4];
+    const elegido = entrada(frame, 60, 22);
+    const cita = entrada(frame, 80, 26);
+
+    // Silueta de una uña: base recta y punta redondeada.
+    const una = (x, y) => `M ${x} ${y + 34} V ${y + 12} A 10 12 0 0 1 ${x + 20} ${y + 12} V ${y + 34} Z`;
+
+    return (
+        <g transform="translate(414 96)">
+            <rect width="180" height="208" rx="12" fill="url(#baldosaBase)" stroke={BLANCO} strokeOpacity="0.18" />
+            {disenos.map((i) => {
+                const x = 18 + i * 30;
+                const esElegido = i === 2;
+                return (
+                    <path
+                        key={i}
+                        d={una(x, 16)}
+                        fill={BLANCO}
+                        fillOpacity={esElegido ? 0.08 + 0.82 * elegido : 0.08 + (i % 2) * 0.06}
+                        stroke={BLANCO}
+                        strokeOpacity={esElegido ? 0.3 + 0.5 * elegido : 0.16}
+                        strokeWidth="1.2"
+                    />
+                );
+            })}
+            <Renglon x={18} y={64} ancho={110 * elegido} alto={7} opacidad={0.6} />
+            <Renglon x={18} y={78} ancho={70 * elegido} alto={5} opacidad={0.2} />
+
+            {/* Agenda de dos manicuristas: el servicio ocupa su duración real. */}
+            {[0, 1].map((c) => (
+                <Renglon key={`m${c}`} x={18 + c * 80} y={100} ancho={40} alto={5} opacidad={0.3} />
+            ))}
+            {[0, 1, 2, 3].map((f) =>
+                [0, 1].map((c) => (
+                    <rect
+                        key={`${c}-${f}`}
+                        x={16 + c * 80}
+                        y={112 + f * 22}
+                        width="68"
+                        height="17"
+                        rx="5"
+                        fill={BLANCO}
+                        fillOpacity={(c + f) % 3 === 0 ? 0.12 : 0.03}
+                        stroke={BLANCO}
+                        strokeOpacity="0.1"
+                    />
+                ))
+            )}
+            <rect x="96" y="134" width="68" height={39 * cita} rx="5" fill={BLANCO} fillOpacity="0.9" />
         </g>
     );
 };
@@ -299,12 +362,21 @@ export const Inmobiliarias = ({ frame }) => (
     />
 );
 
-export const SalonesDeBelleza = ({ frame }) => (
+export const Spas = ({ frame }) => (
     <EsqueletoSector
         frame={frame}
-        etiqueta="HUECO OCUPADO"
-        mensajes={conversacion(76, 98, 84)}
-        Artefacto={AgendaEstilistas}
+        etiqueta="CABINA Y TERAPEUTA"
+        mensajes={conversacion(88, 96, 80)}
+        Artefacto={CabinasSpa}
+    />
+);
+
+export const SalonesDeUnas = ({ frame }) => (
+    <EsqueletoSector
+        frame={frame}
+        etiqueta="DISEÑO Y HORARIO"
+        mensajes={conversacion(72, 104, 86)}
+        Artefacto={DisenosUnas}
     />
 );
 

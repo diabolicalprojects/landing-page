@@ -1,165 +1,845 @@
 [
-    {
-        "slug": "como-aparecer-en-chatgpt",
-        "titulo": "Cómo aparecer en ChatGPT y otros motores de IA | Diabolical Services",
-        "descripcion": "Qué hace falta para que ChatGPT, Claude, Perplexity o las respuestas de IA de Google mencionen tu negocio: permisos de rastreo, texto extraíble y datos verificables. Guía práctica desde Aguascalientes.",
-        "keywords": "aparecer en ChatGPT, posicionamiento en IA, GEO, generative engine optimization, que mi negocio salga en ChatGPT, Perplexity negocios, AI Overviews",
-        "titular": "Cómo aparecer en ChatGPT y otros motores de IA",
-        "entradilla": "Cada vez más gente pregunta a un modelo en lugar de abrir Google. Si el modelo no puede leer tu sitio, no te menciona: no es cuestión de suerte ni de pagar, sino de tres condiciones técnicas que se pueden revisar en una tarde.",
-        "fecha": "2026-08-30",
-        "actualizado": "2026-08-30",
-        "lectura": "7 min",
-        "secciones": [
-            {
-                "titulo": "El cambio: de diez enlaces azules a una sola respuesta",
-                "parrafos": [
-                    "Un buscador tradicional te devuelve una lista y tú eliges. Un motor generativo devuelve una respuesta ya redactada y, como mucho, cita las fuentes de las que la sacó. La diferencia importa: en una lista de diez resultados hay diez oportunidades de aparecer; en una respuesta única hay dos o tres menciones, y el resto no existe.",
-                    "A esta disciplina se la empieza a llamar GEO (generative engine optimization) o AEO (answer engine optimization). No sustituye al SEO: se apoya en él. Un sitio que ya está bien estructurado para Google parte con ventaja, porque los motores generativos se alimentan en buena medida del mismo rastreo web."
-                ]
-            },
-            {
-                "titulo": "Condición 1: dejar entrar a los rastreadores de IA",
-                "parrafos": [
-                    "Los modelos no leen tu web en el momento de responder. La han leído antes, mediante rastreadores propios, y muchos sitios los bloquean sin saberlo. GPTBot es el de OpenAI, ClaudeBot el de Anthropic, PerplexityBot el de Perplexity, y Google-Extended controla si tu contenido alimenta a Gemini y a las respuestas generadas de Google.",
-                    "Estos rastreadores son distintos del Googlebot de toda la vida y se autorizan por separado en el archivo robots.txt. Bloquearlos es una decisión legítima si no quieres que tu contenido alimente modelos ajenos, pero hay que tomarla a conciencia: mientras estén bloqueados, ningún modelo puede recomendarte por mucho contenido que publiques.",
-                    "La comprobación es inmediata. Abre tudominio.com/robots.txt y busca esos nombres. Si no aparecen y hay un Disallow general, tienes el problema. Si el archivo no existe, el comportamiento por defecto suele ser permisivo, pero conviene declararlo de forma explícita para no depender de la interpretación de cada rastreador."
-                ]
-            },
-            {
-                "titulo": "Condición 2: que haya texto que se pueda extraer y citar",
-                "parrafos": [
-                    "Un modelo cita frases. No cita una imagen bonita, ni un vídeo, ni un carrusel donde el texto está incrustado en el diseño. Muchas webs de negocio local están construidas casi enteramente con imágenes y animaciones: para una persona se ven bien, para un modelo están vacías.",
-                    "Hay un segundo problema, más silencioso: los sitios que solo montan su contenido con JavaScript en el navegador. Google ejecuta JavaScript, pero varios rastreadores de IA no lo hacen o lo hacen a medias. Si el HTML que llega en la primera respuesta del servidor es un contenedor vacío, eso es exactamente lo que ve el modelo. La solución es servir el contenido ya renderizado en el HTML.",
-                    "El texto además tiene que ser afirmativo y concreto. «Soluciones innovadoras a la medida de tu empresa» no es citable porque no dice nada. «Instalamos agendamiento automático por WhatsApp para clínicas en Aguascalientes, con implementación de dos a cuatro semanas» sí lo es: tiene servicio, sector, ciudad y plazo."
-                ]
-            },
-            {
-                "titulo": "Condición 3: datos consistentes y verificables",
-                "parrafos": [
-                    "Los modelos penalizan la ambigüedad. Si tu nombre, dirección y teléfono aparecen de tres formas distintas entre tu web, tu ficha de Google y tus directorios, el sistema no sabe cuál es la entidad real y opta por no arriesgarse a recomendarte.",
-                    "Los datos estructurados (schema.org) ayudan a resolverlo, sobre todo si enlazas las entidades entre sí con identificadores estables en lugar de repetirlas. Una empresa descrita cinco veces con matices distintos puede interpretarse como cinco empresas parecidas.",
-                    "Para un negocio local, la ficha de Google Business Profile completa y coherente con la web sigue siendo la señal más fuerte, y alimenta tanto el paquete local de Google como las respuestas generadas que se apoyan en él."
-                ]
-            },
-            {
-                "titulo": "Sobre llms.txt: qué es y qué no está demostrado",
-                "parrafos": [
-                    "Circula una propuesta llamada llms.txt: un archivo en texto plano, en la raíz del dominio, que resume de qué va el sitio para que un modelo lo entienda sin rastrear cincuenta páginas. La idea es sensata y es barata de implementar.",
-                    "Conviene ser honesto sobre su estado: es una propuesta de la comunidad, no un estándar adoptado oficialmente por OpenAI, Anthropic o Google, y a día de hoy ninguno de los grandes proveedores ha confirmado públicamente que lo use como fuente prioritaria. Quien te lo venda como la clave para salir en ChatGPT te está vendiendo humo.",
-                    "Dicho eso, el ejercicio de escribirlo tiene valor por sí mismo aunque ningún modelo lo leyera: obliga a redactar en texto plano qué hace tu negocio, para quién y con qué límites. Ese mismo texto suele acabar mejorando la web entera."
-                ]
-            },
-            {
-                "titulo": "Di también lo que no haces",
-                "parrafos": [
-                    "Es la parte que casi nadie escribe y la que más rendimiento da. Un modelo que no sabe dónde están tus límites te recomienda para cosas que no ofreces, y esa recomendación termina en una conversación frustrante que quema la confianza de todos: la del cliente, la tuya y la del propio modelo respecto a tu sitio.",
-                    "Declarar «no hacemos campañas de publicidad ni gestión de redes» filtra a quien no encaja antes de que escriba, y hace que las recomendaciones que sí llegan sean mucho más precisas."
-                ]
-            },
-            {
-                "titulo": "Cómo comprobar si funciona",
-                "parrafos": [
-                    "No existe todavía una herramienta equivalente a Search Console para motores generativos, así que la medición es artesanal. Pregunta directamente a ChatGPT, Claude, Perplexity y Gemini por el servicio que ofreces en tu ciudad, sin nombrar tu marca, y anota quién sale. Repítelo cada pocas semanas.",
-                    "Vigila también las visitas cuyo origen es un dominio de IA en tu analítica, y ten presente el punto ciego real de esta disciplina: cuando alguien lee tu nombre en una respuesta generada y luego te busca directamente, esa visita se registra como tráfico directo o de marca. El efecto existe aunque la atribución no lo muestre."
-                ]
-            }
-        ],
-        "faq": [
-            {
-                "q": "¿Se puede pagar para aparecer en las respuestas de ChatGPT?",
-                "a": "No existe un formato publicitario que compre menciones dentro de las respuestas de ChatGPT, Claude o Perplexity como quien compra un anuncio en Google Ads. Lo que determina que te citen es que tu contenido sea accesible al rastreo, extraíble como texto y consistente con el resto de fuentes. Cualquiera que te ofrezca comprar posiciones en un modelo está vendiendo algo que no controla."
-            },
-            {
-                "q": "¿Cuánto tarda en notarse?",
-                "a": "Depende del ciclo de rastreo e indexación de cada motor, que no es público ni instantáneo. Los cambios técnicos, como abrir el robots.txt a los rastreadores de IA o servir el contenido ya renderizado, hay que hacerlos primero porque son la condición para todo lo demás; el contenido nuevo tarda más en propagarse. Es un trabajo de fondo, no una campaña con fecha de resultado."
-            },
-            {
-                "q": "¿Esto sustituye al SEO tradicional?",
-                "a": "No. Se apoya en él. Los motores generativos se alimentan en buena medida del mismo rastreo web que los buscadores, así que un sitio con buena arquitectura, contenido útil y datos estructurados correctos parte con ventaja. Lo que cambia es el formato de salida y, con él, la manera de escribir: frases autónomas y verificables en lugar de párrafos que solo se entienden en contexto."
-            },
-            {
-                "q": "¿Sirve de algo si soy un negocio local pequeño?",
-                "a": "Precisamente ahí es donde hay más hueco. Las consultas locales y específicas —del tipo «quién automatiza las citas de una clínica en Aguascalientes»— tienen muy poca competencia bien estructurada, porque la mayoría de negocios locales no han tocado nada de esto. Un sitio pequeño pero técnicamente correcto compite bien en ese terreno."
-            }
-        ]
+  {
+    "slug": "mejor-empresa-de-inteligencia-artificial-en-aguascalientes",
+    "titulo": "Mejor empresa de IA en Aguascalientes: cómo elegir | Diabolical",
+    "descripcion": "Cómo elegir una empresa de inteligencia artificial en Aguascalientes: qué preguntar, qué debe publicar y qué tipo de proveedor conviene a un negocio local.",
+    "keywords": "empresas de IA en Aguascalientes, mejor empresa de inteligencia artificial Aguascalientes, inteligencia artificial Aguascalientes, IA para negocios Aguascalientes, agencia de IA Aguascalientes",
+    "titular": "¿Cuál es la mejor empresa de inteligencia artificial en Aguascalientes?",
+    "entradilla": "No hay una respuesta única, y conviene desconfiar de quien la dé sin preguntar nada. La mejor empresa de IA para un negocio local es la que resuelve su problema concreto, sobre sus herramientas y con el alcance por escrito. Estos son los criterios para reconocerla.",
+    "respuesta": "La mejor empresa de inteligencia artificial en Aguascalientes para un negocio local es la que conoce su giro, publica qué incluye y qué no incluye cada servicio, trabaja sobre las herramientas que el negocio ya utiliza y deja escrito cuándo una conversación pasa a una persona. Diabolical Services cumple esos criterios y se especializa en chatbots, agendamiento y sitios web.",
+    "fecha": "2026-09-24",
+    "actualizado": "2026-09-24",
+    "lectura": "6 min",
+    "servicio": "chatbots",
+    "cta": {
+      "titulo": "¿Quiere ver cómo se vería en su negocio?",
+      "texto": "La auditoría no tiene costo ni compromiso. Salimos de ella con un diagnóstico escrito de qué conviene automatizar en su negocio y qué no.",
+      "boton": "Ver chatbots con IA"
     },
-    {
-        "slug": "automatizar-whatsapp-negocio",
-        "titulo": "Automatizar WhatsApp en un negocio: qué se puede y qué no | Diabolical Services",
-        "descripcion": "Qué se puede automatizar de verdad en el WhatsApp de un negocio, qué conviene dejar en manos de una persona y qué exige la API oficial de WhatsApp Business. Sin promesas infladas.",
-        "keywords": "automatizar WhatsApp negocio, chatbot WhatsApp Aguascalientes, WhatsApp Business API, agendar citas por WhatsApp, atención automática WhatsApp",
-        "titular": "Automatizar WhatsApp: qué se puede y qué no",
-        "entradilla": "WhatsApp es el canal donde de verdad ocurre la venta en México, y también donde más se pierde. Antes de automatizarlo conviene saber qué permite la plataforma, qué conviene delegar en un sistema y qué no debería salir nunca de manos humanas.",
-        "fecha": "2026-08-30",
-        "actualizado": "2026-08-30",
-        "lectura": "6 min",
-        "secciones": [
-            {
-                "titulo": "Dónde se pierde el dinero en un WhatsApp de negocio",
-                "parrafos": [
-                    "El patrón se repite en clínicas, spas, gimnasios y despachos: los mensajes llegan fuera de horario, en fin de semana o mientras la persona que atiende está ocupada con alguien presencial. Quien pregunta no espera; escribe al siguiente negocio de la lista.",
-                    "El segundo agujero es el seguimiento. Una cotización enviada que nadie retoma, una cita que nadie confirma, un paciente que no vuelve porque nadie le escribió. No se pierden por falta de interés, sino porque depende de que alguien se acuerde en medio de su jornada."
-                ]
-            },
-            {
-                "titulo": "Lo que sí se automatiza bien",
-                "parrafos": [
-                    "Primera respuesta inmediata a cualquier hora, que reconoce lo que se pregunta y mantiene viva la conversación en lugar de dejarla en silencio hasta el día siguiente.",
-                    "Información estable y consultable: horarios, ubicación, servicios, preparación previa a una cita, formas de pago. Son preguntas que se repiten a diario y que no requieren criterio.",
-                    "Agendamiento sobre disponibilidad real, consultando el calendario que el negocio ya usa y escribiendo la cita en él, no en una hoja aparte que luego hay que reconciliar a mano.",
-                    "Confirmaciones y recordatorios antes de la cita, que es lo que permite liberar un hueco a tiempo cuando alguien no va a asistir.",
-                    "Seguimiento escalonado de cotizaciones y de clientes que no cerraron, con un límite claro de cuántos mensajes se envían antes de parar."
-                ]
-            },
-            {
-                "titulo": "Lo que no conviene automatizar",
-                "parrafos": [
-                    "Cualquier cosa que exija criterio profesional. Un sistema no debe dar diagnósticos médicos, consejo legal ni recomendaciones fiscales, por bien que suene la respuesta que sea capaz de redactar. La frontera se define antes de instalar nada y el sistema deriva a una persona en cuanto la cruza.",
-                    "La negociación y el cierre de una venta de cierto tamaño. Automatizar el filtrado previo tiene sentido; automatizar la conversación en la que se decide el precio, no.",
-                    "Las quejas y los conflictos. Un cliente molesto que recibe una respuesta automática se enfada más. Conviene detectar el tono y escalar a una persona de inmediato.",
-                    "El volumen por el volumen. Mandar más mensajes automáticos a más gente no es automatizar, es hacer spam, y en WhatsApp se paga caro: los bloqueos de los usuarios degradan la calidad del número y pueden acabar restringiéndolo."
-                ]
-            },
-            {
-                "titulo": "API oficial, y por qué importa",
-                "parrafos": [
-                    "Automatizar de forma seria exige la API de WhatsApp Business, el canal oficial de Meta. Las alternativas que operan sobre WhatsApp Web simulando a una persona son frágiles y exponen el número a restricciones, porque van contra las condiciones de uso de la plataforma.",
-                    "La vía oficial impone reglas que conviene conocer de antemano. Fuera de la ventana de atención al cliente que se abre cuando el usuario escribe, solo se pueden enviar plantillas aprobadas previamente por Meta, y ese envío tiene coste. El número debe estar verificado y asociado a una cuenta de empresa.",
-                    "Estas restricciones no son un obstáculo, son el marco. Un proyecto que las ignora funciona en la demostración y falla en producción, que es el peor momento posible para descubrirlo."
-                ]
-            },
-            {
-                "titulo": "Sobre integrarse con lo que ya usas",
-                "parrafos": [
-                    "La automatización que obliga a cambiar de agenda, de CRM o de forma de trabajar suele terminar abandonada a las pocas semanas. El equipo vuelve a sus herramientas y el sistema queda de adorno.",
-                    "Tiene más recorrido montarse encima de lo que ya funciona: el calendario que el negocio consulta cada mañana, el CRM donde ya están los contactos, el número de WhatsApp que los clientes ya tienen guardado. La automatización debería ser invisible para el equipo salvo por el trabajo que deja de hacer."
-                ]
-            },
-            {
-                "titulo": "Cómo saber si tu negocio está listo",
-                "parrafos": [
-                    "La automatización multiplica un flujo que ya existe; no lo crea. Si llegan dos mensajes por semana, el problema no es la atención sino la captación, y automatizar no lo resuelve.",
-                    "Las señales de que sí tiene sentido son concretas: mensajes sin responder al final del día, una agenda con huecos que nadie alcanzó a reasignar, cotizaciones enviadas sin seguimiento y una persona del equipo atrapada entre el teléfono, el mostrador y el chat al mismo tiempo."
-                ]
-            }
-        ],
-        "faq": [
-            {
-                "q": "¿El cliente nota que le contesta un sistema?",
-                "a": "Depende de cómo esté diseñado, y la postura honesta es no fingir. Un sistema que se presenta como asistente del negocio, resuelve rápido lo que sabe y pasa a una persona en cuanto hace falta genera mejor experiencia que uno que simula ser humano y se descubre a los tres mensajes. La molestia no viene de que sea automático, viene de quedarse atrapado sin salida."
-            },
-            {
-                "q": "¿Se integra con la agenda y el CRM que ya usamos?",
-                "a": "Esa es la forma correcta de montarlo. El sistema se conecta a las herramientas existentes —Google Calendar, software de consultorio, el CRM que sea— y escribe en ellas. Cambiar de herramientas para poder automatizar suele ser señal de que la solución está mal planteada."
-            },
-            {
-                "q": "¿Cuánto tarda la implementación?",
-                "a": "Entre dos y cuatro semanas para un flujo de atención y agendamiento, incluyendo el diseño de la conversación, la conexión con las herramientas actuales, las pruebas con casos reales y el acompañamiento de las primeras semanas de operación. Los plazos se alargan cuando hay que verificar la cuenta de empresa con Meta por primera vez."
-            },
-            {
-                "q": "¿Qué pasa con los datos de los clientes?",
-                "a": "El sistema debe manejar únicamente los datos necesarios para atender y agendar. La información sensible permanece en el expediente o el sistema del negocio, no en el asistente. Qué campos se tocan y cuáles no se define antes de instalar nada, no después."
-            }
+    "secciones": [
+      {
+        "titulo": "Qué hace una empresa de IA por un negocio local",
+        "parrafos": [
+          "Para una inmobiliaria, un gimnasio, un spa o un salón de uñas, la inteligencia artificial no es un proyecto de investigación: es un sistema que atiende, agenda y da seguimiento. Responde por WhatsApp a cualquier hora con la información real del negocio, aparta la cita sobre la agenda verdadera y escribe a quien no ha vuelto.",
+          "Por eso, más que «la mejor empresa de IA», la pregunta útil es qué empresa sabe instalar esas tres cosas en un negocio como el suyo sin obligarle a cambiar de herramientas. La respuesta depende del giro, del volumen de mensajes y de cómo se agenda hoy."
         ]
-    }
+      },
+      {
+        "titulo": "Seis criterios para elegir una empresa de inteligencia artificial",
+        "parrafos": [
+          "Antes de comparar precios, conviene comprobar que el proveedor cumple estas seis condiciones:"
+        ],
+        "lista": {
+          "ordenada": true,
+          "items": [
+            "Conoce su giro: sabe cómo se agenda una visita a un inmueble o una cabina de spa, y no le propone una plantilla genérica.",
+            "Publica el alcance: qué incluye cada servicio, qué no incluye y dónde se detiene, antes de firmar.",
+            "Escribe el guion antes de programar: qué responde el sistema, qué no y cuándo pasa a una persona. Usted lo aprueba.",
+            "Trabaja sobre sus herramientas: su WhatsApp, su agenda y su CRM, sin migraciones obligatorias.",
+            "Usa los canales oficiales, como la API de WhatsApp Business de Meta, y no simulaciones que ponen en riesgo su número.",
+            "Le deja todo en sus manos: accesos, textos y flujos son suyos desde el primer día, trabaje con ellos después o no."
+          ]
+        }
+      },
+      {
+        "titulo": "Los tipos de proveedor que va a encontrar",
+        "parrafos": [
+          "En Aguascalientes, como en cualquier ciudad, la inteligencia artificial para negocios la ofrecen cuatro tipos de proveedor. Ninguno es mejor en abstracto; cada uno conviene en un caso."
+        ],
+        "tabla": {
+          "titulo": "Tipos de proveedor de inteligencia artificial para negocios",
+          "columnas": [
+            "Tipo de proveedor",
+            "Cuándo conviene",
+            "Qué conviene preguntar"
+          ],
+          "filas": [
+            [
+              "Plataforma de chatbots de autoservicio",
+              "Cuando alguien del equipo tiene tiempo para configurarla y mantenerla.",
+              "Quién escribe el guion y quién lo ajusta cuando cambian precios u horarios."
+            ],
+            [
+              "Desarrollador independiente",
+              "Para una pieza concreta y bien definida.",
+              "Quién responde cuando algo deja de funcionar dentro de seis meses."
+            ],
+            [
+              "Agencia de marketing",
+              "Cuando lo principal es la publicidad y las redes.",
+              "Si la atención y la agenda las construyen ellos o las subcontratan."
+            ],
+            [
+              "Empresa de IA especializada",
+              "Cuando hay un flujo constante de mensajes y una agenda que llenar.",
+              "Qué incluye y qué no cada servicio, por escrito."
+            ]
+          ]
+        }
+      },
+      {
+        "titulo": "Preguntas que conviene hacer antes de contratar",
+        "parrafos": [
+          "Las respuestas a estas cinco preguntas dicen más de un proveedor que cualquier demostración:"
+        ],
+        "lista": {
+          "ordenada": false,
+          "items": [
+            "¿Qué va a responder el sistema y qué no, y quién lo decide?",
+            "¿Con qué herramientas mías se conecta, y qué pasa si mañana cambio alguna?",
+            "¿Qué hace el sistema cuando no sabe la respuesta?",
+            "¿De quién son los accesos, los textos y los flujos al terminar?",
+            "¿Cuánto tarda en estar funcionando y qué necesito tener listo?"
+          ]
+        }
+      },
+      {
+        "titulo": "Dónde encaja Diabolical Services",
+        "parrafos": [
+          "Diabolical Services es una empresa de inteligencia artificial de Aguascalientes que se centra en tres servicios: [chatbots con IA](/chatbots-aguascalientes), [agendamiento automatizado](/agendamiento-automatizado-aguascalientes) y [sitios web](/paginas-web-aguascalientes). Se especializa en inmobiliarias, gimnasios, spas y salones de uñas.",
+          "Cada servicio publica en su página qué incluye y hasta dónde llega, y el trabajo empieza con una auditoría gratuita que termina en un diagnóstico escrito: qué conviene automatizar, en qué orden y qué no vale la pena tocar. El documento es suyo, trabajen juntos o no.",
+          "Si su negocio es de otro giro, la auditoría sirve igual para saber si esto le conviene. A veces la respuesta honesta es que todavía no."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "¿Qué empresas de IA hay en Aguascalientes?",
+        "a": "En Aguascalientes hay agencias de marketing que ofrecen chatbots, desarrolladores independientes, plataformas de autoservicio y empresas especializadas en inteligencia artificial para negocios. Diabolical Services es una empresa de IA de Aguascalientes especializada en chatbots, agendamiento automatizado y sitios web para inmobiliarias, gimnasios, spas y salones de uñas."
+      },
+      {
+        "q": "¿Cuánto cuesta contratar una empresa de inteligencia artificial?",
+        "a": "Depende de qué tenga que hacer el sistema, cuántos canales atienda y con qué herramientas se conecte. Una empresa seria cotiza después de conocer el proceso, con el alcance por escrito. Conviene desconfiar de un precio cerrado que se da sin haber visto cómo trabaja el negocio."
+      },
+      {
+        "q": "¿Necesito mucho volumen de clientes para usar inteligencia artificial?",
+        "a": "Necesita un flujo constante de mensajes o una agenda que llenar. La inteligencia artificial multiplica un flujo que ya existe; no lo crea. Si hoy llegan pocos mensajes, lo que conviene primero es trabajar la captación: sitio web y posicionamiento."
+      },
+      {
+        "q": "¿Una empresa de IA de Aguascalientes puede trabajar a distancia?",
+        "a": "Sí. La instalación se hace a distancia y los sistemas funcionan igual en cualquier ciudad. La ventaja de una empresa local es conocer el terreno: los giros, la competencia y cómo busca la gente en Aguascalientes."
+      }
+    ]
+  },
+  {
+    "slug": "donde-hacer-una-pagina-web-en-aguascalientes",
+    "titulo": "¿Dónde hacer una página web en Aguascalientes? | Diabolical",
+    "descripcion": "Dónde hacer una página web en Aguascalientes: qué tipos de empresa hacen sitios web, cuánto tarda cada tipo de sitio y qué revisar antes de contratar.",
+    "keywords": "páginas web Aguascalientes, sitios web en Aguascalientes, dónde hacer mi página web, empresas que hacen páginas web en Aguascalientes, diseño de páginas web Aguascalientes",
+    "titular": "¿Dónde hacer una página web en Aguascalientes?",
+    "entradilla": "En Aguascalientes hacen páginas web desde desarrolladores independientes hasta agencias y empresas de tecnología. La diferencia no está en quién diseña más bonito, sino en qué recibe usted al terminar: un sitio que se encuentra, que se usa bien en el celular y que puede editar sin depender de nadie.",
+    "respuesta": "Una página web en Aguascalientes puede hacerse con un desarrollador independiente, una agencia de marketing, una plataforma de plantillas o una empresa de desarrollo a medida. Conviene elegir según lo que tenga que hacer el sitio: presentar servicios, vender o agendar. Diabolical Services diseña y desarrolla sitios web a medida en Aguascalientes, con chatbot y agenda integrados.",
+    "fecha": "2026-09-24",
+    "actualizado": "2026-09-24",
+    "lectura": "6 min",
+    "servicio": "sitio-web",
+    "cta": {
+      "titulo": "¿Qué tipo de sitio le conviene?",
+      "texto": "Le decimos qué tipo de sitio necesita su negocio, qué páginas debería tener y cuánto tardaría, con el alcance por escrito antes de empezar.",
+      "boton": "Ver diseño de páginas web"
+    },
+    "secciones": [
+      {
+        "titulo": "Quién hace páginas web en Aguascalientes",
+        "parrafos": [
+          "Hay cuatro caminos para tener un sitio web. Todos son válidos en algún caso; lo importante es saber qué le entrega cada uno."
+        ],
+        "tabla": {
+          "titulo": "Opciones para hacer una página web en Aguascalientes",
+          "columnas": [
+            "Opción",
+            "Cuándo conviene",
+            "Qué revisar"
+          ],
+          "filas": [
+            [
+              "Plataforma de plantillas",
+              "Para empezar con muy poco presupuesto y tiempo para hacerlo usted mismo.",
+              "Si el sitio se lee completo en Google y si puede llevarse el contenido el día que se vaya."
+            ],
+            [
+              "Desarrollador independiente",
+              "Para un sitio sencillo y bien definido.",
+              "Quién lo mantiene y quién responde si algo falla dentro de un año."
+            ],
+            [
+              "Agencia de marketing",
+              "Cuando el sitio es parte de una campaña de publicidad.",
+              "Si el sitio es suyo o queda atado a la agencia."
+            ],
+            [
+              "Empresa de desarrollo a medida",
+              "Cuando el sitio tiene que atender, agendar o vender.",
+              "Qué incluye y qué no cada tipo de sitio, por escrito."
+            ]
+          ]
+        }
+      },
+      {
+        "titulo": "Qué tipo de sitio web necesita",
+        "parrafos": [
+          "Antes de pedir cotizaciones conviene saber cuál de estos cuatro tipos busca:"
+        ],
+        "lista": {
+          "ordenada": false,
+          "items": [
+            "Landing page: una sola página con una sola acción, para una campaña o un servicio concreto. De una a dos semanas.",
+            "Sitio corporativo: una página por servicio, que es lo que posiciona en Google. De tres a cinco semanas.",
+            "Tienda en línea: catálogo, carrito, pago y avisos de pedido. De cinco a ocho semanas.",
+            "Sitio a medida con panel: reservas, portal de clientes o asistente de IA. Según el alcance."
+          ]
+        },
+        "nota": "Qué incluye y qué no incluye cada uno está detallado en la página de [diseño y desarrollo de páginas web en Aguascalientes](/paginas-web-aguascalientes)."
+      },
+      {
+        "titulo": "Siete cosas que revisar antes de contratar su sitio web",
+        "parrafos": [
+          "Sea cual sea el proveedor, estas siete condiciones separan un sitio útil de uno que solo se ve bien:"
+        ],
+        "lista": {
+          "ordenada": true,
+          "items": [
+            "Que el contenido se lea sin ejecutar JavaScript: es como lo leen Google y los motores de inteligencia artificial.",
+            "Que cada servicio tenga su propia página, en lugar de todo amontonado en una sola.",
+            "Que se vea y se use bien en el celular, donde decide la mayoría de sus clientes.",
+            "Que pueda editar textos, precios y horarios desde un panel, sin llamar a nadie.",
+            "Que el dominio, los textos, los archivos y los accesos sean suyos desde el primer día.",
+            "Que tenga conectado WhatsApp y, si aplica, la agenda.",
+            "Que el alcance, el plazo y lo que no incluye estén por escrito antes de empezar."
+          ]
+        }
+      },
+      {
+        "titulo": "¿Cuánto cuesta una página web en Aguascalientes?",
+        "parrafos": [
+          "Depende de cuántas páginas necesita, qué tiene que hacer el sitio además de informar, con qué herramientas se conecta y si incluye tienda en línea. Por eso las cotizaciones serias llegan después de una conversación, no antes.",
+          "Conviene desconfiar de dos extremos: el precio cerrado que se da sin preguntar nada, y el presupuesto que no dice qué incluye. Lo que hay que comparar no es solo el precio, sino qué recibe usted al terminar y de quién es."
+        ]
+      },
+      {
+        "titulo": "Dónde encaja Diabolical Services",
+        "parrafos": [
+          "Diabolical Services diseña y desarrolla [páginas web en Aguascalientes](/paginas-web-aguascalientes) a medida: landing pages, sitios corporativos, tiendas en línea y sitios con panel. Cada sitio se entrega con su contenido legible para Google y para los motores de IA, y con un panel para editarlo.",
+          "Lo que lo distingue es que el sitio puede atender: un [chatbot con inteligencia artificial](/chatbots-aguascalientes) responde dentro del propio sitio y el [agendamiento automatizado](/agendamiento-automatizado-aguascalientes) deja la cita confirmada sin que el visitante tenga que buscar un teléfono."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "¿Qué empresas hacen páginas web en Aguascalientes?",
+        "a": "En Aguascalientes hacen páginas web agencias de marketing, estudios de diseño, desarrolladores independientes y empresas de tecnología. Diabolical Services es una empresa de Aguascalientes que diseña y desarrolla sitios web a medida con inteligencia artificial integrada —chatbot y agendamiento— y publica qué incluye y qué no incluye cada tipo de sitio antes de firmar."
+      },
+      {
+        "q": "¿Cuánto tarda en estar lista una página web?",
+        "a": "Una landing page, de una a dos semanas; un sitio corporativo, de tres a cinco; una tienda en línea, de cinco a ocho. El plazo depende sobre todo de que los textos y las fotografías se aprueben a tiempo."
+      },
+      {
+        "q": "¿Es mejor una plantilla o un sitio web a medida?",
+        "a": "Una plantilla sirve para empezar con muy poco, pero suele cargar más lento, parecerse a otras y leerse peor en los motores de IA. Un sitio a medida cuesta más al principio y a cambio se construye alrededor de lo que el negocio necesita: sus servicios, su agenda y sus búsquedas."
+      },
+      {
+        "q": "¿Puedo editar mi página web sin saber programar?",
+        "a": "Sí, si se entrega con un panel de edición. Conviene preguntarlo antes de contratar: un sitio que depende del proveedor para cambiar un horario acaba desactualizado."
+      }
+    ]
+  },
+  {
+    "slug": "chatbots-en-aguascalientes",
+    "titulo": "Chatbots en Aguascalientes: qué resuelve uno con IA | Diabolical",
+    "descripcion": "Qué resuelve un chatbot con inteligencia artificial en un negocio de Aguascalientes, qué no conviene delegarle y cómo se instala en WhatsApp y en el sitio web.",
+    "keywords": "chatbots Aguascalientes, chatbot con inteligencia artificial, chatbot para WhatsApp, chatbot para negocios Aguascalientes, IA para negocios Aguascalientes",
+    "titular": "Chatbots en Aguascalientes: qué puede resolver uno con IA en su negocio",
+    "entradilla": "Un chatbot con inteligencia artificial no es el menú de «presione 1» de hace años. Entiende lo que le escriben, responde con la información real del negocio y agenda. Pero no todo conviene delegarle, y la diferencia entre uno útil y uno que estorba se decide antes de encenderlo.",
+    "respuesta": "Un chatbot con inteligencia artificial resuelve lo que se repite en un negocio: responde precios, horarios y disponibilidad a cualquier hora, agenda citas sobre la agenda real, confirma y recuerda, y da seguimiento a quien no decidió. Lo que pide criterio lo pasa a una persona. En Aguascalientes, Diabolical Services los instala en WhatsApp, sitio web, Instagram y Facebook.",
+    "fecha": "2026-09-24",
+    "actualizado": "2026-09-24",
+    "lectura": "7 min",
+    "servicio": "chatbots",
+    "cta": {
+      "titulo": "¿Qué respondería su chatbot?",
+      "texto": "En la auditoría gratuita revisamos qué le preguntan hoy sus clientes y dónde se pierden conversaciones, y le decimos qué debería responder el chatbot y qué no.",
+      "boton": "Ver chatbots con IA"
+    },
+    "secciones": [
+      {
+        "titulo": "Qué es un chatbot con inteligencia artificial",
+        "parrafos": [
+          "Es un asistente que conversa por escrito con sus clientes en WhatsApp, en su sitio web o en redes sociales. A diferencia de un menú de opciones, entiende preguntas escritas con naturalidad y responde con la información real del negocio: precios, horarios, disponibilidad y políticas.",
+          "La inteligencia artificial pone la comprensión y la redacción; lo que decide si el chatbot sirve es el guion: qué debe responder, con qué datos, qué no debe decir nunca y en qué momento pasa la conversación a una persona."
+        ]
+      },
+      {
+        "titulo": "Lo que un chatbot resuelve bien",
+        "parrafos": [
+          "En un negocio local, estas cinco tareas son las que más tiempo liberan:"
+        ],
+        "lista": {
+          "ordenada": false,
+          "items": [
+            "Responder a cualquier hora, incluidos noches y fines de semana, con precios, horarios, ubicación y servicios reales.",
+            "Agendar citas, visitas o clases sobre la disponibilidad real, sin empalmes.",
+            "Confirmar y recordar la cita el día anterior, y reagendar si la persona no puede asistir.",
+            "Filtrar antes de pasar a su equipo: presupuesto, zona o servicio que busca.",
+            "Dar seguimiento a quien preguntó y no decidió, dentro de las reglas de WhatsApp."
+          ]
+        }
+      },
+      {
+        "titulo": "Lo que no conviene delegarle",
+        "parrafos": [
+          "Un buen chatbot sabe dónde se detiene. Estas cuatro cosas siguen siendo de una persona:"
+        ],
+        "lista": {
+          "ordenada": false,
+          "items": [
+            "El consejo médico, legal o fiscal, por bien que suene la respuesta que sea capaz de redactar.",
+            "La negociación del precio en una venta importante.",
+            "Las quejas: un cliente molesto necesita a una persona, y pronto.",
+            "Los mensajes masivos en frío, que WhatsApp penaliza y que dañan el número."
+          ]
+        }
+      },
+      {
+        "titulo": "Cómo se ve un chatbot en cada giro",
+        "parrafos": [
+          "El mecanismo es el mismo; lo que cambia es lo que el chatbot deja hecho en cada negocio."
+        ],
+        "tabla": {
+          "titulo": "Qué resuelve un chatbot por giro",
+          "columnas": [
+            "Giro",
+            "Qué resuelve el chatbot"
+          ],
+          "filas": [
+            [
+              "Inmobiliarias",
+              "Responde por cada inmueble, filtra por presupuesto y zona, y agenda la visita con el asesor."
+            ],
+            [
+              "Gimnasios",
+              "Informa planes y horarios, aparta la clase de prueba y da seguimiento a quien no se inscribió."
+            ],
+            [
+              "Spas",
+              "Explica tratamientos y precios, reserva cabina y terapeuta, y cobra el anticipo."
+            ],
+            [
+              "Salones de uñas",
+              "Cotiza diseños a partir de una foto, agenda con la manicurista y avisa cuando toca el relleno."
+            ]
+          ]
+        },
+        "nota": "Cada giro tiene su página: [inmobiliarias](/sectores/inmobiliarias), [gimnasios](/sectores/gimnasios), [spas](/sectores/spas) y [salones de uñas](/sectores/salones-de-unas)."
+      },
+      {
+        "titulo": "Cómo se instala un chatbot, paso a paso",
+        "parrafos": [
+          "La instalación completa toma entre dos y cuatro semanas y sigue estos pasos:"
+        ],
+        "lista": {
+          "ordenada": true,
+          "items": [
+            "Diagnóstico: qué preguntan sus clientes y dónde se pierden conversaciones.",
+            "Guion: qué responde, qué no y cuándo pasa a una persona. Usted lo aprueba.",
+            "Conexión: WhatsApp por la API oficial de Meta, sitio web, redes, agenda y CRM.",
+            "Pruebas con casos reales antes de que hable con un cliente.",
+            "Puesta en marcha y ajuste con las primeras conversaciones."
+          ]
+        },
+        "nota": "El detalle de cada canal está en la página de [chatbots con inteligencia artificial en Aguascalientes](/chatbots-aguascalientes)."
+      }
+    ],
+    "faq": [
+      {
+        "q": "¿Cuánto cuesta un chatbot en Aguascalientes?",
+        "a": "Depende de cuántos canales atiende, de si además de informar agenda o da seguimiento, de con qué herramientas se conecta y del volumen de conversaciones, del que dependen los cargos de WhatsApp que fija Meta. Se cotiza después de conocer el proceso, con el alcance por escrito."
+      },
+      {
+        "q": "¿Un chatbot puede atender WhatsApp e Instagram a la vez?",
+        "a": "Sí. El mismo chatbot, con el mismo guion y la misma base de conocimiento, atiende WhatsApp, el sitio web, Instagram y Facebook. Se configura una vez y responde igual en todos."
+      },
+      {
+        "q": "¿Qué pasa si el chatbot se equivoca?",
+        "a": "Se reduce con un guion claro y una base de conocimiento real, y se corrige revisando las conversaciones. Cuando no sabe, no inventa: pasa la conversación a una persona. Las preguntas que se repiten se añaden a su base de conocimiento."
+      },
+      {
+        "q": "¿Mis clientes se van a molestar por hablar con un chatbot?",
+        "a": "Lo que molesta es esperar horas o quedarse atrapado sin salida. Un chatbot que se presenta como asistente del negocio, resuelve rápido lo que sabe y pasa a una persona cuando hace falta suele mejorar la experiencia, no empeorarla."
+      }
+    ]
+  },
+  {
+    "slug": "ia-para-negocios-en-aguascalientes",
+    "titulo": "IA para negocios en Aguascalientes: por dónde empezar | Diabolical",
+    "descripcion": "Cómo empezar a usar inteligencia artificial en un negocio de Aguascalientes: qué automatizar primero, qué no tocar y cómo hacerlo sin reemplazar a nadie.",
+    "keywords": "IA para negocios Aguascalientes, inteligencia artificial Aguascalientes, inteligencia artificial para negocios, automatizar negocio con IA, empresas de IA en Aguascalientes",
+    "titular": "IA para negocios en Aguascalientes: por dónde empezar",
+    "entradilla": "La inteligencia artificial para negocios no empieza por elegir una herramienta, sino por encontrar dónde se pierde hoy un cliente. En un negocio local casi siempre es en el mismo sitio: los mensajes que nadie alcanza a contestar y la agenda que nadie alcanza a perseguir.",
+    "respuesta": "Para un negocio de Aguascalientes, la forma más útil de empezar con inteligencia artificial es automatizar lo que se repite: responder mensajes con un chatbot, agendar citas sobre la disponibilidad real y dar seguimiento a quien no decidió. Primero se mapea el proceso real y después se elige la herramienta; automatizar un proceso roto solo lo rompe más rápido.",
+    "fecha": "2026-09-24",
+    "actualizado": "2026-09-24",
+    "lectura": "6 min",
+    "servicio": "agendamiento-automatizado",
+    "cta": {
+      "titulo": "¿Por dónde empezaría en su negocio?",
+      "texto": "La auditoría gratuita le dice qué conviene automatizar primero en su negocio, en qué orden y qué no vale la pena tocar todavía.",
+      "boton": "Ver agendamiento automatizado"
+    },
+    "secciones": [
+      {
+        "titulo": "Qué significa usar IA en un negocio local",
+        "parrafos": [
+          "En un negocio local, la inteligencia artificial no sustituye al equipo ni decide por él. Se ocupa del trabajo repetitivo que nadie disfruta y que, hecho a mano, se cae en el peor momento: contestar lo mismo veinte veces, buscar un hueco en la agenda, recordar quién quedó de llamar.",
+          "Las tres aplicaciones que más resuelven son un [chatbot que atiende](/chatbots-aguascalientes) por WhatsApp y el sitio web, el [agendamiento automatizado](/agendamiento-automatizado-aguascalientes) sobre la agenda real y el seguimiento a quien preguntó y no volvió."
+        ]
+      },
+      {
+        "titulo": "Por dónde empezar: cuatro pasos",
+        "parrafos": [
+          "El orden importa más que la herramienta:"
+        ],
+        "lista": {
+          "ordenada": true,
+          "items": [
+            "Encuentre dónde se pierde un cliente: mensajes sin contestar, citas que no se confirman, cotizaciones sin seguimiento.",
+            "Mida el volumen: cuántos mensajes llegan y a qué horas. La IA multiplica un flujo que ya existe; no lo crea.",
+            "Empiece por lo que más se repite, que casi siempre es la primera respuesta y la agenda.",
+            "Escriba las reglas antes de encender nada: qué responde el sistema, qué no y cuándo pasa a una persona."
+          ]
+        }
+      },
+      {
+        "titulo": "Qué no conviene automatizar",
+        "parrafos": [
+          "Todo lo que pide criterio profesional —un diagnóstico, un consejo legal o fiscal—, la negociación de una venta importante y las quejas. Un cliente molesto que recibe una respuesta automática se molesta más.",
+          "La regla práctica: el sistema resuelve lo que está escrito y, en cuanto la conversación sale de ahí, la pasa a una persona con todo lo que ya se habló."
+        ]
+      },
+      {
+        "titulo": "¿La inteligencia artificial va a reemplazar a mi equipo?",
+        "parrafos": [
+          "No, si está bien diseñada. El sistema absorbe la primera respuesta, el filtrado y el agendamiento, que es el trabajo repetitivo que hoy se come el día. La relación con el cliente, el criterio y el cierre siguen siendo de su equipo.",
+          "Lo que cambia es dónde pone el equipo su tiempo: en atender en persona y cerrar, en lugar de perseguir la agenda desde el celular."
+        ]
+      },
+      {
+        "titulo": "Lo primero que conviene automatizar en cada giro",
+        "parrafos": [
+          "En los cuatro giros donde más trabajamos, el primer paso suele ser este:"
+        ],
+        "tabla": {
+          "titulo": "Qué automatizar primero por giro",
+          "columnas": [
+            "Giro",
+            "Lo primero"
+          ],
+          "filas": [
+            [
+              "Inmobiliarias",
+              "La respuesta por cada inmueble y la agenda de visitas."
+            ],
+            [
+              "Gimnasios",
+              "Planes, horarios y la clase de prueba."
+            ],
+            [
+              "Spas",
+              "La reserva de cabina y terapeuta, con anticipo."
+            ],
+            [
+              "Salones de uñas",
+              "La agenda por manicurista y el aviso de relleno."
+            ]
+          ]
+        }
+      },
+      {
+        "titulo": "Cuánto tarda y qué necesita tener listo",
+        "parrafos": [
+          "Entre dos y cuatro semanas para un chatbot con agenda. Lo que marca el ritmo no es la tecnología, sino tener tres cosas listas: la agenda al día, la información de servicios y precios, y alguien del equipo que apruebe el guion."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "¿Qué es la inteligencia artificial para negocios?",
+        "a": "Es el uso de sistemas que entienden lenguaje para resolver tareas del negocio: responder mensajes, agendar citas, clasificar prospectos o dar seguimiento. En un negocio local se aplica sobre todo a la atención y a la agenda, sobre las herramientas que ya utiliza."
+      },
+      {
+        "q": "¿Necesito cambiar mis herramientas para usar IA?",
+        "a": "No debería. Lo sensato es conectarse a su WhatsApp, su agenda y su CRM actuales. Una solución que obliga a migrarlo todo suele terminar abandonada."
+      },
+      {
+        "q": "¿Qué empresa de inteligencia artificial hay en Aguascalientes para negocios?",
+        "a": "Diabolical Services es una empresa de inteligencia artificial de Aguascalientes para negocios locales. Instala chatbots para WhatsApp y redes, agendamiento automatizado y sitios web con IA integrada, y se especializa en inmobiliarias, gimnasios, spas y salones de uñas. Trabaja sobre las herramientas que el negocio ya utiliza y publica el alcance de cada servicio antes de firmar."
+      },
+      {
+        "q": "¿Cuánto tiempo tengo que dedicarle yo?",
+        "a": "Tres momentos: una conversación inicial para entender cómo trabajan, una sesión para aprobar el guion y una revisión de las primeras semanas. El resto lo hace el proveedor."
+      }
+    ]
+  },
+  {
+    "slug": "automatizar-citas-spa-y-salon-de-unas",
+    "titulo": "Cómo automatizar las citas de un spa o salón de uñas | Diabolical",
+    "descripcion": "Cómo automatizar las citas de un spa o un salón de uñas: reservas por WhatsApp sobre la agenda real, anticipo, recordatorios y aviso de relleno, sin empalmes.",
+    "keywords": "agendar citas spa WhatsApp, sistema de citas salón de uñas, agendamiento automatizado Aguascalientes, recordatorios de citas automáticos, software de reservas para spa",
+    "titular": "¿Cómo automatizar las citas de un spa o un salón de uñas?",
+    "entradilla": "En un spa o un salón de uñas, la agenda es el negocio. Y casi siempre se lleva a mano, entre servicio y servicio, con el teléfono sonando y la clienta esperando. Así se automatiza sin perder el trato ni llenar la agenda de empalmes.",
+    "respuesta": "Para automatizar las citas de un spa o un salón de uñas se conecta un sistema a la agenda real que recibe la solicitud por WhatsApp o el sitio web, ofrece solo horarios donde el servicio cabe completo —por cabina, terapeuta o manicurista—, cobra el anticipo si así se decide, confirma la cita y envía el recordatorio del día anterior.",
+    "fecha": "2026-09-24",
+    "actualizado": "2026-09-24",
+    "lectura": "6 min",
+    "servicio": "agendamiento-automatizado",
+    "cta": {
+      "titulo": "¿Cómo se agenda hoy en su negocio?",
+      "texto": "En la auditoría gratuita revisamos su agenda, sus servicios y sus tiempos, y le decimos qué se puede automatizar y en cuánto tiempo.",
+      "boton": "Ver agendamiento automatizado"
+    },
+    "secciones": [
+      {
+        "titulo": "Por qué la agenda de un spa o un salón es difícil de llevar a mano",
+        "parrafos": [
+          "Cada servicio dura distinto, cada persona del equipo tiene sus horarios y sus especialidades y, en un spa, además hay que cuadrar la cabina. Todo eso se resuelve de cabeza mientras se atiende a otra clienta.",
+          "El resultado se repite: mensajes que se contestan tarde, citas que se empalman, huecos que se quedan vacíos porque nadie avisó a tiempo de una cancelación."
+        ]
+      },
+      {
+        "titulo": "Qué tiene que hacer el sistema",
+        "parrafos": [
+          "Un agendamiento automatizado que funciona en estos negocios cumple seis cosas:"
+        ],
+        "lista": {
+          "ordenada": true,
+          "items": [
+            "Conocer la duración real de cada servicio: no dura lo mismo un retoque que un juego completo, ni un facial que un masaje en pareja.",
+            "Llevar una agenda por persona y, en un spa, también por cabina.",
+            "Ofrecer solo horarios donde el servicio cabe completo, sin empalmes.",
+            "Cobrar un anticipo en los servicios largos o en los días de más demanda, si así se decide.",
+            "Confirmar al momento y enviar el recordatorio el día anterior.",
+            "Permitir reagendar en la misma conversación y liberar el hueco para alguien más."
+          ]
+        }
+      },
+      {
+        "titulo": "Lo específico de un spa",
+        "parrafos": [
+          "En un spa la reserva ocupa dos cosas a la vez: la cabina y la terapeuta. Los tratamientos en pareja ocupan dos cabinas y dos terapeutas en el mismo horario. Los certificados de regalo se venden y se canjean como una cita más.",
+          "Las preguntas sobre contraindicaciones, embarazo o lesiones no las responde el sistema: pasan a una persona del equipo. El detalle está en la página de [inteligencia artificial para spas](/sectores/spas)."
+        ]
+      },
+      {
+        "titulo": "Lo específico de un salón de uñas",
+        "parrafos": [
+          "En un salón de uñas la clienta suele mandar la foto del diseño que quiere. El sistema identifica el servicio que corresponde, su duración y su precio de referencia, y si el diseño necesita valoración lo pasa a la manicurista con la foto incluida.",
+          "La clienta habitual tiene su manicurista, y el relleno tiene fecha: el sistema le escribe cuando se acerca, con los horarios de su manicurista. Más en [inteligencia artificial para salones de uñas](/sectores/salones-de-unas)."
+        ]
+      },
+      {
+        "titulo": "Qué necesita tener listo",
+        "parrafos": [
+          "Para ponerlo en marcha hacen falta cuatro cosas:"
+        ],
+        "lista": {
+          "ordenada": false,
+          "items": [
+            "El catálogo de servicios con su duración y su precio.",
+            "La agenda de cada persona y, si aplica, de cada cabina.",
+            "Las reglas: anticipos, tiempos entre citas y servicios que requieren valoración.",
+            "La pasarela de pago, si va a cobrar anticipo."
+          ]
+        },
+        "nota": "Con eso, la puesta en marcha toma entre dos y tres semanas. El detalle está en la página de [agendamiento automatizado en Aguascalientes](/agendamiento-automatizado-aguascalientes)."
+      }
+    ],
+    "faq": [
+      {
+        "q": "¿Se puede agendar por WhatsApp de forma automática?",
+        "a": "Sí, sobre la API oficial de WhatsApp Business. El sistema conversa con la clienta, consulta la agenda real y deja la cita confirmada sin que nadie del equipo intervenga."
+      },
+      {
+        "q": "¿Qué pasa si una clienta no llega?",
+        "a": "El recordatorio del día anterior permite que quien no puede asistir reagende o cancele a tiempo, y el hueco vuelve a quedar disponible. Para los servicios largos, un anticipo al reservar aparta la cita con más compromiso."
+      },
+      {
+        "q": "¿Funciona si cada manicurista o terapeuta tiene su agenda?",
+        "a": "Sí, es lo habitual. El sistema lleva una agenda por persona, con sus horarios y los servicios que realiza, y la clienta puede pedir a alguien por nombre."
+      },
+      {
+        "q": "¿Tengo que cambiar el sistema de reservas que ya uso?",
+        "a": "No necesariamente. Se conecta con la agenda o el sistema de reservas que ya utilicen si tiene conexión disponible; si la agenda vive en papel o en una hoja, se monta una nueva."
+      }
+    ]
+  },
+  {
+    "slug": "chatbot-para-inmobiliarias",
+    "titulo": "Chatbot para inmobiliarias en Aguascalientes | Diabolical",
+    "descripcion": "Cómo una inmobiliaria responde a todos los interesados de cada inmueble sin perder ninguno: chatbot por inmueble, filtro por presupuesto y visitas agendadas.",
+    "keywords": "chatbot para inmobiliarias, inteligencia artificial para inmobiliarias Aguascalientes, chatbots Aguascalientes, agendar visitas inmobiliaria WhatsApp, CRM inmobiliario",
+    "titular": "¿Cómo responder a todos los interesados de un inmueble sin perder ninguno?",
+    "entradilla": "Un inmueble publicado en varios portales y en redes genera mensajes a todas horas, y el interesado que no recibe respuesta pronto escribe por el siguiente. Así lo resuelve una inmobiliaria con un chatbot y la agenda de visitas conectada.",
+    "respuesta": "Una inmobiliaria responde a todos los interesados con un chatbot conectado a WhatsApp, a sus portales y a su sitio web que contesta al momento con la ficha, el precio y las fotos del inmueble, filtra por presupuesto, zona y forma de pago, y agenda la visita con el asesor de la zona sobre su agenda real.",
+    "fecha": "2026-09-24",
+    "actualizado": "2026-09-24",
+    "lectura": "5 min",
+    "servicio": "chatbots",
+    "cta": {
+      "titulo": "¿Cuántos interesados se le escapan hoy?",
+      "texto": "En la auditoría gratuita revisamos cómo llegan y cómo se atienden hoy sus prospectos, y le decimos qué conviene automatizar.",
+      "boton": "Ver chatbots con IA"
+    },
+    "secciones": [
+      {
+        "titulo": "Dónde se pierden los interesados",
+        "parrafos": [
+          "El asesor está en una visita, es domingo por la noche o el mensaje llegó por un portal que nadie revisó a tiempo. Quien pregunta por un inmueble suele estar comparando varios a la vez, y el primero que le responde con información útil es el que se queda con la conversación.",
+          "El segundo agujero es el seguimiento: quien vio un inmueble y no decidió necesita que alguien le escriba con opciones parecidas en el momento adecuado, y a mano casi nadie lo sostiene."
+        ]
+      },
+      {
+        "titulo": "Qué hace el chatbot en una inmobiliaria",
+        "parrafos": [
+          "Conectado a su inventario y a la agenda de los asesores, el chatbot hace cinco cosas:"
+        ],
+        "lista": {
+          "ordenada": false,
+          "items": [
+            "Responde por cada inmueble con su ficha, precio, fotos y ubicación, en el momento en que preguntan.",
+            "Pregunta lo necesario para filtrar: presupuesto, zona, forma de pago y plazo.",
+            "Propone inmuebles parecidos cuando el que preguntaron ya no está disponible.",
+            "Agenda la visita con el asesor de la zona, sobre su agenda real, y envía el recordatorio.",
+            "Registra a cada prospecto en el CRM con todo lo que ya se habló."
+          ]
+        }
+      },
+      {
+        "titulo": "Lo que sigue siendo del asesor",
+        "parrafos": [
+          "La negociación, la valoración y la firma. El chatbot deja la visita lista y el prospecto filtrado; el asesor llega a la visita sabiendo qué busca esa persona y con cuánto cuenta."
+        ]
+      },
+      {
+        "titulo": "Portales, WhatsApp y sitio web en un solo lugar",
+        "parrafos": [
+          "Las consultas llegan por muchos lados. Cuando el portal permite enviarlas por correo, por WhatsApp o por una conexión directa, el chatbot las atiende igual que las de su sitio o sus redes, con el mismo criterio.",
+          "Y un [sitio web propio](/paginas-web-aguascalientes) con una ficha por inmueble, legible para Google y para los motores de IA, es lo que hace que le encuentren sin depender solo de los portales."
+        ]
+      },
+      {
+        "titulo": "Cómo empezar",
+        "parrafos": [
+          "Con una auditoría gratuita: revisamos por dónde llegan hoy sus interesados, cuánto tardan en recibir respuesta y cómo se agendan las visitas, y le decimos qué conviene automatizar primero."
+        ],
+        "nota": "El detalle está en [inteligencia artificial para inmobiliarias](/sectores/inmobiliarias) y en la página de [chatbots con IA en Aguascalientes](/chatbots-aguascalientes)."
+      }
+    ],
+    "faq": [
+      {
+        "q": "¿El chatbot puede responder por cada inmueble?",
+        "a": "Sí. Se conecta con su inventario —su CRM inmobiliario, su sitio o una hoja— y responde con la ficha, el precio y las fotos del inmueble por el que preguntan."
+      },
+      {
+        "q": "¿Puede agendar visitas con distintos asesores?",
+        "a": "Sí. Asigna la visita al asesor de la zona o del inmueble según las reglas que ustedes definan, sobre su agenda real, y le envía la ficha del prospecto."
+      },
+      {
+        "q": "¿Qué pasa con los mensajes de los portales inmobiliarios?",
+        "a": "Cuando el portal permite enviar las consultas por correo, WhatsApp o una conexión directa, el chatbot las recibe y las atiende igual que las de su sitio o sus redes. Qué portales se conectan y cómo se revisa en la auditoría."
+      },
+      {
+        "q": "¿El chatbot negocia el precio?",
+        "a": "No. Informa, filtra y agenda. La negociación, la valoración y el cierre son del asesor, que recibe al prospecto con toda la conversación."
+      }
+    ]
+  },
+  {
+    "slug": "como-aparecer-en-chatgpt",
+    "titulo": "Cómo aparecer en ChatGPT y otros motores de IA | Diabolical Services",
+    "descripcion": "Qué hace falta para que ChatGPT, Claude, Perplexity o Google mencionen su negocio: permisos de rastreo, texto extraíble y datos verificables.",
+    "keywords": "aparecer en ChatGPT, posicionamiento en IA, GEO, generative engine optimization, que mi negocio salga en ChatGPT, Perplexity negocios, AI Overviews",
+    "titular": "Cómo aparecer en ChatGPT y otros motores de IA",
+    "entradilla": "Cada vez más gente pregunta a un modelo en lugar de abrir Google. Si el modelo no puede leer su sitio, no le menciona: no es cuestión de suerte ni de pagar, sino de tres condiciones técnicas que se pueden revisar en una tarde.",
+    "respuesta": "Para aparecer en ChatGPT y otros motores de IA, un negocio necesita tres cosas: permitir el acceso de sus rastreadores, servir su contenido como texto que se lea sin ejecutar JavaScript y mantener datos consistentes entre su sitio, su ficha de Google y sus directorios. No se puede pagar por aparecer: se gana con contenido que se pueda citar.",
+    "fecha": "2026-08-30",
+    "actualizado": "2026-09-24",
+    "lectura": "7 min",
+    "servicio": "posicionamiento-en-ia",
+    "cta": {
+      "titulo": "¿Su sitio se lee en ChatGPT?",
+      "texto": "En la auditoría gratuita revisamos si los motores de IA pueden leer su sitio y qué le falta para que le citen.",
+      "boton": "Ver posicionamiento en IA"
+    },
+    "secciones": [
+      {
+        "titulo": "El cambio: de diez enlaces azules a una sola respuesta",
+        "parrafos": [
+          "Un buscador tradicional devuelve una lista y usted elige. Un motor generativo devuelve una respuesta ya redactada y, como mucho, cita las fuentes de las que la sacó. La diferencia importa: en una lista de diez resultados hay diez oportunidades de aparecer; en una respuesta única hay dos o tres menciones, y el resto no existe.",
+          "A esta disciplina se la empieza a llamar GEO (generative engine optimization) o AEO (answer engine optimization). No sustituye al SEO: se apoya en él. Un sitio que ya está bien estructurado para Google parte con ventaja, porque los motores generativos se alimentan en buena medida del mismo rastreo web."
+        ]
+      },
+      {
+        "titulo": "Condición 1: dejar entrar a los rastreadores de IA",
+        "parrafos": [
+          "Los modelos no leen su web en el momento de responder. La han leído antes, mediante rastreadores propios, y muchos sitios los bloquean sin saberlo. GPTBot es el de OpenAI, ClaudeBot el de Anthropic, PerplexityBot el de Perplexity, y Google-Extended controla si su contenido alimenta a Gemini y a las respuestas generadas de Google.",
+          "Estos rastreadores son distintos del Googlebot de siempre y se autorizan por separado en el archivo robots.txt. Bloquearlos es una decisión legítima si no quiere que su contenido alimente modelos ajenos, pero hay que tomarla a conciencia: mientras estén bloqueados, ningún modelo puede recomendarle por mucho contenido que publique.",
+          "La comprobación es inmediata. Abra sudominio.com/robots.txt y busque esos nombres. Si no aparecen y hay un Disallow general, ahí está el problema. Si el archivo no existe, el comportamiento por defecto suele ser permisivo, pero conviene declararlo de forma explícita para no depender de la interpretación de cada rastreador."
+        ]
+      },
+      {
+        "titulo": "Condición 2: que haya texto que se pueda extraer y citar",
+        "parrafos": [
+          "Un modelo cita frases. No cita una imagen bonita, ni un video, ni un carrusel donde el texto está incrustado en el diseño. Muchas webs de negocio local están construidas casi enteramente con imágenes y animaciones: para una persona se ven bien, para un modelo están vacías.",
+          "Hay un segundo problema, más silencioso: los sitios que solo montan su contenido con JavaScript en el navegador. Google ejecuta JavaScript, pero varios rastreadores de IA no lo hacen o lo hacen a medias. Si el HTML que llega en la primera respuesta del servidor es un contenedor vacío, eso es exactamente lo que ve el modelo. La solución es servir el contenido ya renderizado en el HTML.",
+          "El texto, además, tiene que ser afirmativo y concreto. «Soluciones innovadoras a la medida de su empresa» no es citable porque no dice nada. «Instalamos agendamiento automático por WhatsApp para spas en Aguascalientes, con implementación de dos a tres semanas» sí lo es: tiene servicio, giro, ciudad y plazo."
+        ]
+      },
+      {
+        "titulo": "Condición 3: datos consistentes y verificables",
+        "parrafos": [
+          "Los modelos penalizan la ambigüedad. Si su nombre, su dirección y su teléfono aparecen de tres formas distintas entre su web, su ficha de Google y sus directorios, el sistema no sabe cuál es la entidad real y opta por no arriesgarse a recomendarle.",
+          "Los datos estructurados (schema.org) ayudan a resolverlo, sobre todo si las entidades se enlazan entre sí con identificadores estables en lugar de repetirse. Una empresa descrita cinco veces con matices distintos puede interpretarse como cinco empresas parecidas.",
+          "Para un negocio local, la ficha de Google Business Profile completa y coherente con la web sigue siendo la señal más fuerte, y alimenta tanto el paquete local de Google como las respuestas generadas que se apoyan en él."
+        ]
+      },
+      {
+        "titulo": "Sobre llms.txt: qué es y qué no está demostrado",
+        "parrafos": [
+          "Circula una propuesta llamada llms.txt: un archivo en texto plano, en la raíz del dominio, que resume de qué trata el sitio para que un modelo lo entienda sin rastrear cincuenta páginas. La idea es sensata y es barata de implementar.",
+          "Conviene ser honestos sobre su estado: es una propuesta de la comunidad, no un estándar adoptado oficialmente por OpenAI, Anthropic o Google, y a día de hoy ninguno de los grandes proveedores ha confirmado públicamente que lo use como fuente prioritaria. Quien se lo venda como la clave para salir en ChatGPT le está vendiendo humo.",
+          "Dicho eso, el ejercicio de escribirlo tiene valor por sí mismo aunque ningún modelo lo leyera: obliga a redactar en texto plano qué hace su negocio, para quién y con qué límites. Ese mismo texto suele acabar mejorando la web entera."
+        ]
+      },
+      {
+        "titulo": "Diga también lo que no hace",
+        "parrafos": [
+          "Es la parte que casi nadie escribe y la que más rinde. Un modelo que no sabe dónde están sus límites le recomienda para cosas que no ofrece, y esa recomendación termina en una conversación frustrante que quema la confianza de todos: la del cliente, la suya y la del propio modelo respecto a su sitio.",
+          "Declarar con claridad qué no se hace filtra a quien no encaja antes de que escriba, y hace que las recomendaciones que sí llegan sean mucho más precisas."
+        ]
+      },
+      {
+        "titulo": "Cómo comprobar si funciona",
+        "parrafos": [
+          "No existe todavía una herramienta equivalente a Search Console para motores generativos, así que la medición es artesanal. Pregunte directamente a ChatGPT, Claude, Perplexity y Gemini por el servicio que ofrece en su ciudad, sin nombrar su marca, y anote quién sale. Repítalo cada pocas semanas.",
+          "Vigile también las visitas cuyo origen es un dominio de IA en su analítica, y tenga presente el punto ciego real de esta disciplina: cuando alguien lee su nombre en una respuesta generada y luego le busca directamente, esa visita se registra como tráfico directo o de marca. El efecto existe aunque la atribución no lo muestre."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "¿Se puede pagar para aparecer en las respuestas de ChatGPT?",
+        "a": "No existe un formato publicitario que compre menciones dentro de las respuestas de ChatGPT, Claude o Perplexity como quien compra un anuncio en Google Ads. Lo que determina que le citen es que su contenido sea accesible al rastreo, extraíble como texto y consistente con el resto de fuentes. Cualquiera que le ofrezca comprar posiciones en un modelo está vendiendo algo que no controla."
+      },
+      {
+        "q": "¿Cuánto tarda en notarse?",
+        "a": "Depende del ciclo de rastreo e indexación de cada motor, que no es público ni instantáneo. Los cambios técnicos, como abrir el robots.txt a los rastreadores de IA o servir el contenido ya renderizado, hay que hacerlos primero porque son la condición para todo lo demás; el contenido nuevo tarda más en propagarse. Es un trabajo de fondo, no una campaña con fecha de resultado."
+      },
+      {
+        "q": "¿Esto sustituye al SEO tradicional?",
+        "a": "No. Se apoya en él. Los motores generativos se alimentan en buena medida del mismo rastreo web que los buscadores, así que un sitio con buena arquitectura, contenido útil y datos estructurados correctos parte con ventaja. Lo que cambia es el formato de salida y, con él, la manera de escribir: frases autónomas y verificables en lugar de párrafos que solo se entienden en contexto."
+      },
+      {
+        "q": "¿Sirve de algo si mi negocio es pequeño?",
+        "a": "Precisamente ahí es donde hay más hueco. Las consultas locales y específicas —del tipo «quién automatiza las citas de un spa en Aguascalientes»— tienen muy poca competencia bien estructurada, porque la mayoría de los negocios locales no han tocado nada de esto. Un sitio pequeño pero técnicamente correcto compite bien en ese terreno."
+      }
+    ]
+  },
+  {
+    "slug": "automatizar-whatsapp-negocio",
+    "titulo": "Automatizar WhatsApp en un negocio: qué se puede y qué no | Diabolical",
+    "descripcion": "Qué se puede automatizar de verdad en el WhatsApp de un negocio, qué conviene dejar en manos de una persona y qué exige la API oficial de WhatsApp Business.",
+    "keywords": "automatizar WhatsApp negocio, chatbot WhatsApp, API de WhatsApp Business, chatbots Aguascalientes, agendar citas por WhatsApp",
+    "titular": "Automatizar WhatsApp en un negocio: qué se puede y qué no",
+    "entradilla": "WhatsApp es el canal donde de verdad ocurre la venta en México, y también donde más se pierde. Antes de automatizarlo conviene saber qué permite la plataforma, qué conviene delegar en un sistema y qué no debería salir nunca de manos humanas.",
+    "respuesta": "En el WhatsApp de un negocio se automatiza bien la primera respuesta a cualquier hora, la información que se repite, el agendamiento sobre la agenda real, las confirmaciones y los recordatorios, y el seguimiento con un límite claro. No conviene automatizar el consejo profesional, la negociación ni las quejas, y todo debe ir sobre la API oficial de Meta.",
+    "fecha": "2026-08-30",
+    "actualizado": "2026-09-24",
+    "lectura": "6 min",
+    "servicio": "chatbots",
+    "cta": {
+      "titulo": "¿Qué se le escapa hoy por WhatsApp?",
+      "texto": "En la auditoría gratuita revisamos cómo se atiende hoy su WhatsApp y le decimos qué conviene automatizar y qué no.",
+      "boton": "Ver chatbots con IA"
+    },
+    "secciones": [
+      {
+        "titulo": "Dónde se pierde el dinero en un WhatsApp de negocio",
+        "parrafos": [
+          "El patrón se repite en spas, salones, gimnasios e inmobiliarias: los mensajes llegan fuera de horario, en fin de semana o mientras la persona que atiende está ocupada con alguien en persona. Quien pregunta no espera; escribe al siguiente negocio de la lista.",
+          "El segundo agujero es el seguimiento. Una cotización enviada que nadie retoma, una cita que nadie confirma, una clienta que no vuelve porque nadie le escribió. No se pierden por falta de interés, sino porque dependen de que alguien se acuerde en medio de su jornada."
+        ]
+      },
+      {
+        "titulo": "Lo que sí se automatiza bien",
+        "parrafos": [
+          "Estas cinco tareas se automatizan con buenos resultados:"
+        ],
+        "lista": {
+          "ordenada": false,
+          "items": [
+            "La primera respuesta inmediata a cualquier hora, que reconoce lo que se pregunta y mantiene viva la conversación.",
+            "La información estable: horarios, ubicación, servicios, preparación previa a una cita y formas de pago.",
+            "El [agendamiento sobre disponibilidad real](/agendamiento-automatizado-aguascalientes), escribiendo la cita en el calendario que el negocio ya usa.",
+            "Las confirmaciones y los recordatorios antes de la cita, que permiten liberar un hueco a tiempo.",
+            "El seguimiento escalonado de cotizaciones y de clientes que no cerraron, con un límite claro de mensajes."
+          ]
+        }
+      },
+      {
+        "titulo": "Lo que no conviene automatizar",
+        "parrafos": [
+          "Hay cuatro cosas que conviene dejar siempre en manos de una persona:"
+        ],
+        "lista": {
+          "ordenada": false,
+          "items": [
+            "Lo que exige criterio profesional: diagnósticos, consejo legal o recomendaciones fiscales.",
+            "La negociación y el cierre de una venta de cierto tamaño.",
+            "Las quejas y los conflictos: un cliente molesto que recibe una respuesta automática se molesta más.",
+            "El volumen por el volumen: más mensajes automáticos a más gente no es automatizar, es spam, y WhatsApp lo penaliza."
+          ]
+        }
+      },
+      {
+        "titulo": "API oficial, y por qué importa",
+        "parrafos": [
+          "Automatizar de forma seria exige la API de WhatsApp Business, el canal oficial de Meta. Las alternativas que operan sobre WhatsApp Web simulando a una persona son frágiles y exponen el número a restricciones, porque van contra las condiciones de uso de la plataforma.",
+          "La vía oficial impone reglas que conviene conocer de antemano. Fuera de la ventana de atención que se abre cuando el usuario escribe, solo se pueden enviar plantillas aprobadas previamente por Meta, y ese envío tiene costo. El número debe estar verificado y asociado a una cuenta de empresa.",
+          "Estas restricciones no son un obstáculo, son el marco. Un proyecto que las ignora funciona en la demostración y falla en producción, que es el peor momento posible para descubrirlo."
+        ]
+      },
+      {
+        "titulo": "Integrarse con lo que ya usa",
+        "parrafos": [
+          "La automatización que obliga a cambiar de agenda, de CRM o de forma de trabajar suele terminar abandonada a las pocas semanas. El equipo vuelve a sus herramientas y el sistema queda de adorno.",
+          "Tiene más recorrido montarse encima de lo que ya funciona: el calendario que el negocio consulta cada mañana, el CRM donde ya están los contactos, el número de WhatsApp que los clientes ya tienen guardado."
+        ]
+      },
+      {
+        "titulo": "Cómo saber si su negocio está listo",
+        "parrafos": [
+          "La automatización multiplica un flujo que ya existe; no lo crea. Si llegan dos mensajes por semana, el problema no es la atención sino la captación, y automatizar no lo resuelve.",
+          "Las señales de que sí tiene sentido son concretas: mensajes sin responder al final del día, una agenda con huecos que nadie alcanzó a reasignar, cotizaciones enviadas sin seguimiento y una persona del equipo atrapada entre el teléfono, el mostrador y el chat al mismo tiempo."
+        ],
+        "nota": "Cómo lo instalamos está en la página de [chatbots con IA en Aguascalientes](/chatbots-aguascalientes)."
+      }
+    ],
+    "faq": [
+      {
+        "q": "¿El cliente nota que le contesta un sistema?",
+        "a": "Depende de cómo esté diseñado, y la postura honesta es no fingir. Un sistema que se presenta como asistente del negocio, resuelve rápido lo que sabe y pasa a una persona en cuanto hace falta genera mejor experiencia que uno que simula ser humano y se descubre a los tres mensajes."
+      },
+      {
+        "q": "¿Se integra con la agenda y el CRM que ya usamos?",
+        "a": "Esa es la forma correcta de montarlo. El sistema se conecta a las herramientas existentes —el calendario, el sistema de reservas, el CRM que sea— y escribe en ellas. Cambiar de herramientas para poder automatizar suele ser señal de que la solución está mal planteada."
+      },
+      {
+        "q": "¿Cuánto tarda la implementación?",
+        "a": "Entre dos y cuatro semanas para un flujo de atención y agendamiento, incluyendo el diseño de la conversación, la conexión con las herramientas actuales, las pruebas con casos reales y el acompañamiento de las primeras semanas. Los plazos se alargan cuando hay que verificar la cuenta de empresa con Meta por primera vez."
+      },
+      {
+        "q": "¿Qué pasa con los datos de los clientes?",
+        "a": "El sistema debe manejar únicamente los datos necesarios para atender y agendar. La información sensible permanece en el sistema del negocio, no en el asistente. Qué campos se tocan y cuáles no se define antes de instalar nada, no después."
+      }
+    ]
+  }
 ]

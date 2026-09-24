@@ -6,7 +6,7 @@ import Enlace from '../components/common/Enlace';
 import MotionGrafico from '../motion/MotionGrafico';
 import { hayEscena } from '../motion/escenas';
 import { SECTORES, getSector } from '../data/sectores';
-import { rutaServicio } from '../data/servicios';
+import ServiciosPrincipales from '../components/common/ServiciosPrincipales';
 
 /*
  * Página de un sector.
@@ -27,7 +27,10 @@ const SectorPage = ({ slug }) => {
 
     if (!sector) return null;
 
-    const otros = SECTORES.filter((s) => s.slug !== sector.slug);
+    // Los giros principales primero: son los que interesa recorrer.
+    const otros = SECTORES.filter((s) => s.slug !== sector.slug).sort(
+        (a, b) => Number(Boolean(b.principal)) - Number(Boolean(a.principal))
+    );
 
     return (
         <Pagina>
@@ -102,23 +105,15 @@ const SectorPage = ({ slug }) => {
                         ))}
                     </div>
 
-                    {/* La página web del giro. Todo lo de arriba necesita un sitio
-                        donde vivir, y es la mitad del oficio de la casa. */}
-                    <Enlace
-                        destino={rutaServicio('sitio-web')}
-                        className="tarjeta tarjeta-enlace mt-4 flex items-center justify-between gap-6 p-6 md:p-8"
-                    >
-                        <span>
-                            <span className="titular-m block">
-                                Página web para {sector.nombreCorto.toLowerCase()}
-                            </span>
-                            <span className="cuerpo mt-3 block">
-                                Diseño y desarrollo de páginas web en Aguascalientes, con este sistema
-                                integrado en el propio sitio desde el primer día.
-                            </span>
-                        </span>
-                        <ArrowRight size={18} className="flex-none text-white/55" aria-hidden="true" />
-                    </Enlace>
+                    {/* Los tres servicios principales con el nombre del giro: es el
+                        enlace que busca quien tiene un spa o un gimnasio, y el
+                        que le dice a Google qué hay al otro lado. */}
+                    <h3 className="titular-m mt-16 md:mt-20">
+                        Los tres servicios para {sector.nombreCorto.toLowerCase()}
+                    </h3>
+                    <div className="mt-6">
+                        <ServiciosPrincipales giro={sector.nombreCorto.toLowerCase()} nivel="h4" />
+                    </div>
                 </div>
             </section>
 

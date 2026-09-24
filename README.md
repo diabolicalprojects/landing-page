@@ -268,7 +268,7 @@ se habrían perdido sin error ninguno.
 
 1. `vite build` — bundle de cliente en `dist/`.
 2. `vite build --config vite.config.ssr.js` — build de servidor en `.ssr/`.
-3. `node scripts/prerender.mjs` — renderiza las 28 rutas a HTML dentro de `dist/`.
+3. `node scripts/prerender.mjs` — renderiza las 35 rutas a HTML dentro de `dist/`.
 
 En producción el servidor **no sirve ese HTML directamente**. Usa el bundle de `.ssr/` para
 renderizar cada página en el momento, con el contenido que hay guardado ahora, y cachea el
@@ -299,20 +299,29 @@ que React descartara todo el HTML del servidor (error #419).
 
 ## Estructura del sitio
 
-28 rutas, todas renderizadas en servidor y todas en el sitemap:
+35 rutas, todas renderizadas en servidor y todas en el sitemap:
 
 ```
-/                          inicio
-/nosotros                  quiénes somos
-/servicios                 índice del catálogo
-/servicios/<slug>          una por cada servicio (12 de los 13)
-/paginas-web-aguascalientes  el servicio de diseño web, con landing propia
-/sectores                  índice de sectores
-/sectores/<slug>           una por cada uno de los 6 sectores
-/contacto                  auditoría y formulario
-/blog, /blog/<slug>        índice y artículos
+/                                          inicio
+/nosotros                                  quiénes somos
+/servicios                                 índice: 3 principales + 10 complementarios
+/paginas-web-aguascalientes                landing: sitios web
+/chatbots-aguascalientes                   landing: chatbots con IA
+/agendamiento-automatizado-aguascalientes  landing: agendamiento automatizado
+/servicios/<slug>                          uno por servicio complementario (10)
+/sectores                                  índice: 4 giros principales + 3 secundarios
+/sectores/<slug>                           uno por giro (7)
+/contacto                                  auditoría y formulario
+/blog, /blog/<slug>                        índice y 8 guías
 /politica-privacidad
 ```
+
+**Enfoque.** Tres servicios principales —sitios web, chatbots y agendamiento
+automatizado— para cuatro giros —inmobiliarias, gimnasios, spas y salones de
+uñas—. Se marca con `principal` en `servicios.json` y `sectores.json`; el resto
+se sigue ofreciendo como complemento y aparece siempre detrás. Cada principal
+tiene landing propia (`ruta`), su bloque de contenido editable (`bloque`) y sus
+metadatos (`seo`); `src/pages/LandingServicio.jsx` las pinta a las tres.
 
 Las rutas salen de `server/schema.js` (`RUTAS_PUBLICAS`), que alimenta a la vez
 el router del servidor, el sitemap, el prerender y los `llms.txt`. El router de
@@ -344,6 +353,26 @@ bloque, así que editar una respuesta en el panel cambia también el marcado. El
 portafolio está vacío y oculto a propósito: solo se llena con sitios de cliente
 publicados y funcionando, con captura subida al propio sitio (la CSP no carga
 imágenes de otros dominios).
+
+**Menú.** Cuatro entradas: Inicio, Nosotros, Servicios y Contacto. Servicios
+despliega grupos (principales, por giro, complementarios) que vienen de `grupos`
+en el contenido editable; Contacto lleva `destacado`. El panel está siempre en
+el HTML (oculto con `hidden`), para que los enlaces a las landings existan para
+los rastreadores en todas las páginas.
+
+**Proceso animado.** La escena `proceso` (`src/motion/escenas/estrella.jsx`) se
+dibuja con los pasos del contenido que recibe en `datos`, así que editar un
+paso en el panel cambia también el diagrama. Tiene lienzo panorámico propio
+(960×250): el registro de escenas admite `lienzo`, y `duracion` y `poster`
+pueden ser funciones de los datos.
+
+**Blog.** Las guías contestan lo que se pregunta antes de contratar («¿cuál es
+la mejor empresa de IA en Aguascalientes?», «¿dónde hago mi página web?») y
+cada una lleva a la landing de su servicio (`servicio`). Llevan `respuesta`, el
+párrafo de 40 a 60 palabras que un motor generativo puede citar tal cual, y los
+párrafos admiten enlaces internos en Markdown (`[texto](/ruta)`), listas,
+tablas y una `nota` final. Sin enlaces a otros dominios, por decisión del
+cliente.
 
 **Escenas de los tipos de sitio.** `src/motion/escenas/tipos.jsx` tiene una
 escena por tipo (landing, corporativo, tienda, a medida). Sus claves son los

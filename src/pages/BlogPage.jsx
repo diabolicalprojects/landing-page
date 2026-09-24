@@ -1,105 +1,66 @@
-import React, { Suspense, lazy } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import React from 'react';
+import { ArrowUpRight } from 'lucide-react';
 
-import Navbar from '../components/common/Navbar';
-import Footer from '../components/common/Footer';
+import Pagina, { Migas } from '../components/common/Pagina';
+import Enlace from '../components/common/Enlace';
 import { ARTICULOS_POR_FECHA } from '../data/articulos';
-import { useHydrated } from '../utils/useHydrated';
+import { fechaLegible } from '../utils/fechas';
 
-const DiabolicalChatbot = lazy(() => import('../components/common/DiabolicalChatbot'));
-
-const MESES = [
-    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre',
-];
-
-const fechaLegible = (iso) => {
-    const [anio, mes, dia] = iso.split('-');
-    return `${Number(dia)} de ${MESES[Number(mes) - 1]} de ${anio}`;
-};
-
-/**
- * Índice del blog. El <head> (título, descripción, JSON-LD con Blog y
- * BreadcrumbList) lo resuelve el servidor — ver server/render.js.
+/*
+ * Índice del blog.
+ *
+ * Las guías contestan las preguntas que la gente le hace a Google y a los
+ * motores de IA antes de contratar —qué empresa de IA elegir, dónde hacer una
+ * página web, qué resuelve un chatbot—, y cada una termina en la landing del
+ * servicio que corresponde. El <head> (Blog y BreadcrumbList) lo resuelve el
+ * servidor.
  */
-const BlogPage = () => {
-    const mostrarChatbot = useHydrated();
+const BlogPage = () => (
+    <Pagina>
+        <Migas ruta={[{ texto: 'Blog' }]} />
 
-    return (
-        <main className="relative bg-black min-h-screen selection:bg-white selection:text-black font-jakarta overflow-x-hidden">
-            <div className="fixed inset-0 pointer-events-none z-0">
-                <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-white/[0.03] blur-[180px] rounded-full" />
-                <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-white/[0.02] blur-[150px] rounded-full" />
-            </div>
-
-            <Navbar />
-
-            <section className="relative z-10 pt-32 md:pt-44 pb-12 md:pb-16 px-5 md:px-6">
-                <div className="max-w-3xl mx-auto">
-                    <nav aria-label="Ruta de navegación" className="mb-8">
-                        <ol className="flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-white/55 font-bold">
-                            <li><Link to="/" className="inline-flex min-h-[1.75rem] items-center hover:text-white transition-colors">Inicio</Link></li>
-                            <li aria-hidden="true">/</li>
-                            <li className="text-white/60">Blog</li>
-                        </ol>
-                    </nav>
-
-                    <h1 className="text-3xl md:text-5xl font-title uppercase tracking-tighter leading-[0.92] mb-6">
-                        Automatización, sin humo
+        <section className="zona-oscura seccion">
+            <div className="contenedor">
+                <header className="max-w-3xl">
+                    <p className="insignia">Guías</p>
+                    <h1 className="titular-xl mt-5">
+                        Inteligencia artificial y páginas web,{' '}
+                        <span className="titular-apagado">sin humo.</span>
                     </h1>
-
-                    <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-2xl font-light">
-                        Cómo funcionan por dentro las cosas que vendemos: qué se puede automatizar,
-                        qué no, y qué hace falta para que un motor de IA recomiende tu negocio.
-                        Mecanismos y límites, no promesas.
+                    <p className="cuerpo-l mt-7">
+                        Respuestas directas a lo que preguntan los negocios de Aguascalientes antes de
+                        contratar: qué empresa elegir, qué resuelve un chatbot, cuánto tarda una página
+                        web y cómo se automatiza una agenda.
                     </p>
-                </div>
-            </section>
+                </header>
 
-            <section className="relative z-10 pb-20 md:pb-28 px-5 md:px-6">
-                <div className="max-w-3xl mx-auto space-y-4">
+                <ul className="mt-14 grid grid-cols-1 gap-4 md:mt-16 md:grid-cols-2">
                     {ARTICULOS_POR_FECHA.map((articulo) => (
-                        <Link
-                            key={articulo.slug}
-                            to={`/blog/${articulo.slug}`}
-                            className="block glass-card rounded-3xl border-white/5 hover:border-white/15 transition-all group p-7 md:p-9"
-                        >
-                            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] uppercase tracking-[0.3em] text-white/55 font-bold mb-4">
-                                <time dateTime={articulo.fecha}>{fechaLegible(articulo.fecha)}</time>
-                                {articulo.lectura ? (
-                                    <>
-                                        <span aria-hidden="true">·</span>
-                                        <span>{articulo.lectura}</span>
-                                    </>
-                                ) : null}
-                            </div>
-
-                            <h2 className="text-xl md:text-2xl font-title uppercase tracking-tighter leading-[1.05] mb-4 group-hover:text-white transition-colors">
-                                {articulo.titular}
-                            </h2>
-
-                            <p className="text-white/55 text-sm leading-relaxed font-light mb-5">
-                                {articulo.entradilla}
-                            </p>
-
-                            <span className="text-[11px] uppercase tracking-[0.3em] text-white/55 group-hover:text-white transition-colors font-bold inline-flex items-center gap-2">
-                                Leer <ArrowRight size={12} />
-                            </span>
-                        </Link>
+                        <li key={articulo.slug}>
+                            <Enlace
+                                destino={`/blog/${articulo.slug}`}
+                                className="tarjeta tarjeta-enlace flex h-full flex-col p-6 md:p-8"
+                            >
+                                <p className="etiqueta-mono" style={{ color: 'var(--texto-3)' }}>
+                                    <time dateTime={articulo.fecha}>{fechaLegible(articulo.fecha)}</time>
+                                    {articulo.lectura && ` · ${articulo.lectura}`}
+                                </p>
+                                <h2 className="titular-m mt-4">{articulo.titular}</h2>
+                                <p className="cuerpo mt-3 flex-1">{articulo.entradilla}</p>
+                                <span
+                                    className="etiqueta mt-6 inline-flex items-center gap-1.5"
+                                    style={{ color: 'var(--texto-3)' }}
+                                >
+                                    Leer la guía
+                                    <ArrowUpRight size={13} aria-hidden="true" />
+                                </span>
+                            </Enlace>
+                        </li>
                     ))}
-                </div>
-            </section>
-
-            <Footer />
-
-            {mostrarChatbot && (
-                <Suspense fallback={null}>
-                    <DiabolicalChatbot />
-                </Suspense>
-            )}
-        </main>
-    );
-};
+                </ul>
+            </div>
+        </section>
+    </Pagina>
+);
 
 export default BlogPage;

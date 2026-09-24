@@ -1,5 +1,85 @@
 [
   {
+    "slug": "sitio-web",
+    "categoria": "Conversión",
+    "nombre": "Diseño y desarrollo de páginas web",
+    "resumen": "Páginas web a medida en Aguascalientes: rápidas, legibles para Google y para la IA, y con un panel para editarlas sin programador.",
+    "detalle": "Construidas para que carguen rápido y para que el contenido viaje en el código que entrega el servidor: es la diferencia entre que un rastreador de IA lea su sitio entero o una página en blanco. Con la agenda y el WhatsApp conectados desde el primer día.",
+    "limite": "No hacemos sitios que dependan de nosotros para cambiar cada texto: le queda un panel para editar lo que cambia con frecuencia.",
+    "incluye": [
+      "Diseño a medida, sin plantillas recicladas.",
+      "Desarrollo rápido y legible en móvil, que es donde deciden sus clientes.",
+      "Un asistente dentro del propio sitio que resuelve dudas sin sacar al visitante.",
+      "Panel para que su equipo edite los textos sin llamar a nadie."
+    ],
+    "ruta": "/paginas-web-aguascalientes",
+    "principal": true,
+    "bloque": "paginasWeb",
+    "seo": {
+      "title": "Páginas web y sitios web en Aguascalientes | Diabolical",
+      "description": "Diseño y desarrollo de páginas web en Aguascalientes: landing pages, sitios corporativos, tiendas en línea y sitios a medida, legibles para Google y la IA.",
+      "keywords": "páginas web Aguascalientes, sitios web en Aguascalientes, diseño de páginas web, diseño y desarrollo de páginas web en Aguascalientes, desarrollo web Aguascalientes, tiendas en línea Aguascalientes",
+      "alias": [
+        "Diseño de páginas web",
+        "Páginas web Aguascalientes",
+        "Sitios web en Aguascalientes"
+      ]
+    }
+  },
+  {
+    "slug": "chatbots",
+    "ruta": "/chatbots-aguascalientes",
+    "principal": true,
+    "categoria": "Atención y venta",
+    "nombre": "Chatbots con inteligencia artificial",
+    "resumen": "Chatbots con IA para WhatsApp, su sitio web, Instagram y Facebook que responden en segundos a cualquier hora y pasan a una persona cuando hace falta criterio.",
+    "detalle": "Un chatbot que conoce su catálogo, sus precios, sus horarios y sus reglas, y responde igual en todos los canales por donde le escriben. En WhatsApp va sobre la API oficial de Meta, y el guion lo aprueban ustedes antes de encenderlo.",
+    "limite": "No da consejo médico, legal ni fiscal, y se le define por escrito qué no debe responder nunca. Cualquier consulta que pida criterio se deriva a su equipo.",
+    "incluye": [
+      "WhatsApp sobre la API oficial de Meta, con número verificado.",
+      "El mismo chatbot en su sitio web, Instagram y Facebook.",
+      "Guion completo y base de conocimiento con la información real del negocio.",
+      "Traspaso a una persona con la conversación completa en cuanto hace falta."
+    ],
+    "bloque": "chatbots",
+    "seo": {
+      "title": "Chatbots con IA en Aguascalientes | Diabolical",
+      "description": "Chatbots con inteligencia artificial en Aguascalientes para WhatsApp, sitio web, Instagram y Facebook: responden a toda hora, agendan y pasan a una persona.",
+      "keywords": "chatbots Aguascalientes, chatbot con inteligencia artificial, chatbot para WhatsApp Aguascalientes, chatbot para negocios, IA para negocios Aguascalientes",
+      "alias": [
+        "Chatbots Aguascalientes",
+        "Chatbot para WhatsApp",
+        "Chatbot con inteligencia artificial"
+      ]
+    }
+  },
+  {
+    "slug": "agendamiento-automatizado",
+    "ruta": "/agendamiento-automatizado-aguascalientes",
+    "principal": true,
+    "categoria": "Atención y venta",
+    "nombre": "Agendamiento automatizado",
+    "resumen": "Citas, visitas y clases que se agendan solas sobre la disponibilidad real, con confirmación, recordatorio y reagenda sin que nadie del equipo intervenga.",
+    "detalle": "El sistema consulta la agenda que ya utilizan —por persona, por cabina, por sala o por clase—, ofrece solo horarios que existen y deja la cita confirmada. Un día antes la recuerda, y si la persona no puede asistir la mueve y libera el hueco para alguien más.",
+    "limite": "No inventa disponibilidad: si la agenda no está al día, el sistema tampoco lo estará. Por eso lo primero que se ordena es el calendario, no el chatbot.",
+    "incluye": [
+      "Conexión con la agenda que ya utilizan, o una nueva si no la tienen.",
+      "Reserva por WhatsApp, desde su sitio web o desde Instagram.",
+      "Confirmación, recordatorio y reagenda automáticos.",
+      "Anticipo al reservar, si así lo deciden, con su pasarela de pago."
+    ],
+    "bloque": "agendamiento",
+    "seo": {
+      "title": "Agendamiento automatizado en Aguascalientes | Diabolical",
+      "description": "Agendamiento automatizado de citas en Aguascalientes: reservas por WhatsApp y sitio web sobre su agenda real, con confirmación, recordatorio y reagenda.",
+      "keywords": "agendamiento automatizado Aguascalientes, agendar citas por WhatsApp, sistema de citas automático, recordatorios de citas, software de reservas Aguascalientes",
+      "alias": [
+        "Agendamiento automático de citas",
+        "Sistema de citas por WhatsApp"
+      ]
+    }
+  },
+  {
     "slug": "posicionamiento-organico",
     "categoria": "Captación",
     "nombre": "Posicionamiento orgánico",
@@ -11,7 +91,8 @@
       "Una página propia por cada servicio y por cada zona que quieran trabajar.",
       "Los textos escritos para responder lo que la gente busca de verdad.",
       "Informe mensual de posiciones, con lo que subió y lo que falta."
-    ]
+    ],
+    "principal": false
   },
   {
     "slug": "ficha-de-google",
@@ -25,7 +106,8 @@
       "Categorías, servicios, horarios y zona de cobertura bien cargados.",
       "Fotografías y publicaciones periódicas para que la ficha se vea activa.",
       "Respuesta a reseñas y seguimiento de cuántas personas llegan por ahí."
-    ]
+    ],
+    "principal": false
   },
   {
     "slug": "google-ads",
@@ -39,7 +121,8 @@
       "Palabras clave y, sobre todo, las negativas que evitan gasto inútil.",
       "Anuncios y páginas de destino escritos para convertir, no solo para atraer.",
       "Revisión semanal del gasto y ajuste de lo que no rinde."
-    ]
+    ],
+    "principal": false
   },
   {
     "slug": "posicionamiento-en-ia",
@@ -53,22 +136,8 @@
       "Ficheros llms.txt y datos estructurados que describen el negocio con precisión.",
       "Contenido redactado en frases autónomas, que es lo que un modelo cita.",
       "Seguimiento de en qué respuestas aparece el negocio y con qué palabras."
-    ]
-  },
-  {
-    "slug": "sitio-web",
-    "categoria": "Conversión",
-    "nombre": "Diseño y desarrollo de páginas web",
-    "resumen": "Páginas web a medida en Aguascalientes: rápidas, legibles para Google y para la IA, y con un panel para editarlas sin programador.",
-    "detalle": "Construidas para que carguen rápido y para que el contenido viaje en el código que entrega el servidor: es la diferencia entre que un rastreador de IA lea su sitio entero o una página en blanco. Con la agenda y el WhatsApp conectados desde el primer día.",
-    "limite": "No hacemos sitios que dependan de nosotros para cambiar cada texto: le queda un panel para editar lo que cambia con frecuencia.",
-    "incluye": [
-      "Diseño a medida, sin plantillas recicladas.",
-      "Desarrollo rápido y legible en móvil, que es donde deciden sus clientes.",
-      "Un asistente dentro del propio sitio que resuelve dudas sin sacar al visitante.",
-      "Panel para que su equipo edite los textos sin llamar a nadie."
     ],
-    "ruta": "/paginas-web-aguascalientes"
+    "principal": false
   },
   {
     "slug": "embudos-de-venta",
@@ -82,35 +151,8 @@
       "Páginas de destino por campaña, con una sola acción clara en cada una.",
       "Formularios y mecánicas de captación conectadas a su CRM.",
       "Secuencias de seguimiento para quien preguntó y todavía no decidió."
-    ]
-  },
-  {
-    "slug": "ia-whatsapp",
-    "categoria": "Atención y venta",
-    "nombre": "IA para WhatsApp",
-    "resumen": "Contesta en segundos a cualquier hora, agenda sobre huecos reales y pasa a una persona cuando toca.",
-    "detalle": "Sobre la API oficial de Meta, con número verificado y plantillas aprobadas. Es el servicio con el que más empezamos, porque en la mayoría de los negocios locales es donde se pierde más dinero sin que se note.",
-    "limite": "No da consejo médico, legal ni fiscal. Cualquier consulta que pida criterio se deriva a su equipo.",
-    "incluye": [
-      "Número verificado y API oficial de Meta, como exige la plataforma.",
-      "Guion completo de la conversación, aprobado por ustedes antes de programarse.",
-      "Conexión con la agenda, el CRM y el catálogo que ya utilizan.",
-      "Traspaso a una persona en cuanto la conversación lo requiere."
-    ]
-  },
-  {
-    "slug": "agentes-y-chatbots",
-    "categoria": "Atención y venta",
-    "nombre": "Agentes y chatbots",
-    "resumen": "El mismo criterio de atención en su sitio, en Instagram y en Facebook, no solo en WhatsApp.",
-    "detalle": "Un agente que conoce su catálogo, sus horarios y sus reglas, y responde igual en todos los canales por donde le escriben. Sin repetir la configuración canal por canal ni contradecirse entre uno y otro.",
-    "limite": "Se le define por escrito qué no debe responder nunca, antes de encenderlo.",
-    "incluye": [
-      "Un agente por canal: sitio web, Instagram, Facebook o el que corresponda.",
-      "Base de conocimiento con la información real del negocio.",
-      "Reglas claras de qué responde y qué deriva a una persona.",
-      "Revisión de conversaciones y ajuste continuo del guion."
-    ]
+    ],
+    "principal": false
   },
   {
     "slug": "ia-de-ventas",
@@ -124,7 +166,8 @@
       "Recuperación de conversaciones que quedaron a medias.",
       "Registro de cada contacto en el CRM, con su estado al día.",
       "Avisos al equipo cuando un prospecto muestra intención de cerrar."
-    ]
+    ],
+    "principal": false
   },
   {
     "slug": "ia-para-tienda",
@@ -138,7 +181,8 @@
       "Respuestas sobre tallas, materiales, envíos y políticas.",
       "Recuperación de carritos abandonados en el momento oportuno.",
       "Avisos automáticos del estado de cada pedido."
-    ]
+    ],
+    "principal": false
   },
   {
     "slug": "identidad-de-marca",
@@ -152,7 +196,8 @@
       "Paleta, tipografías y reglas de aplicación reunidas en un manual.",
       "Plantillas listas para redes, documentos y presentaciones.",
       "Todos los archivos entregados y de su propiedad, sin ataduras."
-    ]
+    ],
+    "principal": false
   },
   {
     "slug": "presencia-en-eventos",
@@ -166,7 +211,8 @@
       "Pantalla interactiva o código que el visitante usa en el momento.",
       "Captura de contactos sin papel, ordenada y lista para su CRM.",
       "Seguimiento automático al día siguiente, cuando todavía se acuerdan de ustedes."
-    ]
+    ],
+    "principal": false
   },
   {
     "slug": "auditoria-de-friccion",
@@ -180,6 +226,7 @@
       "Identificación de los puntos donde se pierden prospectos o tiempo.",
       "Prioridades ordenadas por lo que más rinde con menos esfuerzo.",
       "Documento escrito que es suyo, trabajen o no con nosotros."
-    ]
+    ],
+    "principal": false
   }
 ]

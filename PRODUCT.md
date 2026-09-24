@@ -71,6 +71,19 @@ tablero de resultados y estrategia de canales. «Presencia en ferias» pasó a
 
 ## Positioning
 
+**Enfoque (24-09-2026).** Tres servicios principales —sitios web, chatbots con
+IA y agendamiento automatizado— para cuatro giros principales —inmobiliarias,
+gimnasios, spas y salones de uñas—. Posicionamiento, publicidad, marca,
+eventos y automatizaciones a medida se siguen ofreciendo como complementarios:
+misma calidad y mismo alcance publicado, pero no encabezan nada. Clínicas,
+despachos y comercio se siguen atendiendo como giros secundarios. Salones de
+belleza se dividió en spas y salones de uñas.
+
+Frases clave: «sitios web en Aguascalientes» y «páginas web Aguascalientes»
+(landing de sitios web), «chatbots Aguascalientes» (landing de chatbots),
+«empresas de IA en Aguascalientes», «inteligencia artificial Aguascalientes» e
+«IA para negocios Aguascalientes» (portada y guías del blog).
+
 Segmentación por sector. Ningún competidor local segmenta, así que quien busca
 «automatizar las citas de mi clínica en Aguascalientes» no encuentra a nadie
 hablándole directamente. Cada sector tiene su propia página con su fricción, sus

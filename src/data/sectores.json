@@ -4,7 +4,7 @@
     "nombre": "Inmobiliarias",
     "nombreCorto": "Inmobiliarias",
     "titulo": "Inteligencia artificial para inmobiliarias en Aguascalientes | Diabolical",
-    "descripcion": "Inteligencia artificial para inmobiliarias en Aguascalientes: atiende cada consulta de propiedad al instante, filtra por presupuesto y zona, y agenda la visita con el asesor que corresponde.",
+    "descripcion": "Inteligencia artificial para inmobiliarias en Aguascalientes: chatbot por inmueble, visitas agendadas con el asesor y una página web que capta compradores.",
     "keywords": "inteligencia artificial para inmobiliarias Aguascalientes, automatización inmobiliaria, agendar visitas propiedades WhatsApp, IA para agentes inmobiliarios, CRM inmobiliario automatizado",
     "titular": "Inteligencia artificial para inmobiliarias",
     "entradilla": "En bienes raíces gana quien responde primero. Instalamos un sistema que atiende cada consulta en el momento en que llega, la califica por presupuesto y zona, y deja la visita agendada con el asesor que corresponde. Funciona a las once de la noche con la misma precisión que a media mañana.",
@@ -53,63 +53,179 @@
         "q": "¿Cuánto tarda en estar funcionando?",
         "a": "Entre dos y cuatro semanas, según cuántos portales y cuántas propiedades haya que conectar. La primera semana se dedica a entender su operación y a escribir el guion; ustedes lo aprueban antes de que se programe nada."
       }
-    ]
+    ],
+    "principal": true
   },
   {
-    "slug": "salones-de-belleza",
-    "nombre": "Salones de Belleza y Centros de Estética",
-    "nombreCorto": "Salones de belleza",
-    "titulo": "Inteligencia artificial para salones de belleza en Aguascalientes | Diabolical",
-    "descripcion": "Inteligencia artificial para salones de belleza y centros de estética en Aguascalientes: cotiza servicios, agenda por estilista sobre disponibilidad real y envía recordatorios automáticos.",
-    "keywords": "inteligencia artificial para salones de belleza Aguascalientes, agendar citas salón WhatsApp, automatización estética, recordatorios de cita automáticos, software para spa Aguascalientes",
-    "titular": "Inteligencia artificial para salones de belleza",
-    "entradilla": "Cuando el equipo tiene las manos ocupadas, el teléfono sigue sonando. Instalamos un sistema que cotiza cada servicio, ofrece los huecos reales de cada estilista y confirma la cita, sin que nadie tenga que interrumpir lo que está haciendo.",
+    "slug": "gimnasios",
+    "nombre": "Gimnasios y Estudios de Entrenamiento",
+    "nombreCorto": "Gimnasios",
+    "titulo": "Inteligencia artificial para gimnasios en Aguascalientes | Diabolical",
+    "descripcion": "Inteligencia artificial para gimnasios en Aguascalientes: chatbot que informa planes y horarios al instante, agenda la clase de prueba con cupo real y da seguimiento a quien no se inscribió.",
+    "keywords": "inteligencia artificial para gimnasios Aguascalientes, automatización gimnasio WhatsApp, agendar clase de prueba, seguimiento de prospectos gimnasio, software para estudio de entrenamiento",
+    "titular": "Inteligencia artificial para gimnasios y estudios",
+    "entradilla": "Quien pregunta por un plan está comparando en ese momento. Instalamos un sistema que responde precios y horarios al instante, aparta la clase de prueba y mantiene el seguimiento de quien todavía no decide.",
     "momentos": [
-      "Una clienta pregunta el precio de un balayage y recibe la respuesta y las opciones de horario en segundos.",
-      "El sistema muestra la disponibilidad real de cada estilista, no una promesa de confirmar después.",
-      "El anticipo queda cobrado en el momento de agendar, si así lo deciden.",
-      "El recordatorio del día anterior llega solo, y quien no puede venir reagenda sin ocupar a nadie."
+      "Alguien pregunta el precio un domingo por la noche y recibe los planes, los horarios y la opción de probar.",
+      "La clase de prueba queda apartada con cupo real, no en una lista que alguien revisará después.",
+      "Quien preguntó y no se inscribió recibe seguimiento en los días siguientes, con la información que le faltaba.",
+      "El equipo entra el lunes y encuentra los prospectos de todo el fin de semana ya ordenados."
     ],
     "soluciones": [
       {
-        "titulo": "Precios y servicios al instante",
-        "detalle": "Cada servicio con su duración y su precio, explicado con claridad y en el momento en que preguntan. La clienta decide con la información delante en lugar de quedarse esperando una respuesta."
+        "titulo": "Planes y horarios al momento",
+        "detalle": "Precios, modalidades, horarios de cada clase y qué incluye cada plan, respondidos en el instante en que preguntan. Es la diferencia entre informar y perder la conversación."
       },
       {
-        "titulo": "Agenda por estilista",
-        "detalle": "El sistema conoce la agenda de cada persona del equipo y sus especialidades, y ofrece únicamente huecos que existen. Quien prefiere a una estilista concreta puede pedirla por nombre."
+        "titulo": "Clase de prueba apartada",
+        "detalle": "El sistema conoce el cupo real de cada clase y aparta el lugar en el momento. Quien prueba llega con su lugar confirmado y el instructor sabe a quién esperar."
       },
       {
-        "titulo": "Anticipos y confirmación",
-        "detalle": "Si lo desean, la cita se aparta con un anticipo cobrado en el momento. Es la forma más directa de que una agenda llena siga llena el día del servicio."
+        "titulo": "Seguimiento escalonado",
+        "detalle": "A quien preguntó y no cerró, el sistema le escribe en los días siguientes con lo que le faltaba para decidir. Es donde se recupera buena parte de las inscripciones, y también lo primero que se abandona cuando el día se complica."
       },
       {
-        "titulo": "Recordatorios y reagenda",
-        "detalle": "Un recordatorio el día anterior y la posibilidad de mover la cita con dos mensajes. La clienta lo resuelve sola y el hueco vuelve a quedar disponible para alguien más."
+        "titulo": "Renovaciones sin perseguir a nadie",
+        "detalle": "Avisos de vencimiento y renovación enviados a tiempo, con el enlace de pago si así lo desean. La mensualidad se renueva sin que nadie tenga que estar recordándolo."
       }
     ],
     "faq": [
       {
-        "q": "¿Funciona si cada estilista lleva su propia agenda?",
-        "a": "Sí, es el caso más común. El sistema mantiene una agenda por persona, con sus horarios, sus días libres y los servicios que realiza. Quien reserva puede elegir estilista o dejar que el sistema proponga quien esté disponible."
+        "q": "¿Puede manejar el cupo de las clases?",
+        "a": "Sí. Se conecta con el sistema de reservas que ya usen o, si no tienen uno, montamos la agenda de clases con su cupo. El sistema solo ofrece lugares que existen."
       },
       {
-        "q": "¿Puede cobrar el anticipo?",
-        "a": "Sí, mediante un enlace de pago con la pasarela que ya utilicen. Es opcional y se puede activar solo para ciertos servicios, por ejemplo los de mayor duración."
+        "q": "¿Cobra las mensualidades?",
+        "a": "Puede enviar el enlace de pago con la pasarela que ya utilicen y registrar cuándo se completó. El cobro lo procesa su pasarela; nosotros montamos el flujo que lleva hasta ahí."
       },
       {
-        "q": "¿Qué pasa si una clienta quiere algo muy específico?",
-        "a": "El sistema resuelve lo que está en el catálogo y, en cuanto la consulta requiere el criterio de una profesional —un diagnóstico capilar, una corrección de color—, pasa la conversación a una persona del equipo con todo lo que ya se habló."
+        "q": "¿Sirve para recuperar miembros que dejaron de venir?",
+        "a": "Sí. El sistema identifica a quien lleva tiempo sin asistir o sin renovar y le escribe en el momento oportuno, con una razón concreta para volver."
       },
       {
-        "q": "¿Sirve para recuperar clientas que dejaron de venir?",
-        "a": "Sí. El sistema identifica a quien no ha vuelto en el plazo habitual de su servicio y le escribe en el momento oportuno. Es un trabajo que a mano nadie alcanza a sostener."
+        "q": "¿Da rutinas o indicaciones de entrenamiento?",
+        "a": "No. Informa, agenda y da seguimiento. Cualquier indicación de entrenamiento o de salud corresponde a sus instructores, y el sistema pasa la conversación en cuanto surge."
       },
       {
         "q": "¿Cuánto tarda en estar funcionando?",
-        "a": "Entre dos y tres semanas. Lo que más tiempo lleva es cargar bien el catálogo de servicios con sus duraciones y precios, porque de eso depende que la agenda cuadre."
+        "a": "Entre dos y tres semanas. Lo que marca el ritmo es tener bien definidos los planes, los horarios y los cupos de cada clase."
       }
-    ]
+    ],
+    "principal": true
+  },
+  {
+    "slug": "spas",
+    "nombre": "Spas y Centros de Bienestar",
+    "nombreCorto": "Spas",
+    "titulo": "Inteligencia artificial para spas en Aguascalientes | Diabolical",
+    "descripcion": "Inteligencia artificial para spas en Aguascalientes: chatbot que responde tratamientos y precios, agenda por cabina y terapeuta, cobra el anticipo y envía recordatorios.",
+    "keywords": "inteligencia artificial para spas Aguascalientes, chatbot para spa, agendar citas spa WhatsApp, software de reservas para spa, página web para spa Aguascalientes",
+    "titular": "Inteligencia artificial para spas",
+    "entradilla": "En un spa, la calma es parte del servicio, y un teléfono sonando en cabina la rompe. Instalamos un sistema que responde tratamientos y precios, reserva por cabina y por terapeuta, y confirma la cita sin interrumpir a nadie.",
+    "momentos": [
+      "Alguien pregunta por un masaje en pareja un sábado por la noche y recibe duración, precio y los horarios con dos cabinas libres.",
+      "La reserva ocupa la cabina y a la terapeuta al mismo tiempo, así que nunca se ofrece un hueco que no existe.",
+      "El anticipo queda cobrado al reservar, y el certificado de regalo sale con su comprobante listo para enviar.",
+      "Un día antes llega el recordatorio con las indicaciones previas, y quien no puede asistir reagenda en dos mensajes."
+    ],
+    "soluciones": [
+      {
+        "titulo": "Chatbot que conoce su carta de tratamientos",
+        "detalle": "Cada tratamiento con su duración, su precio y lo que incluye, explicado en el momento en que preguntan, por WhatsApp, en su sitio o en Instagram. Las dudas de salud o de contraindicaciones pasan a una persona del equipo."
+      },
+      {
+        "titulo": "Agenda por cabina y por terapeuta",
+        "detalle": "El sistema cruza la disponibilidad de cabinas y de terapeutas, y solo ofrece horarios en los que las dos cosas están libres. Los tratamientos en pareja reservan dos cabinas a la vez."
+      },
+      {
+        "titulo": "Anticipos y certificados de regalo",
+        "detalle": "La reserva se aparta con un anticipo si así lo deciden, y los certificados de regalo se venden y se entregan sin que nadie del equipo tenga que intervenir."
+      },
+      {
+        "titulo": "Una página web que reserva sola",
+        "detalle": "Un sitio con su carta de tratamientos, el espacio bien presentado y la reserva integrada, legible para Google y para los motores de inteligencia artificial."
+      }
+    ],
+    "faq": [
+      {
+        "q": "¿Puede reservar la cabina y a la terapeuta al mismo tiempo?",
+        "a": "Sí. El sistema lleva una agenda por cabina y otra por terapeuta, y solo ofrece horarios en los que las dos están libres. Para los tratamientos en pareja reserva dos cabinas y dos terapeutas en el mismo horario, o avisa si ese día no es posible."
+      },
+      {
+        "q": "¿Se pueden vender certificados de regalo?",
+        "a": "Sí. El chatbot ofrece el certificado, envía el enlace de pago de la pasarela que ya utilicen y, una vez pagado, entrega el comprobante listo para regalar. Cuando la persona lo canjea, se agenda como cualquier otra cita."
+      },
+      {
+        "q": "¿Qué pasa con las preguntas sobre contraindicaciones?",
+        "a": "El chatbot no las responde. Informa de los tratamientos, sus duraciones y precios, y en cuanto alguien menciona una condición de salud, un embarazo o una lesión, pasa la conversación a una persona de su equipo con todo lo que ya se habló."
+      },
+      {
+        "q": "¿Funciona con el sistema de reservas que ya usamos?",
+        "a": "En la mayoría de los casos sí: se conecta con la agenda o el sistema de reservas que ya utilicen si tiene conexión disponible. Si hoy llevan la agenda en papel o en una hoja, montamos una nueva y la dejamos funcionando antes de encender el chatbot."
+      },
+      {
+        "q": "¿Cuánto tarda en estar funcionando?",
+        "a": "Entre dos y tres semanas. Lo que más tiempo lleva es cargar bien la carta de tratamientos con sus duraciones, precios y cabinas, porque de eso depende que la agenda cuadre."
+      }
+    ],
+    "principal": true
+  },
+  {
+    "slug": "salones-de-unas",
+    "nombre": "Salones de Uñas y Nail Bars",
+    "nombreCorto": "Salones de uñas",
+    "titulo": "Inteligencia artificial para salones de uñas en Aguascalientes | Diabolical",
+    "descripcion": "Inteligencia artificial para salones de uñas en Aguascalientes: chatbot que cotiza diseños, agenda por manicurista con la duración real de cada servicio y envía recordatorios.",
+    "keywords": "inteligencia artificial para salones de uñas Aguascalientes, chatbot para salón de uñas, agendar citas de uñas por WhatsApp, software para nail bar, página web para salón de uñas",
+    "titular": "Inteligencia artificial para salones de uñas",
+    "entradilla": "Con las manos de una clienta sobre la mesa, nadie puede contestar el teléfono. Instalamos un sistema que cotiza cada diseño, ofrece los huecos reales de cada manicurista y confirma la cita mientras el equipo sigue trabajando.",
+    "momentos": [
+      "Una clienta manda la foto de un diseño y recibe el servicio que le corresponde, su duración y los horarios disponibles en segundos.",
+      "El sistema aparta el tiempo real del servicio —no dura lo mismo un retoque que un juego completo de acrílico— con la manicurista que lo hace.",
+      "En los días de más demanda, un anticipo aparta la cita y la agenda deja de llenarse de ausencias.",
+      "Cuando se acerca la fecha del relleno, el sistema le escribe con el horario de su manicurista habitual."
+    ],
+    "soluciones": [
+      {
+        "titulo": "Cotización de diseños por foto",
+        "detalle": "La clienta envía la foto del diseño que quiere y el chatbot responde con el servicio que corresponde, su duración y su precio de referencia. Si el diseño necesita el criterio de una manicurista, se lo pasa con la foto incluida."
+      },
+      {
+        "titulo": "Agenda por manicurista y por duración",
+        "detalle": "Cada servicio con su duración real y cada manicurista con los servicios que hace. El sistema solo ofrece huecos donde el servicio cabe completo, sin empalmes."
+      },
+      {
+        "titulo": "Recordatorios y aviso de relleno",
+        "detalle": "Recordatorio el día anterior y aviso cuando se acerca la fecha del relleno o del retiro, con el horario de su manicurista. La clienta vuelve a tiempo y con su lugar apartado."
+      },
+      {
+        "titulo": "Una página web con su catálogo de diseños",
+        "detalle": "Un sitio con su galería de trabajos, precios de referencia y la reserva integrada, para que la encuentren en Google y en los motores de inteligencia artificial."
+      }
+    ],
+    "faq": [
+      {
+        "q": "¿Puede cotizar un diseño a partir de una foto?",
+        "a": "Sí, como referencia. El chatbot identifica el tipo de servicio que corresponde a la foto y responde con su duración y su precio de referencia. Cuando el diseño es complejo o necesita la valoración de una manicurista, le pasa la conversación con la foto incluida."
+      },
+      {
+        "q": "¿Cada manicurista puede tener su propia agenda?",
+        "a": "Sí, es lo habitual. El sistema lleva una agenda por persona, con sus horarios, sus días libres y los servicios que realiza. La clienta puede pedir a su manicurista por nombre o dejar que el sistema proponga a quien esté disponible."
+      },
+      {
+        "q": "¿Evita que se empalmen las citas?",
+        "a": "Sí. Cada servicio tiene su duración real y el sistema solo ofrece un horario si el servicio cabe completo en la agenda de esa manicurista. Si la clienta cambia de servicio, el hueco se recalcula."
+      },
+      {
+        "q": "¿Sirve para que las clientas regresen a su relleno?",
+        "a": "Sí. El sistema sabe cuándo fue el último servicio de cada clienta y le escribe cuando se acerca la fecha del relleno, con los horarios de su manicurista. Es un seguimiento que a mano nadie alcanza a sostener."
+      },
+      {
+        "q": "¿Cuánto tarda en estar funcionando?",
+        "a": "Entre dos y tres semanas. Lo que marca el ritmo es tener bien definido el catálogo de servicios con sus duraciones y precios, y la agenda de cada manicurista."
+      }
+    ],
+    "principal": true
   },
   {
     "slug": "clinicas",
@@ -165,63 +281,8 @@
         "q": "¿Cuánto tarda en estar funcionando?",
         "a": "Entre dos y cuatro semanas. El guion de lo que el sistema puede y no puede decir se escribe primero y lo aprueba la clínica antes de programar nada."
       }
-    ]
-  },
-  {
-    "slug": "gimnasios",
-    "nombre": "Gimnasios y Estudios de Entrenamiento",
-    "nombreCorto": "Gimnasios",
-    "titulo": "Inteligencia artificial para gimnasios en Aguascalientes | Diabolical",
-    "descripcion": "Inteligencia artificial para gimnasios y estudios en Aguascalientes: informa planes y horarios al instante, aparta la clase de prueba y da seguimiento a quien preguntó y no se inscribió.",
-    "keywords": "inteligencia artificial para gimnasios Aguascalientes, automatización gimnasio WhatsApp, agendar clase de prueba, seguimiento de prospectos gimnasio, software para estudio de entrenamiento",
-    "titular": "Inteligencia artificial para gimnasios y estudios",
-    "entradilla": "Quien pregunta por un plan está comparando en ese momento. Instalamos un sistema que responde precios y horarios al instante, aparta la clase de prueba y mantiene el seguimiento de quien todavía no decide.",
-    "momentos": [
-      "Alguien pregunta el precio un domingo por la noche y recibe los planes, los horarios y la opción de probar.",
-      "La clase de prueba queda apartada con cupo real, no en una lista que alguien revisará después.",
-      "Quien preguntó y no se inscribió recibe seguimiento en los días siguientes, con la información que le faltaba.",
-      "El equipo entra el lunes y encuentra los prospectos de todo el fin de semana ya ordenados."
     ],
-    "soluciones": [
-      {
-        "titulo": "Planes y horarios al momento",
-        "detalle": "Precios, modalidades, horarios de cada clase y qué incluye cada plan, respondidos en el instante en que preguntan. Es la diferencia entre informar y perder la conversación."
-      },
-      {
-        "titulo": "Clase de prueba apartada",
-        "detalle": "El sistema conoce el cupo real de cada clase y aparta el lugar en el momento. Quien prueba llega con su lugar confirmado y el instructor sabe a quién esperar."
-      },
-      {
-        "titulo": "Seguimiento escalonado",
-        "detalle": "A quien preguntó y no cerró, el sistema le escribe en los días siguientes con lo que le faltaba para decidir. Es donde se recupera buena parte de las inscripciones, y también lo primero que se abandona cuando el día se complica."
-      },
-      {
-        "titulo": "Renovaciones sin perseguir a nadie",
-        "detalle": "Avisos de vencimiento y renovación enviados a tiempo, con el enlace de pago si así lo desean. La mensualidad se renueva sin que nadie tenga que estar recordándolo."
-      }
-    ],
-    "faq": [
-      {
-        "q": "¿Puede manejar el cupo de las clases?",
-        "a": "Sí. Se conecta con el sistema de reservas que ya usen o, si no tienen uno, montamos la agenda de clases con su cupo. El sistema solo ofrece lugares que existen."
-      },
-      {
-        "q": "¿Cobra las mensualidades?",
-        "a": "Puede enviar el enlace de pago con la pasarela que ya utilicen y registrar cuándo se completó. El cobro lo procesa su pasarela; nosotros montamos el flujo que lleva hasta ahí."
-      },
-      {
-        "q": "¿Sirve para recuperar miembros que dejaron de venir?",
-        "a": "Sí. El sistema identifica a quien lleva tiempo sin asistir o sin renovar y le escribe en el momento oportuno, con una razón concreta para volver."
-      },
-      {
-        "q": "¿Da rutinas o indicaciones de entrenamiento?",
-        "a": "No. Informa, agenda y da seguimiento. Cualquier indicación de entrenamiento o de salud corresponde a sus instructores, y el sistema pasa la conversación en cuanto surge."
-      },
-      {
-        "q": "¿Cuánto tarda en estar funcionando?",
-        "a": "Entre dos y tres semanas. Lo que marca el ritmo es tener bien definidos los planes, los horarios y los cupos de cada clase."
-      }
-    ]
+    "principal": false
   },
   {
     "slug": "despachos-y-oficinas",
@@ -277,7 +338,8 @@
         "q": "¿Cuánto tarda en estar funcionando?",
         "a": "Entre dos y cuatro semanas. El guion —qué puede decir el sistema y qué no— se escribe primero y lo aprueba el despacho antes de programar nada."
       }
-    ]
+    ],
+    "principal": false
   },
   {
     "slug": "comercio",
@@ -333,6 +395,7 @@
         "q": "¿Cuánto tarda en estar funcionando?",
         "a": "Entre dos y cuatro semanas, según el tamaño del catálogo y cómo esté montada la tienda. Conectar bien las existencias es lo que más tiempo lleva."
       }
-    ]
+    ],
+    "principal": false
   }
 ]
