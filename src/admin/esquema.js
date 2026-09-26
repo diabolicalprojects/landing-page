@@ -63,8 +63,8 @@ export const BLOQUES = [
     },
     {
         clave: 'servicios',
-        nombre: 'Catálogo',
-        ayuda: 'Encabezado del catálogo. Los 13 servicios se editan en su propio fichero.',
+        nombre: 'Servicios complementarios',
+        ayuda: 'Encabezado de los diez servicios complementarios en la portada. Los tres principales se presentan en «Qué hacemos»; todos se editan en su propio fichero.',
         ancla: '#servicios',
     },
     {

@@ -4,15 +4,17 @@ import { ArrowRight } from 'lucide-react';
 import { SERVICIOS_POR_CATEGORIA, rutaServicio } from '../../data/servicios';
 import { useBloque } from '../../contenido';
 import EncabezadoSeccion from '../common/EncabezadoSeccion';
-import ServiciosPrincipales from '../common/ServiciosPrincipales';
 import CtaServicio from '../common/CtaServicio';
 import Enlace from '../common/Enlace';
 
 /*
- * El catálogo entero en la portada: primero los tres servicios principales,
- * cada uno con su escena y su landing, y debajo los complementarios agrupados
- * por el recorrido real de un cliente —que le encuentren, que le elijan, que
- * le atiendan, que le recuerden y saber si funciona—.
+ * Los servicios complementarios en la portada.
+ *
+ * Los tres principales ya se presentan arriba, en «Qué hacemos» (Pilares), cada
+ * uno con su escena y su landing. Repetirlos aquí hacía que la portada contara
+ * dos veces lo mismo; esta sección se queda con los diez complementarios,
+ * agrupados por el recorrido real de un cliente —que le encuentren, que le
+ * elijan, que le atiendan, que le recuerden y saber si funciona—.
  *
  * Sale de src/data/servicios.json, que es también de donde server/schema.js
  * construye el OfferCatalog y server/llms.js la guía para motores de IA. Una
@@ -20,8 +22,7 @@ import Enlace from '../common/Enlace';
  *
  * Aquí va el resumen; el límite de cada servicio vive en su página para que la
  * portada se barra de un vistazo. Cada nombre enlaza a esa página: el texto del
- * enlace es lo que le dice a un buscador de qué trata el destino. El límite no es opcional, es parte de la
- * oferta — por eso el enlace de abajo lo dice con esas palabras.
+ * enlace es lo que le dice a un buscador de qué trata el destino.
  */
 const Servicios = () => {
     const { visible, titulo, entradilla } = useBloque('servicios');
@@ -33,27 +34,17 @@ const Servicios = () => {
             <div className="contenedor">
                 <EncabezadoSeccion titulo={titulo} entradilla={entradilla} />
 
-                <div className="mt-12 md:mt-16">
-                    <ServiciosPrincipales />
-                </div>
-
-                <h3 className="titular-m mt-16 md:mt-20">Servicios complementarios</h3>
-                <p className="cuerpo mt-3">
-                    Misma calidad y mismo alcance publicado. Se contratan solos o para completar
-                    lo principal.
-                </p>
-
-                <div className="mt-10 space-y-10 md:space-y-14">
+                <div className="mt-12 space-y-10 md:mt-16 md:space-y-14">
                     {SERVICIOS_POR_CATEGORIA.map((grupo) => (
                         <div key={grupo.categoria}>
-                            <h4 className="etiqueta border-b border-white/[0.09] pb-3 text-white/70">
+                            <h3 className="etiqueta border-b border-white/[0.09] pb-3 text-white/70">
                                 {grupo.categoria}
-                            </h4>
+                            </h3>
 
                             {/* En el teléfono, una lista de nombres: con el resumen
                                 debajo, diez servicios complementarios ocupaban
-                                cuatro pantallas detrás de los tres principales.
-                                El resumen está en la página de cada uno. */}
+                                cuatro pantallas. El resumen está en la página de
+                                cada uno. */}
                             <div className="grid gap-x-8 md:mt-6 md:grid-cols-2 md:gap-y-7 lg:grid-cols-3">
                                 {grupo.servicios.map((servicio) => (
                                     <article key={servicio.slug} className="border-b border-white/[0.07] md:border-0">

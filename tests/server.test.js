@@ -1138,3 +1138,36 @@ test('el paquete del navegador no arrastra GSAP', async (t) => {
         assert.ok(!/ScrollTrigger|GreenSock/.test(codigo), `${archivo} incluye GSAP`);
     }
 });
+
+test('la portada presenta los tres servicios principales una sola vez', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+    const html = await (await fetch(`${BASE}/`)).text();
+
+    // Se presentan en «Qué hacemos» (Pilares)...
+    const pilares = html.slice(html.indexOf('id="pilares"'), html.indexOf('</section>', html.indexOf('id="pilares"')));
+    for (const ruta of [RUTA_PAGINAS_WEB, RUTA_CHATBOTS, RUTA_AGENDAMIENTO]) {
+        assert.ok(pilares.includes(`href="${ruta}"`), `Qué hacemos no enlaza a ${ruta}`);
+    }
+
+    // ...y la sección de servicios se queda con los complementarios.
+    const servicios = html.slice(html.indexOf('id="servicios"'), html.indexOf('</section>', html.indexOf('id="servicios"')));
+    for (const ruta of [RUTA_PAGINAS_WEB, RUTA_CHATBOTS, RUTA_AGENDAMIENTO]) {
+        assert.ok(!servicios.includes(`href="${ruta}"`), `la sección de servicios repite ${ruta}`);
+    }
+    for (const s of SERVICIOS.filter((x) => !x.principal)) {
+        assert.ok(servicios.includes(`href="${rutaServicio(s.slug)}"`), `falta el complementario ${s.slug}`);
+    }
+});
+
+test('en el teléfono el menú no lleva el botón de Contacto en la barra', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+    const html = await (await fetch(`${BASE}/`)).text();
+    const nav = html.slice(html.indexOf('aria-label="Principal"'), html.indexOf('</nav>', html.indexOf('aria-label="Principal"')));
+    // `.boton` declara su display fuera de la capa de Tailwind: sin `!` el
+    // `hidden` no oculta nada y la barra del teléfono se llenaba.
+    assert.match(nav, /class="boton !hidden[^"]*sm:!inline-flex/);
+});

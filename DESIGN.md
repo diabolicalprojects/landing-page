@@ -291,6 +291,14 @@ El fondo animado es la excepción a «nada de bucles decorativos»: lo pidió el
 cliente para el hero del teléfono. Se queda ahí, solo usa `transform` y
 `opacity` (se compone en la GPU) y con `prefers-reduced-motion` queda quieto.
 
+**Menú en el teléfono.** Una barra de 54 px con el logo y el botón de menú,
+a 8 px del borde. Contacto va dentro del menú: cada página tiene ya su botón
+de cotizar. Por debajo de 1024 px la barra se esconde al bajar y vuelve al
+subir, al recibir el foco o al abrir el menú; arriba del todo siempre se ve.
+Las clases propias del sitio (`.boton`, `.insignia`, `.hero-pagina__*`) están
+fuera de la capa de Tailwind y su `display` gana a `hidden`: para ocultar una
+de ellas por tamaño hace falta `!hidden` o una regla propia.
+
 **Laptops y pantallas grandes.** La regla: cada bloque (el hero, una tarjeta,
 el formulario) se lee entero sin hacer scroll a mitad de él. Medido en
 1280 × 633, 1366 × 657, 1440 × 789, 1536 × 730, 1920 × 969 y 2560 × 1297.

@@ -27,6 +27,11 @@ import logoHorizontalBlanco from '../../assets/logo/LOGO-DIABOLICAL-HORIZONTAL-B
  * El panel está siempre en el HTML servido, oculto con `hidden` mientras no se
  * abre: los enlaces a las landings tienen que existir para los rastreadores en
  * todas las páginas, no solo cuando alguien pasa el ratón.
+ *
+ * En el teléfono la barra es compacta (logo y menú; Contacto va dentro del
+ * menú y cada página tiene su botón de cotizar) y se esconde al bajar: vuelve
+ * en cuanto la persona sube un poco, recibe el foco o abre el menú. Tapaba
+ * casi una décima parte de la pantalla todo el tiempo.
  */
 
 /** Panel desplegable de un enlace con grupos. */
@@ -132,11 +137,18 @@ const Desplegable = ({ enlace, sobreClaro }) => {
     );
 };
 
+// Dónde está la barra: la línea que se compara con las secciones claras.
 const ALTURA_BARRA = 72;
+const ALTURA_BARRA_MOVIL = 34;
+
+// Por debajo de este ancho la barra se esconde al bajar.
+const ANCHO_ESCRITORIO = 1024;
 
 const Navbar = () => {
     const [desplazado, setDesplazado] = useState(false);
     const [sobreClaro, setSobreClaro] = useState(false);
+    const [escondida, setEscondida] = useState(false);
+    const ultimoY = useRef(0);
     const [menuAbierto, setMenuAbierto] = useState(false);
     const [grupoMovil, setGrupoMovil] = useState(null);
     const zonasRef = useRef([]);
@@ -162,13 +174,27 @@ const Navbar = () => {
         let pendiente = false;
         const medir = () => {
             pendiente = false;
-            setDesplazado(window.scrollY > 24);
+            const y = window.scrollY;
+            const movil = window.innerWidth < ANCHO_ESCRITORIO;
+            const linea = movil ? ALTURA_BARRA_MOVIL : ALTURA_BARRA;
+            setDesplazado(y > 24);
             setSobreClaro(
                 zonasRef.current.some((zona) => {
                     const { top, bottom } = zona.getBoundingClientRect();
-                    return top <= ALTURA_BARRA && bottom >= ALTURA_BARRA;
+                    return top <= linea && bottom >= linea;
                 })
             );
+
+            // Se esconde al bajar y vuelve al subir. El umbral evita que tiemble
+            // con el rebote del scroll en iOS; arriba del todo siempre se ve.
+            const delta = y - ultimoY.current;
+            if (!movil || y < 120) {
+                setEscondida(false);
+                ultimoY.current = y;
+            } else if (Math.abs(delta) > 8) {
+                setEscondida(delta > 0);
+                ultimoY.current = y;
+            }
         };
 
         // El scroll dispara muchísimo más rápido de lo que la pantalla pinta;
@@ -203,12 +229,14 @@ const Navbar = () => {
     return (
         <nav
             aria-label="Principal"
+            onFocus={() => setEscondida(false)}
             className={cn(
-                'fixed left-1/2 top-3 z-50 flex w-[94%] max-w-6xl -translate-x-1/2 min-[1680px]:max-w-[84rem] min-[2200px]:max-w-[88rem] items-center justify-between gap-4 rounded-full px-4 py-2.5 transition-[background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:top-5 md:gap-10 md:px-6 md:py-3',
+                'fixed left-1/2 top-2 z-50 flex w-[calc(100%-1rem)] max-w-6xl -translate-x-1/2 min-[1680px]:max-w-[84rem] min-[2200px]:max-w-[88rem] items-center justify-between gap-4 rounded-full py-1.5 pl-4 pr-1.5 transition-[background-color,border-color,box-shadow,translate] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none md:top-5 md:w-[94%] md:gap-10 md:px-6 md:py-3',
                 sobreClaro
                     ? 'border border-black/10 bg-white/85 backdrop-blur-xl'
                     : 'border border-white/10 bg-black/70 backdrop-blur-xl',
-                desplazado && 'shadow-[0_10px_40px_-16px_rgba(0,0,0,0.7)]'
+                desplazado && 'shadow-[0_10px_40px_-16px_rgba(0,0,0,0.7)]',
+                escondida && !menuAbierto && '-translate-y-[calc(100%+2rem)]'
             )}
         >
             <Enlace destino="/" className="flex min-h-[2.25rem] min-w-0 items-center py-1" aria-label="Diabolical, inicio">
@@ -257,7 +285,10 @@ const Navbar = () => {
                     <Enlace
                         destino={destacado.destino}
                         className={cn(
-                            'boton hidden min-h-[2.75rem] px-6 text-[0.9375rem] sm:inline-flex',
+                            // `!hidden`: la clase .boton declara su display fuera de la
+                            // capa de Tailwind y ganaba a un `hidden` normal, así que
+                            // el botón salía también en el teléfono.
+                            'boton !hidden min-h-[2.75rem] px-6 text-[0.9375rem] sm:!inline-flex',
                             sobreClaro ? 'bg-black text-white hover:bg-black/85' : 'bg-white text-black hover:bg-white/85'
                         )}
                     >
@@ -271,7 +302,7 @@ const Navbar = () => {
                     aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
                     aria-expanded={menuAbierto}
                     className={cn(
-                        'flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full transition-colors lg:hidden',
+                        'flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full transition-colors md:h-11 md:w-11 lg:hidden',
                         sobreClaro
                             ? 'bg-black/5 text-black active:bg-black/10'
                             : 'bg-white/10 text-white active:bg-white/20'

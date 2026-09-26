@@ -192,8 +192,8 @@
   },
   "servicios": {
     "visible": true,
-    "titulo": "Tres servicios principales y diez complementarios.",
-    "entradilla": "Los complementarios no son de segunda: tienen la misma calidad y el mismo alcance publicado. Simplemente no son el centro de lo que hacemos.",
+    "titulo": "Diez servicios complementarios.",
+    "entradilla": "Con la misma calidad y el mismo alcance publicado que los tres principales. Se contratan solos o para completar el sitio web, el chatbot y la agenda.",
     "cta": {
       "texto": "Ver el catálogo completo",
       "destino": "/servicios"

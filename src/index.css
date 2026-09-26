@@ -1091,7 +1091,7 @@ select {
     justify-content: center;
     min-height: 100vh;
     min-height: 100svh;
-    padding: 6.25rem 0 5rem;
+    padding: 5rem 0 5rem;
     text-align: center;
   }
 
@@ -1207,6 +1207,11 @@ select {
 }
 
 @media (min-width: 768px) and (max-width: 1023.98px) {
+  /* En tableta el menú es más alto que en el teléfono. */
+  .hero-pagina__cabeza {
+    padding-top: 6.5rem;
+  }
+
   .hero-pagina__escenario {
     margin-inline: -2rem;
   }
@@ -1246,7 +1251,7 @@ select {
   }
 
   .hero-pagina__cabeza {
-    padding-top: 5.5rem;
+    padding-top: 4.5rem;
   }
 
   .hero-pagina__sello {
@@ -1270,7 +1275,7 @@ select {
   }
 
   .hero-pagina__cabeza {
-    padding: 5.25rem 0 1.5rem;
+    padding: 4.5rem 0 1.5rem;
   }
 
   .hero-pagina__bajada {
