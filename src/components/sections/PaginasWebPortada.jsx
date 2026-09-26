@@ -17,7 +17,7 @@ import PantallaEscena from '../common/PantallaEscena';
  * hacemos, y qué cuatro cosas concretas se pueden encargar.
  *
  * Los tipos salen del mismo bloque que la landing (paginasWeb.tipos), así que
- * el nombre, para quién es y el plazo no pueden decir aquí una cosa y allí
+ * el nombre, para quién es y el alcance no pueden decir aquí una cosa y allí
  * otra. Cada tarjeta lleva la escena animada de su tipo y enlaza a la landing,
  * donde está el detalle: qué incluye y qué no.
  *
@@ -59,7 +59,7 @@ const PaginasWebPortada = () => {
                                     <p className="cuerpo mt-3 flex-1">{tipo.paraQuien}</p>
                                     <p className="mt-6 flex items-center justify-between gap-4">
                                         <span className="etiqueta-mono" style={{ color: 'var(--texto-3)' }}>
-                                            Plazo típico: {tipo.plazo}
+                                            Alcance: {tipo.alcance}
                                         </span>
                                         <ArrowUpRight
                                             size={16}

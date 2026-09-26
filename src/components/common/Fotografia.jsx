@@ -13,8 +13,9 @@ import FOTOS from '../../data/fotos.json';
  * autor y la licencia. Se sirven desde /imagenes (la CSP no carga imágenes de
  * otros dominios) en dos anchos, y el navegador elige el que le toca.
  *
- * El crédito va visible aunque la licencia de Unsplash no lo exige: cuesta una
- * línea y es lo correcto con quien hizo la foto.
+ * El crédito no se muestra bajo la foto (la licencia de Unsplash no lo exige),
+ * pero viaja en el JSON-LD de la página como ImageObject con autor y licencia
+ * (server/schema.js, imagenDe), que es donde Google lo lee.
  */
 const Fotografia = ({ clave, prioridad = false, proporcion = '21 / 9', className = '' }) => {
     const foto = FOTOS[clave];
@@ -39,9 +40,6 @@ const Fotografia = ({ clave, prioridad = false, proporcion = '21 / 9', className
                     style={{ objectPosition: foto.encuadre ?? 'center' }}
                 />
             </div>
-            <figcaption className="foto-credito etiqueta-mono mt-3" style={{ color: 'var(--texto-3)' }}>
-                Foto: {foto.autor} · Unsplash
-            </figcaption>
         </figure>
     );
 };

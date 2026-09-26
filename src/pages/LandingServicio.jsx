@@ -181,23 +181,13 @@ const LandingServicio = ({ slug }) => {
 
                                 <div className="flex-1 xl:col-start-1 xl:row-start-3" />
 
-                                <dl className="mt-7 grid grid-cols-2 gap-4 pt-5 xl:col-start-1 xl:row-start-4" style={lineaSuperior}>
-                                    <div>
-                                        <dt className="etiqueta" style={{ color: 'var(--texto-3)' }}>
-                                            Alcance
-                                        </dt>
-                                        <dd className="mt-2 text-[0.9375rem] font-bold tracking-tight">
-                                            {tipo.alcance}
-                                        </dd>
-                                    </div>
-                                    <div>
-                                        <dt className="etiqueta" style={{ color: 'var(--texto-3)' }}>
-                                            Plazo típico
-                                        </dt>
-                                        <dd className="mt-2 text-[0.9375rem] font-bold tracking-tight">
-                                            {tipo.plazo}
-                                        </dd>
-                                    </div>
+                                <dl className="mt-7 pt-5 xl:col-start-1 xl:row-start-4" style={lineaSuperior}>
+                                    <dt className="etiqueta" style={{ color: 'var(--texto-3)' }}>
+                                        Alcance
+                                    </dt>
+                                    <dd className="mt-2 text-[0.9375rem] font-bold tracking-tight">
+                                        {tipo.alcance}
+                                    </dd>
                                 </dl>
                                 <CtaServicio
                                     servicio={slug}
@@ -270,9 +260,6 @@ const LandingServicio = ({ slug }) => {
                                     <div className="flex items-baseline gap-4 md:col-span-3 md:flex-col md:gap-2">
                                         <span className="cifras etiqueta-mono" style={{ color: 'var(--texto-3)' }}>
                                             {String(i + 1).padStart(2, '0')}
-                                        </span>
-                                        <span className="etiqueta-mono" style={{ color: 'var(--texto-2)' }}>
-                                            {paso.duracion}
                                         </span>
                                     </div>
                                     <h3 className="titular-m md:col-span-4">{paso.titulo}</h3>

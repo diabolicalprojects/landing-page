@@ -173,30 +173,26 @@
   "proceso": {
     "visible": true,
     "titulo": "De la primera conversación a tenerlo funcionando.",
-    "entradilla": "Entre dos y cuatro semanas según lo que haya que conectar. Sin permanencia y sin comisión sobre su inversión publicitaria.",
+    "entradilla": "Sin permanencia y sin comisión sobre su inversión publicitaria. El plazo de cada proyecto queda por escrito en la propuesta.",
     "pasos": [
       {
         "id": "paso-1",
         "titulo": "Auditoría de fricción",
-        "duracion": "Día 1 · sin costo",
         "texto": "Recorremos el camino que hace hoy un cliente suyo y señalamos dónde se detiene. Sale de ahí un documento con lo que conviene automatizar, en qué orden, y también con lo que NO conviene tocar. Es suyo, trabajemos juntos o no."
       },
       {
         "id": "paso-2",
         "titulo": "Diseño del flujo",
-        "duracion": "Días 2 a 5",
         "texto": "Redactamos el guion completo: qué responde el sistema, con qué datos, cuándo entrega la conversación a una persona y qué no debe decir nunca. Usted lo aprueba antes de que se programe una sola línea. Ahí se decide si esto funciona, no en la elección del modelo."
       },
       {
         "id": "paso-3",
         "titulo": "Conexión y pruebas",
-        "duracion": "Semanas 2 a 3",
         "texto": "Enlazamos WhatsApp, la agenda, el CRM y el sitio. Probamos con conversaciones reales de su negocio hasta que no queda un camino sin resolver."
       },
       {
         "id": "paso-4",
         "titulo": "Arranque y ajuste",
-        "duracion": "Semana 4 en adelante",
         "texto": "Arranca en vivo y revisamos las conversaciones. Lo que haya que afinar se corrige sobre la marcha. Usted lo ve todo desde un tablero y puede tomar cualquier conversación cuando quiera."
       }
     ],
@@ -438,8 +434,7 @@
             "Textos escritos para la búsqueda que quiere ganar."
           ],
           "noIncluye": "Presentar varios servicios: para eso conviene un sitio corporativo.",
-          "alcance": "Una página",
-          "plazo": "1 a 2 semanas"
+          "alcance": "Una página"
         },
         {
           "id": "tipo-corporativo",
@@ -451,8 +446,7 @@
             "Datos estructurados y mapa del sitio para los buscadores."
           ],
           "noIncluye": "Venta en línea con carrito y pagos: para vender dentro del sitio corresponde una tienda en línea.",
-          "alcance": "De 5 a 15 páginas",
-          "plazo": "3 a 5 semanas"
+          "alcance": "De 5 a 15 páginas"
         },
         {
           "id": "tipo-tienda",
@@ -464,8 +458,7 @@
             "Recuperación de carritos y avisos automáticos de pedido."
           ],
           "noIncluye": "La operación del envío y la fotografía de producto, que corren por su cuenta. El sitio se conecta con las herramientas que ya utilice.",
-          "alcance": "Según el tamaño del catálogo",
-          "plazo": "5 a 8 semanas"
+          "alcance": "Según el tamaño del catálogo"
         },
         {
           "id": "tipo-medida",
@@ -477,8 +470,7 @@
             "Conexión con su agenda, su CRM o sus sistemas propios."
           ],
           "noIncluye": "Un precio de catálogo: se define en la auditoría y se cotiza con el alcance por escrito antes de empezar.",
-          "alcance": "Se define en la auditoría",
-          "plazo": "Según el alcance"
+          "alcance": "Se define en la auditoría"
         }
       ]
     },
@@ -518,35 +510,29 @@
         {
           "id": "pw-1",
           "titulo": "Diagnóstico y arquitectura",
-          "duracion": "Semana 1",
           "texto": "Qué tiene que lograr la página, para quién y con qué búsquedas se la va a encontrar. De ahí sale la arquitectura: qué páginas existen y qué dice cada una."
         },
         {
           "id": "pw-2",
           "titulo": "Contenido",
-          "duracion": "Semanas 1 y 2",
           "texto": "Redactamos los textos pensando en la búsqueda que cada página tiene que ganar. Usted los aprueba antes de pasar al diseño."
         },
         {
           "id": "pw-3",
           "titulo": "Diseño",
-          "duracion": "Semanas 2 y 3",
           "texto": "Diseño a medida sobre la identidad de su marca, pensado primero para el celular, que es donde deciden sus clientes."
         },
         {
           "id": "pw-4",
           "titulo": "Desarrollo y conexiones",
-          "duracion": "Semanas 3 y 4",
           "texto": "Construcción, formularios, agenda, WhatsApp y, si se contrata, el asistente de IA. Pruebas en celular y en escritorio."
         },
         {
           "id": "pw-5",
           "titulo": "Publicación",
-          "duracion": "Al terminar",
           "texto": "Publicación, envío del mapa del sitio a Google y entrega del panel y de todos los accesos."
         }
-      ],
-      "nota": "Los plazos corresponden a un sitio corporativo. Una landing se entrega antes y una tienda en línea necesita más tiempo."
+      ]
     },
     "precio": {
       "titulo": "¿Cuánto cuesta una página web en Aguascalientes?",
@@ -598,7 +584,7 @@
         },
         {
           "pregunta": "¿Cuánto tarda en estar lista una página web?",
-          "respuesta": "Una landing page, de una a dos semanas. Un sitio corporativo, de tres a cinco semanas. Una tienda en línea, de cinco a ocho semanas. Los plazos dependen sobre todo de que los textos y las fotografías se aprueben a tiempo, así que los fijamos por escrito al empezar."
+          "respuesta": "Depende del tipo de sitio y de que los textos y las fotografías se aprueben a tiempo. El plazo se fija por escrito en la propuesta, antes de empezar."
         },
         {
           "pregunta": "¿Qué es una página web con inteligencia artificial?",
@@ -679,8 +665,7 @@
             "Agenda y traspaso a una persona dentro de la misma conversación."
           ],
           "noIncluye": "Mensajes masivos en frío: WhatsApp los penaliza y dañan el número. El chatbot responde a quien escribe y da seguimiento dentro de las reglas de Meta.",
-          "alcance": "Un número verificado",
-          "plazo": "2 a 3 semanas"
+          "alcance": "Un número verificado"
         },
         {
           "id": "agentes-y-chatbots",
@@ -692,8 +677,7 @@
             "Mensajes directos de Instagram y Facebook atendidos al momento."
           ],
           "noIncluye": "La gestión de sus redes: el chatbot atiende los mensajes, no publica contenido.",
-          "alcance": "Hasta tres canales",
-          "plazo": "2 a 4 semanas"
+          "alcance": "Hasta tres canales"
         },
         {
           "id": "ia-de-ventas",
@@ -705,8 +689,7 @@
             "Aviso al equipo cuando alguien muestra intención de cerrar."
           ],
           "noIncluye": "La negociación del precio: el cierre lo hace una persona de su equipo.",
-          "alcance": "Según el volumen de prospectos",
-          "plazo": "2 a 3 semanas"
+          "alcance": "Según el volumen de prospectos"
         },
         {
           "id": "ia-para-tienda",
@@ -718,8 +701,7 @@
             "Estado del pedido consultable por WhatsApp."
           ],
           "noIncluye": "La operación de envíos y devoluciones, que sigue siendo de su tienda.",
-          "alcance": "Según el tamaño del catálogo",
-          "plazo": "3 a 4 semanas"
+          "alcance": "Según el tamaño del catálogo"
         }
       ]
     },
@@ -759,35 +741,29 @@
         {
           "id": "ch-1",
           "titulo": "Diagnóstico",
-          "duracion": "Semana 1",
           "texto": "Recorremos cómo atienden hoy, qué preguntan sus clientes y dónde se pierden conversaciones."
         },
         {
           "id": "ch-2",
           "titulo": "Guion",
-          "duracion": "Semana 1",
           "texto": "Qué responde, qué no y cuándo pasa a una persona. Ustedes lo revisan y lo aprueban."
         },
         {
           "id": "ch-3",
           "titulo": "Conexión",
-          "duracion": "Semana 2",
           "texto": "WhatsApp, sitio, redes, agenda y CRM, sobre las herramientas que ya utilizan."
         },
         {
           "id": "ch-4",
           "titulo": "Pruebas",
-          "duracion": "Semanas 2 y 3",
           "texto": "Con casos reales y con su equipo, antes de que el chatbot hable con un cliente."
         },
         {
           "id": "ch-5",
           "titulo": "Puesta en marcha",
-          "duracion": "Semana 3",
           "texto": "Encendido, revisión de las primeras conversaciones y ajuste del guion."
         }
-      ],
-      "nota": "Los plazos corresponden a un chatbot de WhatsApp con agenda. Cada canal adicional suma unos días."
+      ]
     },
     "precio": {
       "titulo": "¿Cuánto cuesta un chatbot en Aguascalientes?",
@@ -863,7 +839,7 @@
         },
         {
           "pregunta": "¿Cuánto tarda en estar funcionando un chatbot?",
-          "respuesta": "Entre dos y cuatro semanas. La primera se dedica a entender su operación y escribir el guion; las siguientes, a conectar los canales y probar con casos reales antes de encenderlo."
+          "respuesta": "Depende de los canales y de las herramientas que haya que conectar. Primero se entiende su operación y se escribe el guion; después se conectan los canales y se prueba con casos reales antes de encenderlo. El plazo queda por escrito en la propuesta."
         }
       ]
     },
@@ -912,8 +888,7 @@
             "Confirmación y recordatorio al interesado y al asesor."
           ],
           "noIncluye": "La negociación ni la firma: el sistema deja la visita lista y el cierre es de su asesor.",
-          "alcance": "Por asesor y por inmueble",
-          "plazo": "2 a 3 semanas"
+          "alcance": "Por asesor y por inmueble"
         },
         {
           "id": "gimnasios",
@@ -925,8 +900,7 @@
             "Seguimiento a quien probó y no se inscribió."
           ],
           "noIncluye": "Rutinas o indicaciones de entrenamiento: corresponden a sus instructores.",
-          "alcance": "Por clase y por cupo",
-          "plazo": "2 a 3 semanas"
+          "alcance": "Por clase y por cupo"
         },
         {
           "id": "spas",
@@ -938,8 +912,7 @@
             "Indicaciones previas y recordatorio el día anterior."
           ],
           "noIncluye": "Valoraciones de salud o contraindicaciones: se derivan a su equipo.",
-          "alcance": "Por cabina y por terapeuta",
-          "plazo": "2 a 3 semanas"
+          "alcance": "Por cabina y por terapeuta"
         },
         {
           "id": "salones-de-unas",
@@ -951,8 +924,7 @@
             "Aviso cuando se acerca la fecha del relleno."
           ],
           "noIncluye": "Diseños fuera de catálogo: se pasan a la manicurista para que los valore.",
-          "alcance": "Por manicurista y por servicio",
-          "plazo": "2 a 3 semanas"
+          "alcance": "Por manicurista y por servicio"
         }
       ]
     },
@@ -992,35 +964,30 @@
         {
           "id": "ag-1",
           "titulo": "Diagnóstico",
-          "duracion": "Semana 1",
           "texto": "Cómo agendan hoy, quién decide cada cita y dónde se pierden las reservas."
         },
         {
           "id": "ag-2",
           "titulo": "Orden de la agenda",
-          "duracion": "Semana 1",
           "texto": "Servicios con su duración, personas, cabinas o salas, y las reglas de cada uno."
         },
         {
           "id": "ag-3",
           "titulo": "Conexión",
-          "duracion": "Semana 2",
           "texto": "Calendario, WhatsApp, sitio web y pasarela de pago, sobre lo que ya utilizan."
         },
         {
           "id": "ag-4",
           "titulo": "Pruebas",
-          "duracion": "Semanas 2 y 3",
           "texto": "Reservas, cambios y cancelaciones reales antes de abrirlo a sus clientes."
         },
         {
           "id": "ag-5",
           "titulo": "Puesta en marcha",
-          "duracion": "Semana 3",
           "texto": "Encendido y revisión de la primera semana de citas con su equipo."
         }
       ],
-      "nota": "Si hoy la agenda vive en papel o en una hoja, la primera semana incluye montarla."
+      "nota": "Si hoy la agenda vive en papel o en una hoja, el primer paso incluye montarla."
     },
     "precio": {
       "titulo": "¿Cuánto cuesta automatizar el agendamiento de citas?",
@@ -1092,7 +1059,7 @@
         },
         {
           "pregunta": "¿Cuánto tarda en estar funcionando?",
-          "respuesta": "Entre dos y tres semanas. La primera se dedica a ordenar la agenda (servicios, duraciones y reglas), que es de lo que depende que todo cuadre."
+          "respuesta": "Depende de cuántas agendas y reglas haya que montar, y el plazo queda por escrito en la propuesta. Lo primero es ordenar la agenda (servicios, duraciones y reglas), que es de lo que depende que todo cuadre."
         }
       ]
     },
@@ -1164,7 +1131,7 @@
       "items": [
         {
           "pregunta": "¿Cuánto tarda en estar listo un sitio web?",
-          "respuesta": "Depende del número de páginas y de si lleva tienda o panel. Un sitio corporativo con una página por servicio suele tomar de tres a cinco semanas. La fecha queda por escrito en la propuesta, junto con lo que incluye y lo que no."
+          "respuesta": "Depende del número de páginas y de si lleva tienda o panel. El plazo queda por escrito en la propuesta, junto con lo que incluye y lo que no."
         },
         {
           "pregunta": "¿Cuánto cuesta un sitio web en Aguascalientes?",

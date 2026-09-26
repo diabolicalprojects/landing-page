@@ -26,7 +26,7 @@ import logoCuadrado from '../assets/logo/LOGO-DIABOLICAL-CUADRADO-BLANCO.svg';
  *   Hero          la frase clave en el h1 y en el título de la pestaña
  *   Definición    un párrafo que se entiende solo: el que un motor cita tal cual
  *   Soluciones    lo que resuelve, con su escena y enlace a cada servicio
- *   Proceso       cómo se trabaja, con plazos
+ *   Proceso       cómo se trabaja, paso a paso
  *   Preguntas     preguntas con respuesta directa, marcadas como FAQPage
  *   Cierre        las demás landings de la red y el botón
  *

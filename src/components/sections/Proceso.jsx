@@ -13,7 +13,7 @@ import CtaServicio from '../common/CtaServicio';
  * el tema. Es el respiro que hace que lo siguiente vuelva a leerse.
  *
  * Los pasos van numerados porque aquí el orden SÍ es información: cada uno
- * depende del anterior y lleva su plazo. Numerar tarjetas que no son una
+ * depende del anterior. Numerar tarjetas que no son una
  * secuencia es lo que hay que evitar; esto es una secuencia.
  *
  * El diagrama es una escena animada (escena «proceso») dibujada con los mismos
@@ -43,14 +43,13 @@ const Proceso = ({ conCta = true }) => {
                 </div>
 
                 <ol className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    {pasos.map((paso) => (
+                    {pasos.map((paso, i) => (
                         <li key={paso.id} className="flex flex-col">
                             <div className="tarjeta flex flex-1 flex-col p-6">
-                                <p
-                                    className="etiqueta-mono"
-                                    style={{ color: 'var(--texto-3)' }}
-                                >
-                                    {paso.duracion}
+                                {/* El número, no un plazo: el orden importa, y el plazo de
+                                    cada proyecto va por escrito en su propuesta. */}
+                                <p className="cifras etiqueta-mono" style={{ color: 'var(--texto-3)' }}>
+                                    {String(i + 1).padStart(2, '0')}
                                 </p>
                                 <h3 className="mt-3 text-lg font-extrabold tracking-tight">
                                     {paso.titulo}

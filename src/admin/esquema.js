@@ -52,7 +52,7 @@ export const BLOQUES = [
     {
         clave: 'proceso',
         nombre: 'Cómo trabajamos',
-        ayuda: 'Los cuatro pasos, con su plazo. Sección de fondo claro.',
+        ayuda: 'Los cuatro pasos, en orden. Sin plazos: el plazo de cada proyecto va en su propuesta. Sección de fondo claro.',
         ancla: '#proceso',
     },
     {

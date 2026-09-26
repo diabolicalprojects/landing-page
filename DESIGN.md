@@ -421,7 +421,7 @@ construida de una ensamblada, y lo que más se salta.
 - Nada de tarjetas iguales con icono, título y texto como estructura de página.
   Si tres cosas no pesan lo mismo, la retícula no puede decir que sí.
 - Nada de números de sección salvo donde el orden sea información. El proceso
-  los lleva porque cada paso depende del anterior y tiene plazo; el catálogo los
+  los lleva porque cada paso depende del anterior; el catálogo los
   lleva porque son las etapas del ciclo de un cliente.
 - Nada de tipografía de sistema como voz de display. CODE Bold es la marca.
 

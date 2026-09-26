@@ -94,7 +94,7 @@ ${t.paraQuien}
 ${incluye}
 
 No incluye: ${t.noIncluye}
-Alcance: ${t.alcance} · Plazo típico: ${t.plazo}`;
+Alcance: ${t.alcance}`;
         })
         .join('\n\n');
 
@@ -269,7 +269,6 @@ resto de México a distancia.
    hable con un cliente.
 5. **Acompañamiento.** Ajustes durante las primeras semanas de operación.
 
-Plazo de implementación: entre 2 y 4 semanas.
 
 ## Preguntas frecuentes
 

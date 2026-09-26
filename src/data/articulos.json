@@ -126,7 +126,7 @@
   {
     "slug": "donde-hacer-una-pagina-web-en-aguascalientes",
     "titulo": "¿Dónde hacer una página web en Aguascalientes? | Diabolical",
-    "descripcion": "Dónde hacer una página web en Aguascalientes: qué tipos de empresa hacen sitios web, cuánto tarda cada tipo de sitio y qué revisar antes de contratar.",
+    "descripcion": "Dónde hacer una página web en Aguascalientes: qué tipos de empresa hacen sitios web, qué incluye cada tipo de sitio y qué revisar antes de contratar.",
     "keywords": "páginas web Aguascalientes, sitios web en Aguascalientes, dónde hacer mi página web, empresas que hacen páginas web en Aguascalientes, diseño de páginas web Aguascalientes",
     "titular": "¿Dónde hacer una página web en Aguascalientes?",
     "entradilla": "En Aguascalientes hacen páginas web desde desarrolladores independientes hasta agencias y empresas de tecnología. La diferencia no está en quién diseña más bonito, sino en qué recibe usted al terminar: un sitio que se encuentra, que se usa bien en el celular y que puede editar sin depender de nadie.",
@@ -186,9 +186,9 @@
         "lista": {
           "ordenada": false,
           "items": [
-            "Landing page: una sola página con una sola acción, para una campaña o un servicio concreto. De una a dos semanas.",
-            "Sitio corporativo: una página por servicio, que es lo que posiciona en Google. De tres a cinco semanas.",
-            "Tienda en línea: catálogo, carrito, pago y avisos de pedido. De cinco a ocho semanas.",
+            "Landing page: una sola página con una sola acción, para una campaña o un servicio concreto.",
+            "Sitio corporativo: una página por servicio, que es lo que posiciona en Google.",
+            "Tienda en línea: catálogo, carrito, pago y avisos de pedido.",
             "Sitio a medida con panel: reservas, portal de clientes o asistente de IA. Según el alcance."
           ]
         },
@@ -234,7 +234,7 @@
       },
       {
         "q": "¿Cuánto tarda en estar lista una página web?",
-        "a": "Una landing page, de una a dos semanas; un sitio corporativo, de tres a cinco; una tienda en línea, de cinco a ocho. El plazo depende sobre todo de que los textos y las fotografías se aprueben a tiempo."
+        "a": "Depende del tipo de sitio y, sobre todo, de que los textos y las fotografías se aprueben a tiempo. El plazo se fija por escrito en la propuesta, antes de empezar."
       },
       {
         "q": "¿Es mejor una plantilla o un sitio web a medida?",
@@ -338,7 +338,7 @@
       {
         "titulo": "Cómo se instala un chatbot, paso a paso",
         "parrafos": [
-          "La instalación completa toma entre dos y cuatro semanas y sigue estos pasos:"
+          "La instalación sigue estos pasos:"
         ],
         "lista": {
           "ordenada": true,
@@ -460,9 +460,9 @@
         }
       },
       {
-        "titulo": "Cuánto tarda y qué necesita tener listo",
+        "titulo": "Qué necesita tener listo",
         "parrafos": [
-          "Entre dos y cuatro semanas para un chatbot con agenda. Lo que marca el ritmo no es la tecnología, sino tener tres cosas listas: la agenda al día, la información de servicios y precios, y alguien del equipo que apruebe el guion."
+          "Lo que marca el ritmo de la instalación no es la tecnología, sino tener tres cosas listas: la agenda al día, la información de servicios y precios, y alguien del equipo que apruebe el guion."
         ]
       }
     ],
@@ -556,7 +556,7 @@
             "La pasarela de pago, si va a cobrar anticipo."
           ]
         },
-        "nota": "Con eso, la puesta en marcha toma entre dos y tres semanas. El detalle está en la página de [agendamiento automatizado en Aguascalientes](/agendamiento-automatizado-aguascalientes)."
+        "nota": "El detalle está en la página de [agendamiento automatizado en Aguascalientes](/agendamiento-automatizado-aguascalientes)."
       }
     ],
     "faq": [
@@ -699,7 +699,7 @@
         "parrafos": [
           "Un modelo cita frases. No cita una imagen bonita, ni un video, ni un carrusel donde el texto está incrustado en el diseño. Muchas webs de negocio local están construidas casi enteramente con imágenes y animaciones: para una persona se ven bien, para un modelo están vacías.",
           "Hay un segundo problema, más silencioso: los sitios que solo montan su contenido con JavaScript en el navegador. Google ejecuta JavaScript, pero varios rastreadores de IA no lo hacen o lo hacen a medias. Si el HTML que llega en la primera respuesta del servidor es un contenedor vacío, eso es exactamente lo que ve el modelo. La solución es servir el contenido ya renderizado en el HTML.",
-          "El texto, además, tiene que ser afirmativo y concreto. «Soluciones innovadoras a la medida de su empresa» no es citable porque no dice nada. «Instalamos agendamiento automático por WhatsApp para spas en Aguascalientes, con implementación de dos a tres semanas» sí lo es: tiene servicio, giro, ciudad y plazo."
+          "El texto, además, tiene que ser afirmativo y concreto. «Soluciones innovadoras a la medida de su empresa» no es citable porque no dice nada. «Instalamos agendamiento automático por WhatsApp para spas en Aguascalientes, conectado a la agenda que ya usan» sí lo es: tiene servicio, giro, ciudad y alcance."
         ]
       },
       {
@@ -844,7 +844,7 @@
       },
       {
         "q": "¿Cuánto tarda la implementación?",
-        "a": "Entre dos y cuatro semanas para un flujo de atención y agendamiento, incluyendo el diseño de la conversación, la conexión con las herramientas actuales, las pruebas con casos reales y el acompañamiento de las primeras semanas. Los plazos se alargan cuando hay que verificar la cuenta de empresa con Meta por primera vez."
+        "a": "Depende de lo que haya que conectar, y el plazo queda por escrito en la propuesta. Incluye el diseño de la conversación, la conexión con las herramientas actuales, las pruebas con casos reales y el acompañamiento del arranque. Se alarga cuando hay que verificar la cuenta de empresa con Meta por primera vez."
       },
       {
         "q": "¿Qué pasa con los datos de los clientes?",

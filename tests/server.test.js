@@ -1239,3 +1239,21 @@ test('los servicios retirados redirigen al índice', async () => {
         assert.match(res.headers.get('location') ?? '', /\/servicios$/);
     }
 });
+
+test('el sitio no publica plazos de entrega ni créditos bajo las fotos', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+    // El plazo de cada proyecto va por escrito en su propuesta, no en la web.
+    const PLAZO = /Plazo típico|\b(\d+|una|dos|tres|cuatro|cinco|ocho) (a|y) (\d+|dos|tres|cuatro|cinco|ocho) semanas|Semanas? \d/i;
+    const rutas = ['/', RUTA_PAGINAS_WEB, RUTA_CHATBOTS, RUTA_AGENDAMIENTO, '/sectores/inmobiliarias', '/contacto',
+        '/sitios-web-en-aguascalientes', ...ARTICULOS.map((a) => `/blog/${a.slug}`)];
+    for (const ruta of rutas) {
+        const html = await (await fetch(`${BASE}${ruta}`)).text();
+        const visible = html.slice(html.indexOf('<body'), html.lastIndexOf('</body>'))
+            .replace(/<script[\s\S]*?<\/script>/g, '')
+            .replace(/<[^>]+>/g, ' ');
+        assert.ok(!PLAZO.test(visible), `${ruta} publica un plazo: «${(visible.match(PLAZO) ?? [])[0]}»`);
+        assert.ok(!/Foto: .{1,60}· Unsplash/.test(visible), `${ruta} muestra el crédito de la foto`);
+    }
+});

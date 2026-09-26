@@ -336,10 +336,10 @@ function partir(texto = '', maximo = 17) {
 }
 
 const PASOS_POR_DEFECTO = [
-    { titulo: 'Diagnóstico', duracion: 'Semana 1' },
-    { titulo: 'Diseño', duracion: 'Semana 1' },
-    { titulo: 'Conexión', duracion: 'Semana 2' },
-    { titulo: 'Puesta en marcha', duracion: 'Semana 3' },
+    { titulo: 'Diagnóstico' },
+    { titulo: 'Diseño' },
+    { titulo: 'Conexión' },
+    { titulo: 'Puesta en marcha' },
 ];
 
 const pasosDe = (datos) => {
