@@ -171,12 +171,19 @@ html {
    separaba nada.
    ========================================================================== */
 
+/*
+  El aire entre secciones mira también el alto de la pantalla. Solo con el
+  ancho, una laptop de 1366 × 657 recibía 109 px arriba y abajo de cada sección:
+  un tercio de la pantalla sin contenido y cada bloque partido por el pliegue.
+*/
 .seccion {
-  padding-block: clamp(4.5rem, 8vw, 7.5rem);
+  padding-block: clamp(4.5rem, min(8vw, 13vh), 7.5rem);
+  padding-block: clamp(4.5rem, min(8vw, 13svh), 7.5rem);
 }
 
 .seccion-amplia {
-  padding-block: clamp(6rem, 12vw, 11rem);
+  padding-block: clamp(6rem, min(12vw, 18vh), 11rem);
+  padding-block: clamp(6rem, min(12vw, 18svh), 11rem);
 }
 
 .seccion-compacta {
@@ -196,6 +203,27 @@ html {
   }
 }
 
+/*
+  Monitores grandes. Con 76rem fijos, en una pantalla de 2560 px el contenido
+  ocupaba menos de la mitad del ancho y todo se leía pequeño y lejano. Se abre
+  el contenedor y, desde 2200 px, la escala entera sube un paso (todo va en rem).
+*/
+@media (min-width: 1680px) {
+  .contenedor {
+    max-width: 84rem;
+  }
+}
+
+@media (min-width: 2200px) {
+  html {
+    font-size: 112.5%;
+  }
+
+  .contenedor {
+    max-width: 88rem;
+  }
+}
+
 /* ==========================================================================
    ESCALA TIPOGRÁFICA
    --------------------------------------------------------------------------
@@ -203,8 +231,15 @@ html {
    subirla agranda la jerarquía entera sin descomponerla.
    ========================================================================== */
 
+/*
+  Los titulares miran el ancho y el alto: el segundo término de min() es el
+  techo que pone la altura. En una laptop de 657 px de alto el titular grande
+  pasa de 84 a 69 px, y el hero entero (título, párrafo y botón) cabe sin
+  scroll. En teléfonos el techo nunca llega a actuar en vertical.
+*/
 .titular-xl {
-  font-size: calc(clamp(2.5rem, 7.2vw, 5.25rem) * var(--escala-titulo));
+  font-size: calc(min(clamp(2.5rem, 7.2vw, 5.25rem), 10.5vh) * var(--escala-titulo));
+  font-size: calc(min(clamp(2.5rem, 7.2vw, 5.25rem), 10.5svh) * var(--escala-titulo));
   line-height: 0.98;
   letter-spacing: -0.045em;
   font-weight: 800;
@@ -218,7 +253,8 @@ html {
   cambiar de registro.
 */
 .titular-xl.titular-largo {
-  font-size: calc(clamp(2.25rem, 5.6vw, 4.25rem) * var(--escala-titulo));
+  font-size: calc(min(clamp(2.25rem, 5.6vw, 4.25rem), 8.4vh) * var(--escala-titulo));
+  font-size: calc(min(clamp(2.25rem, 5.6vw, 4.25rem), 8.4svh) * var(--escala-titulo));
   line-height: 1;
 }
 
@@ -231,7 +267,8 @@ html {
 }
 
 .titular-l {
-  font-size: calc(clamp(2rem, 4.6vw, 3.5rem) * var(--escala-titulo));
+  font-size: calc(min(clamp(2rem, 4.6vw, 3.5rem), 7.6vh) * var(--escala-titulo));
+  font-size: calc(min(clamp(2rem, 4.6vw, 3.5rem), 7.6svh) * var(--escala-titulo));
   line-height: 1.03;
   letter-spacing: -0.04em;
   font-weight: 800;
@@ -718,17 +755,6 @@ select {
   .tarjeta-enlace:hover {
     transform: none;
   }
-
-  .js .footer-content > * {
-    opacity: 1;
-  }
-}
-
-/* El pie conserva su entrada por GSAP. La clase `js` la añade un script inline
-   en el <head> antes del primer pintado: sin JavaScript no se aplica y el pie
-   queda visible tal cual, que es como lo leen los rastreadores. */
-.js .footer-content > * {
-  opacity: 0;
 }
 
 /* ==========================================================================
@@ -856,16 +882,10 @@ select {
 
    Desde 1024 px, el hero de siempre: texto a la izquierda, escena a la derecha.
 
-   Por debajo, la escena es el banner. Sube arriba del todo, a todo el ancho y
-   por detrás del menú flotante, con un foco de luz encima. Del lienzo se ve
-   solo el ENCUADRE (escenas/index.js): la parte donde pasa algo, sin el aire
-   que la escena traía para la columna de escritorio. Así se ve hasta un tercio
-   más grande sin redibujarla.
-
-   El alto de la escena tiene tope (--hero-alto-escena) para que el título, la
-   frase y el botón quepan en el primer pantallazo, y el botón quede por encima
-   de la burbuja del chatbot, que flota abajo a la derecha. Solo lo tocan las
-   escenas casi cuadradas; las apaisadas ya son más bajas que el tope.
+   Por debajo, una pantalla completa y centrada: el sello de la marca arriba,
+   el título, la frase corta y el botón en medio, y detrás un fondo animado
+   (retícula con pulsos de luz, un foco que respira y un barrido lento). La
+   escena de la página baja justo después, a sangre.
    ========================================================================== */
 
 @keyframes escenario {
@@ -884,87 +904,243 @@ select {
   animation: escenario 1s var(--salida) 0.12s both;
 }
 
+/* --- Fondo animado (solo teléfono y tableta) ----------------------------- */
+
+.fondo-hero {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent);
+}
+
+.fondo-hero__rejilla {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 3rem 3rem;
+  -webkit-mask-image: radial-gradient(ellipse 95% 70% at 50% 42%, #000 25%, transparent 78%);
+  mask-image: radial-gradient(ellipse 95% 70% at 50% 42%, #000 25%, transparent 78%);
+}
+
+.fondo-hero__foco {
+  position: absolute;
+  left: 50%;
+  top: 34%;
+  width: 34rem;
+  height: 34rem;
+  margin: -17rem 0 0 -17rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 62%);
+  animation: foco-respira 7s ease-in-out infinite;
+}
+
+@keyframes foco-respira {
+  50% {
+    opacity: 0.55;
+    transform: scale(0.88);
+  }
+}
+
+/* Barrido: una banda de luz que baja despacio, como en las escenas. */
+.fondo-hero__barrido {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 9rem;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.045), transparent);
+  animation: barrido-baja 9s linear infinite;
+}
+
+@keyframes barrido-baja {
+  from {
+    transform: translateY(-9rem);
+  }
+
+  to {
+    transform: translateY(100vh);
+  }
+}
+
+/* Pulsos: la misma luz que recorre los conectores de las escenas, aquí sobre
+   las líneas de la retícula. Cada uno lleva su línea, su ritmo y su retraso. */
+.fondo-hero__pulso {
+  position: absolute;
+  opacity: 0;
+}
+
+.fondo-hero__pulso--h {
+  top: calc(var(--linea) * 3rem);
+  left: 0;
+  width: 5.5rem;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8), transparent);
+  animation: pulso-h var(--duracion) linear var(--retraso) infinite;
+}
+
+.fondo-hero__pulso--v {
+  top: 0;
+  left: calc(var(--linea) * 3rem);
+  width: 1px;
+  height: 5.5rem;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.8), transparent);
+  animation: pulso-v var(--duracion) linear var(--retraso) infinite;
+}
+
+@keyframes pulso-h {
+  0% {
+    opacity: 0;
+    transform: translateX(-5.5rem);
+  }
+
+  10%,
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes pulso-v {
+  0% {
+    opacity: 0;
+    transform: translateY(-5.5rem);
+  }
+
+  10%,
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(100vh);
+  }
+}
+
+/* --- Sello de la marca (solo teléfono y tableta) ------------------------- */
+
+/* El sello solo existe en la composición del teléfono. Va con una regla propia
+   y no con `lg:hidden`: estas reglas no están en la capa de Tailwind y su
+   `display: grid` ganaría a la utilidad. */
+@media (min-width: 1024px) {
+  .hero-pagina__sello {
+    display: none !important;
+  }
+}
+
+.hero-pagina__sello {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 6rem;
+  height: 6rem;
+  margin-bottom: 1.75rem;
+}
+
+.hero-pagina__anillo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: anillo-gira 14s linear infinite;
+}
+
+@keyframes anillo-gira {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hero-pagina__marca {
+  display: grid;
+  place-items: center;
+  width: 4.25rem;
+  height: 4.25rem;
+  border-radius: 1.15rem;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 18px 50px -18px rgba(255, 255, 255, 0.28);
+}
+
+.hero-pagina__marca img {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+/* --- Composición del teléfono y la tableta ------------------------------- */
+
 @media (max-width: 1023.98px) {
   .hero-pagina {
-    --hero-alto-escena: 30vh;
+    padding-top: 0;
   }
 
-  @supports (height: 1svh) {
-    .hero-pagina {
-      --hero-alto-escena: 30svh;
-    }
+  /* La primera pantalla: todo centrado. Arriba deja sitio al menú flotante y
+     abajo a la burbuja del chatbot. */
+  .hero-pagina__cabeza {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: 6.25rem 0 5rem;
+    text-align: center;
   }
 
-  .hero-pagina__escenario {
-    position: relative;
-    isolation: isolate;
-    /* A sangre: se come el margen del contenedor. */
-    margin-inline: -1.25rem;
-    /* El menú flota encima; la escena empieza justo debajo de él. */
-    padding-top: 5.25rem;
+  .hero-pagina__texto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
 
-  /* El foco de luz, arriba y detrás del menú. */
-  .hero-pagina__escenario::before {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    left: 50%;
-    top: 0;
-    width: min(40rem, 150%);
-    height: 26rem;
-    transform: translate(-50%, -38%);
-    border-radius: 999px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, transparent 68%);
-    filter: blur(60px);
-    pointer-events: none;
-  }
-
-  .hero-pagina__encuadre {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: var(--encuadre-proporcion);
-    width: min(100%, calc(var(--hero-alto-escena) * var(--encuadre-proporcion)));
+  .hero-pagina__texto .cuerpo-l {
     margin-inline: auto;
-    /* Entra y sale fundiéndose con el negro, sin bordes de caja. */
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 86%, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 86%, transparent 100%);
   }
 
-  .hero-pagina__lienzo {
-    position: absolute;
-    width: calc(var(--encuadre-ancho) * 100%);
-    left: calc(var(--encuadre-x) * -100%);
-    top: calc(var(--encuadre-y) * -100%);
+  .hero-pagina__texto > p.flex {
+    justify-content: center;
   }
 
-  /* La fotografía de los artículos, como banner: a sangre, desde arriba del
-     todo y fundida con el negro. El crédito queda sobre el fundido. */
-  .hero-pagina__foto {
-    position: relative;
-    margin-inline: -1.25rem;
+  .hero-pagina__bajada {
+    margin: 1rem auto 0;
+    max-width: 32ch;
+    font-size: calc(1.0625rem * var(--escala-texto));
+    line-height: 1.55;
+    color: var(--texto-2);
   }
 
-  .hero-pagina__foto .foto-marco {
-    --proporcion: 1 / 1;
-    max-height: 46vh;
-    max-height: 46svh;
-    border: 0;
-    border-radius: 0;
-    -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  /* El botón mide lo que su texto y va al centro, con la alternativa debajo. */
+  .hero-pagina__cta {
+    width: 100%;
   }
 
-  .hero-pagina__foto .foto-credito {
-    position: absolute;
-    right: 1.25rem;
-    bottom: 0;
-    margin: 0;
+  .hero-pagina__cta > div {
+    align-items: center;
+    justify-content: center;
   }
 
-  /* Migas en una sola línea: la última se corta con puntos suspensivos. */
+  .hero-pagina__cta .boton-grande {
+    align-self: center;
+  }
+
+  /* Migas centradas y en una sola línea: la última se corta con puntos
+     suspensivos. */
+  .hero-pagina__migas {
+    max-width: 100%;
+  }
+
   .hero-pagina__migas .migas {
     flex-wrap: nowrap;
+    justify-content: center;
     white-space: nowrap;
   }
 
@@ -982,93 +1158,208 @@ select {
     text-overflow: ellipsis;
   }
 
-  .hero-pagina__bajada {
-    margin-top: 1rem;
-    max-width: 34ch;
-    font-size: calc(1.0625rem * var(--escala-texto));
-    line-height: 1.55;
-    color: var(--texto-2);
-  }
-}
-
-/* Pantallas bajas (iPhone SE, teléfonos con la barra del navegador abierta):
-   la escena cede alto para que el botón siga en el primer pantallazo. */
-@media (max-width: 1023.98px) and (max-height: 700px) {
-  .hero-pagina {
-    --hero-alto-escena: 24vh;
+  /* La escena de la página, después de la primera pantalla y a sangre. Del
+     lienzo se ve solo su ENCUADRE (escenas/index.js): la zona donde pasa algo,
+     sin el aire que traía para la columna de escritorio. */
+  .hero-pagina__escenario {
+    position: relative;
+    isolation: isolate;
+    margin-inline: -1.25rem;
   }
 
-  @supports (height: 1svh) {
-    .hero-pagina {
-      --hero-alto-escena: 24svh;
-    }
-  }
-}
-
-/* En el teléfono el botón del hero mide lo que su texto y va a la izquierda.
-   A todo el ancho, su extremo derecho caía debajo de la burbuja del chatbot,
-   que flota en esa esquina. */
-@media (max-width: 639.98px) {
-  .hero-pagina__cta .boton-grande {
-    align-self: flex-start;
-  }
-}
-
-/* Teléfono en horizontal: apilado, la escena quedaba de 90 px encima de un
-   título que ya no cabía. Lado a lado, como en escritorio. */
-@media (max-width: 1023.98px) and (orientation: landscape) and (max-height: 540px) {
-  .hero-pagina:has(.hero-pagina__escenario) {
-    padding-top: 6.25rem;
+  .hero-pagina__escenario::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: 50%;
+    width: min(36rem, 140%);
+    height: 20rem;
+    transform: translate(-50%, -50%);
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 68%);
+    filter: blur(50px);
+    pointer-events: none;
   }
 
-  .hero-pagina .grid:has(> .hero-pagina__escenario) {
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-    column-gap: 2rem;
-    align-items: center;
+  .hero-pagina__encuadre {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: var(--encuadre-proporcion);
+    width: min(100%, calc(46vh * var(--encuadre-proporcion)));
+    width: min(100%, calc(46svh * var(--encuadre-proporcion)));
+    margin-inline: auto;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 88%, transparent 100%);
   }
 
-  .hero-pagina__migas {
-    grid-column: 1 / -1;
+  .hero-pagina__lienzo {
+    position: absolute;
+    width: calc(var(--encuadre-ancho) * 100%);
+    left: calc(var(--encuadre-x) * -100%);
+    top: calc(var(--encuadre-y) * -100%);
   }
 
-  .hero-pagina .grid > .hero-pagina__texto {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .hero-pagina .grid > .hero-pagina__escenario {
-    grid-column: 2;
-    grid-row: 2;
-    margin: 0;
-    padding: 0;
-  }
-
-  .hero-pagina__escenario .hero-pagina__encuadre {
-    width: 100%;
+  /* La fotografía de los artículos, en 4:3: a 21:9 quedaba como una tira. */
+  .hero-pagina__foto .foto-marco {
+    --proporcion: 4 / 3;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1023.98px) {
-  .hero-pagina__escenario,
-  .hero-pagina__foto {
-    margin-inline: -2rem;
-  }
-
   .hero-pagina__escenario {
-    padding-top: 6.5rem;
+    margin-inline: -2rem;
   }
 
   .hero-pagina__foto .foto-marco {
     --proporcion: 16 / 9;
   }
+}
 
-  .hero-pagina__foto .foto-credito {
-    right: 2rem;
+/* Pantallas bajas (iPhone SE, teléfono en horizontal): el sello se encoge para
+   que el botón siga dentro de la primera pantalla. */
+@media (max-width: 1023.98px) and (max-height: 700px) {
+  .hero-pagina__sello {
+    width: 4.75rem;
+    height: 4.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-pagina__marca {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 0.95rem;
+  }
+
+  .hero-pagina__marca img {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+/* Teléfonos de 320 px: sin las migas ni la etiqueta de la portada (siguen en
+   el marcado para Google) el botón queda por encima de la burbuja del chatbot. */
+@media (max-width: 359.98px) {
+  .hero-pagina__migas,
+  .hero-pagina .insignia {
+    display: none;
+  }
+
+  .hero-pagina__cabeza {
+    padding-top: 5.5rem;
+  }
+
+  .hero-pagina__sello {
+    width: 4.25rem;
+    height: 4.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-pagina__marca {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+}
+
+/* Teléfono en horizontal: 375 px de alto no dan para sello, migas, título,
+   frase y botón. Se quedan título, frase y botón; el logo ya está en el menú. */
+@media (max-width: 1023.98px) and (orientation: landscape) and (max-height: 540px) {
+  .hero-pagina__sello,
+  .hero-pagina__migas {
+    display: none;
+  }
+
+  .hero-pagina__cabeza {
+    padding: 5.25rem 0 1.5rem;
+  }
+
+  .hero-pagina__bajada {
+    max-width: 48ch;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-pagina__escenario {
+  .hero-pagina__escenario,
+  .fondo-hero__foco,
+  .fondo-hero__barrido,
+  .hero-pagina__anillo {
     animation: none;
+  }
+
+  .fondo-hero__pulso,
+  .fondo-hero__barrido {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   LAPTOPS Y PANTALLAS BAJAS
+   --------------------------------------------------------------------------
+   Una laptop de 1366 × 768 deja unos 657 px de página con el navegador
+   abierto. La regla: cada bloque (el hero, una tarjeta, el formulario) se lee
+   entero sin tener que hacer scroll a mitad de él.
+   ========================================================================== */
+
+/* En escritorio bajo, el hero también usa la frase corta: con la entradilla
+   larga el botón quedaba debajo del pliegue en casi todas las páginas. */
+@media (min-width: 1024px) and (max-height: 760px) {
+  .hero-pagina__entradilla--larga {
+    display: none;
+  }
+
+  .hero-pagina__bajada {
+    display: block;
+    margin-top: 1.75rem;
+    max-width: 46ch;
+    font-size: calc(1.1875rem * var(--escala-texto));
+    line-height: 1.6;
+    color: var(--texto-2);
+  }
+
+  .formulario-tarjeta {
+    padding: 1.5rem;
+  }
+}
+
+/* Escenas dentro de tarjetas: su alto sale del ancho (16:10), así que en una
+   columna ancha crecían más que la pantalla. Con tope, la escena se centra y la
+   tarjeta entera cabe. */
+@media (min-width: 1024px) {
+  .escena-tope {
+    width: 100%;
+    max-width: calc(var(--escena-tope, 34vh) * 1.6);
+    max-width: calc(var(--escena-tope, 34svh) * 1.6);
+    margin-inline: auto;
+  }
+}
+
+/* Marco de la escena de cada tipo de sitio. En escritorio la escena tiene el
+   mismo tope de alto que las demás: el marco negro la rodea. */
+.pantalla-escena {
+  border-bottom: 1px solid var(--linea);
+}
+
+@media (min-width: 1024px) {
+  .pantalla-escena > [role='img'] {
+    max-width: calc(34vh * 1.6);
+    max-width: calc(34svh * 1.6);
+    margin-inline: auto;
+  }
+}
+
+/* Tipos de sitio en escritorio ancho: una fila por tipo, con la escena a la
+   izquierda y la ficha a la derecha. Apiladas medían más de 1.000 px cada una:
+   ninguna cabía en una pantalla. */
+@media (min-width: 1280px) {
+  .tipo-tarjeta .pantalla-escena {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 0;
+    border-right: 1px solid var(--linea);
+  }
+
+  .tipo-tarjeta .pantalla-escena > * {
+    width: 100%;
   }
 }

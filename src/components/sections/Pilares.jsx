@@ -65,7 +65,7 @@ const Pilares = () => {
                                     className="tarjeta tarjeta-enlace flex flex-col p-6 md:p-8"
                                 >
                                     {conEscena ? (
-                                        <div className="mb-7 overflow-hidden rounded-xl border border-white/[0.07]">
+                                        <div className="escena-tope mb-7 overflow-hidden rounded-xl border border-white/[0.07]">
                                             <MotionGrafico
                                                 escena={item.escena}
                                                 etiqueta={`Ilustración animada: ${item.titulo.toLowerCase()}.`}

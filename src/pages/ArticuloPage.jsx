@@ -122,6 +122,9 @@ const ArticuloPage = ({ slug }) => {
                     largo
                     titulo={articulo.titular}
                     entradilla={articulo.entradilla}
+                    /* En el teléfono el hero se queda con la pregunta y la
+                       fecha: la respuesta directa va justo debajo. */
+                    entradillaEnMovil={false}
                     meta={
                         <p className="etiqueta-mono mt-8 flex flex-wrap gap-x-3 gap-y-1" style={{ color: 'var(--texto-3)' }}>
                             <time dateTime={articulo.fecha}>{fechaLegible(articulo.fecha)}</time>
@@ -135,7 +138,7 @@ const ArticuloPage = ({ slug }) => {
                         </p>
                     }
                     foto={articulo.foto}
-                    separacion="lg:mb-[clamp(2.5rem,4vw,3.5rem)]"
+                    separacion="lg:mb-[clamp(2rem,min(4vw,6svh),3.5rem)]"
                     abajo="lg:pb-16"
                 />
 

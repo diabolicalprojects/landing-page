@@ -268,28 +268,43 @@ Medida de lectura: 46ch en `cuerpo-l`, 62ch en `cuerpo`.
 Móvil primero de verdad: 375 px sin scroll horizontal y sin un solo objetivo
 táctil por debajo de 24×24, que es el mínimo de WCAG 2.2.
 
-**Hero de página** (`HeroPagina`, 24-09-2026). Todas las páginas abren con el
+**Hero de página** (`HeroPagina`, 26-09-2026). Todas las páginas abren con el
 mismo componente, que pinta dos composiciones sobre el mismo HTML:
 
-- Desde 1024 px, la de siempre: migas, texto a la izquierda (7 u 6 columnas) y
-  escena a la derecha.
-- En teléfono y tableta, la escena es el banner: arriba del todo, a sangre y
-  por detrás del menú flotante, con un foco de luz encima. Debajo, las migas en
-  una sola línea, el título, la `bajada` y el botón. Los tres entran en el
-  primer pantallazo de 360 × 740, 375 × 667 y 375 × 812.
-- La `bajada` es la frase corta del teléfono (20 palabras como mucho). La
-  entradilla larga sigue en el HTML y se ve en escritorio; sin bajada, el
-  teléfono enseña la entradilla.
-- Del lienzo de la escena solo se ve su **encuadre** (`ENCUADRES` en
-  `escenas/index.js`): la zona donde pasa algo, sin el aire que traía para la
-  columna de escritorio. El alto tiene tope (30 % de la pantalla, 24 % en
-  pantallas bajas) para que el botón no baje.
-- En el teléfono el botón del hero mide lo que su texto: a todo el ancho, su
-  extremo caía debajo de la burbuja del chatbot.
-- En horizontal (teléfono girado), texto y escena lado a lado.
-- Los artículos usan su fotografía como banner en lugar de una escena.
+- Desde 1024 px: migas, texto a la izquierda (7 u 6 columnas) y escena a la
+  derecha.
+- En teléfono y tableta: una pantalla completa y centrada. Arriba el sello de
+  la marca (el símbolo en su baldosa, con un anillo que gira); en medio las
+  migas, el título, la `bajada` y el botón; detrás, un fondo animado: la
+  retícula de 3rem con pulsos de luz que recorren sus líneas, un foco que
+  respira y un barrido lento. La escena de la página baja justo después, a
+  sangre y encuadrada (`ENCUADRES` en `escenas/index.js`).
+- La `bajada` es la frase corta (20 palabras como mucho). La entradilla larga
+  sigue en el HTML; el teléfono y las laptops bajas enseñan la bajada.
+- El botón mide lo que su texto y queda por encima de la burbuja del chatbot
+  en 320, 360, 375, 430 y 768 px. A 320 px el hero prescinde de las migas y de
+  la etiqueta de la portada; en horizontal, también del sello.
 - En el HTML el texto va antes que la escena, que es el orden en que se lee.
-  El teléfono la pinta primero solo con CSS; nada se duplica.
+  Todo se reordena con CSS; nada se duplica.
+
+El fondo animado es la excepción a «nada de bucles decorativos»: lo pidió el
+cliente para el hero del teléfono. Se queda ahí, solo usa `transform` y
+`opacity` (se compone en la GPU) y con `prefers-reduced-motion` queda quieto.
+
+**Laptops y pantallas grandes.** La regla: cada bloque (el hero, una tarjeta,
+el formulario) se lee entero sin hacer scroll a mitad de él. Medido en
+1280 × 633, 1366 × 657, 1440 × 789, 1536 × 730, 1920 × 969 y 2560 × 1297.
+
+- Los titulares y el aire entre secciones miran el ancho y el alto:
+  `min(clamp(… vw …), … svh)`. En 657 px de alto el titular grande baja de 84
+  a 69 px y el margen de sección de 109 a 85 px.
+- Con menos de 760 px de alto, el hero de escritorio también usa la bajada.
+- Las escenas dentro de tarjetas llevan tope de alto (`.escena-tope`, 34 % de
+  la pantalla) y se centran.
+- Los tipos de sitio, desde 1280 px, van en una fila por tipo: escena a la
+  izquierda, ficha en dos columnas.
+- Desde 1680 px el contenedor se abre a 84rem; desde 2200 px, a 88rem y la
+  escala entera sube un paso (la raíz pasa a 18 px).
 
 ## Elevation & Depth
 
@@ -347,6 +362,13 @@ descarga cuando la escena entra en pantalla (39 kB brotli, cero en el bundle
 crítico), y se pausa al salir de vista. Con `prefers-reduced-motion` o sin
 `IntersectionObserver` se queda en el póster, que es un resultado correcto y no
 una versión rota.
+
+El reproductor arranca en el fotograma del póster, no en el 0: antes cada
+escena se vaciaba y se volvía a armar delante de quien llegaba a ella con el
+scroll. Y todas las escenas esperan a UN aviso de «página asentada» con plazo
+(1,2 s): cuando cada una pedía su propio hueco libre sin tope, la primera
+escena animada ocupaba el hilo principal y las de más abajo podían no arrancar
+nunca en un teléfono.
 
 La regla que las mantiene distintas sin convertirlas en veintidós estilos: cada
 escena enseña el **mecanismo**, no el tema. La de posicionamiento no dibuja una

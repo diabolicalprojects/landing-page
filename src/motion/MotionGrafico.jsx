@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 
 import { ESCENAS } from './escenas';
 import { LIENZO } from './primitivas';
@@ -28,7 +28,7 @@ import { FPS } from './tiempo';
 
 const Reproductor = lazy(() => import('./Reproductor'));
 
-/**
+/*
  * Espera a que la página termine de cargar y el navegador tenga un hueco libre.
  *
  * Existe por la escena del primer viewport. Está en pantalla desde el segundo
@@ -41,40 +41,58 @@ const Reproductor = lazy(() => import('./Reproductor'));
  *
  * Con esto la animación sigue llegando, pero después del pintado en vez de
  * delante de él. No se toca el HTML que se sirve ni lo que ve un rastreador.
+ *
+ * Es UN aviso para toda la página, no uno por escena, y el hueco libre tiene
+ * plazo. Antes cada escena pedía su propio requestIdleCallback sin tope: la
+ * primera arrancaba su reproductor, el reproductor ocupaba el hilo principal
+ * a 30 fotogramas por segundo y los demás avisos no llegaban nunca. Todas las
+ * escenas de más abajo se quedaban quietas al llegar a ellas con el scroll,
+ * sobre todo en teléfonos, que son los que menos huecos libres tienen.
  */
-function usePaginaAsentada() {
-    const [asentada, setAsentada] = useState(false);
+const PLAZO_HUECO = 1200;
 
-    useEffect(() => {
-        let cancelado = false;
+let asentada = false;
+const avisar = new Set();
 
-        const marcar = () => {
-            if (cancelado) return;
-            // requestIdleCallback no existe en Safari antiguo; el respaldo es un
-            // temporizador corto, que para esto vale igual.
-            const enHueco =
-                window.requestIdleCallback || ((fn) => window.setTimeout(fn, 200));
-            enHueco(() => {
-                if (!cancelado) setAsentada(true);
-            });
-        };
-
-        if (document.readyState === 'complete') {
-            marcar();
-            return () => {
-                cancelado = true;
-            };
-        }
-
-        window.addEventListener('load', marcar, { once: true });
-        return () => {
-            cancelado = true;
-            window.removeEventListener('load', marcar);
-        };
-    }, []);
-
-    return asentada;
+function marcarAsentada() {
+    if (asentada) return;
+    asentada = true;
+    avisar.forEach((fn) => fn());
+    avisar.clear();
 }
+
+function esperarAsentada() {
+    const enHueco = () => {
+        // requestIdleCallback no existe en Safari antiguo; el respaldo es un
+        // temporizador corto, que para esto vale igual.
+        if (window.requestIdleCallback) window.requestIdleCallback(marcarAsentada, { timeout: PLAZO_HUECO });
+        else window.setTimeout(marcarAsentada, 200);
+    };
+
+    if (document.readyState === 'complete') enHueco();
+    else window.addEventListener('load', enHueco, { once: true });
+}
+
+let esperando = false;
+
+function suscribir(fn) {
+    if (asentada) return () => {};
+    avisar.add(fn);
+    if (!esperando) {
+        esperando = true;
+        esperarAsentada();
+    }
+    return () => avisar.delete(fn);
+}
+
+// En el servidor y al hidratar la página nunca está asentada: el primer
+// pintado siempre es el póster, igual que el HTML servido.
+const usePaginaAsentada = () =>
+    useSyncExternalStore(
+        suscribir,
+        () => asentada,
+        () => false
+    );
 
 const MotionGrafico = ({ escena, etiqueta, className = '', prioridad = false, datos }) => {
     const definicion = ESCENAS[escena];
@@ -139,6 +157,7 @@ const MotionGrafico = ({ escena, etiqueta, className = '', prioridad = false, da
                     <Reproductor
                         Escena={Escena}
                         duracion={duracion}
+                        inicio={poster}
                         enPausa={!visible}
                         datos={datos}
                         lienzo={lienzo}

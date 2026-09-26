@@ -39,6 +39,7 @@ const SectorPage = ({ slug }) => {
             <HeroPagina
                 migas={[{ texto: 'Sectores', destino: '/sectores' }, { texto: sector.titular }]}
                 columnas={6}
+                largo
                 titulo={sector.titular}
                 entradilla={sector.entradilla}
                 bajada={sector.bajada}

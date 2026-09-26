@@ -6,37 +6,37 @@ import MotionGrafico from '../../motion/MotionGrafico';
 import { ENCUADRES, ESCENAS } from '../../motion/escenas';
 import { LIENZO } from '../../motion/primitivas';
 import { cn } from '../../utils/cn';
+import logoMarca from '../../assets/logo/icono-diabolical-chatbot.svg';
 
 /*
  * El hero de cada página: dos composiciones sobre el mismo HTML.
  *
- * ESCRITORIO (desde 1024 px) es el de siempre: migas arriba, el texto a la
- * izquierda y la escena a la derecha.
+ * ESCRITORIO (desde 1024 px): migas arriba, el texto a la izquierda y la escena
+ * a la derecha. Los márgenes miran también el alto de la pantalla, para que en
+ * una laptop el título, el párrafo y el botón quepan sin scroll.
  *
- * TELÉFONO Y TABLETA son otra cosa, pensada para esa pantalla:
+ * TELÉFONO Y TABLETA: una pantalla completa, centrada.
  *
  *   ┌──────────────────────┐
  *   │  menú (flota encima) │
- *   │                      │
- *   │   escena, a todo el  │  la animación sube arriba, sin márgenes, y se
- *   │   ancho y encuadrada │  recorta el aire que traía del escritorio
- *   │                      │
- *   │  Inicio › Servicios  │  las migas en una sola línea
- *   │  Título grande       │
- *   │  Una frase corta     │  `bajada`, en vez de la entradilla larga
- *   │  [ Cotizar … ]       │  el botón, dentro del primer pantallazo
+ *   │                      │   fondo animado: retícula con pulsos de luz
+ *   │        [ D ]         │   el sello de la marca, con su anillo
+ *   │  Inicio › Servicios  │
+ *   │    Título grande     │
+ *   │   Una frase corta    │   `bajada`, en vez de la entradilla larga
+ *   │   [ Cotizar … ]      │
  *   └──────────────────────┘
+ *     escena de la página     la animación de la página, justo después
  *
  * Es el mismo HTML reordenado con CSS (index.css, «HERO DE PÁGINA»): lo que lee
  * un rastreador no cambia con el ancho, y no hay dos escenas animándose a la
- * vez. En el DOM el texto va antes que la escena, que es el orden en que se
- * lee; en el teléfono la escena se pinta primero.
+ * vez. En escritorio el bloque de cabecera se disuelve (`display: contents`) y
+ * sus piezas vuelven a la retícula de doce columnas.
  *
- * La entradilla completa sigue en el HTML. En el teléfono se cambia por la
- * bajada solo cuando la página trae una; si no, se ve la entradilla.
+ * La entradilla completa sigue en el HTML. Donde hay bajada, el teléfono y las
+ * laptops bajas enseñan la bajada; si no, la entradilla.
  *
- * `foto` es para los artículos: en el teléfono la fotografía es el banner de
- * arriba y en escritorio va debajo del texto, como hasta ahora.
+ * `foto` es para los artículos: va debajo del texto en las dos composiciones.
  */
 
 /** Variables del encuadre móvil: qué parte del lienzo se ve y a qué escala. */
@@ -52,6 +52,62 @@ function variablesEncuadre(clave) {
     };
 }
 
+/*
+ * Los pulsos del fondo: cada uno corre por una línea de la retícula (celdas de
+ * 3rem), con su propio ritmo para que nunca vayan sincronizados.
+ */
+const PULSOS = [
+    { eje: 'h', linea: 3, duracion: 6.5, retraso: 0 },
+    { eje: 'h', linea: 9, duracion: 8, retraso: 2.4 },
+    { eje: 'h', linea: 14, duracion: 7, retraso: 4.1 },
+    { eje: 'v', linea: 1, duracion: 7.5, retraso: 1.2 },
+    { eje: 'v', linea: 5, duracion: 9, retraso: 3.3 },
+    { eje: 'v', linea: 7, duracion: 6, retraso: 5.2 },
+];
+
+/** Fondo animado del hero en el teléfono. Decorativo: no se anuncia. */
+const FondoHero = () => (
+    <div className="fondo-hero lg:hidden" aria-hidden="true">
+        <div className="fondo-hero__rejilla" />
+        <div className="fondo-hero__foco" />
+        <div className="fondo-hero__barrido" />
+        {PULSOS.map((p) => (
+            <span
+                key={`${p.eje}${p.linea}`}
+                className={`fondo-hero__pulso fondo-hero__pulso--${p.eje}`}
+                style={{
+                    '--linea': p.linea,
+                    '--duracion': `${p.duracion}s`,
+                    '--retraso': `${p.retraso}s`,
+                }}
+            />
+        ))}
+    </div>
+);
+
+/** El sello de la marca sobre el título, con el anillo girando alrededor. */
+const Sello = () => (
+    <div className="hero-pagina__sello entrada lg:hidden" aria-hidden="true">
+        <svg className="hero-pagina__anillo" viewBox="0 0 120 120" focusable="false">
+            <circle cx="60" cy="60" r="57" fill="none" stroke="#fff" strokeOpacity="0.1" />
+            <circle
+                cx="60"
+                cy="60"
+                r="57"
+                fill="none"
+                stroke="#fff"
+                strokeOpacity="0.55"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeDasharray="70 288"
+            />
+        </svg>
+        <span className="hero-pagina__marca">
+            <img src={logoMarca} alt="" width="40" height="40" />
+        </span>
+    </div>
+);
+
 const HeroPagina = ({
     como: Etiqueta = 'section',
     migas,
@@ -59,6 +115,7 @@ const HeroPagina = ({
     titulo,
     largo = false,
     entradilla,
+    entradillaEnMovil = true,
     bajada,
     meta,
     cta,
@@ -66,9 +123,9 @@ const HeroPagina = ({
     escena,
     foto,
     columnas = 7,
-    arriba = 'lg:pt-32',
-    separacion = 'lg:mb-[clamp(4.5rem,8vw,7.5rem)]',
-    abajo = 'lg:pb-[clamp(4.5rem,8vw,7.5rem)]',
+    arriba = 'lg:pt-[clamp(6.5rem,16svh,8rem)]',
+    separacion = 'lg:mb-[clamp(2.5rem,min(8vw,9svh),7.5rem)]',
+    abajo = 'lg:pb-[clamp(4rem,min(8vw,13svh),7.5rem)]',
     hueco = 'lg:gap-x-12',
     fondo,
     pie,
@@ -76,66 +133,73 @@ const HeroPagina = ({
     className,
 }) => {
     const hayEscena = Boolean(escena && ESCENAS[escena.clave]);
-    const hayBanner = hayEscena || Boolean(foto);
     // Un <header> no puede llevar otro dentro: en los artículos el hero entero
     // ya es el encabezado.
     const Texto = Etiqueta === 'header' ? 'div' : 'header';
 
     return (
-        <Etiqueta
-            className={cn(
-                'hero-pagina zona-oscura relative overflow-hidden pb-16',
-                !hayBanner && 'pt-28 md:pt-32',
-                arriba,
-                abajo,
-                className
-            )}
-        >
+        <Etiqueta className={cn('hero-pagina zona-oscura relative overflow-hidden pb-16', arriba, abajo, className)}>
+            <FondoHero />
             {fondo}
 
             <div className="contenedor relative">
                 <div className={cn('grid grid-cols-1 lg:grid-cols-12 lg:items-center', hueco)}>
-                    {migas && (
-                        <Migas
-                            ruta={migas}
-                            className={cn('hero-pagina__migas mb-3 lg:col-span-12', separacion)}
-                        />
-                    )}
+                    <div className="hero-pagina__cabeza lg:contents">
+                        <Sello />
 
-                    <Texto
-                        className={cn(
-                            'hero-pagina__texto',
-                            hayEscena
-                                ? columnas === 6
-                                    ? 'lg:col-span-6'
-                                    : 'lg:col-span-7'
-                                : 'lg:col-span-12 lg:max-w-3xl'
+                        {migas && (
+                            <Migas
+                                ruta={migas}
+                                className={cn('hero-pagina__migas mb-3 lg:col-span-12', separacion)}
+                            />
                         )}
-                    >
-                        {insignia && <p className="insignia entrada mb-4 lg:mb-5">{insignia}</p>}
 
-                        <h1 className={cn('titular-xl entrada', largo && 'titular-largo')}>{titulo}</h1>
+                        <Texto
+                            className={cn(
+                                'hero-pagina__texto',
+                                hayEscena
+                                    ? columnas === 6
+                                        ? 'lg:col-span-6'
+                                        : 'lg:col-span-7'
+                                    : 'lg:col-span-12 lg:max-w-3xl'
+                            )}
+                        >
+                            {insignia && <p className="insignia entrada mb-4 lg:mb-5">{insignia}</p>}
 
-                        {entradilla && (
-                            <p className={cn('cuerpo-l entrada entrada-2 mt-7', bajada && 'hidden lg:block')}>
-                                {entradilla}
-                            </p>
-                        )}
-                        {bajada && <p className="hero-pagina__bajada entrada entrada-2 lg:hidden">{bajada}</p>}
+                            <h1 className={cn('titular-xl entrada', largo && 'titular-largo')}>{titulo}</h1>
 
-                        {meta}
+                            {entradilla && (
+                                <p
+                                    className={cn(
+                                        'cuerpo-l entrada entrada-2 mt-7',
+                                        bajada && 'hero-pagina__entradilla--larga hidden lg:block',
+                                        !bajada && !entradillaEnMovil && 'hidden lg:block'
+                                    )}
+                                >
+                                    {entradilla}
+                                </p>
+                            )}
+                            {bajada && <p className="hero-pagina__bajada entrada entrada-2 lg:hidden">{bajada}</p>}
 
-                        {cta && (
-                            <div className={cn('hero-pagina__cta entrada entrada-3 mt-7 lg:mt-9', ctaSoloMovil && 'lg:hidden')}>
-                                {cta}
-                            </div>
-                        )}
-                    </Texto>
+                            {meta}
+
+                            {cta && (
+                                <div
+                                    className={cn(
+                                        'hero-pagina__cta entrada entrada-3 mt-8 lg:mt-9',
+                                        ctaSoloMovil && 'lg:hidden'
+                                    )}
+                                >
+                                    {cta}
+                                </div>
+                            )}
+                        </Texto>
+                    </div>
 
                     {hayEscena && (
                         <div
                             className={cn(
-                                'hero-pagina__escenario order-first mb-5 lg:order-none lg:mb-0',
+                                'hero-pagina__escenario',
                                 columnas === 6 ? 'lg:col-span-6' : 'lg:col-span-5'
                             )}
                         >
@@ -156,7 +220,7 @@ const HeroPagina = ({
                         <Fotografia
                             clave={foto}
                             prioridad
-                            className="hero-pagina__foto order-first mb-6 lg:order-none lg:col-span-12 lg:mb-0 lg:mt-12"
+                            className="hero-pagina__foto lg:col-span-12 lg:mt-12"
                         />
                     )}
                 </div>

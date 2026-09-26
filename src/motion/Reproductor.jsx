@@ -30,7 +30,7 @@ const Puente = ({ Escena, datos }) => {
     return <Escena frame={frame} fps={fps} datos={datos} />;
 };
 
-const Reproductor = ({ Escena, duracion, enPausa, datos, lienzo = LIENZO }) => {
+const Reproductor = ({ Escena, duracion, inicio = 0, enPausa, datos, lienzo = LIENZO }) => {
     const reproductor = useRef(null);
 
     useEffect(() => {
@@ -48,6 +48,11 @@ const Reproductor = ({ Escena, duracion, enPausa, datos, lienzo = LIENZO }) => {
             component={Puente}
             inputProps={{ Escena, datos }}
             durationInFrames={duracion}
+            // Arranca donde estaba el póster. Desde el fotograma 0, que casi
+            // siempre está vacío, la ilustración desaparecía de golpe al pasar
+            // de estática a animada y se volvía a dibujar delante de quien
+            // estaba haciendo scroll.
+            initialFrame={Math.min(inicio, duracion - 1)}
             fps={FPS}
             compositionWidth={lienzo.ancho}
             compositionHeight={lienzo.alto}

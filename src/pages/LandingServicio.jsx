@@ -129,22 +129,32 @@ const LandingServicio = ({ slug }) => {
                 <div className="contenedor">
                     <EncabezadoSeccion titulo={tipos.titulo} entradilla={tipos.entradilla} />
 
-                    <ul className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2">
+                    {/* Desde 1280 px, una fila por tipo: la escena a la
+                        izquierda y la ficha en dos columnas (quién y cuánto a
+                        un lado, qué incluye al otro). Apiladas, cada tarjeta
+                        medía más de 1.000 px y no cabía en ninguna laptop. El
+                        HTML sigue el orden de lectura del teléfono; la
+                        rejilla solo recoloca. */}
+                    <ul className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2 xl:grid-cols-1">
                         {(tipos.items ?? []).map((tipo) => (
-                            <li key={tipo.id ?? tipo.nombre} className="tarjeta flex flex-col overflow-hidden">
+                            <li
+                                key={tipo.id ?? tipo.nombre}
+                                className="tipo-tarjeta tarjeta flex flex-col overflow-hidden xl:grid xl:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"
+                            >
                                 <PantallaEscena escena={tipo.id} />
-                                <div className="flex flex-1 flex-col p-6 md:p-8">
-                                <h3 className="titular-m">{tipo.nombre}</h3>
-                                <p className="cuerpo mt-3">{tipo.paraQuien}</p>
+                                <div className="flex flex-1 flex-col p-6 md:p-8 xl:grid xl:grid-cols-2 xl:grid-rows-[auto_auto_1fr_auto_auto] xl:gap-x-10">
+                                <h3 className="titular-m xl:col-start-1 xl:row-start-1">{tipo.nombre}</h3>
+                                <p className="cuerpo mt-3 xl:col-start-1 xl:row-start-2">{tipo.paraQuien}</p>
 
-                                <h4 className="etiqueta mt-7" style={{ color: 'var(--texto-3)' }}>
+                                <div className="xl:col-start-2 xl:row-span-5 xl:row-start-1">
+                                <h4 className="etiqueta mt-7 xl:mt-0" style={{ color: 'var(--texto-3)' }}>
                                     Incluye
                                 </h4>
                                 <ul className="mt-3">
                                     {(tipo.incluye ?? []).map((punto) => (
                                         <li
                                             key={punto}
-                                            className="flex items-start gap-3.5 py-3"
+                                            className="flex items-start gap-3.5 py-3 xl:py-2.5"
                                             style={lineaSuperior}
                                         >
                                             <span
@@ -167,10 +177,11 @@ const LandingServicio = ({ slug }) => {
                                         <p className="cuerpo mt-2.5">{tipo.noIncluye}</p>
                                     </>
                                 )}
+                                </div>
 
-                                <div className="flex-1" />
+                                <div className="flex-1 xl:col-start-1 xl:row-start-3" />
 
-                                <dl className="mt-7 grid grid-cols-2 gap-4 pt-5" style={lineaSuperior}>
+                                <dl className="mt-7 grid grid-cols-2 gap-4 pt-5 xl:col-start-1 xl:row-start-4" style={lineaSuperior}>
                                     <div>
                                         <dt className="etiqueta" style={{ color: 'var(--texto-3)' }}>
                                             Alcance
@@ -194,7 +205,7 @@ const LandingServicio = ({ slug }) => {
                                     detalle={getSector(tipo.id) ? undefined : tipo.nombre}
                                     secundario={false}
                                     ubicacion="landing-tipo"
-                                    className="mt-7"
+                                    className="mt-7 xl:col-start-1 xl:row-start-5"
                                 />
                                 </div>
                             </li>

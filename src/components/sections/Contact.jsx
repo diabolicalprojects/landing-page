@@ -97,7 +97,7 @@ const Contact = () => {
                     </div>
 
                     <div className="lg:col-span-7">
-                        <div className="tarjeta p-5 sm:p-6 md:p-9">
+                        <div className="formulario-tarjeta tarjeta p-5 sm:p-6 md:p-9">
                             {enviado ? (
                                 <div className="flex flex-col items-start gap-5 py-6">
                                     <span

@@ -4,10 +4,6 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { ProveedorContenido } from './contenido'
 import './index.css'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger);
 
 const container = document.getElementById('root');
 

@@ -36,7 +36,7 @@ const SectoresPage = () => (
                         {SECTORES_PRINCIPALES.map((sector) => (
                             <article key={sector.slug} className="tarjeta tarjeta-enlace flex flex-col p-5 md:p-6">
                                 {hayEscena(sector.slug) && (
-                                    <div className="mb-6 overflow-hidden rounded-xl border border-white/[0.07]">
+                                    <div className="escena-tope mb-6 overflow-hidden rounded-xl border border-white/[0.07]">
                                         <MotionGrafico
                                             escena={sector.slug}
                                             etiqueta={`Ilustración animada del sistema trabajando para ${sector.nombreCorto.toLowerCase()}.`}

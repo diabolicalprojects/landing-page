@@ -204,7 +204,7 @@ const Navbar = () => {
         <nav
             aria-label="Principal"
             className={cn(
-                'fixed left-1/2 top-3 z-50 flex w-[94%] max-w-6xl -translate-x-1/2 items-center justify-between gap-4 rounded-full px-4 py-2.5 transition-[background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:top-5 md:gap-10 md:px-6 md:py-3',
+                'fixed left-1/2 top-3 z-50 flex w-[94%] max-w-6xl -translate-x-1/2 min-[1680px]:max-w-[84rem] min-[2200px]:max-w-[88rem] items-center justify-between gap-4 rounded-full px-4 py-2.5 transition-[background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:top-5 md:gap-10 md:px-6 md:py-3',
                 sobreClaro
                     ? 'border border-black/10 bg-white/85 backdrop-blur-xl'
                     : 'border border-white/10 bg-black/70 backdrop-blur-xl',

@@ -65,8 +65,8 @@ const Hero = () => {
                 etiqueta:
                     'La marca de Diabolical en el centro de un sistema, con la página web, WhatsApp, la agenda y las redes conectados a ella.',
             }}
-            arriba="lg:pt-40"
-            abajo="lg:pb-28"
+            arriba="lg:pt-[clamp(7rem,20svh,10rem)]"
+            abajo="lg:pb-[clamp(4rem,12svh,7rem)]"
             hueco="lg:gap-x-10"
             fondo={
                 <>

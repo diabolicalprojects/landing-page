@@ -23,8 +23,7 @@ const PantallaEscena = ({ escena, etiqueta, decorativa = false }) => {
 
     return (
         <div
-            className="zona-oscura px-3 pt-3 md:px-4 md:pt-4"
-            style={{ borderBottom: '1px solid var(--linea)' }}
+            className="pantalla-escena zona-oscura px-3 pt-3 md:px-4 md:pt-4"
             aria-hidden={decorativa ? 'true' : undefined}
         >
             <MotionGrafico escena={escena} etiqueta={etiqueta ?? definicion.descripcion} />

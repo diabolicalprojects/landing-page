@@ -1111,3 +1111,30 @@ test('los artículos abren con su fotografía y la privacidad se lee como el res
     const legal = privacidad.slice(privacidad.indexOf('<main'), privacidad.indexOf('</main>'));
     assert.ok(!/text-xs/.test(legal), 'nada de letra de 12 px en el texto legal');
 });
+
+test('el hero del teléfono lleva el sello de la marca y el fondo animado, sin anunciarlos', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    for (const ruta of ['/', RUTA_CHATBOTS, '/sectores/spas', '/contacto', `/blog/${ARTICULOS[0].slug}`, '/politica-privacidad']) {
+        const html = await (await fetch(`${BASE}${ruta}`)).text();
+        assert.match(html, /class="fondo-hero lg:hidden" aria-hidden="true"/, `${ruta}: falta el fondo animado`);
+        assert.match(html, /class="hero-pagina__sello[^"]*" aria-hidden="true"/, `${ruta}: falta el sello`);
+        // El sello va antes que el título: es lo primero que se ve arriba.
+        assert.ok(html.indexOf('hero-pagina__sello') < html.indexOf('<h1'), `${ruta}: el sello va sobre el título`);
+    }
+});
+
+test('el paquete del navegador no arrastra GSAP', async (t) => {
+    const dir = path.join(__dirname, '..', 'dist', 'assets');
+    if (!fs.existsSync(dir)) {
+        return t.skip('requiere npm run build');
+    }
+    // Se registraba en cada visita sin que ninguna página lo usara: decenas de
+    // KB de JavaScript compitiendo con la primera pintura.
+    for (const archivo of fs.readdirSync(dir).filter((a) => a.endsWith('.js'))) {
+        const codigo = fs.readFileSync(path.join(dir, archivo), 'utf8');
+        assert.ok(!/ScrollTrigger|GreenSock/.test(codigo), `${archivo} incluye GSAP`);
+    }
+});
