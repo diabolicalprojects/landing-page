@@ -1,0 +1,70 @@
+[
+  {
+    "slug": "sitios-web",
+    "ruta": "/sitios-web-en-aguascalientes",
+    "clave": "Sitios web en Aguascalientes",
+    "nombreEnlace": "Sitios web en Aguascalientes",
+    "bloque": "claveSitiosWeb",
+    "servicio": "sitio-web",
+    "ctaTexto": "Cotizar mi sitio web",
+    "escena": "tipo-corporativo",
+    "foto": "paginas-web",
+    "seo": {
+      "title": "Sitios web en Aguascalientes para negocios | Diabolical",
+      "description": "Sitios web en Aguascalientes con una página por servicio, rápidos y legibles para Google y la IA, con chatbot y agenda conectados. Alcance por escrito.",
+      "keywords": "sitios web en Aguascalientes, sitio web para negocio Aguascalientes, desarrollo de sitios web Aguascalientes, sitio web corporativo Aguascalientes, empresa de sitios web Aguascalientes",
+      "tipo": "Diseño y desarrollo de sitios web"
+    }
+  },
+  {
+    "slug": "empresas-de-ia",
+    "ruta": "/empresas-de-ia-en-aguascalientes",
+    "clave": "Empresas de IA en Aguascalientes",
+    "nombreEnlace": "Empresas de IA en Aguascalientes",
+    "bloque": "claveEmpresasIa",
+    "servicio": null,
+    "ctaTexto": null,
+    "escena": "identidad",
+    "foto": "ia-negocios",
+    "seo": {
+      "title": "Empresas de IA en Aguascalientes: Diabolical Services",
+      "description": "Empresa de inteligencia artificial en Aguascalientes: chatbots, agendamiento automatizado y sitios web para negocios de servicio, con el alcance por escrito.",
+      "keywords": "empresas de IA en Aguascalientes, empresa de inteligencia artificial Aguascalientes, empresas de inteligencia artificial en Aguascalientes, agencia de IA Aguascalientes, consultora de IA Aguascalientes",
+      "tipo": "Empresa de inteligencia artificial"
+    }
+  },
+  {
+    "slug": "inteligencia-artificial",
+    "ruta": "/inteligencia-artificial-aguascalientes",
+    "clave": "Inteligencia artificial Aguascalientes",
+    "nombreEnlace": "Inteligencia artificial en Aguascalientes",
+    "bloque": "claveInteligenciaArtificial",
+    "servicio": null,
+    "ctaTexto": null,
+    "escena": "nucleo",
+    "foto": "chatbots",
+    "seo": {
+      "title": "Inteligencia artificial en Aguascalientes | Diabolical Services",
+      "description": "Inteligencia artificial aplicada a negocios de Aguascalientes: chatbots que responden, agenda que se llena sola y seguimiento automático, sobre sus herramientas.",
+      "keywords": "inteligencia artificial Aguascalientes, inteligencia artificial en Aguascalientes, IA Aguascalientes, soluciones de inteligencia artificial Aguascalientes, automatización con IA Aguascalientes",
+      "tipo": "Inteligencia artificial aplicada a negocios"
+    }
+  },
+  {
+    "slug": "ia-para-negocios",
+    "ruta": "/ia-para-negocios-aguascalientes",
+    "clave": "IA para negocios Aguascalientes",
+    "nombreEnlace": "IA para negocios en Aguascalientes",
+    "bloque": "claveIaNegocios",
+    "servicio": null,
+    "ctaTexto": null,
+    "escena": "giros",
+    "foto": "agendamiento",
+    "seo": {
+      "title": "IA para negocios en Aguascalientes: qué automatizar | Diabolical",
+      "description": "IA para negocios en Aguascalientes, giro por giro: qué automatizar en una inmobiliaria, un gimnasio, un spa o un salón de uñas, y por dónde empezar.",
+      "keywords": "IA para negocios Aguascalientes, inteligencia artificial para negocios en Aguascalientes, IA para pymes Aguascalientes, automatización para negocios Aguascalientes, IA para empresas Aguascalientes",
+      "tipo": "Inteligencia artificial para negocios"
+    }
+  }
+]

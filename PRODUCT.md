@@ -174,7 +174,7 @@ tipográfica viven en `data/contenido.json` (volumen), fusionados sobre
 `src/data/contenido.json` (fábrica). Quien toque la portada tiene que preguntarse
 antes si eso debería ser editable en vez de estar escrito en un componente.
 
-Contacto: WhatsApp +52 449 513 6907 · contacto@diabolicalservices.tech
+Contacto: el número y el correo están en src/data/contacto.json.
 
 Negocio de área de servicio: no hay oficina abierta al público. No se publica
 dirección exacta ni coordenadas.

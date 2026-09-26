@@ -382,6 +382,18 @@ menos de 760 px de alto. Qué parte de cada escena se ve en el teléfono lo dice
 `ENCUADRES` en `src/motion/escenas/index.js`. Las reglas están en DESIGN.md,
 «Hero de página» y «Laptops y pantallas grandes».
 
+**Landings de frase clave.** Cada frase clave tiene su página con la frase en
+la dirección y en el título: `/sitios-web-en-aguascalientes`,
+`/empresas-de-ia-en-aguascalientes`, `/inteligencia-artificial-aguascalientes`
+e `/ia-para-negocios-aguascalientes` (src/data/claves.json, página
+`LandingClave`). «Páginas web» y «chatbots» son la landing de su servicio. El
+texto de cada una es un bloque del panel; de ahí salen también su JSON-LD
+(Service, FAQPage y migas) y su entrada en los llms.txt.
+
+**Teléfono y correo.** Viven en un solo archivo, `src/data/contacto.json`. De
+ahí salen los enlaces de WhatsApp, el pie, el JSON-LD y los llms.txt: cambiar
+de número es cambiar ese archivo.
+
 **Proceso animado.** La escena `proceso` (`src/motion/escenas/estrella.jsx`) se
 dibuja con los pasos del contenido que recibe en `datos`, así que editar un
 paso en el panel cambia también el diagrama. Tiene lienzo panorámico propio

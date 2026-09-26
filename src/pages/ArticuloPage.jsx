@@ -228,7 +228,11 @@ const ArticuloPage = ({ slug }) => {
                                 servicio={servicio?.slug}
                                 secundario={
                                     servicio
-                                        ? { texto: articulo.cta?.boton ?? `Ver ${servicio.nombre.toLowerCase()}`, destino: rutaServicio(servicio.slug) }
+                                        ? {
+                                              texto: articulo.cta?.boton ?? `Ver ${servicio.nombre.toLowerCase()}`,
+                                              // La guía puede llevar a la landing de su frase clave.
+                                              destino: articulo.cta?.destino ?? rutaServicio(servicio.slug),
+                                          }
                                         : undefined
                                 }
                                 ubicacion="guia-cierre"

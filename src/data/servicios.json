@@ -16,14 +16,14 @@
     "principal": true,
     "bloque": "paginasWeb",
     "seo": {
-      "title": "Páginas web y sitios web en Aguascalientes | Diabolical",
+      "title": "Páginas web en Aguascalientes: diseño y desarrollo | Diabolical",
       "description": "Diseño y desarrollo de páginas web en Aguascalientes: landing pages, sitios corporativos, tiendas en línea y sitios a medida, legibles para Google y la IA.",
-      "keywords": "páginas web Aguascalientes, sitios web en Aguascalientes, diseño de páginas web, diseño y desarrollo de páginas web en Aguascalientes, desarrollo web Aguascalientes, tiendas en línea Aguascalientes",
+      "keywords": "páginas web Aguascalientes, páginas web en Aguascalientes, diseño de páginas web Aguascalientes, diseño y desarrollo de páginas web en Aguascalientes, desarrollo web Aguascalientes, tiendas en línea Aguascalientes",
       "alias": [
         "Diseño de páginas web",
-        "Páginas web Aguascalientes",
-        "Sitios web en Aguascalientes"
-      ]
+        "Páginas web Aguascalientes"
+      ],
+      "enlace": "Páginas web en Aguascalientes"
     },
     "foto": "paginas-web"
   },
@@ -44,14 +44,15 @@
     ],
     "bloque": "chatbots",
     "seo": {
-      "title": "Chatbots con IA en Aguascalientes | Diabolical",
+      "title": "Chatbots en Aguascalientes con inteligencia artificial | Diabolical",
       "description": "Chatbots con inteligencia artificial en Aguascalientes para WhatsApp, sitio web, Instagram y Facebook: responden a toda hora, agendan y pasan a una persona.",
       "keywords": "chatbots Aguascalientes, chatbot con inteligencia artificial, chatbot para WhatsApp Aguascalientes, chatbot para negocios, IA para negocios Aguascalientes",
       "alias": [
         "Chatbots Aguascalientes",
         "Chatbot para WhatsApp",
         "Chatbot con inteligencia artificial"
-      ]
+      ],
+      "enlace": "Chatbots en Aguascalientes"
     },
     "foto": "chatbots"
   },
@@ -78,7 +79,8 @@
       "alias": [
         "Agendamiento automático de citas",
         "Sistema de citas por WhatsApp"
-      ]
+      ],
+      "enlace": "Agendamiento automatizado en Aguascalientes"
     },
     "foto": "agendamiento"
   },
@@ -95,7 +97,11 @@
       "Los textos escritos para responder lo que la gente busca de verdad.",
       "Informe mensual de posiciones, con lo que subió y lo que falta."
     ],
-    "principal": false
+    "principal": false,
+    "seo": {
+      "title": "Posicionamiento SEO en Google en Aguascalientes | Diabolical",
+      "description": "Posicionamiento orgánico en Aguascalientes: estructura, contenido y datos estructurados para que Google le encuentre sin pagar por cada clic."
+    }
   },
   {
     "slug": "ficha-de-google",
@@ -110,22 +116,11 @@
       "Fotografías y publicaciones periódicas para que la ficha se vea activa.",
       "Respuesta a reseñas y seguimiento de cuántas personas llegan por ahí."
     ],
-    "principal": false
-  },
-  {
-    "slug": "google-ads",
-    "categoria": "Captación",
-    "nombre": "Google Ads",
-    "resumen": "Aparecer arriba desde el primer día para las búsquedas que sí traen clientes, no para las que traen curiosos.",
-    "detalle": "Campañas de búsqueda con palabras negativas trabajadas desde el inicio, para no pagar por quien busca «gratis» o «cómo hacerlo yo mismo». Se conecta al mismo sistema de atención, así que el clic que entra por anuncio se contesta igual de rápido que el que entra por WhatsApp.",
-    "limite": "El presupuesto de medios lo pagas tú y va directo a Google. Nosotros cobramos por gestionar, no llevamos comisión sobre el gasto.",
-    "incluye": [
-      "Estructura de campañas por servicio y por intención de búsqueda.",
-      "Palabras clave y, sobre todo, las negativas que evitan gasto inútil.",
-      "Anuncios y páginas de destino escritos para convertir, no solo para atraer.",
-      "Revisión semanal del gasto y ajuste de lo que no rinde."
-    ],
-    "principal": false
+    "principal": false,
+    "seo": {
+      "title": "Ficha de Google y Google Maps en Aguascalientes | Diabolical",
+      "description": "Ficha de Google para negocios de Aguascalientes: categorías, horarios, servicios, fotos y reseñas para salir en el mapa cuando le buscan cerca."
+    }
   },
   {
     "slug": "posicionamiento-en-ia",
@@ -140,22 +135,11 @@
       "Contenido redactado en frases autónomas, que es lo que un modelo cita.",
       "Seguimiento de en qué respuestas aparece el negocio y con qué palabras."
     ],
-    "principal": false
-  },
-  {
-    "slug": "embudos-de-venta",
-    "categoria": "Conversión",
-    "nombre": "Embudos de venta",
-    "resumen": "El camino de quien le descubre hasta que agenda, sin puntos donde se pierda.",
-    "detalle": "Página de entrada, formulario corto, respuesta inmediata y seguimiento automático. La mayoría de los embudos rotos no se rompen por diseño: se rompen porque nadie contesta el mensaje que llega el sábado.",
-    "limite": "Un embudo multiplica el tráfico que ya tiene. Si no llega nadie, el problema es de captación y se lo decimos.",
-    "incluye": [
-      "Mapa del recorrido real desde que alguien los descubre hasta que compra.",
-      "Páginas de destino por campaña, con una sola acción clara en cada una.",
-      "Formularios y mecánicas de captación conectadas a su CRM.",
-      "Secuencias de seguimiento para quien preguntó y todavía no decidió."
-    ],
-    "principal": false
+    "principal": false,
+    "seo": {
+      "title": "Posicionamiento en motores de IA en Aguascalientes | Diabolical",
+      "description": "Posicionamiento en motores de IA para negocios de Aguascalientes: que ChatGPT, Claude o Perplexity entiendan su negocio y puedan mencionarlo."
+    }
   },
   {
     "slug": "ia-de-ventas",
@@ -170,7 +154,11 @@
       "Registro de cada contacto en el CRM, con su estado al día.",
       "Avisos al equipo cuando un prospecto muestra intención de cerrar."
     ],
-    "principal": false
+    "principal": false,
+    "seo": {
+      "title": "IA de ventas y seguimiento en Aguascalientes | Diabolical",
+      "description": "Seguimiento automático por WhatsApp y correo para cotizaciones sin cerrar y clientes que no regresan, con el contexto de cada caso para su equipo."
+    }
   },
   {
     "slug": "ia-para-tienda",
@@ -185,7 +173,11 @@
       "Recuperación de carritos abandonados en el momento oportuno.",
       "Avisos automáticos del estado de cada pedido."
     ],
-    "principal": false
+    "principal": false,
+    "seo": {
+      "title": "IA para tienda en línea en Aguascalientes | Diabolical",
+      "description": "IA para tienda en línea: recuperación de carritos abandonados, recomendaciones según el historial y avisos de reposición para negocios de Aguascalientes."
+    }
   },
   {
     "slug": "identidad-de-marca",
@@ -200,7 +192,11 @@
       "Plantillas listas para redes, documentos y presentaciones.",
       "Todos los archivos entregados y de su propiedad, sin ataduras."
     ],
-    "principal": false
+    "principal": false,
+    "seo": {
+      "title": "Identidad de marca y logo en Aguascalientes | Diabolical",
+      "description": "Identidad de marca en Aguascalientes: logotipo, paleta, tipografía y sus aplicaciones reales (rótulo, uniformes, papelería y redes), con manual."
+    }
   },
   {
     "slug": "presencia-en-eventos",
@@ -215,7 +211,11 @@
       "Captura de contactos sin papel, ordenada y lista para su CRM.",
       "Seguimiento automático al día siguiente, cuando todavía se acuerdan de ustedes."
     ],
-    "principal": false
+    "principal": false,
+    "seo": {
+      "title": "Activaciones digitales para expos en Aguascalientes | Diabolical",
+      "description": "Activaciones digitales para expos y eventos en Aguascalientes: una experiencia en su stand que registra al visitante y le da seguimiento al día siguiente."
+    }
   },
   {
     "slug": "auditoria-de-friccion",
@@ -230,6 +230,10 @@
       "Prioridades ordenadas por lo que más rinde con menos esfuerzo.",
       "Documento escrito que es suyo, trabajen o no con nosotros."
     ],
-    "principal": false
+    "principal": false,
+    "seo": {
+      "title": "Auditoría de fricción gratuita en Aguascalientes | Diabolical",
+      "description": "Auditoría de fricción sin costo: revisamos su presencia digital, su atención y sus tiempos de respuesta, y le entregamos un diagnóstico escrito."
+    }
   }
 ]

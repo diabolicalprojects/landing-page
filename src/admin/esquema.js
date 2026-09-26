@@ -64,7 +64,7 @@ export const BLOQUES = [
     {
         clave: 'servicios',
         nombre: 'Servicios complementarios',
-        ayuda: 'Encabezado de los diez servicios complementarios en la portada. Los tres principales se presentan en «Qué hacemos»; todos se editan en su propio fichero.',
+        ayuda: 'Encabezado de los ocho servicios complementarios en la portada. Los tres principales se presentan en «Qué hacemos»; todos se editan en su propio fichero.',
         ancla: '#servicios',
     },
     {
@@ -119,6 +119,34 @@ export const BLOQUES = [
         ayuda: 'La página /agendamiento-automatizado-aguascalientes. Cada tipo lleva la escena del giro con el mismo identificador.',
         ancla: '#top',
         ruta: '/agendamiento-automatizado-aguascalientes',
+    },
+    {
+        clave: 'claveSitiosWeb',
+        nombre: 'Página: sitios web en Aguascalientes',
+        ayuda: 'La página /sitios-web-en-aguascalientes. El título principal y el de la pestaña llevan la frase «sitios web en Aguascalientes»: no la quites. Las preguntas se publican también para Google y los motores de IA.',
+        ancla: '#top',
+        ruta: '/sitios-web-en-aguascalientes',
+    },
+    {
+        clave: 'claveEmpresasIa',
+        nombre: 'Página: empresas de IA',
+        ayuda: 'La página /empresas-de-ia-en-aguascalientes. Persigue la búsqueda «empresas de IA en Aguascalientes». Las preguntas se publican también para Google y los motores de IA.',
+        ancla: '#top',
+        ruta: '/empresas-de-ia-en-aguascalientes',
+    },
+    {
+        clave: 'claveInteligenciaArtificial',
+        nombre: 'Página: inteligencia artificial',
+        ayuda: 'La página /inteligencia-artificial-aguascalientes. Persigue «inteligencia artificial Aguascalientes». Las preguntas se publican también para Google y los motores de IA.',
+        ancla: '#top',
+        ruta: '/inteligencia-artificial-aguascalientes',
+    },
+    {
+        clave: 'claveIaNegocios',
+        nombre: 'Página: IA para negocios',
+        ayuda: 'La página /ia-para-negocios-aguascalientes. Persigue «IA para negocios Aguascalientes», giro por giro. Las preguntas se publican también para Google y los motores de IA.',
+        ancla: '#top',
+        ruta: '/ia-para-negocios-aguascalientes',
     },
     {
         clave: 'nosotros',
@@ -182,6 +210,8 @@ export const ETIQUETAS = {
     plazo: 'Plazo típico',
     diferencias: 'La diferencia',
     tituloApagado: 'Segunda parte del título (sale en gris)',
+    soluciones: 'Lo que resuelve (tarjetas con escena)',
+    enlace: 'Texto del enlace de la tarjeta',
     precio: 'Precio',
     respuesta: 'Respuesta',
     factores: 'De qué depende (una línea por factor)',

@@ -8,13 +8,17 @@ import { hayEscena } from '../motion/escenas';
 import { SERVICIOS, getServicio, rutaServicio } from '../data/servicios';
 import ServiciosPrincipales from '../components/common/ServiciosPrincipales';
 import CtaServicio from '../components/common/CtaServicio';
+import FAQ from '../data/faq.json';
+
+// La misma respuesta al precio que da la portada (ver server/schema.js).
+const RESPUESTA_PRECIO = FAQ.find((p) => /^¿Cuánto cuesta/.test(p.pregunta))?.respuesta;
 
 /*
  * Página de un servicio.
  *
  * Trece páginas salidas de un solo componente y de src/data/servicios.json, que
  * es la misma fuente de la que server/schema.js construye el catálogo de
- * ofertas y server/llms.js la guía para motores de IA. Escribir trece páginas a
+ * ofertas y server/llms.js la guía para motores de IA. Escribir cada página a
  * mano garantizaría que en unos meses dijeran cosas distintas.
  *
  * El alcance («hasta dónde llega») va en la página, no en letra pequeña: es la
@@ -60,15 +64,17 @@ const ServicioPage = ({ slug }) => {
                 <div className="contenedor">
                     <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
                         <div className="lg:col-span-5">
+                            {/* Los encabezados son las preguntas que la gente hace y que
+                                el servidor publica como FAQPage con este mismo texto. */}
                             <h2 className="titular-l">
-                                En qué <span className="titular-apagado">consiste.</span>
+                                ¿En qué <span className="titular-apagado">consiste?</span>
                             </h2>
                             <p className="cuerpo-l mt-6">{servicio.detalle}</p>
                         </div>
 
                         <div className="lg:col-span-7">
                             <h3 className="etiqueta" style={{ color: 'var(--texto-3)' }}>
-                                Qué incluye
+                                ¿Qué incluye?
                             </h3>
                             <ul className="mt-5">
                                 {(servicio.incluye ?? []).map((punto) => (
@@ -95,9 +101,17 @@ const ServicioPage = ({ slug }) => {
 
             <section className="zona-oscura seccion">
                 <div className="contenedor">
-                    <div className="tarjeta max-w-3xl p-7 md:p-10">
-                        <h2 className="etiqueta text-white/55">Hasta dónde llega</h2>
-                        <p className="cuerpo-destacado mt-4 max-w-none">{servicio.limite}</p>
+                    <div className="grid max-w-5xl gap-4 md:grid-cols-2">
+                        <div className="tarjeta p-7 md:p-10">
+                            <h2 className="etiqueta text-white/55">¿Hasta dónde llega?</h2>
+                            <p className="cuerpo-destacado mt-4 max-w-none">{servicio.limite}</p>
+                        </div>
+                        {RESPUESTA_PRECIO && (
+                            <div className="tarjeta p-7 md:p-10">
+                                <h2 className="etiqueta text-white/55">¿Cuánto cuesta?</h2>
+                                <p className="cuerpo-destacado mt-4 max-w-none">{RESPUESTA_PRECIO}</p>
+                            </div>
+                        )}
                     </div>
                     <CtaServicio servicio={servicio.slug} ubicacion="servicio-alcance" className="mt-10" />
 

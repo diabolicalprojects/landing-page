@@ -12,7 +12,7 @@ import Enlace from '../common/Enlace';
  *
  * Los tres principales ya se presentan arriba, en «Qué hacemos» (Pilares), cada
  * uno con su escena y su landing. Repetirlos aquí hacía que la portada contara
- * dos veces lo mismo; esta sección se queda con los diez complementarios,
+ * dos veces lo mismo; esta sección se queda con los ocho complementarios,
  * agrupados por el recorrido real de un cliente —que le encuentren, que le
  * elijan, que le atiendan, que le recuerden y saber si funciona—.
  *
@@ -42,7 +42,7 @@ const Servicios = () => {
                             </h3>
 
                             {/* En el teléfono, una lista de nombres: con el resumen
-                                debajo, diez servicios complementarios ocupaban
+                                debajo, los servicios complementarios ocupaban
                                 cuatro pantallas. El resumen está en la página de
                                 cada uno. */}
                             <div className="grid gap-x-8 md:mt-6 md:grid-cols-2 md:gap-y-7 lg:grid-cols-3">

@@ -296,7 +296,7 @@ test('el catálogo de servicios se sirve entero y con su límite', async (t) => 
     const html = await res.text();
     const visible = html.replace(/<script[\s\S]*?<\/script>/g, '');
 
-    // El índice lleva el nombre y el resumen de los trece.
+    // El índice lleva el nombre y el resumen de todos.
     for (const servicio of SERVICIOS) {
         assert.ok(visible.includes(servicio.nombre), `falta el servicio "${servicio.nombre}"`);
         assert.ok(visible.includes(servicio.resumen), `falta el resumen de "${servicio.nombre}"`);
@@ -628,10 +628,10 @@ test('la landing de páginas web persigue sus tres búsquedas', async (t) => {
     }
 
     /*
-     * Tres frases clave repartidas en tres señales distintas, en lugar de la
-     * misma repetida: la URL lleva «páginas web Aguascalientes», el título
-     * «diseño de páginas web en Aguascalientes» y el h1 «diseño y desarrollo
-     * de páginas web en Aguascalientes».
+     * La URL y el título llevan «páginas web Aguascalientes» y el h1 «diseño y
+     * desarrollo de páginas web en Aguascalientes». «Sitios web en
+     * Aguascalientes» tiene ahora su propia landing, así que este título ya no
+     * la persigue: dos páginas con la misma frase se quitan la posición.
      */
     assert.equal(RUTA_PAGINAS_WEB, '/paginas-web-aguascalientes');
 
@@ -639,7 +639,7 @@ test('la landing de páginas web persigue sus tres búsquedas', async (t) => {
     assert.equal(res.status, 200);
     const html = await res.text();
 
-    assert.match(html, /<title>Páginas web y sitios web en Aguascalientes/);
+    assert.match(html, /<title>Páginas web en Aguascalientes: diseño y desarrollo/);
     assert.match(html, /<h1[^>]*>Diseño y desarrollo de páginas web en Aguascalientes<\/h1>/);
     assert.match(html, new RegExp(`rel="canonical" href="[^"]*${RUTA_PAGINAS_WEB}"`));
 
@@ -784,7 +784,10 @@ test('el enfoque: tres servicios principales para cuatro giros', async (t) => {
      */
     const principales = SERVICIOS.filter((s) => s.principal).map((s) => s.slug);
     assert.deepEqual(principales, ['sitio-web', 'chatbots', 'agendamiento-automatizado']);
-    assert.equal(SERVICIOS.length, 13);
+    // Once: los tres principales y ocho complementarios (Google Ads y embudos de
+    // venta salieron del catálogo).
+    assert.equal(SERVICIOS.length, 11);
+    assert.ok(!SERVICIOS.some((s) => ['google-ads', 'embudos-de-venta'].includes(s.slug)));
     assert.deepEqual(
         SECTORES.filter((s) => s.principal).map((s) => s.slug),
         ['inmobiliarias', 'gimnasios', 'spas', 'salones-de-unas']
@@ -820,7 +823,7 @@ test('las landings de chatbots y agendamiento persiguen sus búsquedas', async (
     }
 
     const casos = [
-        { ruta: RUTA_CHATBOTS, h1: 'Chatbots con inteligencia artificial en Aguascalientes', title: /<title>Chatbots con IA en Aguascalientes/ },
+        { ruta: RUTA_CHATBOTS, h1: 'Chatbots con inteligencia artificial en Aguascalientes', title: /<title>Chatbots en Aguascalientes con inteligencia artificial/ },
         {
             ruta: RUTA_AGENDAMIENTO,
             h1: 'Agendamiento automatizado para negocios en Aguascalientes',
@@ -1036,7 +1039,7 @@ test('sin relleno de IA: ni etiquetas en cada sección ni rayas en el texto', as
 
     const rutas = ['/', '/nosotros', '/servicios', '/sectores', '/contacto', '/blog',
         RUTA_PAGINAS_WEB, RUTA_CHATBOTS, RUTA_AGENDAMIENTO, '/sectores/spas',
-        '/servicios/google-ads', `/blog/${ARTICULOS[0].slug}`];
+        '/servicios/posicionamiento-en-ia', `/blog/${ARTICULOS[0].slug}`];
 
     for (const ruta of rutas) {
         const html = await (await fetch(`${BASE}${ruta}`)).text();
@@ -1170,4 +1173,69 @@ test('en el teléfono el menú no lleva el botón de Contacto en la barra', asyn
     // `.boton` declara su display fuera de la capa de Tailwind: sin `!` el
     // `hidden` no oculta nada y la barra del teléfono se llenaba.
     assert.match(nav, /class="boton !hidden[^"]*sm:!inline-flex/);
+});
+
+test('cada frase clave tiene su landing, con la frase en la dirección y en el título', async (t) => {
+    const { CLAVES } = require('../server/schema');
+    const sinAcentos = (x) => x.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+    // Las seis frases que persigue el negocio: cuatro con landing propia y dos
+    // que son la landing de su servicio.
+    const FRASES = {
+        'Sitios web en Aguascalientes': '/sitios-web-en-aguascalientes',
+        'Paginas Web Aguascalientes': RUTA_PAGINAS_WEB,
+        'Empresas de IA en Aguascalientes': '/empresas-de-ia-en-aguascalientes',
+        'Inteligencia Artificial Aguascalientes': '/inteligencia-artificial-aguascalientes',
+        'IA para negocios Aguascalientes': '/ia-para-negocios-aguascalientes',
+        'Chatbots Aguascalientes': RUTA_CHATBOTS,
+    };
+    for (const [frase, ruta] of Object.entries(FRASES)) {
+        const slug = sinAcentos(frase).replace(/\s+/g, '-');
+        const palabras = slug.split('-').filter((p) => !['en', 'de', 'para'].includes(p));
+        for (const p of palabras) assert.ok(ruta.includes(p), `${ruta} no lleva «${p}» de «${frase}»`);
+    }
+    assert.equal(CLAVES.length, 4);
+
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    const sitemap = await (await fetch(`${BASE}/sitemap.xml`)).text();
+    const llms = await (await fetch(`${BASE}/llms.txt`)).text();
+
+    for (const [frase, ruta] of Object.entries(FRASES)) {
+        const res = await fetch(`${BASE}${ruta}`);
+        assert.equal(res.status, 200, `${ruta} no responde`);
+        const html = await res.text();
+        const titulo = (html.match(/<title>([^<]*)<\/title>/) ?? [])[1] ?? '';
+        const h1 = ((html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/) ?? [])[1] ?? '').replace(/<[^>]+>/g, '');
+
+        // La frase (sin acentos ni mayúsculas, con «en» opcional) en el título.
+        const patron = new RegExp(sinAcentos(frase).replace(/ aguascalientes$/, ' (en )?aguascalientes'));
+        assert.match(sinAcentos(titulo), patron, `${ruta}: el título «${titulo}» no lleva «${frase}»`);
+        assert.ok(titulo.length <= 70, `${ruta}: título de ${titulo.length} caracteres`);
+        assert.ok(/aguascalientes/i.test(h1), `${ruta}: el h1 no dice Aguascalientes`);
+        assert.match(html, new RegExp(`rel="canonical" href="[^"]*${ruta}"`));
+        const descripcion = (html.match(/<meta name="description" content="([^"]*)"/) ?? [])[1] ?? '';
+        assert.ok(descripcion.length >= 110 && descripcion.length <= 170, `${ruta}: descripción de ${descripcion.length}`);
+
+        const tipos = [...html.matchAll(/application\/ld\+json">(.*?)<\/script>/gs)].map((m) => JSON.parse(m[1])['@type']);
+        for (const tipo of ['Service', 'FAQPage', 'BreadcrumbList']) {
+            assert.ok(tipos.includes(tipo), `${ruta}: falta ${tipo}`);
+        }
+        assert.ok(sitemap.includes(ruta), `${ruta} no está en el sitemap`);
+        assert.ok(llms.includes(ruta), `${ruta} no está en llms.txt`);
+    }
+
+    // Las landings de frase clave se enlazan entre sí desde el pie.
+    const portada = await (await fetch(`${BASE}/`)).text();
+    for (const c of CLAVES) assert.ok(portada.includes(`href="${c.ruta}"`), `la portada no enlaza a ${c.ruta}`);
+});
+
+test('los servicios retirados redirigen al índice', async () => {
+    for (const ruta of ['/servicios/google-ads', '/servicios/embudos-de-venta']) {
+        const res = await fetch(`${BASE}${ruta}`, { redirect: 'manual' });
+        assert.equal(res.status, 301, `${ruta} no redirige`);
+        assert.match(res.headers.get('location') ?? '', /\/servicios$/);
+    }
 });

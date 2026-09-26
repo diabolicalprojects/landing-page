@@ -21,6 +21,7 @@ import NosotrosPage from './pages/NosotrosPage';
 import ServiciosPage from './pages/ServiciosPage';
 import ServicioPage from './pages/ServicioPage';
 import LandingServicio from './pages/LandingServicio';
+import LandingClave from './pages/LandingClave';
 import SectoresPage from './pages/SectoresPage';
 import SectorPage from './pages/SectorPage';
 import ContactoPage from './pages/ContactoPage';
@@ -31,6 +32,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import { SECTORES } from './data/sectores';
 import { SERVICIOS, rutaServicio } from './data/servicios';
 import { ARTICULOS } from './data/articulos';
+import { CLAVES } from './data/claves';
 
 // Rutas secundarias que no se prerenderizan: estas sí se parten.
 const AdminPage = lazy(() => import('./pages/AdminPage'));
@@ -60,6 +62,10 @@ function App() {
                             path={rutaServicio(servicio.slug)}
                             element={<LandingServicio slug={servicio.slug} />}
                         />
+                    ))}
+                    {/* Una landing por frase clave, con la frase en la dirección. */}
+                    {CLAVES.map((clave) => (
+                        <Route key={clave.slug} path={clave.ruta} element={<LandingClave slug={clave.slug} />} />
                     ))}
                     {SERVICIOS.filter((servicio) => !servicio.ruta).map((servicio) => (
                         <Route

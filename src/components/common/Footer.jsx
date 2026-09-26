@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useBloque } from '../../contenido';
-import { CONTACT_EMAIL } from '../../config';
+import { CONTACT_EMAIL, WHATSAPP_VISIBLE } from '../../config';
 import Enlace from './Enlace';
 import logoHorizontalBlanco from '../../assets/logo/LOGO-DIABOLICAL-HORIZONTAL-BLANCO.svg';
 
@@ -40,7 +40,7 @@ const Footer = () => {
                         <ul className="mt-7 space-y-2 text-sm">
                             <li>
                                 <Enlace destino="whatsapp" className="enlace inline-flex min-h-[1.75rem] items-center py-1">
-                                    WhatsApp +52 449 513 6907
+                                    WhatsApp {WHATSAPP_VISIBLE}
                                 </Enlace>
                             </li>
                             <li>

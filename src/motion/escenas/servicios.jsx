@@ -29,7 +29,7 @@ import {
  * portapapeles, dibuja el punto por donde se escapa un prospecto.
  *
  * Todas comparten las mismas piezas (baldosa, conector, pulso, ventana,
- * teléfono), así que son variaciones de un sistema y no trece estilos.
+ * teléfono), así que son variaciones de un sistema y no un estilo por escena.
  */
 
 const cx = LIENZO.ancho / 2;
@@ -140,55 +140,6 @@ export const FichaDeGoogle = ({ frame }) => {
                     <rect x="20" y="116" width="96" height="24" rx="12" fill={BLANCO} fillOpacity="0.9" />
                 </g>
             </Ventana>
-        </Lienzo>
-    );
-};
-
-/** Google Ads: varias pujas y la que se queda con el espacio de arriba. */
-export const GoogleAds = ({ frame }) => {
-    const pGana = entrada(frame, 46, 30);
-    const pujas = [
-        { x: 130, retraso: 6 },
-        { x: 320, retraso: 14 },
-        { x: 510, retraso: 22 },
-    ];
-
-    return (
-        <Lienzo>
-            <g opacity={pGana}>
-                <rect x="120" y="52" width="400" height="58" rx="12" fill={BLANCO} fillOpacity="0.09" />
-                <rect x="136" y="68" width="32" height="14" rx="7" fill={BLANCO} fillOpacity="0.85" />
-                <text x="152" y="79" textAnchor="middle" fontSize="8" fill="#000" fontFamily="inherit" fontWeight="700">
-                    AD
-                </text>
-                <Renglon x={180} y={68} ancho={190} alto={7} opacidad={0.8} />
-                <Renglon x={180} y={83} ancho={300} alto={5} opacidad={0.2} />
-            </g>
-            <Etiqueta x={cx} y={36} texto="ESPACIO PATROCINADO" p={pGana} />
-
-            {pujas.map((puja, i) => {
-                const pi = entrada(frame, puja.retraso, 26);
-                const gana = i === 1;
-                const sube = gana ? interpolar(pGana, [0, 1], [0, -120]) : 0;
-                const d = trazado(puja.x, 250 + sube, puja.x, 132, { modo: 'ele' });
-                return (
-                    <g key={puja.x} opacity={gana ? 1 : interpolar(pGana, [0, 1], [1, 0.32])}>
-                        <Conector d={trazado(puja.x, 250 + sube, puja.x, 132, { modo: 'ele' })} p={pi} />
-                        {gana && pi > 0.9 && <Pulso d={d} frame={frame} periodo={80} largo={40} />}
-                        <Baldosa x={puja.x} y={286 + sube} tam={64} destacada={gana} p={pi}>
-                            {gana ? (
-                                <g transform="translate(32 32)">
-                                    <Marca x={0} y={0} tam={30} p={pi} />
-                                </g>
-                            ) : (
-                                <g transform="translate(32 32)">
-                                    <circle r="10" fill="none" stroke={BLANCO} strokeOpacity="0.35" />
-                                </g>
-                            )}
-                        </Baldosa>
-                    </g>
-                );
-            })}
         </Lienzo>
     );
 };
@@ -304,57 +255,6 @@ export const SitioWeb = ({ frame }) => {
         </Lienzo>
     );
 };
-
-/** Embudo: lo que entra arriba y lo que sale abajo, etapa a etapa. */
-export const EmbudosDeVenta = ({ frame }) => {
-    const etapas = [
-        { y: 78, w: 340, texto: 'VISITAN' },
-        { y: 156, w: 250, texto: 'PREGUNTAN' },
-        { y: 234, w: 164, texto: 'AGENDAN' },
-        { y: 312, w: 92, texto: 'COMPRAN' },
-    ];
-
-    return (
-        <Lienzo>
-            {etapas.map((e, i) => {
-                const p = entrada(frame, i * 12, 30);
-                return (
-                    <g key={e.texto} opacity={p}>
-                        <rect
-                            x={cx - (e.w / 2) * p}
-                            y={e.y}
-                            width={e.w * p}
-                            height="44"
-                            rx="10"
-                            fill={BLANCO}
-                            fillOpacity={0.05 + i * 0.045}
-                            stroke={BLANCO}
-                            strokeOpacity={0.14 + i * 0.05}
-                        />
-                        <Etiqueta x={cx} y={e.y + 27} texto={e.texto} p={p} />
-                    </g>
-                );
-            })}
-
-            {/* Los puntos que bajan por el embudo: lo que se mueve de verdad. */}
-            {[0, 1, 2, 3, 4].map((i) => {
-                const ciclo = ((frame + i * 26) % 130) / 130;
-                const y = interpolar(ciclo, [0, 1], [66, 348]);
-                // Se estrecha conforme baja, igual que el embudo.
-                const dispersión = interpolar(ciclo, [0, 1], [150, 34]);
-                const x = cx + Math.sin(i * 2.1) * dispersión;
-                const visible = Math.sin(ciclo * Math.PI);
-                return <circle key={i} cx={x} cy={y} r="3.5" fill={BLANCO} opacity={visible * 0.85} />;
-            })}
-
-            <g opacity={entrada(frame, 46, 30)}>
-                <Marca x={cx} y={362} tam={26} p={1} />
-            </g>
-        </Lienzo>
-    );
-};
-
-/* --- Atención y venta --------------------------------------------------- */
 
 /** IA para WhatsApp: la conversación que se resuelve sola. */
 export const IaWhatsapp = ({ frame }) => {

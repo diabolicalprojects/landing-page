@@ -1352,6 +1352,41 @@ select {
   }
 }
 
+/* Tarjetas con escena: al pasar por encima se enciende el marco de la escena
+   y la flecha avanza. Es lo que distingue una tarjeta que lleva a algún sitio. */
+.tarjeta-escena .pantalla-escena {
+  transition: background-color 300ms var(--salida);
+}
+
+.tarjeta-escena:hover .pantalla-escena {
+  background-color: #0d0d0d;
+}
+
+/* En las tarjetas con escena y texto debajo, la escena cede un poco más de
+   alto: con el tope general la tarjeta entera no cabía en una laptop. */
+@media (min-width: 1024px) {
+  .tarjeta-escena:not(.tarjeta-escena--ancha) .pantalla-escena > [role='img'] {
+    max-width: calc(29vh * 1.6);
+    max-width: calc(29svh * 1.6);
+  }
+}
+
+/* Tarjeta ancha (servicios principales en /servicios): la escena a la
+   izquierda, centrada en su marco. */
+@media (min-width: 1024px) {
+  .tarjeta-escena--ancha .pantalla-escena {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 0;
+    border-right: 1px solid var(--linea);
+  }
+
+  .tarjeta-escena--ancha .pantalla-escena > * {
+    width: 100%;
+  }
+}
+
 /* Tipos de sitio en escritorio ancho: una fila por tipo, con la escena a la
    izquierda y la ficha a la derecha. Apiladas medían más de 1.000 px cada una:
    ninguna cabía en una pantalla. */

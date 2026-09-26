@@ -36,7 +36,7 @@
             "titulo": "Servicios principales",
             "enlaces": [
               {
-                "texto": "Sitios web",
+                "texto": "Páginas web",
                 "detalle": "Páginas web, tiendas en línea y sitios con panel",
                 "destino": "/paginas-web-aguascalientes"
               },
@@ -65,16 +65,34 @@
                 "destino": "/servicios/posicionamiento-en-ia"
               },
               {
-                "texto": "Google Ads",
-                "destino": "/servicios/google-ads"
-              },
-              {
                 "texto": "Identidad de marca",
                 "destino": "/servicios/identidad-de-marca"
               },
               {
                 "texto": "Todos los servicios",
                 "destino": "/servicios"
+              }
+            ]
+          },
+          {
+            "id": "grupo-aguascalientes",
+            "titulo": "En Aguascalientes",
+            "enlaces": [
+              {
+                "texto": "Sitios web en Aguascalientes",
+                "destino": "/sitios-web-en-aguascalientes"
+              },
+              {
+                "texto": "Empresa de IA en Aguascalientes",
+                "destino": "/empresas-de-ia-en-aguascalientes"
+              },
+              {
+                "texto": "Inteligencia artificial en Aguascalientes",
+                "destino": "/inteligencia-artificial-aguascalientes"
+              },
+              {
+                "texto": "IA para negocios",
+                "destino": "/ia-para-negocios-aguascalientes"
               }
             ]
           }
@@ -192,7 +210,7 @@
   },
   "servicios": {
     "visible": true,
-    "titulo": "Diez servicios complementarios.",
+    "titulo": "Ocho servicios complementarios.",
     "entradilla": "Con la misma calidad y el mismo alcance publicado que los tres principales. Se contratan solos o para completar el sitio web, el chatbot y la agenda.",
     "cta": {
       "texto": "Ver el catálogo completo",
@@ -263,6 +281,28 @@
         ]
       },
       {
+        "id": "col-aguascalientes",
+        "titulo": "En Aguascalientes",
+        "enlaces": [
+          {
+            "texto": "Sitios web en Aguascalientes",
+            "destino": "/sitios-web-en-aguascalientes"
+          },
+          {
+            "texto": "Empresas de IA en Aguascalientes",
+            "destino": "/empresas-de-ia-en-aguascalientes"
+          },
+          {
+            "texto": "Inteligencia artificial en Aguascalientes",
+            "destino": "/inteligencia-artificial-aguascalientes"
+          },
+          {
+            "texto": "IA para negocios en Aguascalientes",
+            "destino": "/ia-para-negocios-aguascalientes"
+          }
+        ]
+      },
+      {
         "id": "col-giros",
         "titulo": "Por giro",
         "enlaces": [
@@ -320,7 +360,7 @@
       "Las páginas web son la mitad visible del oficio. Las diseñamos y desarrollamos a medida (desde una landing hasta una tienda en línea) para que carguen rápido, se lean completas en Google y en los motores de inteligencia artificial, y se editen desde un panel sin depender de nadie. Es la misma base técnica con la que está hecho este sitio.",
       "La parte más ingrata de cualquier negocio es la que se repite: responder lo mismo veinte veces, buscar un hueco en la agenda, recordar quién quedó de llamar. Es trabajo que nadie disfruta y que, hecho a mano, siempre se cae en el peor momento.",
       "Nuestro oficio es convertir esa parte en un sistema que no se cansa. Atiende a cualquier hora, consulta la disponibilidad real, deja el registro donde su equipo lo consulta y entrega la conversación a una persona en cuanto hace falta criterio. No sustituye a nadie: libera a su equipo de lo que no debería estar haciendo.",
-      "Nos centramos en tres servicios (sitios web, chatbots y agendamiento automatizado) y en cuatro giros: inmobiliarias, gimnasios, spas y salones de uñas. Hacemos también posicionamiento, publicidad, identidad de marca y automatizaciones a medida, con la misma calidad, como complemento de lo principal."
+      "Nos centramos en tres servicios (sitios web, chatbots y agendamiento automatizado) y en cuatro giros: inmobiliarias, gimnasios, spas y salones de uñas. Hacemos también posicionamiento, identidad de marca y automatizaciones a medida, con la misma calidad, como complemento de lo principal."
     ],
     "principios": [
       {
@@ -1066,6 +1106,358 @@
       "alternativa": {
         "texto": "O pregúntenos por WhatsApp",
         "destino": "whatsapp:Hola. Me interesa automatizar el agendamiento de citas."
+      }
+    }
+  },
+  "claveSitiosWeb": {
+    "hero": {
+      "titulo": "Sitios web en Aguascalientes",
+      "tituloApagado": "con una página para cada cosa que vende.",
+      "entradilla": "Sitios web completos para negocios de Aguascalientes: una página por servicio, textos escritos para lo que su cliente busca de verdad, carga rápida y el chatbot y la agenda conectados desde el primer día. El alcance queda por escrito antes de empezar.",
+      "bajada": "Una página por servicio, rápida y legible para Google y la IA, con chatbot y agenda conectados.",
+      "ctaSecundario": {
+        "texto": "Ver qué lleva un sitio web",
+        "destino": "#que-incluye"
+      }
+    },
+    "definicion": {
+      "titulo": "Qué es un sitio web para un negocio",
+      "texto": "Un sitio web es el conjunto de páginas de un negocio bajo su propio dominio: la portada, una página por cada servicio o producto, la de contacto y las que responden las preguntas de sus clientes. En Aguascalientes, Diabolical Services diseña y desarrolla sitios web a medida para negocios de servicio (inmobiliarias, gimnasios, spas y salones de uñas, entre otros), escritos para que Google y los motores de inteligencia artificial entiendan qué hace el negocio y dónde, con un chatbot que atiende dentro del propio sitio y la agenda conectada."
+    },
+    "soluciones": {
+      "id": "que-incluye",
+      "titulo": "Qué lleva un sitio web bien hecho.",
+      "entradilla": "Cuatro piezas que deciden si un sitio consigue clientes o solo ocupa un dominio.",
+      "items": [
+        {
+          "titulo": "Una página por servicio",
+          "texto": "Cada servicio con su propia dirección, su título y su texto. Es lo que permite aparecer cuando alguien busca ese servicio en Aguascalientes, en lugar de que una sola portada compita por todas las búsquedas.",
+          "escena": "tipo-corporativo",
+          "destino": "/paginas-web-aguascalientes#tipos",
+          "enlace": "Ver los tipos de sitio"
+        },
+        {
+          "titulo": "Legible para Google y para la IA",
+          "texto": "El contenido completo en el HTML, datos estructurados con los servicios y la ubicación del negocio, y respuestas directas a las preguntas de sus clientes. Así lo pueden entender y citar Google, ChatGPT o Perplexity.",
+          "escena": "posicionamiento-en-ia",
+          "destino": "/servicios/posicionamiento-en-ia",
+          "enlace": "Ver posicionamiento en motores de IA"
+        },
+        {
+          "titulo": "Un chatbot que atiende dentro del sitio",
+          "texto": "Quien llega de noche o en fin de semana recibe respuesta en ese momento, con la información real del negocio, y la conversación pasa a su equipo cuando hace falta criterio.",
+          "escena": "chatbots",
+          "destino": "/chatbots-aguascalientes",
+          "enlace": "Ver chatbots con IA"
+        },
+        {
+          "titulo": "La agenda conectada",
+          "texto": "El sitio no termina en un formulario que alguien revisa el lunes: ofrece los horarios que existen y deja la cita confirmada, con su recordatorio.",
+          "escena": "agendamiento-automatizado",
+          "destino": "/agendamiento-automatizado-aguascalientes",
+          "enlace": "Ver agendamiento automatizado"
+        }
+      ]
+    },
+    "faq": {
+      "titulo": "Preguntas frecuentes sobre sitios web en Aguascalientes",
+      "items": [
+        {
+          "pregunta": "¿Cuánto tarda en estar listo un sitio web?",
+          "respuesta": "Depende del número de páginas y de si lleva tienda o panel. Un sitio corporativo con una página por servicio suele tomar de tres a cinco semanas. La fecha queda por escrito en la propuesta, junto con lo que incluye y lo que no."
+        },
+        {
+          "pregunta": "¿Cuánto cuesta un sitio web en Aguascalientes?",
+          "respuesta": "Se cotiza después de una conversación de diagnóstico sin costo, cuando ya se sabe cuántas páginas lleva, si tiene tienda o panel y con qué herramientas se conecta. No publicamos una tarifa genérica porque, sin conocer el proyecto, sería adivinar."
+        },
+        {
+          "pregunta": "¿Qué diferencia hay entre un sitio web y una página web?",
+          "respuesta": "Se usan casi como sinónimos. En la práctica, una página web suele ser una sola página (por ejemplo, una landing para una campaña) y un sitio web es el conjunto: portada, páginas de servicio, contacto y blog. Hacemos las dos cosas."
+        },
+        {
+          "pregunta": "¿Podré editar el sitio sin llamar a nadie?",
+          "respuesta": "Sí. El sitio queda con un panel para que su equipo cambie textos, precios y fotos desde el navegador. Qué partes se editan desde el panel queda definido en la propuesta."
+        },
+        {
+          "pregunta": "¿Hacen sitios web para negocios fuera de Aguascalientes?",
+          "respuesta": "Sí. El trabajo se hace a distancia y el sitio funciona igual en cualquier ciudad. Nuestro foco son los negocios de Aguascalientes porque conocemos cómo buscan sus clientes."
+        }
+      ]
+    },
+    "cierre": {
+      "titulo": "Empecemos por lo que tiene que lograr su sitio.",
+      "texto": "La conversación de diagnóstico no tiene costo ni compromiso. Salimos de ella con las páginas que necesita su sitio, el plazo y lo que queda fuera, por escrito.",
+      "boton": {
+        "texto": "Cotizar mi sitio web",
+        "destino": "/contacto?servicio=sitio-web"
+      },
+      "alternativa": {
+        "texto": "O pregúntenos por WhatsApp",
+        "destino": "whatsapp:Hola. Me interesa un sitio web para mi negocio."
+      }
+    }
+  },
+  "claveEmpresasIa": {
+    "hero": {
+      "titulo": "Empresa de IA en Aguascalientes",
+      "tituloApagado": "para negocios que atienden por mensaje y por cita.",
+      "entradilla": "Diabolical Services es una empresa de inteligencia artificial de Aguascalientes. Instalamos chatbots, agendamiento automatizado y sitios web sobre las herramientas que su negocio ya usa, publicamos por escrito hasta dónde llega cada servicio y lo dejamos funcionando.",
+      "bajada": "Chatbots, agenda automática y sitios web, instalados sobre lo que su negocio ya usa.",
+      "ctaSecundario": {
+        "texto": "Ver qué instalamos",
+        "destino": "#que-instalamos"
+      }
+    },
+    "definicion": {
+      "titulo": "Qué hace una empresa de IA",
+      "texto": "Una empresa de inteligencia artificial diseña, instala y mantiene sistemas que hacen parte del trabajo de un negocio: responder mensajes, agendar citas, dar seguimiento a interesados o clasificar solicitudes. Diabolical Services es una empresa de IA de Aguascalientes especializada en atención y agenda para negocios de servicio: inmobiliarias, gimnasios, spas y salones de uñas. Trabaja sobre el WhatsApp, el sitio web, Instagram y Facebook del propio negocio, y cada servicio publica en su página lo que incluye y lo que no."
+    },
+    "soluciones": {
+      "id": "que-instalamos",
+      "titulo": "Lo que instalamos.",
+      "entradilla": "Tres servicios que trabajan juntos y un diagnóstico para saber por cuál empezar. Cada uno se contrata por separado.",
+      "items": [
+        {
+          "titulo": "Chatbots con inteligencia artificial",
+          "texto": "Responde en WhatsApp, el sitio web, Instagram y Facebook con la información real del negocio, a cualquier hora, y pasa la conversación a una persona cuando hace falta criterio.",
+          "escena": "chatbots",
+          "destino": "/chatbots-aguascalientes",
+          "enlace": "Ver chatbots en Aguascalientes"
+        },
+        {
+          "titulo": "Agendamiento automatizado",
+          "texto": "Ofrece los horarios que existen, confirma la cita, envía el recordatorio y reagenda sin que nadie del equipo tenga que intervenir.",
+          "escena": "agendamiento-automatizado",
+          "destino": "/agendamiento-automatizado-aguascalientes",
+          "enlace": "Ver agendamiento automatizado"
+        },
+        {
+          "titulo": "Sitios web",
+          "texto": "Páginas legibles para Google y para los motores de IA, con una página por servicio y el chatbot y la agenda conectados.",
+          "escena": "sitio-web",
+          "destino": "/sitios-web-en-aguascalientes",
+          "enlace": "Ver sitios web en Aguascalientes"
+        },
+        {
+          "titulo": "Auditoría de fricción",
+          "texto": "Antes de instalar nada: un diagnóstico sin costo de dónde se le van los clientes y el tiempo, y qué conviene automatizar primero.",
+          "escena": "auditoria-de-friccion",
+          "destino": "/servicios/auditoria-de-friccion",
+          "enlace": "Ver la auditoría"
+        }
+      ]
+    },
+    "faq": {
+      "titulo": "Preguntas frecuentes sobre empresas de IA en Aguascalientes",
+      "items": [
+        {
+          "pregunta": "¿Qué empresas de IA hay en Aguascalientes?",
+          "respuesta": "Las opciones se agrupan en cuatro: agencias de marketing que suman chatbots a su oferta, programadores independientes, plataformas de autoservicio que usted configura por su cuenta y empresas dedicadas a la inteligencia artificial para negocios. Diabolical Services es de las últimas, con foco en atención y agenda para negocios de servicio."
+        },
+        {
+          "pregunta": "¿Qué debo pedirle a una empresa de IA antes de contratar?",
+          "respuesta": "Tres cosas por escrito: qué hará el sistema y qué no, con qué herramientas de su negocio se conecta y quién lo atiende cuando algo cambia. Una empresa seria también le dirá qué no conviene automatizar todavía."
+        },
+        {
+          "pregunta": "¿Cuánto cuesta contratar una empresa de IA?",
+          "respuesta": "Depende de qué tenga que hacer el sistema, cuántos canales atienda y con qué herramientas se conecte. Nosotros cotizamos después de una auditoría sin costo, con el alcance por escrito."
+        },
+        {
+          "pregunta": "¿Tengo que cambiar mis herramientas para usar inteligencia artificial?",
+          "respuesta": "No. Trabajamos sobre lo que el negocio ya usa: su WhatsApp, su sitio, su calendario y su CRM, si lo tiene. Si alguna herramienta no permite conectarse, se lo decimos en la auditoría."
+        },
+        {
+          "pregunta": "¿Trabajan con negocios de otros giros?",
+          "respuesta": "Sí. El foco son inmobiliarias, gimnasios, spas y salones de uñas, y también atendemos clínicas, despachos y comercio en línea. En la auditoría le decimos si lo que su giro necesita es algo que hacemos bien."
+        }
+      ]
+    },
+    "cierre": {
+      "titulo": "Empecemos por el diagnóstico.",
+      "texto": "La auditoría no tiene costo ni compromiso. Sale de ella con un documento que dice dónde se pierden prospectos hoy y qué conviene automatizar primero.",
+      "boton": {
+        "texto": "Cotizar mi proyecto",
+        "destino": "/contacto"
+      },
+      "alternativa": {
+        "texto": "O pregúntenos por WhatsApp",
+        "destino": "whatsapp:Hola. Me interesa la auditoría sin costo."
+      }
+    }
+  },
+  "claveInteligenciaArtificial": {
+    "hero": {
+      "titulo": "Inteligencia artificial en Aguascalientes",
+      "tituloApagado": "aplicada a lo que su negocio ya hace.",
+      "entradilla": "Inteligencia artificial para el trabajo diario de un negocio: contestar los mensajes que hoy se quedan sin respuesta, llenar la agenda y dar seguimiento a quien preguntó y no volvió. La instalamos en Aguascalientes sobre su WhatsApp, su sitio y su calendario.",
+      "bajada": "Responde mensajes, llena la agenda y da seguimiento, sobre las herramientas que ya usa.",
+      "ctaSecundario": {
+        "texto": "Ver qué resuelve",
+        "destino": "#que-resuelve"
+      }
+    },
+    "definicion": {
+      "titulo": "Qué es la inteligencia artificial para un negocio",
+      "texto": "La inteligencia artificial aplicada a un negocio son sistemas que entienden un mensaje escrito como lo escribe la gente, consultan la información real del negocio y actúan: responden, agendan, registran al interesado o pasan la conversación a una persona. En Aguascalientes, Diabolical Services la instala de tres formas: chatbots para WhatsApp, el sitio web, Instagram y Facebook; agendamiento automatizado sobre la disponibilidad real, y sitios web preparados para que los motores de IA los entiendan y los citen."
+    },
+    "soluciones": {
+      "id": "que-resuelve",
+      "titulo": "Lo que resuelve en un negocio.",
+      "entradilla": "Cuatro tareas que hoy dependen de que alguien esté disponible.",
+      "items": [
+        {
+          "titulo": "Contestar a cualquier hora",
+          "texto": "Precios, horarios, disponibilidad y requisitos respondidos en segundos, en WhatsApp y en el sitio, también de noche y en fin de semana.",
+          "escena": "chatbots",
+          "destino": "/chatbots-aguascalientes",
+          "enlace": "Ver chatbots con IA"
+        },
+        {
+          "titulo": "Llenar la agenda",
+          "texto": "Citas, visitas y clases agendadas sobre los huecos reales, con confirmación y recordatorio automáticos.",
+          "escena": "agendamiento-automatizado",
+          "destino": "/agendamiento-automatizado-aguascalientes",
+          "enlace": "Ver agendamiento automatizado"
+        },
+        {
+          "titulo": "Dar seguimiento",
+          "texto": "Las cotizaciones sin cerrar y los clientes que no regresan dejan de depender de que alguien se acuerde. El cierre lo sigue haciendo una persona.",
+          "escena": "ia-de-ventas",
+          "destino": "/servicios/ia-de-ventas",
+          "enlace": "Ver IA de ventas"
+        },
+        {
+          "titulo": "Aparecer en las respuestas de la IA",
+          "texto": "Un sitio preparado para que ChatGPT, Claude o Perplexity entiendan su negocio y puedan mencionarlo cuando alguien pide un proveedor en Aguascalientes.",
+          "escena": "posicionamiento-en-ia",
+          "destino": "/servicios/posicionamiento-en-ia",
+          "enlace": "Ver posicionamiento en IA"
+        }
+      ]
+    },
+    "faq": {
+      "titulo": "Preguntas frecuentes sobre inteligencia artificial en Aguascalientes",
+      "items": [
+        {
+          "pregunta": "¿Qué puede hacer la inteligencia artificial por un negocio pequeño?",
+          "respuesta": "Lo que más rinde en un negocio de servicio es lo repetitivo: contestar las mismas preguntas, agendar, confirmar y recordar citas, y dar seguimiento a interesados. Son tareas que hoy dependen de que alguien esté libre y que un sistema puede hacer a cualquier hora."
+        },
+        {
+          "pregunta": "¿La inteligencia artificial reemplaza a mi equipo?",
+          "respuesta": "No. Se encarga de lo repetitivo y pasa a una persona todo lo que pide criterio, con la conversación completa. Su equipo deja de contestar lo mismo y atiende a quien tiene enfrente."
+        },
+        {
+          "pregunta": "¿Qué necesito para empezar?",
+          "respuesta": "Un flujo constante de mensajes o una agenda que llenar, y la información de su negocio: servicios, precios, horarios y reglas. Si hoy llegan pocos mensajes, lo primero es la captación: sitio web y posicionamiento."
+        },
+        {
+          "pregunta": "¿Cuánto tarda en instalarse?",
+          "respuesta": "Depende de los canales y de las herramientas que haya que conectar. El plazo queda por escrito en la propuesta, después de la auditoría sin costo."
+        },
+        {
+          "pregunta": "¿Puede la IA dar una información equivocada?",
+          "respuesta": "Responde con la información que el negocio le da, y se le define por escrito qué no debe contestar nunca. Lo que pide criterio, como un consejo médico, legal o fiscal, lo deriva a una persona."
+        }
+      ]
+    },
+    "cierre": {
+      "titulo": "Empecemos por lo que hoy se queda sin respuesta.",
+      "texto": "La auditoría sin costo le dice qué conviene automatizar primero en su negocio y qué todavía no vale la pena.",
+      "boton": {
+        "texto": "Cotizar mi proyecto",
+        "destino": "/contacto"
+      },
+      "alternativa": {
+        "texto": "O pregúntenos por WhatsApp",
+        "destino": "whatsapp:Hola. Me interesa aplicar inteligencia artificial en mi negocio."
+      }
+    }
+  },
+  "claveIaNegocios": {
+    "hero": {
+      "titulo": "IA para negocios en Aguascalientes",
+      "tituloApagado": "explicada giro por giro.",
+      "entradilla": "Lo que conviene automatizar cambia de una inmobiliaria a un salón de uñas. Aquí está, giro por giro, qué hace la inteligencia artificial en cada negocio y por dónde empezar, con el alcance publicado de cada servicio.",
+      "bajada": "Qué automatizar en una inmobiliaria, un gimnasio, un spa o un salón de uñas, y por dónde empezar.",
+      "ctaSecundario": {
+        "texto": "Ver por giro",
+        "destino": "#por-giro"
+      }
+    },
+    "definicion": {
+      "titulo": "Qué es la IA para negocios",
+      "texto": "La IA para negocios son sistemas de inteligencia artificial que se encargan de tareas concretas de la operación diaria: atender consultas, agendar, confirmar citas y dar seguimiento a interesados. En Aguascalientes, Diabolical Services la adapta a cada giro: en una inmobiliaria califica al interesado y agenda la visita; en un gimnasio aparta la clase de prueba; en un spa reserva por cabina y terapeuta, y en un salón de uñas cotiza el diseño y ofrece los huecos de cada manicurista."
+    },
+    "soluciones": {
+      "id": "por-giro",
+      "titulo": "Qué hace en cada giro.",
+      "entradilla": "El sistema es el mismo; lo que cambia es lo que deja hecho en cada negocio.",
+      "items": [
+        {
+          "titulo": "IA para inmobiliarias",
+          "texto": "Cada consulta atendida al momento, calificada por presupuesto y zona, con la visita ya agendada con el asesor que corresponde.",
+          "escena": "inmobiliarias",
+          "destino": "/sectores/inmobiliarias",
+          "enlace": "Ver inteligencia artificial para inmobiliarias"
+        },
+        {
+          "titulo": "IA para gimnasios",
+          "texto": "Precios y horarios al instante, la clase de prueba apartada y seguimiento a quien todavía no decide.",
+          "escena": "gimnasios",
+          "destino": "/sectores/gimnasios",
+          "enlace": "Ver inteligencia artificial para gimnasios"
+        },
+        {
+          "titulo": "IA para spas",
+          "texto": "Responde tratamientos y precios, reserva por cabina y terapeuta y confirma la cita sin interrumpir a nadie.",
+          "escena": "spas",
+          "destino": "/sectores/spas",
+          "enlace": "Ver inteligencia artificial para spas"
+        },
+        {
+          "titulo": "IA para salones de uñas",
+          "texto": "Cotiza cada diseño, ofrece los huecos reales de cada manicurista y confirma la cita mientras su equipo sigue trabajando.",
+          "escena": "salones-de-unas",
+          "destino": "/sectores/salones-de-unas",
+          "enlace": "Ver inteligencia artificial para salones de uñas"
+        }
+      ]
+    },
+    "faq": {
+      "titulo": "Preguntas frecuentes sobre IA para negocios en Aguascalientes",
+      "items": [
+        {
+          "pregunta": "¿Por dónde empieza un negocio que nunca ha usado IA?",
+          "respuesta": "Por lo que más se repite y más cuesta cuando no se atiende: casi siempre, contestar mensajes y agendar. Un chatbot conectado a la agenda se encarga de las dos cosas sin cambiar las herramientas del equipo."
+        },
+        {
+          "pregunta": "¿Sirve la IA para un negocio pequeño?",
+          "respuesta": "Sí, si recibe mensajes o citas con regularidad. No necesita un equipo de sistemas: el negocio aporta su información y sus reglas, y la instalación la hacemos nosotros."
+        },
+        {
+          "pregunta": "¿Qué giros atienden?",
+          "respuesta": "Nos especializamos en inmobiliarias, gimnasios, spas y salones de uñas, y también trabajamos con clínicas, despachos y comercio en línea."
+        },
+        {
+          "pregunta": "¿Puedo empezar con un solo servicio?",
+          "respuesta": "Sí. Cada servicio se contrata por separado. Lo habitual es empezar por el que resuelve el problema más caro hoy y sumar los demás cuando el primero ya funciona."
+        },
+        {
+          "pregunta": "¿Qué diferencia hay entre un chatbot y un agendamiento automatizado?",
+          "respuesta": "El chatbot conversa: responde dudas y guía al interesado. El agendamiento automatizado se encarga de la cita: ofrece los horarios reales, confirma, recuerda y reagenda. Suelen instalarse juntos, porque el chatbot termina donde empieza la agenda."
+        }
+      ]
+    },
+    "cierre": {
+      "titulo": "Empecemos por su giro.",
+      "texto": "En la auditoría sin costo revisamos cómo le llegan hoy los clientes a su negocio y qué conviene automatizar primero.",
+      "boton": {
+        "texto": "Cotizar mi proyecto",
+        "destino": "/contacto"
+      },
+      "alternativa": {
+        "texto": "O pregúntenos por WhatsApp",
+        "destino": "whatsapp:Hola. Me interesa la IA para mi negocio."
       }
     }
   }

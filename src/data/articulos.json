@@ -14,7 +14,8 @@
     "cta": {
       "titulo": "¿Quiere ver cómo se vería en su negocio?",
       "texto": "La auditoría no tiene costo ni compromiso. Salimos de ella con un diagnóstico escrito de qué conviene automatizar en su negocio y qué no.",
-      "boton": "Ver chatbots con IA"
+      "boton": "Ver empresa de IA en Aguascalientes",
+      "destino": "/empresas-de-ia-en-aguascalientes"
     },
     "secciones": [
       {
@@ -137,7 +138,8 @@
     "cta": {
       "titulo": "¿Qué tipo de sitio le conviene?",
       "texto": "Le decimos qué tipo de sitio necesita su negocio, qué páginas debería tener y cuánto tardaría, con el alcance por escrito antes de empezar.",
-      "boton": "Ver diseño de páginas web"
+      "boton": "Ver sitios web en Aguascalientes",
+      "destino": "/sitios-web-en-aguascalientes"
     },
     "secciones": [
       {
@@ -386,7 +388,8 @@
     "cta": {
       "titulo": "¿Por dónde empezaría en su negocio?",
       "texto": "La auditoría gratuita le dice qué conviene automatizar primero en su negocio, en qué orden y qué no vale la pena tocar todavía.",
-      "boton": "Ver agendamiento automatizado"
+      "boton": "Ver IA para negocios en Aguascalientes",
+      "destino": "/ia-para-negocios-aguascalientes"
     },
     "secciones": [
       {

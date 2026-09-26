@@ -3,9 +3,7 @@ import { CICLO_GUIAS, Guias } from './guias';
 import {
     AgentesYChatbots,
     AuditoriaDeFriccion,
-    EmbudosDeVenta,
     FichaDeGoogle,
-    GoogleAds,
     IaDeVentas,
     IaParaTienda,
     IaWhatsapp,
@@ -116,10 +114,8 @@ export const ESCENAS = {
     // Servicios
     'posicionamiento-organico': escena(PosicionamientoOrganico, 240, 120),
     'ficha-de-google': escena(FichaDeGoogle, 240, 130),
-    'google-ads': escena(GoogleAds, 260, 140),
     'posicionamiento-en-ia': escena(PosicionamientoEnIa, 280, 150),
     'sitio-web': escena(SitioWeb, 260, 140),
-    'embudos-de-venta': escena(EmbudosDeVenta, 260, 130),
     'ia-whatsapp': escena(IaWhatsapp, 280, 150),
     'agentes-y-chatbots': escena(AgentesYChatbots, 280, 140),
     'ia-de-ventas': escena(IaDeVentas, 280, 140),

@@ -1,6 +1,7 @@
 const SECTORES = require('../src/data/sectores.json');
 const ARTICULOS = require('../src/data/articulos.json');
 const SERVICIOS = require('../src/data/servicios.json');
+const CLAVES = require('../src/data/claves.json');
 const FOTOS = require('../src/data/fotos.json');
 const config = require('./config');
 const { leerContenido } = require('./contenido');
@@ -15,8 +16,10 @@ const SITE = config.siteUrl;
 const ID_NEGOCIO = `${SITE}/#negocio`;
 const ID_WEBSITE = `${SITE}/#website`;
 
-const TELEFONO = '+524495136907';
-const EMAIL = 'contacto@diabolicalservices.tech';
+// Número y correo: src/data/contacto.json, el mismo archivo que usa el sitio.
+const CONTACTO = require('../src/data/contacto.json');
+const TELEFONO = `+${CONTACTO.whatsapp}`;
+const EMAIL = CONTACTO.email;
 
 /*
  * El sitio pasa de una landing a varias paginas. Las rutas de sector cambian de
@@ -79,6 +82,9 @@ const REDIRECCIONES = {
     // Salones de belleza se dividió en spas y salones de uñas; su contenido
     // (estética, anticipos, agenda por profesional) es el de spas.
     '/sectores/salones-de-belleza': rutaSector('spas'),
+    // Servicios retirados del catálogo: su búsqueda la cubre el índice.
+    '/servicios/google-ads': RUTA_SERVICIOS,
+    '/servicios/embudos-de-venta': RUTA_SERVICIOS,
 };
 
 /**
@@ -139,7 +145,7 @@ function negocio() {
         name: 'Diabolical Services',
         alternateName: 'Diabolical',
         description:
-            'Empresa de inteligencia artificial y páginas web en Aguascalientes. Tres servicios principales —sitios web, chatbots con IA y agendamiento automatizado— para inmobiliarias, gimnasios, spas y salones de uñas, sobre las herramientas que el negocio ya utiliza. Como complemento: posicionamiento en Google y en motores de IA, publicidad, identidad de marca y automatizaciones a medida.',
+            'Empresa de inteligencia artificial y páginas web en Aguascalientes. Tres servicios principales —sitios web, chatbots con IA y agendamiento automatizado— para inmobiliarias, gimnasios, spas y salones de uñas, sobre las herramientas que el negocio ya utiliza. Como complemento: posicionamiento en Google y en motores de IA, identidad de marca y automatizaciones a medida.',
         slogan: 'Páginas web e inteligencia artificial para negocios en Aguascalientes.',
         url: SITE,
         telephone: TELEFONO,
@@ -173,7 +179,6 @@ function negocio() {
             'Tiendas en línea',
             'Posicionamiento en buscadores y en motores generativos',
             'Marketing digital para negocios locales',
-            'Publicidad en Google',
             'Identidad de marca',
             'Automatización de procesos',
             'Chatbots de WhatsApp',
@@ -335,7 +340,7 @@ function metadatosPorRuta() {
     meta[RUTA_SERVICIOS] = {
         title: 'Servicios: sitios web, chatbots y agenda con IA | Diabolical',
         description:
-            'Sitios web, chatbots y agendamiento automatizado para negocios en Aguascalientes, más diez servicios complementarios. Cada uno con su alcance publicado.',
+            'Sitios web, chatbots y agendamiento automatizado para negocios en Aguascalientes, más ocho servicios complementarios. Cada uno con su alcance publicado.',
         keywords:
             'sitios web en Aguascalientes, chatbots Aguascalientes, agendamiento automatizado, IA para negocios Aguascalientes, empresa de IA en Aguascalientes',
         robots: 'index, follow',
@@ -343,8 +348,8 @@ function metadatosPorRuta() {
 
     for (const servicio of SERVICIOS) {
         meta[rutaServicio(servicio.slug)] = {
-            title: `${servicio.nombre} en Aguascalientes | Diabolical`,
-            description: servicio.resumen,
+            title: servicio.seo?.title ?? `${servicio.nombre} en Aguascalientes | Diabolical`,
+            description: servicio.seo?.description ?? servicio.resumen,
             keywords: `${servicio.nombre.toLowerCase()} Aguascalientes, inteligencia artificial para negocios en Aguascalientes, ${servicio.categoria.toLowerCase()}`,
             robots: 'index, follow',
         };
@@ -361,6 +366,16 @@ function metadatosPorRuta() {
             title: landing.seo.title,
             description: landing.seo.description,
             keywords: landing.seo.keywords,
+            robots: 'index, follow',
+        };
+    }
+
+    // Landings de frase clave: la frase va en la dirección y en el título.
+    for (const clave of CLAVES) {
+        meta[clave.ruta] = {
+            title: clave.seo.title,
+            description: clave.seo.description,
+            keywords: clave.seo.keywords,
             robots: 'index, follow',
         };
     }
@@ -519,10 +534,105 @@ function bloquesLanding(servicio) {
     return bloques;
 }
 
+/*
+ * La respuesta al precio es la misma en todo el sitio: la de la portada.
+ * Un precio que cambiara de una página a otra es justo lo que hace que un
+ * motor generativo deje de fiarse de la fuente.
+ */
+const RESPUESTA_PRECIO = require('../src/data/faq.json').find((p) => /^¿Cuánto cuesta/.test(p.pregunta))?.respuesta;
+
+/** «Posicionamiento orgánico» → «posicionamiento orgánico»; «IA de ventas» se queda. */
+const enFrase = (nombre) => (/^[A-ZÁÉÍÓÚ][a-záéíóúñ]/.test(nombre) ? nombre.charAt(0).toLowerCase() + nombre.slice(1) : nombre);
+
+/**
+ * Las cuatro preguntas de la página de un servicio complementario. Son los
+ * encabezados de la propia página (¿en qué consiste?, ¿qué incluye?, ¿hasta
+ * dónde llega?, ¿cuánto cuesta?) con su texto: lo marcado es lo que se ve.
+ */
+function preguntasServicio(servicio) {
+    const n = enFrase(servicio.nombre);
+    return [
+        { q: `¿En qué consiste el servicio de ${n}?`, a: servicio.detalle },
+        { q: `¿Qué incluye el servicio de ${n}?`, a: (servicio.incluye ?? []).join(' ') },
+        { q: `¿Hasta dónde llega el servicio de ${n}?`, a: servicio.limite },
+        { q: `¿Cuánto cuesta el servicio de ${n}?`, a: RESPUESTA_PRECIO },
+    ].filter((p) => p.a);
+}
+
+/** Preguntas de una landing de frase clave, tal como se ven en la página. */
+function preguntasClave(bloque) {
+    return (bloque.faq?.items ?? [])
+        .filter((p) => p?.pregunta && p?.respuesta)
+        .map((p) => ({ q: p.pregunta, a: p.respuesta }));
+}
+
+/**
+ * JSON-LD de una landing de frase clave: el Service que describe la página,
+ * con lo que resuelve como catálogo, sus preguntas y sus migas. La
+ * descripción es el párrafo de definición: el mismo que se lee en la página y
+ * el que un motor generativo puede citar tal cual.
+ */
+function bloquesClave(clave) {
+    const bloque = leerContenido().valor[clave.bloque] ?? {};
+    const url = `${SITE}${clave.ruta}`;
+    const nombre = [bloque.hero?.titulo, bloque.hero?.tituloApagado].filter(Boolean).join(' ') || clave.clave;
+    const soluciones = (bloque.soluciones?.items ?? []).filter((i) => i?.titulo);
+    const preguntas = preguntasClave(bloque);
+
+    const bloques = [
+        {
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            '@id': `${url}#servicio`,
+            name: nombre,
+            alternateName: [clave.clave, clave.nombreEnlace].filter(Boolean),
+            description: bloque.definicion?.texto || clave.seo.description,
+            url,
+            serviceType: clave.seo.tipo,
+            provider: { '@id': ID_NEGOCIO },
+            areaServed: [
+                { '@type': 'City', name: 'Aguascalientes' },
+                { '@type': 'State', name: 'Aguascalientes' },
+                { '@type': 'Country', name: 'México' },
+            ],
+            ...(imagenDe(clave.foto) && { image: imagenDe(clave.foto) }),
+            ...(soluciones.length > 0 && {
+                hasOfferCatalog: {
+                    '@type': 'OfferCatalog',
+                    name: bloque.soluciones?.titulo || nombre,
+                    itemListElement: soluciones.map((i) => ({
+                        '@type': 'Offer',
+                        itemOffered: {
+                            '@type': 'Service',
+                            name: i.titulo,
+                            description: i.texto,
+                            ...(i.destino?.startsWith('/') && { url: `${SITE}${i.destino.split('#')[0]}` }),
+                        },
+                    })),
+                },
+            }),
+        },
+    ];
+
+    if (preguntas.length > 0) bloques.push(faqPage(preguntas));
+
+    bloques.push(
+        migas([
+            { nombre: 'Inicio', ruta: '/' },
+            { nombre: bloque.hero?.titulo || clave.nombreEnlace, ruta: clave.ruta },
+        ])
+    );
+
+    return bloques;
+}
+
 /** Los bloques JSON-LD que corresponden a una ruta. */
 function bloquesDeRuta(ruta) {
     const landing = LANDINGS.find((s) => s.ruta === ruta);
     if (landing) return bloquesLanding(landing);
+
+    const clave = CLAVES.find((c) => c.ruta === ruta);
+    if (clave) return bloquesClave(clave);
 
     /*
      * Página de un servicio.
@@ -551,7 +661,9 @@ function bloquesDeRuta(ruta) {
                 // con criterio en lugar de por parecido.
                 termsOfService: servicio.limite,
             },
-            negocioCompacto(),
+            // La ficha del negocio ya la pone datosEstructurados() delante de
+            // todo: repetirla aquí la declaraba dos veces en la misma página.
+            faqPage(preguntasServicio(servicio)),
             migas([
                 { nombre: 'Inicio', ruta: '/' },
                 { nombre: 'Servicios', ruta: RUTA_SERVICIOS },
@@ -790,6 +902,7 @@ const RUTAS_PUBLICAS = [
     RUTA_NOSOTROS,
     RUTA_SERVICIOS,
     ...SERVICIOS.map((s) => rutaServicio(s.slug)),
+    ...CLAVES.map((c) => c.ruta),
     RUTA_SECTORES,
     ...SECTORES.map((s) => rutaSector(s.slug)),
     RUTA_CONTACTO,
@@ -817,6 +930,7 @@ const RUTAS_PRERENDER = [
     RUTA_NOSOTROS,
     RUTA_SERVICIOS,
     ...SERVICIOS.map((s) => rutaServicio(s.slug)),
+    ...CLAVES.map((c) => c.ruta),
     RUTA_SECTORES,
     ...SECTORES.map((s) => rutaSector(s.slug)),
     RUTA_CONTACTO,
@@ -848,10 +962,14 @@ module.exports = {
     RUTA_CHATBOTS,
     RUTA_AGENDAMIENTO,
     LANDINGS,
+    CLAVES,
     REDIRECCIONES,
     SERVICIOS,
     FAQ_PORTADA,
     preguntasLanding,
+    preguntasClave,
+    preguntasServicio,
+    RESPUESTA_PRECIO,
     rutaSector,
     rutaServicio,
     rutaArticulo,

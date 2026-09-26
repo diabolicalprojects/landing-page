@@ -1,13 +1,11 @@
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
 
 import Pagina from '../components/common/Pagina';
 import HeroPagina from '../components/common/HeroPagina';
-import Enlace from '../components/common/Enlace';
 import EncabezadoSeccion from '../components/common/EncabezadoSeccion';
-import ServiciosPrincipales from '../components/common/ServiciosPrincipales';
+import TarjetaEscena from '../components/common/TarjetaEscena';
 import CtaServicio from '../components/common/CtaServicio';
-import { SERVICIOS_POR_CATEGORIA, rutaServicio } from '../data/servicios';
+import { SERVICIOS_COMPLEMENTARIOS, SERVICIOS_PRINCIPALES, rutaServicio } from '../data/servicios';
 
 /*
  * Índice de servicios.
@@ -31,8 +29,8 @@ const ServiciosPage = () => (
                     <span className="titular-apagado">para negocios en Aguascalientes.</span>
                 </>
             }
-            entradilla="Tres servicios principales (sitios web, chatbots y agendamiento automatizado) y diez complementarios con la misma calidad. Cada uno tiene su página con lo que incluye y hasta dónde llega."
-            bajada="Sitios web, chatbots y agendamiento automatizado, más diez servicios complementarios con la misma calidad."
+            entradilla="Tres servicios principales (sitios web, chatbots y agendamiento automatizado) y ocho complementarios con la misma calidad. Cada uno tiene su página con lo que incluye y hasta dónde llega."
+            bajada="Sitios web, chatbots y agendamiento automatizado, más ocho servicios complementarios con la misma calidad."
             cta={<CtaServicio ubicacion="servicios-hero" />}
             escena={{
                 clave: 'nucleo',
@@ -40,49 +38,56 @@ const ServiciosPage = () => (
             }}
         />
 
+        {/* Los principales, uno por fila: la escena a la izquierda y a la derecha
+            qué resuelve y qué incluye. */}
         <section className="zona-clara seccion">
             <div className="contenedor">
                 <EncabezadoSeccion
                     titulo="Sitios web, chatbots y agendamiento."
                     entradilla="El sitio atrae, el chatbot responde y la agenda confirma. Se pueden contratar por separado, pero rinden más como una sola pieza."
                 />
-                <div className="mt-12 md:mt-16">
-                    <ServiciosPrincipales nivel="h2" />
-                </div>
+                <ul className="mt-12 grid gap-4 md:mt-16">
+                    {SERVICIOS_PRINCIPALES.map((servicio) => (
+                        <li key={servicio.slug}>
+                            <TarjetaEscena
+                                ancha
+                                nivel="h2"
+                                escena={servicio.slug}
+                                titulo={servicio.nombre}
+                                texto={servicio.resumen}
+                                incluye={servicio.incluye ?? []}
+                                destino={rutaServicio(servicio.slug)}
+                                enlace="Ver el servicio"
+                            />
+                        </li>
+                    ))}
+                </ul>
             </div>
         </section>
 
+        {/* Los complementarios, cada uno con su escena. */}
         <section className="zona-oscura zona-oscura-1 seccion">
-            <div className="contenedor space-y-14 md:space-y-20">
-                <EncabezadoSeccion titulo="Diez servicios complementarios." />
-                {SERVICIOS_POR_CATEGORIA.map((grupo) => (
-                    <div key={grupo.categoria}>
-                        <h3 className="etiqueta border-b border-white/[0.09] pb-3 text-white/70">
-                            {grupo.categoria}
-                        </h3>
-
-                        <ul className="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-                            {grupo.servicios.map((servicio) => (
-                                <li key={servicio.slug}>
-                                    <Enlace
-                                        destino={rutaServicio(servicio.slug)}
-                                        className="tarjeta tarjeta-enlace flex h-full flex-col p-6"
-                                    >
-                                        <h4 className="text-[1rem] font-extrabold leading-tight tracking-tight text-white">
-                                            {servicio.nombre}
-                                        </h4>
-                                        <p className="cuerpo mt-2.5 flex-1">{servicio.resumen}</p>
-                                        <span className="etiqueta mt-5 inline-flex items-center gap-1.5 text-white/55">
-                                            Ver el detalle
-                                            <ArrowUpRight size={13} aria-hidden="true" />
-                                        </span>
-                                    </Enlace>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
-                <CtaServicio ubicacion="servicios-complementarios" />
+            <div className="contenedor">
+                <EncabezadoSeccion
+                    titulo="Ocho servicios complementarios."
+                    entradilla="Con la misma calidad y el mismo alcance publicado que los tres principales. Se contratan solos o para completar el sitio web, el chatbot y la agenda."
+                />
+                <ul className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2">
+                    {SERVICIOS_COMPLEMENTARIOS.map((servicio) => (
+                        <li key={servicio.slug}>
+                            <TarjetaEscena
+                                nivel="h3"
+                                escena={servicio.slug}
+                                titulo={servicio.nombre}
+                                texto={servicio.resumen}
+                                incluye={(servicio.incluye ?? []).slice(0, 2)}
+                                destino={rutaServicio(servicio.slug)}
+                                enlace="Ver qué incluye"
+                            />
+                        </li>
+                    ))}
+                </ul>
+                <CtaServicio ubicacion="servicios-complementarios" className="mt-12" />
             </div>
         </section>
     </Pagina>
