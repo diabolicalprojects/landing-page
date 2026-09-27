@@ -151,7 +151,7 @@ export const BLOQUES = [
     {
         clave: 'nosotros',
         nombre: 'Página: nosotros',
-        ayuda: 'La página /nosotros: de dónde sale el nombre y los principios.',
+        ayuda: 'La página /nosotros: la trayectoria, por qué el nombre y los principios.',
         ancla: '#top',
         ruta: '/nosotros',
     },

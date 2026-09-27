@@ -351,13 +351,17 @@
     "tituloApagado": "e inteligencia artificial en Aguascalientes.",
     "entradilla": "Diabolical Services diseña y desarrolla páginas web y sistemas de inteligencia artificial para negocios de Aguascalientes. No vendemos una plantilla ni una herramienta suelta: partimos del proceso real del negocio, construimos sobre lo que la empresa ya utiliza y lo dejamos funcionando.",
     "bajada": "Partimos del proceso real de su negocio y lo dejamos funcionando.",
-    "parrafos": [
-      "Sobre el nombre. En el trato clásico con el diablo, las condiciones se descubren cuando ya es tarde. Nos quedamos con la primera mitad (el interés por lo que se repite, lo ingrato y lo que ocurre de madrugada) y publicamos la segunda por adelantado: bajo cada servicio está escrito hasta dónde llega, antes de que usted firme nada.",
-      "Las páginas web son la mitad visible del oficio. Las diseñamos y desarrollamos a medida (desde una landing hasta una tienda en línea) para que carguen rápido, se lean completas en Google y en los motores de inteligencia artificial, y se editen desde un panel sin depender de nadie. Es la misma base técnica con la que está hecho este sitio.",
-      "La parte más ingrata de cualquier negocio es la que se repite: responder lo mismo veinte veces, buscar un hueco en la agenda, recordar quién quedó de llamar. Es trabajo que nadie disfruta y que, hecho a mano, siempre se cae en el peor momento.",
-      "Nuestro oficio es convertir esa parte en un sistema que no se cansa. Atiende a cualquier hora, consulta la disponibilidad real, deja el registro donde su equipo lo consulta y entrega la conversación a una persona en cuanto hace falta criterio. No sustituye a nadie: libera a su equipo de lo que no debería estar haciendo.",
-      "Nos centramos en tres servicios (sitios web, chatbots y agendamiento automatizado) y en cuatro giros: inmobiliarias, gimnasios, spas y salones de uñas. Hacemos también posicionamiento, identidad de marca y automatizaciones a medida, con la misma calidad, como complemento de lo principal."
-    ],
+    "trayectoria": {
+      "titulo": "Por qué nos llamamos",
+      "tituloApagado": "Diabolical.",
+      "cifra": "+5",
+      "unidad": "años de experiencia conjunta",
+      "parrafos": [
+        "Somos un equipo de profesionales con más de cinco años de experiencia conjunta en la creación de soluciones digitales: páginas web, chatbots con inteligencia artificial y automatizaciones para negocios.",
+        "El nombre viene de cómo se percibe nuestro trabajo. Un sitio que atiende solo, una agenda que se confirma sin que nadie la toque o un seguimiento que nunca se olvida parecen, vistos desde fuera, magia negra. Algo casi diabólico.",
+        "Sabemos que es un nombre que puede resultar polémico, y lo elegimos a conciencia: lograr que una marca impacte y se recuerde es precisamente lo que hacemos por nuestros clientes. Lo respaldamos de la única forma que cuenta, con resultados."
+      ]
+    },
     "principios": [
       {
         "id": "pr-proceso",

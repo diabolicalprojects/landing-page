@@ -8,6 +8,7 @@ import { hayEscena } from '../motion/escenas';
 import { SERVICIOS, getServicio, rutaServicio } from '../data/servicios';
 import ServiciosPrincipales from '../components/common/ServiciosPrincipales';
 import CtaServicio from '../components/common/CtaServicio';
+import MotoresIA, { motoresEn } from '../components/common/MotoresIA';
 import FAQ from '../data/faq.json';
 
 // La misma respuesta al precio que da la portada (ver server/schema.js).
@@ -70,6 +71,10 @@ const ServicioPage = ({ slug }) => {
                                 ¿En qué <span className="titular-apagado">consiste?</span>
                             </h2>
                             <p className="cuerpo-l mt-6">{servicio.detalle}</p>
+                            {/* El servicio que trata de los asistentes de IA los enseña. */}
+                            {motoresEn(`${servicio.resumen} ${servicio.detalle}`).length > 1 && (
+                                <MotoresIA className="mt-8" />
+                            )}
                         </div>
 
                         <div className="lg:col-span-7">

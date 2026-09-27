@@ -1286,3 +1286,96 @@ test('el sitio no publica plazos de entrega ni créditos bajo las fotos', async 
         assert.ok(!/Foto: .{1,60}· Unsplash/.test(visible), `${ruta} muestra el crédito de la foto`);
     }
 });
+
+test('los asistentes de IA llevan su logo allí donde se nombran', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+    const NOMBRES = ['ChatGPT', 'Gemini', 'Claude', 'Perplexity', 'Copilot', 'Meta AI'];
+
+    // Donde el tema es aparecer en la IA, los seis con su nota.
+    for (const ruta of ['/', '/servicios/posicionamiento-en-ia', '/blog/como-aparecer-en-chatgpt']) {
+        const html = await (await fetch(`${BASE}${ruta}`)).text();
+        const i = html.indexOf('motores-ia--completo');
+        assert.ok(i > -1, `${ruta}: faltan los asistentes de IA`);
+        const bloque = html.slice(i, html.indexOf('</ul>', i));
+        for (const nombre of NOMBRES) assert.ok(bloque.includes(nombre), `${ruta}: falta ${nombre}`);
+        assert.match(html, /Ningún proveedor puede garantizar una mención/, `${ruta}: falta la nota de honestidad`);
+    }
+
+    // Bajo un párrafo, solo los que ese párrafo nombra.
+    const clave = await (await fetch(`${BASE}/inteligencia-artificial-aguascalientes`)).text();
+    const i = clave.indexOf('motores-ia--apunte');
+    assert.ok(i > -1, 'la tarjeta que nombra a ChatGPT, Claude y Perplexity no lleva sus logos');
+    const apunte = clave.slice(i, clave.indexOf('</ul>', i));
+    assert.deepEqual(
+        [...apunte.matchAll(/motores-ia__nombre">([^<]+)</g)].map((m) => m[1]),
+        ['ChatGPT', 'Claude', 'Perplexity']
+    );
+
+    // Los logos se sirven desde el propio sitio.
+    const src = clave.slice(i).match(/<img src="([^"]+\.svg)"/)[1];
+    const logo = await fetch(`${BASE}${src}`);
+    assert.equal(logo.status, 200, `${src} no se sirve`);
+});
+
+test('el HTML servido no lleva notas internas en comentarios', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+    for (const ruta of ['/', '/nosotros', RUTA_CHATBOTS]) {
+        const html = await (await fetch(`${BASE}${ruta}`)).text();
+        assert.ok(!/CONTRATO DE DIRECCI/.test(html), `${ruta} publica el contrato de dirección`);
+        // Fuera de la aplicación (cuyos marcadores son de React), ningún comentario.
+        const plantilla = html.slice(0, html.indexOf('<div id="root"'));
+        const comentarios = (plantilla.match(/<!--[\s\S]*?-->/g) ?? []).filter((c) => !/SEO_INJECT_(START|END)/.test(c));
+        assert.deepEqual(comentarios, [], `${ruta} publica comentarios`);
+    }
+});
+
+test('los giros de la portada llevan su fotografía y el chat de ejemplo viaja entero en el HTML', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+    const html = await (await fetch(`${BASE}/`)).text();
+    const tarjetas = [...html.matchAll(/class="giro-tarjeta[\s\S]*?<\/article>/g)].map((m) => m[0]);
+    assert.equal(tarjetas.length, 4, 'los cuatro giros principales llevan tarjeta');
+    for (const tarjeta of tarjetas) {
+        assert.match(tarjeta, /<img src="\/imagenes\/[a-z-]+-800\.webp"[^>]*alt="[^"]{15,}"/, 'la tarjeta no lleva foto con texto alternativo');
+    }
+
+    const chat = html.slice(html.indexOf('class="chat-demo'));
+    for (const frase of ['¿tienen lugar para un masaje en pareja', 'quedan dos cabinas libres', 'A las 5', '¿A nombre de quién la reservo?']) {
+        assert.ok(chat.includes(frase), `el chat servido no lleva «${frase}»`);
+    }
+    assert.ok(!chat.slice(0, 4000).includes('chat-demo__fila--oculta'), 'en el HTML servido la conversación se ve completa');
+});
+
+test('nosotros: la trayectoria sustituye a «De dónde viene el nombre»', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+    const html = await (await fetch(`${BASE}/nosotros`)).text();
+    assert.ok(!/De dónde viene/.test(html), 'sigue la sección del nombre');
+    assert.match(html, /Por qué nos llamamos/);
+    assert.match(html, /más de cinco años de experiencia conjunta/);
+    assert.match(html, /magia negra/);
+    assert.match(html, /con resultados/);
+    // El logo se construye en grande: la escena de identidad sigue en el hero.
+    assert.match(html, /aria-label="El logo de Diabolical construyéndose/);
+});
+
+test('el menú de servicios lleva un icono por enlace y se abre con CSS', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+    const html = await (await fetch(`${BASE}/`)).text();
+    const i = html.indexOf('class="menu-panel ');
+    assert.ok(i > -1, 'falta el panel del menú');
+    const panel = html.slice(i, html.indexOf('</li></ul></div></div></div>', i));
+    const enlaces = (panel.match(/class="menu-enlace/g) ?? []).length;
+    const iconos = (panel.match(/class="menu-icono" aria-hidden="true"><svg/g) ?? []).length;
+    assert.ok(enlaces >= 11, `el panel lleva ${enlaces} enlaces`);
+    assert.equal(iconos, enlaces, 'cada enlace del menú lleva su icono');
+    assert.ok(!/<div[^>]*hidden=""[^>]*class="menu-panel/.test(html), 'el panel ya no se oculta con hidden');
+});

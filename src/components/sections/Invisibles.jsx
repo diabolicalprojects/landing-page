@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useBloque } from '../../contenido';
 import CtaServicio from '../common/CtaServicio';
+import MotoresIA from '../common/MotoresIA';
 
 /*
  * «Invisible para la inteligencia artificial».
@@ -34,6 +35,9 @@ const Invisibles = () => {
                     </h2>
                     <p className="cuerpo-l mt-6">{entradilla}</p>
                 </header>
+
+                {/* La entradilla nombra a los asistentes; aquí se ven. */}
+                <MotoresIA className="mt-10" />
 
                 <dl className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2">
                     {datos.map((dato) => (

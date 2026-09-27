@@ -72,7 +72,9 @@ const escena = (Escena, duracion, poster, descripcion, lienzo) => ({
 export const ESCENAS = {
     // Marca
     nucleo: escena(Nucleo, 340, 150),
-    identidad: escena(Identidad, 360, 200),
+    // Póster al final del ciclo, con el logo entero: al arrancar, el
+    // reproductor se funde y el logo se construye delante de quien llega.
+    identidad: escena(Identidad, 360, 330),
     sello: escena(Sello, 420, 180),
     giros: escena(
         Giros,
@@ -178,7 +180,7 @@ const ENCUADRE_SECTOR = [66, 44, 546, 322];
 export const ENCUADRES = {
     nucleo: [40, 44, 560, 330],
     giros: [30, 44, 580, 330],
-    identidad: [120, 10, 400, 380],
+    identidad: [110, 18, 420, 382],
     sello: [150, 40, 340, 320],
     guias: [80, 44, 480, 300],
     'sitio-web': [76, 34, 488, 330],

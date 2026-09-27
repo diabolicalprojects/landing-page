@@ -9,6 +9,7 @@ import PantallaEscena from '../components/common/PantallaEscena';
 import Preguntas from '../components/common/Preguntas';
 import Fotografia from '../components/common/Fotografia';
 import CtaServicio from '../components/common/CtaServicio';
+import MotoresIA from '../components/common/MotoresIA';
 import { getSector } from '../data/sectores';
 import MotionGrafico from '../motion/MotionGrafico';
 import { useBloque } from '../contenido';
@@ -220,6 +221,7 @@ const LandingServicio = ({ slug }) => {
                                         {item.titulo}
                                     </h3>
                                     <p className="cuerpo mt-2.5">{item.texto}</p>
+                                    <MotoresIA texto={item.texto ?? ''} className="mt-4" />
                                 </li>
                             ))}
                         </ul>

@@ -6,6 +6,7 @@ import HeroPagina from '../components/common/HeroPagina';
 import Enlace from '../components/common/Enlace';
 import Preguntas from '../components/common/Preguntas';
 import TextoConEnlaces from '../components/common/TextoConEnlaces';
+import MotoresIA, { motoresEn } from '../components/common/MotoresIA';
 import CtaServicio from '../components/common/CtaServicio';
 import { getArticulo, ARTICULOS_POR_FECHA } from '../data/articulos';
 import { getServicio, rutaServicio } from '../data/servicios';
@@ -154,6 +155,10 @@ const ArticuloPage = ({ slug }) => {
                                 <p className="cuerpo-l m-0 max-w-[68ch] lg:col-span-12" style={{ color: 'var(--texto-1)' }}>
                                     <TextoConEnlaces texto={articulo.respuesta} />
                                 </p>
+                                {/* La guía que trata de aparecer en la IA enseña a quién se refiere. */}
+                                {motoresEn(`${articulo.titular} ${articulo.respuesta}`).length > 0 && (
+                                    <MotoresIA className="lg:col-span-12" />
+                                )}
                             </div>
                         </div>
                     </section>

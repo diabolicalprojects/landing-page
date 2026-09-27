@@ -5,6 +5,7 @@ import faqs from '../../data/faq.json';
 import { useBloque } from '../../contenido';
 import EncabezadoSeccion from '../common/EncabezadoSeccion';
 import CtaServicio from '../common/CtaServicio';
+import MotoresIA from '../common/MotoresIA';
 
 /*
  * Preguntas frecuentes. Segunda inversión a claro.
@@ -95,6 +96,10 @@ const FAQSection = () => {
                                             >
                                                 {faq.respuesta}
                                             </p>
+                                            <MotoresIA
+                                                texto={`${faq.pregunta} ${faq.respuesta}`}
+                                                className="-mt-2 px-5 pb-6 md:px-7 md:pb-7"
+                                            />
                                         </div>
                                     </li>
                                 );

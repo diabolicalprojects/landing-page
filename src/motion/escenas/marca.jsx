@@ -15,6 +15,7 @@ import {
     interpolar,
     vaivén,
 } from '../primitivas';
+import { LOGO } from '../logo';
 
 /*
  * Las tres escenas de marca.
@@ -215,95 +216,285 @@ export const Giros = ({ frame }) => <Red frame={frame} canales={GIROS} Icono={Gl
 /* ==========================================================================
    IDENTIDAD · quiénes somos
    --------------------------------------------------------------------------
-   La marca construyéndose: primero la retícula sobre la que está dibujada,
-   luego los anillos, luego el logotipo. Cuenta que detrás de lo que se ve hay
-   un sistema, que es literalmente lo que vende la empresa.
+   El logo construyéndose como en su guía de marca, y a tamaño grande:
+
+     0 a 1 s     la retícula se abre desde el centro y se trazan los círculos
+                 guía y las marcas de encuadre
+     0,7 s       las cotas: el logo se dibuja sobre un cuadrado de 136
+     1 a 2,8 s   el contorno del disco y el de la cabeza se dibujan en blanco;
+                 los cuernos y el ojo marcan sus puntos de construcción
+     2,8 s       el disco se llena, la cabeza queda en negro y se abre el ojo
+     3,7 s       el andamio se retira, los anillos empiezan a girar y se
+                 escribe «DIABOLICAL SERVICES»
+     después     respira, parpadea y un barrido lo recorre; al final del ciclo
+                 se funde y vuelve a construirse
+
+   Las piezas salen del propio archivo del logo (motion/logo.js): el estado
+   final es el logo exacto.
    ========================================================================== */
 
-export const Identidad = ({ frame }) => {
-    const pGuias = entrada(frame, 0, 34);
-    const pAnillos = entrada(frame, 20, 38);
-    const pMarca = entrada(frame, 44, 34);
-    const giro = frame * 0.12;
+const LADO_LOGO = 200; // el logo, en unidades del lienzo
+const ESCALA = LADO_LOGO / LOGO.lado;
+const R_DISCO = LOGO.radio * ESCALA;
+const ORIGEN_X = centroX - LADO_LOGO / 2;
+const ORIGEN_Y = centroY - LADO_LOGO / 2;
+const NOMBRE = 'DIABOLICAL SERVICES';
 
-    const guias = [-120, -60, 0, 60, 120];
+// Entrada y salida suaves, para los trazos: la curva de la casa frena de golpe
+// y un contorno que se dibuja se ve mejor acelerando y frenando.
+const suave = (t) => {
+    const x = Math.min(1, Math.max(0, t));
+    return x < 0.5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2;
+};
+const tramo = (frame, desde, duracion) => suave((frame - desde) / duracion);
+
+/** Cota de plano: la línea, sus topes y la medida. */
+const Cota = ({ x1, y1, x2, y2, texto }) => {
+    const vertical = x1 === x2;
+    const t = 5;
+    return (
+        <g stroke="#ffffff" strokeOpacity="0.45" strokeWidth="1" fill="none">
+            <line x1={x1} y1={y1} x2={x2} y2={y2} />
+            {vertical ? (
+                <>
+                    <line x1={x1 - t} y1={y1} x2={x1 + t} y2={y1} />
+                    <line x1={x2 - t} y1={y2} x2={x2 + t} y2={y2} />
+                </>
+            ) : (
+                <>
+                    <line x1={x1} y1={y1 - t} x2={x1} y2={y1 + t} />
+                    <line x1={x2} y1={y2 - t} x2={x2} y2={y2 + t} />
+                </>
+            )}
+            <text
+                x={vertical ? x1 + 10 : (x1 + x2) / 2}
+                y={vertical ? (y1 + y2) / 2 + 3 : y1 - 9}
+                textAnchor={vertical ? 'start' : 'middle'}
+                fontSize="10"
+                fill="#ffffff"
+                fillOpacity="0.6"
+                stroke="none"
+                fontFamily="inherit"
+                letterSpacing="0.08em"
+            >
+                {texto}
+            </text>
+        </g>
+    );
+};
+
+export const Identidad = ({ frame }) => {
+    const pRed = entrada(frame, 0, 30);
+    const pGuias = tramo(frame, 6, 36);
+    const pCotas = entrada(frame, 20, 24);
+    const pTrazo = tramo(frame, 30, 54);
+    const pPuntos = entrada(frame, 44, 22);
+    const pRelleno = entrada(frame, 84, 26);
+    const pOjo = entrada(frame, 104, 14);
+    const pFinal = entrada(frame, 112, 36);
+    const letras = Math.round(interpolar(frame, [120, 156], [0, NOMBRE.length]));
+    const fundido = 1 - interpolar(frame, [336, 358], [0, 1]);
+
+    // El andamio no desaparece del todo: queda como fondo tenue.
+    const andamio = 1 - pFinal * 0.72;
+    const respiro = interpolar(vaivén(Math.max(0, frame - 112), 120), [0, 1], [1, 1.018]);
+
+    // Un parpadeo cada cinco segundos, ya terminado el logo.
+    const fase = (frame - 170) % 150;
+    const parpadeo = frame > 170 && fase < 8 ? 1 - Math.sin((fase / 8) * Math.PI) * 0.92 : 1;
+
+    const lineas = [-150, -100, -50, 0, 50, 100, 150];
+    const [cx, cy] = LOGO.centroOjo;
 
     return (
         <Lienzo rejilla={false}>
-            <circle cx={centroX} cy={centroY} r="170" fill="url(#d-halo)" opacity={pMarca} />
+            <defs>
+                <radialGradient id="identidad-difumina">
+                    <stop offset="0" stopColor="#ffffff" />
+                    <stop offset="0.6" stopColor="#ffffff" stopOpacity="0.7" />
+                    <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
+                </radialGradient>
+                <mask id="identidad-mascara">
+                    <rect width={LIENZO.ancho} height={LIENZO.alto} fill="url(#identidad-difumina)" />
+                </mask>
+                <clipPath id="identidad-disco">
+                    <circle cx="68" cy="68" r="68" />
+                </clipPath>
+            </defs>
 
-            {/* La retícula de construcción. Se dibuja primero y se queda muy
-                tenue: es el andamio, no el edificio. */}
-            <g opacity={pGuias * 0.5}>
-                {guias.map((d) => (
-                    <line
-                        key={`v${d}`}
-                        x1={centroX + d}
-                        y1={centroY - 150 * pGuias}
-                        x2={centroX + d}
-                        y2={centroY + 150 * pGuias}
-                        stroke="#ffffff"
-                        strokeOpacity="0.16"
-                    />
-                ))}
-                {guias.map((d) => (
-                    <line
-                        key={`h${d}`}
-                        x1={centroX - 190 * pGuias}
-                        y1={centroY + d}
-                        x2={centroX + 190 * pGuias}
-                        y2={centroY + d}
-                        stroke="#ffffff"
-                        strokeOpacity="0.16"
-                    />
-                ))}
-            </g>
+            <g opacity={fundido}>
+                <circle
+                    cx={centroX}
+                    cy={centroY}
+                    r="200"
+                    fill="url(#d-halo)"
+                    opacity={0.3 + pRelleno * 0.7 * (0.85 + 0.15 * vaivén(frame, 120))}
+                />
 
-            <g opacity={pAnillos}>
-                <Anillo x={centroX} y={centroY} radio={132} frame={frame} velocidad={0.18} opacidad={0.18} hueco={0.42} />
-                <Anillo x={centroX} y={centroY} radio={106} frame={-frame} velocidad={0.26} opacidad={0.26} hueco={0.3} />
-            </g>
-
-            {/* Cuatro marcas de encuadre, como las de una guía de marca. */}
-            {pAnillos > 0.5 &&
-                [
-                    [-1, -1],
-                    [1, -1],
-                    [-1, 1],
-                    [1, 1],
-                ].map(([sx, sy]) => (
-                    <g key={`${sx}${sy}`} opacity={pAnillos * 0.55}>
-                        <path
-                            d={`M ${centroX + sx * 86} ${centroY + sy * 86 - sy * 14} V ${centroY + sy * 86} H ${centroX + sx * 86 - sx * 14}`}
+                {/* 1. La retícula, abriéndose desde el centro. */}
+                <g mask="url(#identidad-mascara)" opacity={andamio}>
+                    {lineas.map((d) => (
+                        <line
+                            key={`v${d}`}
+                            x1={centroX + d}
+                            y1={centroY - 200 * pRed}
+                            x2={centroX + d}
+                            y2={centroY + 200 * pRed}
                             stroke="#ffffff"
-                            strokeOpacity="0.4"
-                            fill="none"
-                            strokeWidth="1.5"
+                            strokeOpacity={d === 0 ? 0.26 : 0.12}
                         />
+                    ))}
+                    {lineas.map((d) => (
+                        <line
+                            key={`h${d}`}
+                            x1={centroX - 320 * pRed}
+                            y1={centroY + d}
+                            x2={centroX + 320 * pRed}
+                            y2={centroY + d}
+                            stroke="#ffffff"
+                            strokeOpacity={d === 0 ? 0.26 : 0.12}
+                        />
+                    ))}
+                    {[45, -45].map((a) => (
+                        <line
+                            key={a}
+                            x1={centroX - 190 * pRed}
+                            y1={centroY}
+                            x2={centroX + 190 * pRed}
+                            y2={centroY}
+                            stroke="#ffffff"
+                            strokeOpacity="0.1"
+                            strokeDasharray="3 5"
+                            transform={`rotate(${a} ${centroX} ${centroY})`}
+                        />
+                    ))}
+                </g>
+
+                {/* Círculos guía y marcas de encuadre. */}
+                <g fill="none" stroke="#ffffff" opacity={andamio}>
+                    {[R_DISCO * 0.5, R_DISCO + 32, R_DISCO + 58].map((r, i) => (
+                        <circle
+                            key={r}
+                            cx={centroX}
+                            cy={centroY}
+                            r={r}
+                            strokeOpacity={0.18 - i * 0.03}
+                            pathLength="1"
+                            strokeDasharray="1"
+                            strokeDashoffset={1 - pGuias}
+                            transform={`rotate(${-90 + i * 40} ${centroX} ${centroY})`}
+                        />
+                    ))}
+                    {[
+                        [-1, -1],
+                        [1, -1],
+                        [-1, 1],
+                        [1, 1],
+                    ].map(([sx, sy]) => {
+                        const d = R_DISCO + 42;
+                        return (
+                            <path
+                                key={`${sx}${sy}`}
+                                d={`M ${centroX + sx * d} ${centroY + sy * d - sy * 16} V ${centroY + sy * d} H ${centroX + sx * d - sx * 16}`}
+                                strokeOpacity={0.5 * pGuias}
+                                strokeWidth="1.5"
+                            />
+                        );
+                    })}
+                </g>
+
+                {/* 2. Las cotas del plano. Se van cuando el logo está hecho. */}
+                <g opacity={pCotas * (1 - pFinal)}>
+                    <Cota x1={ORIGEN_X} y1={ORIGEN_Y - 24} x2={ORIGEN_X + LADO_LOGO} y2={ORIGEN_Y - 24} texto="136" />
+                    <Cota
+                        x1={ORIGEN_X + LADO_LOGO + 24}
+                        y1={ORIGEN_Y}
+                        x2={ORIGEN_X + LADO_LOGO + 24}
+                        y2={ORIGEN_Y + LADO_LOGO}
+                        texto="136"
+                    />
+                </g>
+
+                {/* 5. Los anillos, cuando el logo ya está. */}
+                <g opacity={pFinal}>
+                    <Anillo x={centroX} y={centroY} radio={R_DISCO + 32} frame={frame} velocidad={0.22} opacidad={0.3} hueco={0.35} />
+                    <Anillo x={centroX} y={centroY} radio={R_DISCO + 58} frame={-frame} velocidad={0.14} opacidad={0.2} hueco={0.5} />
+                </g>
+
+                {/* 3 y 4. El logo: se traza, se llena y abre el ojo. */}
+                <g transform={`translate(${centroX} ${centroY}) scale(${respiro}) translate(${-centroX} ${-centroY})`}>
+                    <g transform={`translate(${ORIGEN_X} ${ORIGEN_Y}) scale(${ESCALA})`}>
+                        {/* El contorno del disco. */}
+                        <circle
+                            cx="68"
+                            cy="68"
+                            r="67.4"
+                            fill="none"
+                            stroke="#ffffff"
+                            strokeWidth="1.2"
+                            strokeOpacity={1 - pRelleno}
+                            pathLength="1"
+                            strokeDasharray="1"
+                            strokeDashoffset={1 - pTrazo}
+                            transform="rotate(-90 68 68)"
+                        />
+                        {/* El disco se llena desde el centro. */}
+                        <circle cx="68" cy="68" r={68 * pRelleno} fill="#ffffff" />
+
+                        <g clipPath="url(#identidad-disco)">
+                            <path
+                                d={LOGO.cabeza}
+                                fill="#000000"
+                                fillOpacity={pRelleno}
+                                stroke="#ffffff"
+                                strokeWidth="1.4"
+                                strokeLinejoin="round"
+                                strokeOpacity={1 - pRelleno}
+                                pathLength="1"
+                                strokeDasharray="1"
+                                strokeDashoffset={1 - pTrazo}
+                            />
+                            {pOjo > 0 && (
+                                <g transform={`translate(${cx} ${cy}) scale(1 ${pOjo * parpadeo}) translate(${-cx} ${-cy})`}>
+                                    <path d={LOGO.ojo} fill="#ffffff" />
+                                    <path d={LOGO.pupila} fill="#000000" />
+                                </g>
+                            )}
+                        </g>
+
+                        {/* Puntos de construcción: los cuernos y el ojo. */}
+                        <g opacity={pPuntos * (1 - pRelleno)} fill="none" stroke="#ffffff" strokeWidth="0.7">
+                            {LOGO.cuernos.map(([x, y]) => (
+                                <g key={x}>
+                                    <line x1="68" y1="68" x2={x} y2={y} strokeOpacity="0.35" strokeDasharray="2 3" />
+                                    <circle cx={x} cy={y} r="3.4" strokeOpacity="0.8" />
+                                    <circle cx={x} cy={y} r="0.9" fill="#ffffff" stroke="none" />
+                                </g>
+                            ))}
+                            <circle cx={cx} cy={cy} r={LOGO.radioOjo} strokeOpacity="0.5" strokeDasharray="2 2.5" />
+                            <circle cx="68" cy="68" r="1.1" fill="#ffffff" stroke="none" />
+                        </g>
                     </g>
-                ))}
+                </g>
 
-            <g transform={`rotate(${interpolar(pMarca, [0, 1], [-12, 0])} ${centroX} ${centroY})`}>
-                <Marca x={centroX} y={centroY} tam={interpolar(pMarca, [0, 1], [64, 92])} p={pMarca} />
-            </g>
+                <g opacity={pFinal}>
+                    <Barrido y={centroY} frame={frame} periodo={170} />
+                </g>
 
-            <g opacity={pMarca}>
-                <Anillo x={centroX} y={centroY} radio={70} frame={frame} velocidad={-0.4} opacidad={0.3} hueco={0.7} />
-            </g>
-
-            <g opacity={pMarca * 0.9} transform={`translate(${centroX} ${centroY + 150})`}>
+                {/* El nombre, escribiéndose. */}
                 <text
+                    x={centroX}
+                    y={centroY + R_DISCO + 86}
                     textAnchor="middle"
-                    fontSize="11"
+                    fontSize="12"
                     fill="#ffffff"
-                    fillOpacity="0.45"
+                    fillOpacity="0.55"
                     fontFamily="inherit"
-                    letterSpacing="0.28em"
+                    letterSpacing="0.32em"
                 >
-                    DIABOLICAL SERVICES
+                    {NOMBRE.slice(0, letras)}
                 </text>
             </g>
-            <g style={{ transform: `rotate(${giro}deg)` }} />
         </Lienzo>
     );
 };

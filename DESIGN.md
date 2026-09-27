@@ -312,6 +312,37 @@ abre solo con el texto, centrado en todas las pantallas. Lo pidió el cliente.
 - La escena de la marca en el centro del sistema bajó a «Tres servicios, un
   solo sistema» (`Pilares`), junto al titular que la explica.
 
+**Menú de servicios** (27-09-2026). Cada enlace lleva su icono (`ICONOS` en
+`Navbar.jsx`, por dirección; sin icono propio, una flecha) en una pastilla que
+se invierte a blanco al pasar el ratón. El panel no se monta y desmonta: está
+siempre en el HTML y se abre con CSS (`.menu-panel`), bajando y creciendo
+desde el botón con la curva de la casa, con grupos y enlaces en cascada. En el
+teléfono el menú entra desde arriba y cada grupo se despliega animando su
+altura (`.acordeon`, rejilla de 0fr a 1fr; cerrado es `inert`).
+
+**Asistentes de IA** (`MotoresIA`). Donde el texto nombra a ChatGPT, Gemini,
+Claude, Perplexity, Copilot o Meta AI se ven sus logos, cada uno en una
+pastilla negra como el icono de una app (se ve igual en zona clara y
+oscura). Completo, con etiqueta y nota, en las secciones que tratan de aparecer
+en la IA; como apunte bajo un párrafo, solo los que ese párrafo nombra. Los
+logos salen de Lobe Icons (MIT) y se sirven desde `src/assets/ia`. Se dice
+«puede aparecer», nunca «aparecerá».
+
+**Giros de la portada.** Cada tarjeta abre con la foto de su giro (la misma de
+su página, en blanco y negro) y la tarjeta entera es el enlace.
+
+**Conversación de ejemplo** (`ChatDemo`). Se ve desde el teléfono de quien
+escribe y ocurre al llegar a ella: el mensaje entra, el doble check se pone
+azul, arriba sale «escribiendo…» con los tres puntos y entra la respuesta.
+Los globos ocupan su sitio desde el principio (la página no salta), el HTML
+servido lleva la conversación entera y con menos movimiento se ve quieta.
+
+**Nosotros.** La escena de identidad construye el logo a tamaño grande como en
+una guía de marca: retícula, círculos guía y cotas; se trazan el disco y la
+cabeza (las piezas salen del archivo del logo, `motion/logo.js`), se rellenan,
+se abre el ojo y se escribe el nombre. El póster es el final del ciclo, así
+que al arrancar el logo se funde y se construye delante de quien llega.
+
 **Menú en el teléfono.** Una barra de 54 px con el logo y el botón de menú,
 a 8 px del borde. Contacto va dentro del menú: cada página tiene ya su botón
 de cotizar. Por debajo de 1024 px la barra se esconde al bajar y vuelve al

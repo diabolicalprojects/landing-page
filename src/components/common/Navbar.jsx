@@ -1,6 +1,22 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import {
+    AppWindow,
+    ArrowUpRight,
+    BotMessageSquare,
+    BrainCircuit,
+    BriefcaseBusiness,
+    Building2,
+    CalendarCheck,
+    ChevronDown,
+    LayoutGrid,
+    Menu,
+    MonitorSmartphone,
+    Palette,
+    Search,
+    Sparkles,
+    X,
+} from 'lucide-react';
 
 import { cn } from '../../utils/cn';
 import { useBloque } from '../../contenido';
@@ -34,7 +50,42 @@ import logoHorizontalBlanco from '../../assets/logo/LOGO-DIABOLICAL-HORIZONTAL-B
  * casi una décima parte de la pantalla todo el tiempo.
  */
 
-/** Panel desplegable de un enlace con grupos. */
+/*
+ * El icono de cada destino del menú. Va por dirección y no en el contenido
+ * editable: el panel no tiene que saber de iconos, y un enlace nuevo sin icono
+ * propio lleva la flecha.
+ */
+const ICONOS = {
+    '/paginas-web-aguascalientes': MonitorSmartphone,
+    '/chatbots-aguascalientes': BotMessageSquare,
+    '/agendamiento-automatizado-aguascalientes': CalendarCheck,
+    '/servicios/posicionamiento-organico': Search,
+    '/servicios/posicionamiento-en-ia': Sparkles,
+    '/servicios/identidad-de-marca': Palette,
+    '/servicios': LayoutGrid,
+    '/sitios-web-en-aguascalientes': AppWindow,
+    '/empresas-de-ia-en-aguascalientes': Building2,
+    '/inteligencia-artificial-aguascalientes': BrainCircuit,
+    '/ia-para-negocios-aguascalientes': BriefcaseBusiness,
+};
+
+const IconoMenu = ({ destino, tam = 17 }) => {
+    const Icono = ICONOS[destino] ?? ArrowUpRight;
+    return (
+        <span className="menu-icono" aria-hidden="true">
+            <Icono size={tam} strokeWidth={1.8} />
+        </span>
+    );
+};
+
+/**
+ * Panel desplegable de un enlace con grupos.
+ *
+ * No se monta y desmonta: está siempre en el HTML (los rastreadores leen sus
+ * enlaces) y se abre con CSS (`.menu-panel`, en index.css): el panel baja y
+ * crece desde el botón, y los grupos y enlaces entran escalonados. Cerrado
+ * queda con `visibility: hidden`, fuera del tabulador y del lector de pantalla.
+ */
 const Desplegable = ({ enlace, sobreClaro }) => {
     const [abierto, setAbierto] = useState(false);
     const contenedor = useRef(null);
@@ -100,37 +151,49 @@ const Desplegable = ({ enlace, sobreClaro }) => {
 
             <div
                 id={idPanel}
-                hidden={!abierto}
-                className="absolute left-1/2 top-full z-50 w-[min(52rem,calc(100vw-3rem))] -translate-x-1/2 pt-4"
+                data-abierto={abierto || undefined}
+                className="menu-panel absolute left-1/2 top-full z-50 w-[min(54rem,calc(100vw-3rem))] -translate-x-1/2 pt-4"
             >
-                <div className="zona-oscura grid gap-8 rounded-3xl border border-white/10 p-7 shadow-2xl md:grid-cols-[1.35fr_1fr_1fr]">
-                    {(enlace.grupos ?? []).map((grupo) => (
-                        <div key={grupo.id ?? grupo.titulo}>
-                            <p className="etiqueta" style={{ color: 'var(--texto-3)' }}>
-                                {grupo.titulo}
-                            </p>
-                            <ul className="mt-4 space-y-1">
-                                {(grupo.enlaces ?? []).map((hijo) => (
-                                    <li key={hijo.destino ?? hijo.texto}>
-                                        <Enlace
-                                            destino={hijo.destino}
-                                            onClick={() => setAbierto(false)}
-                                            className="-mx-3 flex min-h-[2.25rem] flex-col justify-center rounded-xl px-3 py-2 transition-colors duration-150 hover:bg-white/[0.06]"
+                <div className="menu-panel__tarjeta zona-oscura grid gap-8 rounded-3xl border border-white/10 p-7 shadow-2xl md:grid-cols-[1.35fr_1fr_1fr]">
+                    {(enlace.grupos ?? []).map((grupo, g) => {
+                        // Orden de entrada: cada columna arranca un poco después
+                        // que la anterior y sus enlaces van en cascada.
+                        const base = g * 2;
+                        return (
+                            <div key={grupo.id ?? grupo.titulo}>
+                                <p className="etiqueta menu-panel__pieza" style={{ color: 'var(--texto-3)', '--i': base }}>
+                                    {grupo.titulo}
+                                </p>
+                                <ul className="mt-4 space-y-1">
+                                    {(grupo.enlaces ?? []).map((hijo, h) => (
+                                        <li
+                                            key={hijo.destino ?? hijo.texto}
+                                            className="menu-panel__pieza"
+                                            style={{ '--i': base + h + 1 }}
                                         >
-                                            <span className="text-[0.9375rem] font-bold tracking-tight text-white">
-                                                {hijo.texto}
-                                            </span>
-                                            {hijo.detalle && (
-                                                <span className="mt-0.5 text-[0.9375rem] leading-snug text-white/60">
-                                                    {hijo.detalle}
+                                            <Enlace
+                                                destino={hijo.destino}
+                                                onClick={() => setAbierto(false)}
+                                                className="menu-enlace -mx-3 flex min-h-[2.25rem] items-start gap-3 rounded-xl px-3 py-2 transition-colors duration-150 hover:bg-white/[0.06]"
+                                            >
+                                                <IconoMenu destino={hijo.destino} />
+                                                <span className="flex min-w-0 flex-col justify-center self-center">
+                                                    <span className="text-[0.9375rem] font-bold tracking-tight text-white">
+                                                        {hijo.texto}
+                                                    </span>
+                                                    {hijo.detalle && (
+                                                        <span className="mt-0.5 text-[0.9375rem] leading-snug text-white/60">
+                                                            {hijo.detalle}
+                                                        </span>
+                                                    )}
                                                 </span>
-                                            )}
-                                        </Enlace>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
+                                            </Enlace>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </li>
@@ -313,7 +376,7 @@ const Navbar = () => {
             </div>
 
             {menuAbierto && (
-                <div className="absolute left-0 top-[calc(100%+10px)] flex max-h-[calc(100dvh-6rem)] w-full flex-col overflow-y-auto rounded-3xl border border-white/10 bg-black px-5 py-3 shadow-2xl lg:hidden">
+                <div className="menu-movil absolute left-0 top-[calc(100%+10px)] flex max-h-[calc(100dvh-6rem)] w-full flex-col overflow-y-auto rounded-3xl border border-white/10 bg-black px-5 py-3 shadow-2xl lg:hidden">
                     {normales.map((enlace) =>
                         (enlace.grupos ?? []).length > 0 ? (
                             <div key={enlace.id ?? enlace.texto} className="border-b border-white/10">
@@ -330,22 +393,33 @@ const Navbar = () => {
                                         className={cn('transition-transform duration-200', grupoMovil === enlace.id && 'rotate-180')}
                                     />
                                 </button>
-                                <div hidden={grupoMovil !== enlace.id} className="pb-4">
-                                    {(enlace.grupos ?? []).map((grupo) => (
-                                        <div key={grupo.id ?? grupo.titulo} className="mt-2 first:mt-0">
-                                            <p className="etiqueta py-2 text-white/55">{grupo.titulo}</p>
-                                            {(grupo.enlaces ?? []).map((hijo) => (
-                                                <Enlace
-                                                    key={hijo.destino ?? hijo.texto}
-                                                    destino={hijo.destino}
-                                                    onClick={() => setMenuAbierto(false)}
-                                                    className="flex min-h-[2.75rem] items-center text-[0.9375rem] text-white/80 active:text-white"
-                                                >
-                                                    {hijo.texto}
-                                                </Enlace>
+                                {/* Acordeón: se despliega animando la altura (rejilla de
+                                    0fr a 1fr). Cerrado es inert: fuera del tabulador. */}
+                                <div
+                                    className="acordeon"
+                                    data-abierto={grupoMovil === enlace.id || undefined}
+                                    inert={grupoMovil !== enlace.id}
+                                >
+                                    <div>
+                                        <div className="pb-4">
+                                            {(enlace.grupos ?? []).map((grupo) => (
+                                                <div key={grupo.id ?? grupo.titulo} className="mt-2 first:mt-0">
+                                                    <p className="etiqueta py-2 text-white/55">{grupo.titulo}</p>
+                                                    {(grupo.enlaces ?? []).map((hijo) => (
+                                                        <Enlace
+                                                            key={hijo.destino ?? hijo.texto}
+                                                            destino={hijo.destino}
+                                                            onClick={() => setMenuAbierto(false)}
+                                                            className="menu-enlace flex min-h-[2.75rem] items-center gap-3 text-[0.9375rem] text-white/80 active:text-white"
+                                                        >
+                                                            <IconoMenu destino={hijo.destino} tam={16} />
+                                                            {hijo.texto}
+                                                        </Enlace>
+                                                    ))}
+                                                </div>
                                             ))}
                                         </div>
-                                    ))}
+                                    </div>
                                 </div>
                             </div>
                         ) : (

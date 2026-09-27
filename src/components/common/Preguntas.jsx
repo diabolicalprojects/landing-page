@@ -1,6 +1,8 @@
 import React, { useId, useState } from 'react';
 import { Plus } from 'lucide-react';
 
+import MotoresIA from './MotoresIA';
+
 /**
  * Acordeón de preguntas que funciona en cualquier zona: los colores salen de
  * los tokens de inversión de la zona, no de papel y tinta fijos. Las respuestas
@@ -56,6 +58,7 @@ const Preguntas = ({ items = [], nivel = 'h3' }) => {
                             >
                                 {item.respuesta}
                             </p>
+                            <MotoresIA texto={`${item.pregunta} ${item.respuesta}`} className="-mt-2 px-5 pb-6 md:px-7" />
                         </div>
                     </li>
                 );

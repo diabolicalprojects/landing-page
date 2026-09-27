@@ -3,6 +3,7 @@ import { ArrowRight, Check } from 'lucide-react';
 
 import Enlace from './Enlace';
 import PantallaEscena from './PantallaEscena';
+import MotoresIA from './MotoresIA';
 import { cn } from '../../utils/cn';
 
 /**
@@ -43,6 +44,8 @@ const TarjetaEscena = ({
             <div className={cn('flex flex-1 flex-col p-6 md:p-7', ancha && 'lg:p-9')}>
                 <Titulo className="titular-m">{titulo}</Titulo>
                 {texto && <p className="cuerpo mt-3">{texto}</p>}
+                {/* Si el texto nombra a ChatGPT, Claude…, sus logos debajo. */}
+                <MotoresIA texto={texto ?? ''} className="mt-4" />
 
                 {incluye.length > 0 && (
                     <ul className="mt-5 space-y-2.5">

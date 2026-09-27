@@ -1770,6 +1770,368 @@ select {
 }
 
 /* ==========================================================================
+   ASISTENTES DE IA (MotoresIA)
+   --------------------------------------------------------------------------
+   Cada logo en una pastilla negra, como el icono de una app: se ve igual en
+   zona oscura y en zona clara. Completo, con etiqueta y nota; como apunte
+   bajo un párrafo, más pequeño y solo con los que el texto nombra.
+   ========================================================================== */
+
+.motores-ia__etiqueta {
+  margin-bottom: 0.9rem;
+  color: var(--texto-3);
+}
+
+.motores-ia__lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.motores-ia__motor {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 1rem 0.4rem 0.4rem;
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  background: var(--tarjeta);
+  color: var(--texto-1);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  transition: border-color 0.2s ease, transform 0.35s var(--salida);
+}
+
+.motores-ia__motor:hover {
+  border-color: var(--linea-fuerte);
+  transform: translateY(-2px);
+}
+
+.motores-ia__icono {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.7rem;
+  background: #0b0b0b;
+}
+
+.motores-ia__icono img {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.motores-ia__nota {
+  max-width: 62ch;
+  margin-top: 0.9rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--texto-3);
+}
+
+.motores-ia--apunte .motores-ia__lista {
+  gap: 0.4rem;
+}
+
+.motores-ia--apunte .motores-ia__motor {
+  gap: 0.45rem;
+  padding: 0.25rem 0.75rem 0.25rem 0.25rem;
+  font-size: 0.8125rem;
+}
+
+.motores-ia--apunte .motores-ia__icono {
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 0.5rem;
+}
+
+.motores-ia--apunte .motores-ia__icono img {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+/* ==========================================================================
+   TARJETAS DE LOS GIROS (portada)
+   --------------------------------------------------------------------------
+   La foto del giro arriba y el texto debajo. La tarjeta entera es el enlace:
+   el de «Ver cómo funciona» se estira sobre ella con un ::after.
+   ========================================================================== */
+
+.giro-tarjeta__foto {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border-bottom: 1px solid var(--linea);
+}
+
+@media (min-width: 768px) {
+  .giro-tarjeta__foto {
+    aspect-ratio: 2 / 1;
+  }
+}
+
+.giro-tarjeta__foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8) contrast(1.05);
+  transition: transform 0.9s var(--salida), filter 0.5s ease;
+}
+
+/* Un velo abajo que funde la foto con la tarjeta. */
+.giro-tarjeta__foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 55%, rgba(11, 11, 11, 0.6));
+  pointer-events: none;
+}
+
+.giro-tarjeta:hover .giro-tarjeta__foto img {
+  transform: scale(1.05);
+  filter: brightness(0.95) contrast(1.05);
+}
+
+.giro-tarjeta__enlace::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.giro-tarjeta:has(.giro-tarjeta__enlace:focus-visible) {
+  outline: 2px solid var(--texto-1);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   CONVERSACIÓN DE WHATSAPP (ChatDemo)
+   --------------------------------------------------------------------------
+   Los globos ocupan su sitio siempre y se muestran u ocultan: la página no
+   salta. Los tres puntos de «escribiendo» ocupan el sitio de la respuesta.
+   ========================================================================== */
+
+.chat-demo__globo {
+  transition: opacity 0.3s ease, transform 0.45s var(--salida);
+}
+
+.chat-demo__globo--cliente {
+  transform-origin: 100% 0;
+}
+
+.chat-demo__globo--sistema {
+  transform-origin: 0 0;
+}
+
+.chat-demo__fila--oculta .chat-demo__globo {
+  opacity: 0;
+  transform: translateY(8px) scale(0.92);
+}
+
+.chat-demo--saliendo .chat-demo__globo {
+  opacity: 0;
+  transform: translateY(-4px);
+  transition-duration: 0.45s;
+}
+
+.chat-demo__tecleo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 11px 13px;
+  border-radius: 8px;
+  border-top-left-radius: 0;
+  background: #1f2c33;
+  animation: tecleo-entra 0.3s var(--salida) both;
+}
+
+.chat-demo__tecleo i {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.75);
+  animation: tecleo-punto 1.2s ease-in-out infinite;
+}
+
+.chat-demo__tecleo i:nth-child(2) {
+  animation-delay: 0.16s;
+}
+
+.chat-demo__tecleo i:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+@keyframes tecleo-entra {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.9);
+  }
+}
+
+@keyframes tecleo-punto {
+  0%,
+  60%,
+  100% {
+    opacity: 0.4;
+    transform: none;
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+/* ==========================================================================
+   MENÚ: ICONOS Y DESPLIEGUE
+   --------------------------------------------------------------------------
+   Escritorio: el panel baja y crece desde el botón con la curva de la casa, y
+   grupos y enlaces entran en cascada. Al cerrar, todo sale deprisa y a la
+   vez. Teléfono: el menú entra desde arriba y cada grupo se despliega
+   animando su altura.
+   ========================================================================== */
+
+.menu-icono {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.85);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.4s var(--salida);
+}
+
+.menu-enlace:hover .menu-icono,
+.menu-enlace:focus-visible .menu-icono {
+  border-color: #fff;
+  background: #fff;
+  color: #000;
+  transform: scale(1.06) rotate(-4deg);
+}
+
+.menu-panel {
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 0.22s;
+}
+
+.menu-panel[data-abierto] {
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+.menu-panel__tarjeta {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.97);
+  transform-origin: 50% 0;
+  transition: opacity 0.18s ease, transform 0.22s ease;
+}
+
+.menu-panel[data-abierto] .menu-panel__tarjeta {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.25s ease, transform 0.5s var(--salida);
+}
+
+.menu-panel__pieza {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+
+.menu-panel[data-abierto] .menu-panel__pieza {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.3s ease, transform 0.5s var(--salida);
+  transition-delay: calc(60ms + var(--i, 0) * 28ms);
+}
+
+.menu-movil {
+  transform-origin: 50% 0;
+  animation: menu-movil-entra 0.38s var(--salida) both;
+}
+
+@keyframes menu-movil-entra {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+}
+
+.menu-movil .menu-icono {
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 0.6rem;
+}
+
+.acordeon {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.42s var(--salida);
+}
+
+.acordeon[data-abierto] {
+  grid-template-rows: 1fr;
+}
+
+.acordeon > div {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.acordeon > div > div {
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.3s var(--salida);
+}
+
+.acordeon[data-abierto] > div > div {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.06s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motores-ia__motor,
+  .giro-tarjeta__foto img,
+  .chat-demo__globo,
+  .menu-icono,
+  .menu-panel,
+  .menu-panel__tarjeta,
+  .menu-panel__pieza,
+  .acordeon,
+  .acordeon > div > div {
+    transition: none !important;
+  }
+
+  .menu-movil,
+  .chat-demo__tecleo,
+  .chat-demo__tecleo i {
+    animation: none;
+  }
+
+  .giro-tarjeta:hover .giro-tarjeta__foto img,
+  .motores-ia__motor:hover,
+  .menu-enlace:hover .menu-icono {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
    LAPTOPS Y PANTALLAS BAJAS
    --------------------------------------------------------------------------
    Una laptop de 1366 × 768 deja unos 657 px de página con el navegador
