@@ -5,7 +5,7 @@ import EncabezadoSeccion from '../common/EncabezadoSeccion';
 import CtaServicio from '../common/CtaServicio';
 import { ESCENAS } from './Mockups';
 import MotionGrafico from '../../motion/MotionGrafico';
-import { hayEscena } from '../../motion/escenas';
+import { hayEscena, variablesEncuadre } from '../../motion/escenas';
 
 /*
  * Los tres frentes.
@@ -18,7 +18,17 @@ import { hayEscena } from '../../motion/escenas';
  * Una tarjeta con `escena` (una clave de src/motion/escenas) lleva esa escena
  * animada; sin ella, la maqueta estática de `icono`. Las escenas mandan: son
  * las que cuentan el mecanismo.
+ *
+ * Junto al titular, «un solo sistema» dibujado: la marca en el centro con los
+ * canales del negocio colgando de ella. El logotipo no está de adorno: es
+ * literalmente el dibujo de lo que se vende. Antes era la escena del hero; la
+ * portada abre ahora solo con el texto y la escena baja aquí, donde el titular
+ * la explica.
  */
+const SISTEMA = 'nucleo';
+// El encuadre del hero móvil cortaba los rótulos de abajo (Agenda, Redes); este
+// deja entero cada canal con su rótulo.
+const ENCUADRE_SISTEMA = [30, 34, 580, 350];
 const Pilares = () => {
     const { visible, titulo, entradilla, items = [] } = useBloque('pilares');
 
@@ -30,11 +40,27 @@ const Pilares = () => {
     return (
         <section id="pilares" className="zona-oscura seccion">
             <div className="contenedor">
-                <EncabezadoSeccion
-                    id="pilares"
-                    titulo={titulo}
-                    entradilla={entradilla}
-                />
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center lg:gap-12">
+                    <EncabezadoSeccion
+                        id="pilares"
+                        titulo={titulo}
+                        entradilla={entradilla}
+                        className={hayEscena(SISTEMA) ? 'lg:col-span-6' : 'lg:col-span-12'}
+                    />
+
+                    {hayEscena(SISTEMA) && (
+                        <div className="pilares__sistema lg:col-span-6">
+                            <div className="encuadre" style={variablesEncuadre(SISTEMA, ENCUADRE_SISTEMA)}>
+                                <div className="encuadre__lienzo">
+                                    <MotionGrafico
+                                        escena={SISTEMA}
+                                        etiqueta="La marca de Diabolical en el centro de un sistema, con la página web, WhatsApp, la agenda y las redes conectados a ella."
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
 
                 <div className="mt-12 grid grid-cols-1 gap-4 md:mt-16">
                     <article className="tarjeta tarjeta-enlace grid grid-cols-1 gap-8 overflow-hidden p-6 md:grid-cols-2 md:items-center md:p-9">

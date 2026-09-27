@@ -3,8 +3,7 @@ import React from 'react';
 import { Migas } from './Pagina';
 import Fotografia from './Fotografia';
 import MotionGrafico from '../../motion/MotionGrafico';
-import { ENCUADRES, ESCENAS } from '../../motion/escenas';
-import { LIENZO } from '../../motion/primitivas';
+import { ESCENAS, variablesEncuadre } from '../../motion/escenas';
 import { cn } from '../../utils/cn';
 import logoMarca from '../../assets/logo/icono-diabolical-chatbot.svg';
 
@@ -39,19 +38,6 @@ import logoMarca from '../../assets/logo/icono-diabolical-chatbot.svg';
  * `foto` es para los artículos: va debajo del texto en las dos composiciones.
  */
 
-/** Variables del encuadre móvil: qué parte del lienzo se ve y a qué escala. */
-function variablesEncuadre(clave) {
-    const lienzo = ESCENAS[clave]?.lienzo ?? LIENZO;
-    const [x, y, ancho, alto] = ENCUADRES[clave] ?? [0, 0, lienzo.ancho, lienzo.alto];
-
-    return {
-        '--encuadre-proporcion': (ancho / alto).toFixed(4),
-        '--encuadre-ancho': (lienzo.ancho / ancho).toFixed(4),
-        '--encuadre-x': (x / ancho).toFixed(4),
-        '--encuadre-y': (y / alto).toFixed(4),
-    };
-}
-
 /*
  * Los pulsos del fondo: cada uno corre por una línea de la retícula (celdas de
  * 3rem), con su propio ritmo para que nunca vayan sincronizados.
@@ -65,9 +51,12 @@ const PULSOS = [
     { eje: 'v', linea: 7, duracion: 6, retraso: 5.2 },
 ];
 
-/** Fondo animado del hero en el teléfono. Decorativo: no se anuncia. */
-const FondoHero = () => (
-    <div className="fondo-hero lg:hidden" aria-hidden="true">
+/**
+ * Fondo animado del hero en el teléfono. Decorativo: no se anuncia. `tenue` lo
+ * baja de intensidad: la portada lo usa así, con el logo animado encima.
+ */
+export const FondoHero = ({ tenue = false }) => (
+    <div className={cn('fondo-hero', tenue && 'fondo-hero--tenue', 'lg:hidden')} aria-hidden="true">
         <div className="fondo-hero__rejilla" />
         <div className="fondo-hero__foco" />
         <div className="fondo-hero__barrido" />

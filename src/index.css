@@ -1298,6 +1298,478 @@ select {
 }
 
 /* ==========================================================================
+   HERO DE LA PORTADA
+   --------------------------------------------------------------------------
+   Solo el texto, al centro y en todas las pantallas: el logo que se dibuja,
+   la etiqueta, el título, la frase corta y el botón.
+
+   Detrás, en escritorio, la malla de puntos que se deforma con el cursor
+   (PuntosReactivos, un <canvas>); en el teléfono, la retícula animada de las
+   demás páginas a media intensidad. La escena de la marca ya no va aquí: baja
+   a la sección siguiente (ver `.pilares__sistema`).
+   ========================================================================== */
+
+.hero-portada {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  /* Arriba, el menú flotante; abajo, la burbuja del chatbot. */
+  padding: 5rem 0;
+  text-align: center;
+}
+
+.hero-portada__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 62rem;
+  margin-inline: auto;
+}
+
+.hero-portada .insignia {
+  margin-bottom: 1rem;
+}
+
+.hero-portada__bajada {
+  margin-top: 1rem;
+  max-width: 34ch;
+  font-size: calc(1.0625rem * var(--escala-texto));
+  line-height: 1.55;
+  color: var(--texto-2);
+}
+
+.hero-portada__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem 1.75rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 640px) {
+  .hero-portada__cta {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-portada {
+    padding-top: 6.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-portada {
+    padding: clamp(6rem, 13svh, 8rem) 0 clamp(3rem, 8svh, 5rem);
+  }
+
+  .hero-portada h1 {
+    max-width: 21ch;
+  }
+
+  .hero-portada .insignia {
+    margin-bottom: clamp(1rem, 2.4svh, 1.4rem);
+  }
+
+  .hero-portada__bajada {
+    margin-top: clamp(1.1rem, 2.6svh, 1.6rem);
+    max-width: 44ch;
+    font-size: calc(min(1.25rem, 2.9svh) * var(--escala-texto));
+  }
+
+  .hero-portada__cta {
+    margin-top: clamp(1.75rem, 4.5svh, 2.75rem);
+  }
+}
+
+/* Velo detrás del texto: la malla se calma donde se lee y sigue viva
+   alrededor. */
+.hero-portada__foco {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(64rem, 92vw);
+  height: 70%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.22) 60%, transparent);
+  pointer-events: none;
+}
+
+.fondo-hero--tenue {
+  opacity: 0.5;
+}
+
+/* --- La malla de puntos (escritorio) ------------------------------------ */
+
+/* Sin `display` aquí: lo ponen las utilidades (`hidden lg:block`), y esta
+   regla, fuera de la capa de Tailwind, les ganaría. */
+.puntos-hero {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.4s ease 0.15s;
+  -webkit-mask-image: radial-gradient(ellipse 90% 100% at 50% 42%, #000 45%, transparent 100%);
+  mask-image: radial-gradient(ellipse 90% 100% at 50% 42%, #000 45%, transparent 100%);
+}
+
+.puntos-hero[data-lista] {
+  opacity: 1;
+}
+
+/* --- El logo que se dibuja y respira ------------------------------------ */
+
+/*
+  Cada pieza tiene como estilo base su estado final y la animación parte del
+  inicial (`both`): con menos movimiento basta con quitar las animaciones para
+  ver el logo terminado.
+
+  Las piezas del logo, en el orden del archivo: el disco blanco, el marco
+  (blanco sobre blanco), la cabeza en negro, el ojo y la pupila.
+*/
+.logo-animado {
+  --logo: 5rem;
+  --ciclo: 4.8s;
+  --respira: 2.1s;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: calc(var(--logo) * 1.38);
+  height: calc(var(--logo) * 1.38);
+  margin-bottom: 1.5rem;
+}
+
+/* En una laptop baja el logo cede alto al título: 63 px a 633 de alto, 96 px
+   en un monitor. */
+@media (min-width: 1024px) {
+  .logo-animado {
+    --logo: clamp(3.5rem, 10svh, 6rem);
+    margin-bottom: clamp(1rem, 3svh, 2rem);
+  }
+}
+
+.logo-animado__icono {
+  position: relative;
+  width: var(--logo);
+  height: var(--logo);
+  animation: logo-respira var(--ciclo) ease-in-out var(--respira) infinite;
+}
+
+.logo-animado__icono svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* 1. El anillo se traza alrededor. */
+.logo-animado__anillo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.logo-animado__anillo circle {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: logo-traza 1.4s cubic-bezier(0.45, 0, 0.2, 1) 0.1s both;
+}
+
+@keyframes logo-traza {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+/* 2. El contorno de la cabeza se dibuja en blanco y se rellena de negro. */
+.logo-animado__icono g > path:nth-of-type(2) {
+  stroke: #fff;
+  stroke-width: 2.4;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-opacity: 0;
+  animation: logo-cabeza 1.9s linear 0.15s both;
+}
+
+@keyframes logo-cabeza {
+  0% {
+    stroke-dashoffset: 1;
+    stroke-opacity: 1;
+    fill-opacity: 0;
+    animation-timing-function: cubic-bezier(0.45, 0, 0.2, 1);
+  }
+
+  55% {
+    stroke-dashoffset: 0;
+    stroke-opacity: 1;
+    fill-opacity: 0;
+  }
+
+  72% {
+    stroke-opacity: 1;
+    fill-opacity: 1;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+    stroke-opacity: 0;
+    fill-opacity: 1;
+  }
+}
+
+/* 3. El disco se llena desde el centro. El marco (blanco sobre blanco) no
+   crece con él: es cuadrado, y a medio crecer asomaría como un recuadro. Se
+   pone cuando el disco ya lo tapa. */
+.logo-animado__icono g > circle {
+  transform-box: view-box;
+  transform-origin: 68px 68px;
+  animation: logo-disco 0.8s var(--salida) 1.1s both;
+}
+
+@keyframes logo-disco {
+  from {
+    opacity: 0;
+    transform: scale(0.35);
+  }
+}
+
+.logo-animado__icono g > path:nth-of-type(1) {
+  animation: logo-marco 0.2s linear 1.8s both;
+}
+
+@keyframes logo-marco {
+  from {
+    opacity: 0;
+  }
+}
+
+/* 4. Se abre el ojo y, de vez en cuando, parpadea. */
+.logo-animado__icono g > path:nth-of-type(3),
+.logo-animado__icono g > path:nth-of-type(4) {
+  transform-box: view-box;
+  transform-origin: 68.4px 72px;
+  animation:
+    logo-ojo 0.5s var(--salida) 1.6s both,
+    logo-parpadeo 7s ease-in-out 3.6s infinite;
+}
+
+@keyframes logo-ojo {
+  from {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+}
+
+@keyframes logo-parpadeo {
+  0%,
+  93%,
+  100% {
+    transform: none;
+  }
+
+  96% {
+    transform: scaleY(0.08);
+  }
+}
+
+/* 5. Respira: el halo late, el logo lo acompaña y una onda sale del disco
+   en cada ciclo. Los tres van con el mismo ritmo. */
+.logo-animado__halo {
+  position: absolute;
+  inset: -45%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.06) 36%, transparent 66%);
+  pointer-events: none;
+  animation:
+    logo-halo-entra 1s ease-out 1.1s both,
+    logo-halo var(--ciclo) ease-in-out var(--respira) infinite;
+}
+
+@keyframes logo-halo-entra {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@keyframes logo-halo {
+  50% {
+    opacity: 0.5;
+    transform: scale(0.86);
+  }
+}
+
+@keyframes logo-respira {
+  50% {
+    transform: scale(0.97);
+  }
+}
+
+.logo-animado__onda {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--logo);
+  height: var(--logo);
+  margin: calc(var(--logo) / -2) 0 0 calc(var(--logo) / -2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  animation: logo-onda var(--ciclo) var(--salida) var(--respira) infinite;
+}
+
+@keyframes logo-onda {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+/* --- Pantallas pequeñas ------------------------------------------------- */
+
+/* Teléfonos bajos: el logo se encoge para que el botón siga en la primera
+   pantalla. */
+@media (max-width: 1023.98px) and (max-height: 700px) {
+  .logo-animado {
+    --logo: 4rem;
+    margin-bottom: 1.1rem;
+  }
+}
+
+/* 320 px: sin la etiqueta (sigue en el marcado) el botón queda por encima de
+   la burbuja del chatbot. */
+@media (max-width: 359.98px) {
+  .hero-portada {
+    padding-top: 4.25rem;
+  }
+
+  .hero-portada .insignia {
+    display: none;
+  }
+
+  .logo-animado {
+    --logo: 3.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-portada .titular-xl.titular-largo {
+    font-size: calc(1.8rem * var(--escala-titulo));
+  }
+
+  .hero-portada__bajada {
+    margin-top: 0.75rem;
+    font-size: calc(1rem * var(--escala-texto));
+    line-height: 1.5;
+  }
+
+  .hero-portada__cta {
+    margin-top: 1.5rem;
+  }
+}
+
+/* Teléfono en horizontal: el logo ya está en el menú; se quedan el título, la
+   frase y el botón. */
+@media (max-width: 1023.98px) and (orientation: landscape) and (max-height: 540px) {
+  .hero-portada {
+    padding: 6.25rem 0 1.5rem;
+  }
+
+  .logo-animado,
+  .hero-portada .insignia {
+    display: none;
+  }
+
+  .hero-portada__bajada {
+    max-width: 48ch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-animado *,
+  .logo-animado__icono g > * {
+    animation: none !important;
+  }
+
+  .logo-animado__onda {
+    display: none;
+  }
+
+  .puntos-hero {
+    transition: none;
+  }
+}
+
+/* --- La escena de la marca, bajo el hero -------------------------------- */
+
+/* Un encuadre para cualquier ancho: solo se ve la parte del lienzo donde pasa
+   algo (ENCUADRES, en escenas/index.js). */
+.encuadre {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: var(--encuadre-proporcion);
+}
+
+.encuadre__lienzo {
+  position: absolute;
+  width: calc(var(--encuadre-ancho) * 100%);
+  left: calc(var(--encuadre-x) * -100%);
+  top: calc(var(--encuadre-y) * -100%);
+}
+
+.pilares__sistema {
+  position: relative;
+  isolation: isolate;
+}
+
+.pilares__sistema::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  width: 80%;
+  height: 70%;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.09) 0%, transparent 68%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.pilares__sistema .encuadre {
+  width: min(100%, calc(44vh * var(--encuadre-proporcion)));
+  width: min(100%, calc(44svh * var(--encuadre-proporcion)));
+  margin-inline: auto;
+  /* Solo se funden los bordes: una máscara redonda se comía los rótulos de
+     las esquinas. */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 5%, #000 95%, transparent),
+    linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 5%, #000 95%, transparent),
+    linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
+  mask-composite: intersect;
+}
+
+/* ==========================================================================
    LAPTOPS Y PANTALLAS BAJAS
    --------------------------------------------------------------------------
    Una laptop de 1366 × 768 deja unos 657 px de página con el navegador

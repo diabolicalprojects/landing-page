@@ -42,6 +42,7 @@ import {
     cicloProceso,
     posterProceso,
 } from './estrella';
+import { LIENZO } from '../primitivas';
 
 /*
  * Registro de escenas.
@@ -191,6 +192,23 @@ export const ENCUADRES = {
     'despachos-y-oficinas': ENCUADRE_SECTOR,
     comercio: ENCUADRE_SECTOR,
 };
+
+/**
+ * Variables CSS de un encuadre: qué parte del lienzo se ve y a qué escala. Las
+ * leen `.hero-pagina__encuadre` (teléfono) y `.encuadre` (cualquier ancho).
+ * `encuadre` sustituye al de la tabla cuando una sección necesita otro.
+ */
+export function variablesEncuadre(clave, encuadre = ENCUADRES[clave]) {
+    const lienzo = ESCENAS[clave]?.lienzo ?? LIENZO;
+    const [x, y, ancho, alto] = encuadre ?? [0, 0, lienzo.ancho, lienzo.alto];
+
+    return {
+        '--encuadre-proporcion': (ancho / alto).toFixed(4),
+        '--encuadre-ancho': (lienzo.ancho / ancho).toFixed(4),
+        '--encuadre-x': (x / ancho).toFixed(4),
+        '--encuadre-y': (y / alto).toFixed(4),
+    };
+}
 
 /** ¿Hay escena para esta clave? Lo usan las páginas generadas por datos. */
 export const hayEscena = (clave) => Boolean(ESCENAS[clave]);

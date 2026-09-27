@@ -3,10 +3,25 @@ import { ArrowRight } from 'lucide-react';
 
 import { useBloque } from '../../contenido';
 import Enlace from '../common/Enlace';
-import HeroPagina from '../common/HeroPagina';
+import { FondoHero } from '../common/HeroPagina';
+import LogoAnimado from '../common/LogoAnimado';
+import PuntosReactivos from '../common/PuntosReactivos';
 
 /*
- * Primer viewport.
+ * Primer viewport de la portada: solo el texto, al centro.
+ *
+ *   ┌──────────────────────────────┐
+ *   │ · · · · · · · · · · · · · · ·│   escritorio: malla de puntos que se
+ *   │ · · · · ·  (logo)  · · · · · │   deforma con el cursor
+ *   │ · · · ·   ETIQUETA   · · · · │   teléfono: la retícula animada, tenue
+ *   │ · ·   Título grande   · · · ·│
+ *   │ · · ·  frase corta  · · · · ·│   el logo se dibuja y después respira
+ *   │ · · ·  [ Cotizar ]  · · · · ·│
+ *   └──────────────────────────────┘
+ *
+ * Las demás páginas usan HeroPagina (texto y escena); la portada no lleva
+ * escena arriba. La de la marca en el centro del sistema baja a la sección
+ * siguiente, «Tres servicios, un solo sistema», que es justo lo que dibuja.
  *
  * El h1 lleva las dos especialidades de la casa en una sola frase: «Páginas web
  * e inteligencia artificial para negocios en Aguascalientes». Dentro va entera
@@ -15,14 +30,9 @@ import HeroPagina from '../common/HeroPagina';
  * un motor generativo necesita leer para saber a quién recomendar, y ningún
  * otro encabezado pesa lo que pesa el h1.
  *
- * La insignia de encima dice qué es la empresa con la palabra que se busca:
- * agencia. «Diseño de páginas web» como tal se deja a la landing, para que la
- * portada no compita con ella por la misma búsqueda.
- *
- * Al lado, la marca en el centro de su propio sistema, con los canales del
- * negocio colgando de ella. El logotipo no está de adorno: es literalmente el
- * dibujo de lo que se vende. En el teléfono esa escena es el banner de arriba
- * (ver HeroPagina).
+ * La etiqueta de encima dice qué es la empresa con la palabra que se busca.
+ * Debajo va la frase corta (`bajada`); el párrafo largo (`apoyo`) solo si no
+ * hay frase corta.
  */
 const Hero = () => {
     const hero = useBloque('hero');
@@ -30,54 +40,45 @@ const Hero = () => {
     if (hero.visible === false) return null;
 
     return (
-        <HeroPagina
-            insignia={hero.insignia}
-            largo
-            /* Los dos tonos van en línea y no en bloque: como bloques,
-               `text-wrap: balance` equilibra cada mitad por separado y deja
-               huérfanas como «en» sola en una línea. En línea, la frase se
-               equilibra entera. */
-            titulo={
-                <>
-                    {hero.fraseA} <span className="titular-apagado">{hero.fraseB}</span>
-                </>
-            }
-            entradilla={hero.apoyo}
-            bajada={hero.bajada}
-            cta={
-                /* Un botón principal y una alternativa en texto: dos botones
-                   del mismo peso reparten la atención. */
-                <div className="flex flex-col gap-x-7 gap-y-4 sm:flex-row sm:items-center">
-                    <Enlace destino={hero.ctaPrimario?.destino} className="boton boton-acento boton-grande">
-                        {hero.ctaPrimario?.texto}
-                        <ArrowRight size={17} aria-hidden="true" />
-                    </Enlace>
-                    <Enlace
-                        destino={hero.ctaSecundario?.destino}
-                        className="enlace inline-flex min-h-[2.75rem] items-center text-[0.9375rem] font-bold"
-                    >
-                        {hero.ctaSecundario?.texto}
-                    </Enlace>
-                </div>
-            }
-            escena={{
-                clave: 'nucleo',
-                etiqueta:
-                    'La marca de Diabolical en el centro de un sistema, con la página web, WhatsApp, la agenda y las redes conectados a ella.',
-            }}
-            arriba="lg:pt-[clamp(7rem,20svh,10rem)]"
-            abajo="lg:pb-[clamp(4rem,12svh,7rem)]"
-            hueco="lg:gap-x-10"
-            fondo={
-                <>
-                    <div className="rejilla hidden lg:block" aria-hidden="true" />
-                    <div
-                        className="resplandor left-1/2 top-[-16rem] hidden h-[32rem] w-[48rem] -translate-x-1/2 lg:block"
-                        aria-hidden="true"
-                    />
-                </>
-            }
-        />
+        <section className="hero-portada zona-oscura relative isolate overflow-hidden">
+            <FondoHero tenue />
+            <PuntosReactivos className="hidden lg:block" />
+            <div className="hero-portada__foco hidden lg:block" aria-hidden="true" />
+
+            <div className="contenedor relative">
+                <header className="hero-portada__texto">
+                    <LogoAnimado />
+
+                    {hero.insignia && <p className="insignia entrada">{hero.insignia}</p>}
+
+                    {/* Los dos tonos van en línea y no en bloque: como bloques,
+                        `text-wrap: balance` equilibra cada mitad por separado y
+                        deja huérfanas como «en» sola en una línea. */}
+                    <h1 className="titular-xl titular-largo entrada">
+                        {hero.fraseA} <span className="titular-apagado">{hero.fraseB}</span>
+                    </h1>
+
+                    {(hero.bajada || hero.apoyo) && (
+                        <p className="hero-portada__bajada entrada entrada-2">{hero.bajada || hero.apoyo}</p>
+                    )}
+
+                    {/* Un botón principal y una alternativa en texto: dos botones
+                        del mismo peso reparten la atención. */}
+                    <div className="hero-portada__cta entrada entrada-3">
+                        <Enlace destino={hero.ctaPrimario?.destino} className="boton boton-acento boton-grande">
+                            {hero.ctaPrimario?.texto}
+                            <ArrowRight size={17} aria-hidden="true" />
+                        </Enlace>
+                        <Enlace
+                            destino={hero.ctaSecundario?.destino}
+                            className="enlace inline-flex min-h-[2.75rem] items-center text-[0.9375rem] font-bold"
+                        >
+                            {hero.ctaSecundario?.texto}
+                        </Enlace>
+                    </div>
+                </header>
+            </div>
+        </section>
     );
 };
 

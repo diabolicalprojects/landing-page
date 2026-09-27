@@ -29,8 +29,8 @@ import CierreCta from '../components/sections/CierreCta';
  * negro se leen como una sola masa plana, así que la página invierte a claro
  * cuatro veces, y siempre donde cambia el tema de conversación:
  *
- *   Hero          negro      la frase clave y la marca en el centro del sistema
- *   Pilares       negro      los tres frentes, cada uno con su escena
+ *   Hero          negro      solo el texto: el logo que se dibuja y la frase clave
+ *   Pilares       negro      la marca en el centro del sistema y los tres frentes
  *   Páginas web   CLARO      los cuatro tipos de sitio  ← cambia el tema
  *   Invisibles    negro·2    la medición propia: el dato que sostiene la tesis
  *   Sectores      negro·1    seis giros, cada uno hacia su página

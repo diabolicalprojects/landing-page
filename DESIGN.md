@@ -291,6 +291,26 @@ El fondo animado es la excepción a «nada de bucles decorativos»: lo pidió el
 cliente para el hero del teléfono. Se queda ahí, solo usa `transform` y
 `opacity` (se compone en la GPU) y con `prefers-reduced-motion` queda quieto.
 
+**Hero de la portada** (`Hero`, 27-09-2026). La portada no usa `HeroPagina`:
+abre solo con el texto, centrado en todas las pantallas. Lo pidió el cliente.
+
+- Arriba, el logo que se dibuja (`LogoAnimado`): el anillo y el contorno de la
+  cabeza se trazan en blanco, el disco se llena, se abre el ojo y después
+  respira (halo, onda y un parpadeo cada 7 s). Es el archivo del logo
+  incrustado tal cual; la animación va en CSS y el estado final es el logo
+  exacto.
+- Etiqueta, h1, `bajada` y los dos botones. El párrafo largo (`apoyo`) solo
+  sale si no hay bajada.
+- Fondo en escritorio: una malla de puntos en `<canvas>` (`PuntosReactivos`)
+  que se abre como una lente al pasar el cursor y vuelve con un pequeño
+  rebote; un clic suelta una onda. Sin cursor, una ola de brillo lenta la
+  cruza. Va a 25 fotogramas en reposo, se para fuera de pantalla y con menos
+  movimiento se queda quieta.
+- Fondo en el teléfono: la retícula con pulsos de las demás páginas, a media
+  intensidad (`fondo-hero--tenue`).
+- La escena de la marca en el centro del sistema bajó a «Tres servicios, un
+  solo sistema» (`Pilares`), junto al titular que la explica.
+
 **Menú en el teléfono.** Una barra de 54 px con el logo y el botón de menú,
 a 8 px del borde. Contacto va dentro del menú: cada página tiene ya su botón
 de cotizar. Por debajo de 1024 px la barra se esconde al bajar y vuelve al

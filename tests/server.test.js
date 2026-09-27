@@ -1062,8 +1062,9 @@ test('cada página abre con el hero móvil: escena encuadrada, título y botón'
         return t.skip('requiere npm run build');
     }
 
+    // La portada no: abre solo con el texto (ver la prueba siguiente).
     const conEscena = [
-        '/', '/nosotros', '/servicios', '/sectores', '/contacto', '/blog',
+        '/nosotros', '/servicios', '/sectores', '/contacto', '/blog',
         RUTA_PAGINAS_WEB, RUTA_CHATBOTS, RUTA_AGENDAMIENTO,
         ...SECTORES.map((s) => rutaSector(s.slug)),
     ];
@@ -1120,13 +1121,41 @@ test('el hero del teléfono lleva el sello de la marca y el fondo animado, sin a
         return t.skip('requiere npm run build');
     }
 
-    for (const ruta of ['/', RUTA_CHATBOTS, '/sectores/spas', '/contacto', `/blog/${ARTICULOS[0].slug}`, '/politica-privacidad']) {
+    for (const ruta of [RUTA_CHATBOTS, '/sectores/spas', '/contacto', `/blog/${ARTICULOS[0].slug}`, '/politica-privacidad']) {
         const html = await (await fetch(`${BASE}${ruta}`)).text();
         assert.match(html, /class="fondo-hero lg:hidden" aria-hidden="true"/, `${ruta}: falta el fondo animado`);
         assert.match(html, /class="hero-pagina__sello[^"]*" aria-hidden="true"/, `${ruta}: falta el sello`);
         // El sello va antes que el título: es lo primero que se ve arriba.
         assert.ok(html.indexOf('hero-pagina__sello') < html.indexOf('<h1'), `${ruta}: el sello va sobre el título`);
     }
+});
+
+test('la portada abre solo con el texto: logo que se dibuja, puntos en escritorio y retícula tenue en el teléfono', async (t) => {
+    if (!fs.existsSync(path.join(__dirname, '..', 'dist', 'index.html'))) {
+        return t.skip('requiere npm run build');
+    }
+
+    const html = await (await fetch(`${BASE}/`)).text();
+    const inicio = html.indexOf('class="hero-portada ');
+    assert.ok(inicio > -1, 'la portada no usa su hero centrado');
+    const hero = html.slice(inicio, html.indexOf('</section>', inicio));
+
+    assert.equal((hero.match(/<h1[\s>]/g) ?? []).length, 1, 'el h1 va dentro del hero');
+    assert.ok(hero.includes(CONTENIDO.hero.bajada), 'falta la frase corta');
+    // El logo, incrustado y sin anunciar, va antes que el título.
+    assert.match(hero, /class="logo-animado" aria-hidden="true"/);
+    assert.ok(hero.indexOf('logo-animado') < hero.indexOf('<h1'), 'el logo va sobre el título');
+    assert.match(hero, /<path pathLength="1"/, 'el logo se incrusta para poder trazarlo');
+    // Fondo: la malla de puntos en escritorio y la retícula, tenue, en el teléfono.
+    assert.match(hero, /<canvas class="puntos-hero hidden lg:block" aria-hidden="true">/);
+    assert.match(hero, /class="fondo-hero fondo-hero--tenue lg:hidden" aria-hidden="true"/);
+    // Nada de escena en el hero: baja a la sección siguiente.
+    assert.ok(!/role="img"|hero-pagina__escenario/.test(hero), 'la portada no lleva escena en el hero');
+
+    const pilares = html.slice(html.indexOf('id="pilares"'), html.indexOf('</section>', html.indexOf('id="pilares"')));
+    assert.match(pilares, /class="pilares__sistema/, 'la escena de la marca va en «un solo sistema»');
+    assert.match(pilares, /--encuadre-proporcion:/);
+    assert.match(pilares, /role="img" aria-label="La marca de Diabolical en el centro de un sistema/);
 });
 
 test('el paquete del navegador no arrastra GSAP', async (t) => {
