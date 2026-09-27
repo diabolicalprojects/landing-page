@@ -303,7 +303,8 @@ abre solo con el texto, centrado en todas las pantallas. Lo pidió el cliente.
   sale si no hay bajada.
 - Fondo en escritorio: una malla de puntos en `<canvas>` (`PuntosReactivos`)
   que se abre como una lente al pasar el cursor y vuelve con un pequeño
-  rebote; un clic suelta una onda. Sin cursor, una ola de brillo lenta la
+  rebote; con el cursor quieto, la lente se desinfla en medio segundo y se
+  abre otra vez al moverlo. Un clic suelta una onda. Sin cursor, una ola de brillo lenta la
   cruza. Va a 25 fotogramas en reposo, se para fuera de pantalla y con menos
   movimiento se queda quieta.
 - Fondo en el teléfono: la retícula con pulsos de las demás páginas, a media

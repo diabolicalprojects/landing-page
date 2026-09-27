@@ -6,8 +6,9 @@ import React, { useEffect, useRef } from 'react';
  *
  * Cada punto está atado a su sitio con un muelle. El cursor lo empuja hacia
  * fuera, más cuanto más cerca, y al irse el muelle lo devuelve con un pequeño
- * rebote: la malla se abre como una lente y se cierra detrás. Un clic suelta
- * una onda que recorre la malla. Sin cursor, una ola de brillo muy lenta la
+ * rebote: la malla se abre como una lente y se cierra detrás. Si el cursor se
+ * queda quieto, la lente se desinfla despacio y la malla vuelve a su sitio;
+ * al moverlo, se abre otra vez. Un clic suelta una onda que recorre la malla. Sin cursor, una ola de brillo muy lenta la
  * cruza en diagonal para que el fondo siga vivo.
  *
  * Solo desde 1024 px y con ratón: en el teléfono no hay cursor que seguir y
@@ -30,6 +31,9 @@ const ONDA_VELOCIDAD = 900; // px por segundo
 const ONDA_ANCHO = 70;
 const ONDA_VIDA = 1.1; // segundos
 const ONDA_FUERZA = 16;
+const ESPERA_QUIETO = 140; // ms sin moverse antes de soltar la malla
+const SUBIDA = 0.06; // s: la lente se abre casi al instante al mover el cursor
+const BAJADA = 0.5; // s: y se desinfla despacio cuando se queda quieto
 
 /** Radio y opacidad de un punto según su nivel de intensidad (0…1). */
 const radio = (i) => 1.15 + i * 1.5;
@@ -54,7 +58,9 @@ const PuntosReactivos = ({ className = '' }) => {
         let grupos = [];
         let cuentas = new Uint32Array(NIVELES);
 
-        const cursor = { x: 0, y: 0, cx: 0, cy: 0, dentro: false, activo: false };
+        // `fuerza` (0…1) escala la lente: 1 mientras el cursor se mueve y baja
+        // a 0 cuando lleva un momento quieto.
+        const cursor = { x: 0, y: 0, cx: 0, cy: 0, dentro: false, activo: false, movido: 0, fuerza: 0, cuadro: 0 };
         let ondas = [];
         let cuadro = 0;
         let anterior = 0;
@@ -112,6 +118,18 @@ const PuntosReactivos = ({ className = '' }) => {
                 cursor.cy += (y - cursor.cy) * 0.3;
                 siguiendo = influye && Math.abs(x - cursor.cx) + Math.abs(y - cursor.cy) > 0.2;
             }
+
+            // Quieto un momento: la lente se desinfla. Suavizado por tiempo, no
+            // por fotograma, para que dure lo mismo a 30 que a 144 Hz.
+            const dt = Math.min(0.1, Math.max(0, (ahora - cursor.cuadro) / 1000));
+            cursor.cuadro = ahora;
+            const objetivo = influye && ahora - cursor.movido < ESPERA_QUIETO ? 1 : 0;
+            const tau = objetivo > cursor.fuerza ? SUBIDA : BAJADA;
+            cursor.fuerza += (objetivo - cursor.fuerza) * (1 - Math.exp(-dt / tau));
+            // La cola de la exponencial ya no se ve: se corta para que el
+            // bucle pueda volver al ritmo de reposo.
+            if (objetivo === 0 && cursor.fuerza < 0.03) cursor.fuerza = 0;
+            const cambia = Math.abs(objetivo - cursor.fuerza) > 0.005;
             ondas = ondas.filter((o) => t - o.t < ONDA_VIDA);
 
             cuentas.fill(0);
@@ -124,14 +142,14 @@ const PuntosReactivos = ({ className = '' }) => {
                 let ty = 0;
                 let cerca = 0;
 
-                if (influye) {
+                if (cursor.dentro && cursor.fuerza > 0.005) {
                     const ex = x0 - cursor.cx;
                     const ey = y0 - cursor.cy;
                     const d2 = ex * ex + ey * ey;
                     if (d2 < R2) {
                         const d = Math.sqrt(d2) || 1;
                         const f = 1 - d / ALCANCE;
-                        const suave = f * f * (3 - 2 * f);
+                        const suave = f * f * (3 - 2 * f) * cursor.fuerza;
                         tx = (ex / d) * EMPUJE * suave;
                         ty = (ey / d) * EMPUJE * suave;
                         cerca = suave;
@@ -190,7 +208,7 @@ const PuntosReactivos = ({ className = '' }) => {
             }
             ctx.globalAlpha = 1;
 
-            return movimiento > 0.05 || siguiendo || ondas.length > 0;
+            return movimiento > 0.05 || siguiendo || cambia || ondas.length > 0;
         }
 
         function bucle(ahora) {
@@ -231,6 +249,7 @@ const PuntosReactivos = ({ className = '' }) => {
             cursor.x = e.clientX;
             cursor.y = e.clientY;
             cursor.activo = true;
+            cursor.movido = performance.now();
             enReposo = false;
         };
         const salir = (e) => {
