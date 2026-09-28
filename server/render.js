@@ -67,8 +67,11 @@ function buildSeoBlock(settings, requestPath, { indexable = true } = {}) {
     <meta name="twitter:url" content="${canonical}">
     <meta name="twitter:title" content="${title}">
     <meta name="twitter:description" content="${description}">
-    <meta name="twitter:image" content="${ogImage}">
-    <meta name="twitter:site" content="${escapeHtml(settings.twitterHandle)}">
+    <meta name="twitter:image" content="${ogImage}">${
+        settings.twitterHandle
+            ? `\n    <meta name="twitter:site" content="${escapeHtml(settings.twitterHandle)}">`
+            : ''
+    }
 
 ${bloques}${extra}
 ${gtmId ? gtmSnippet(gtmId) : ''}${pixelId ? pixelSnippet(pixelId) : ''}${settings.customHeaderScripts || ''}

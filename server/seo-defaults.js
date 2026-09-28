@@ -31,7 +31,7 @@ const defaults = {
     siteUrl: config.siteUrl,
     favicon: '/favicon.svg',
     ogImage: `${config.siteUrl}/og-image.png`,
-    twitterHandle: '@diabolical',
+    twitterHandle: '',
     sitemapXml: '',
     robotsTxt: '',
     structuredData: '',

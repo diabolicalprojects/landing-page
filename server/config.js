@@ -60,10 +60,10 @@ const config = {
     // de Express; cualquier otra cosa se ignora en vez de montar la ruta.
     indexNowKey: /^[a-f0-9]{8,128}$/i.test(process.env.INDEXNOW_KEY || '')
         ? process.env.INDEXNOW_KEY
-        : '',
+        : 'c7b892a4e512401f893d56b0981e7d23',
 
     // Perfiles oficiales (Instagram, Facebook, LinkedIn, ficha de Google).
-    sameAs: (process.env.BUSINESS_PROFILES || '')
+    sameAs: (process.env.BUSINESS_PROFILES || 'https://www.instagram.com/diabolical.services')
         .split(',')
         .map((u) => u.trim())
         .filter(Boolean),

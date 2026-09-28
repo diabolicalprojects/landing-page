@@ -160,3 +160,10 @@ jobs:
           fi
 
           exit $FAILED
+
+      - name: Notificar a IndexNow (Bing / Copilot / ChatGPT)
+        if: steps.check.outputs.configured == 'true'
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://diabolicalservices.tech' }}
+        run: |
+          npm run indexnow || echo "::warning title=IndexNow::No se pudo notificar a IndexNow en este intento"

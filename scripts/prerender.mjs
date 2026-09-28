@@ -28,6 +28,7 @@ const indexFile = path.join(distDir, 'index.html');
 const shellFile = path.join(distDir, 'app-shell.html');
 
 const require = createRequire(import.meta.url);
+const config = require('../server/config.js');
 const { RUTAS_PRERENDER, RUTAS_PUBLICAS, archivoPrerender } = require('../server/schema.js');
 const { buildSeoBlock, MARKER_START, MARKER_END } = require('../server/render.js');
 const { defaults } = require('../server/seo-defaults.js');
@@ -115,6 +116,7 @@ const estaticos = {
     // despliegue compara contra producción para saber si la versión nueva
     // llegó de verdad (ver scripts/build-id.mjs).
     'build-id.txt': `${buildId(rootDir)}\n`,
+    ...(config.indexNowKey && { [`${config.indexNowKey}.txt`]: `${config.indexNowKey}\n` }),
 };
 
 for (const [nombre, contenido] of Object.entries(estaticos)) {
