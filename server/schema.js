@@ -90,6 +90,16 @@ const REDIRECCIONES = {
 /**
  * Una foto de src/data/fotos.json como ImageObject: con autor y licencia, que
  * es lo que Google usa para mostrar el crédito y la licencia en Imágenes.
+ *
+ * Los cinco campos de metadatos IPTC que Google lee van completos. Faltaba
+ * `copyrightNotice` y Search Console lo reportó el 28/09/2026: es un aviso leve
+ * —no saca la página de Google— pero avisan de que estos pueden reclasificarse
+ * como graves, y sin él la ficha de la imagen sale incompleta.
+ *
+ * El titular del copyright es EL FOTÓGRAFO, no esta casa. Todas las fotos son
+ * de Unsplash, cuya licencia permite el uso comercial pero no transfiere la
+ * autoría: quien la hizo la sigue teniendo. Poner aquí «© Diabolical Services»
+ * sería reclamar una obra ajena, así que el aviso nombra al autor.
  */
 function imagenDe(clave) {
     const foto = FOTOS[clave];
@@ -102,6 +112,7 @@ function imagenDe(clave) {
         caption: foto.alt,
         creditText: `${foto.autor} / Unsplash`,
         creator: { '@type': 'Person', name: foto.autor },
+        copyrightNotice: `© ${foto.autor}`,
         license: 'https://unsplash.com/es/licencia',
         acquireLicensePage: foto.pagina,
     };

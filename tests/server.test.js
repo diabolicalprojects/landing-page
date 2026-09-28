@@ -973,6 +973,39 @@ test('las fotos de banco se sirven del propio sitio, con texto alternativo y cr�
     assert.match(post.image.license, /unsplash\.com/);
     assert.ok(post.image.creditText);
 
+    // Los cinco campos de metadatos IPTC que lee Google, en TODAS las páginas
+    // con foto y no solo en la guía de arriba.
+    //
+    // Se comprueban uno a uno porque faltaba `copyrightNotice` y nadie se
+    // enteró hasta que Search Console lo reportó el 28/09/2026. La prueba de
+    // antes solo miraba que `creditText` existiera, así que los otros tres
+    // podían desaparecer igual sin que fallara nada.
+    const IPTC = ['creditText', 'creator', 'copyrightNotice', 'license', 'acquireLicensePage'];
+    for (const { ruta, clave } of paginas) {
+        const foto = FOTOS[clave];
+        const htmlRuta = await (await fetch(`${BASE}${ruta}`)).text();
+        const imagenes = [...htmlRuta.matchAll(/application\/ld\+json">(.*?)<\/script>/gs)]
+            .flatMap((m) => {
+                const bloque = JSON.parse(m[1]);
+                return bloque['@graph'] ?? [bloque];
+            })
+            .map((nodo) => nodo.image)
+            .filter((img) => img && img['@type'] === 'ImageObject');
+
+        assert.ok(imagenes.length > 0, `${ruta} no publica su foto como ImageObject`);
+        for (const imagen of imagenes) {
+            for (const campo of IPTC) {
+                assert.ok(imagen[campo], `${ruta}: al ImageObject le falta ${campo}`);
+            }
+            // El copyright es del fotógrafo: la licencia de Unsplash permite el
+            // uso comercial, no transfiere la autoría.
+            assert.ok(
+                imagen.copyrightNotice.includes(foto.autor),
+                `${ruta}: el copyright debe nombrar al autor (${foto.autor}), no a la casa`
+            );
+        }
+    }
+
     const res = await fetch(`${BASE}/imagenes/${FOTOS[guia.foto].archivo}-800.webp`);
     assert.equal(res.status, 200);
     assert.match(res.headers.get('content-type') ?? '', /image\/webp/);
