@@ -1,4 +1,4 @@
-node_modules
+**/node_modules
 dist
 data
 .git
@@ -25,3 +25,9 @@ README.md
 # imagen: meterlo obligaria a npm ci a instalarlo en cada despliegue, y este
 # build ya murio tres veces por falta de memoria en el servidor.
 video
+
+# CMS: lo generado en local no entra en ninguna imagen.
+cms/**/dist
+cms/api/.datos
+cms/panel/test-results
+cms/panel/playwright-report

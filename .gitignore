@@ -24,3 +24,9 @@ screenshots/
 video/public/
 video/out/
 video/node_modules/
+
+# CMS
+cms/**/dist
+cms/api/.datos
+cms/panel/test-results
+cms/panel/playwright-report

@@ -17,7 +17,8 @@ jobs:
           node-version: 22
           cache: npm
 
-      - run: npm ci
+      # Solo el sitio: el CMS tiene su propio flujo (cms.yml).
+      - run: npm ci --workspaces=false
 
       - name: Lint
         run: npm run lint

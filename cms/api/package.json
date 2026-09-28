@@ -1,0 +1,41 @@
+{
+  "name": "@diabolical/cms-api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "API del CMS de Diabolical: sirve el panel en /admin y la API en /admin/api.",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/servidor.ts",
+    "build": "node scripts/empaquetar.mjs",
+    "start": "node dist/servidor.js",
+    "tipos": "tsc --noEmit -p .",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "crear-admin": "tsx src/cli/crear-admin.ts",
+    "migrar": "tsx src/cli/migrar.ts"
+  },
+  "dependencies": {
+    "@diabolical/esquemas": "*",
+    "@electric-sql/pglite": "^0.5.8",
+    "@fastify/cookie": "^11.1.2",
+    "@fastify/rate-limit": "^11.2.0",
+    "@fastify/static": "^10.1.5",
+    "@node-rs/argon2": "^2.2.1",
+    "@zxcvbn-ts/language-common": "^4.1.3",
+    "drizzle-orm": "^0.45.3",
+    "fastify": "^5.12.5",
+    "nodemailer": "^10.0.11",
+    "pg": "^8.23.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/nodemailer": "^8.0.2",
+    "@types/pg": "^8.23.1",
+    "esbuild": "^0.28.2",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.0",
+    "typescript-eslint": "^8.70.1",
+    "vitest": "^5.0.2"
+  }
+}

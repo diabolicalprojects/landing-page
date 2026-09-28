@@ -5,7 +5,8 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 
 export default [
-    { ignores: ['dist/**', 'node_modules/**', 'data/**'] },
+    // El CMS (cms/, compartido/) es TypeScript y tiene su propia configuración.
+    { ignores: ['dist/**', 'node_modules/**', 'data/**', 'cms/**', 'compartido/**'] },
 
     // Cliente: React sobre el navegador, módulos ES.
     {

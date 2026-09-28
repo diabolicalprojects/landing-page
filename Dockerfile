@@ -5,8 +5,12 @@ WORKDIR /app
 
 # Se copian solo los manifiestos primero para que la capa de dependencias se
 # cachee y no se reinstale en cada cambio de código.
+#
+# `--workspaces=false`: el repositorio tiene también el CMS (cms/, compartido/)
+# como workspaces de npm. El sitio instala solo lo suyo; el CMS tiene su propia
+# imagen (cms/Dockerfile).
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm ci --workspaces=false
 
 COPY . .
 
@@ -34,7 +38,7 @@ RUN NODE_OPTIONS=--max-old-space-size=512 npm run build
 # Encadenarlas deja una sola instalación en toda la imagen: la mitad de trabajo
 # y un pico de memoria que no se solapa consigo mismo.
 FROM builder AS prod-deps
-RUN npm prune --omit=dev && npm cache clean --force
+RUN npm prune --omit=dev --workspaces=false && npm cache clean --force
 
 # --- Etapa 3: runtime -----------------------------------------------------
 FROM node:22-alpine AS runtime

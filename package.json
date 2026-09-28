@@ -17,7 +17,15 @@
     "test": "node --test tests/*.test.js",
     "hash-password": "node scripts/hash-password.js",
     "indexnow": "node scripts/indexnow.mjs",
-    "verify": "npm run lint && npm run build && npm test"
+    "verify": "npm run lint && npm run build && npm test",
+    "cms:dev:api": "npm run dev -w @diabolical/cms-api",
+    "cms:dev:panel": "npm run dev -w @diabolical/cms-panel",
+    "cms:tipos": "npm run tipos -w @diabolical/esquemas -w @diabolical/cms-api -w @diabolical/cms-panel",
+    "cms:lint": "npm run lint -w @diabolical/cms-api -w @diabolical/cms-panel",
+    "cms:test": "npm run test -w @diabolical/esquemas -w @diabolical/cms-api",
+    "cms:build": "npm run build -w @diabolical/cms-panel && npm run build -w @diabolical/cms-api",
+    "cms:e2e": "npm run e2e -w @diabolical/cms-panel",
+    "cms:crear-admin": "npm run crear-admin -w @diabolical/cms-api"
   },
   "dependencies": {
     "@remotion/player": "^4.0.400",
@@ -49,5 +57,10 @@
     "globals": "^17.11.0",
     "tailwindcss": "^4.2.1",
     "vite": "^7.3.6"
-  }
+  },
+  "workspaces": [
+    "compartido/esquemas",
+    "cms/api",
+    "cms/panel"
+  ]
 }

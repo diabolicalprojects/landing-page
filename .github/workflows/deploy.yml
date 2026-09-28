@@ -37,7 +37,7 @@ jobs:
         env:
           SITE_URL: ${{ vars.SITE_URL || 'https://diabolicalservices.tech' }}
         run: |
-          npm ci
+          npm ci --workspaces=false
           npm run build
 
       - name: Comprobar si hay webhook configurado

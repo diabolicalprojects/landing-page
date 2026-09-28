@@ -448,6 +448,12 @@ Las utilidades de tiempo (`src/motion/tiempo.js`) son propias y no las de
 Remotion a propósito: importar `interpolate` del paquete metería Remotion entero
 en el bundle crítico.
 
+## CMS nuevo (en construcción)
+
+Un CMS propio sustituirá al panel actual de `/admin`: Postgres con Row Level Security, roles, sesiones revocables, auditoría y, en las fases siguientes, páginas por secciones, medios, SEO, formularios y analítica. Vive en este mismo repositorio como workspaces de npm (`compartido/esquemas`, `cms/api`, `cms/panel`) y no afecta al sitio: el sitio se instala con `npm ci --workspaces=false`.
+
+Estado, arquitectura, comandos y despliegue: [docs/cms/README.md](docs/cms/README.md). Hasta que termine la Fase 6, el panel de esta sección sigue siendo el que edita el sitio.
+
 ## Contenido editable y panel
 
 El panel `/admin` es un CMS. Edita el contenido con el sitio real al lado, en un `<iframe>` que

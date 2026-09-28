@@ -1,0 +1,21 @@
+{
+  "name": "@diabolical/esquemas",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Esquemas Zod compartidos entre el CMS (panel y API) y el render del sitio.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "tipos": "tsc --noEmit -p .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.0",
+    "vitest": "^5.0.2"
+  }
+}
