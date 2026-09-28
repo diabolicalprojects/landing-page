@@ -1,6 +1,6 @@
 # CMS de Diabolical
 
-Panel propio para administrar diabolicalservices.tech sin tocar código. La especificación aprobada (Fase 0) está en el artifact «Especificación CMS Diabolical»; este documento explica cómo está hecho y cómo se opera.
+Panel propio para administrar diabolicalservices.tech sin tocar código. **Para retomar el trabajo, empezar por [RELEVO.md](RELEVO.md).** La especificación aprobada (Fase 0) está en el artifact «Especificación CMS Diabolical»; este documento explica cómo está hecho y cómo se opera.
 
 | Fase | Estado |
 |---|---|
